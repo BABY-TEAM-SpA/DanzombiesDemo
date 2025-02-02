@@ -3,16 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputReciever : BeatReciever
+public class PlayerInputReciever : MonoBehaviour
 {
-
-
-    public bool reciveInput = false;
     private bool inputClockActive = false;
     [SerializeField] private float inputMargen;
     private float inputClock=0f;
-    public Queue<string> inputRegist = new Queue<string>();
+
+    private string inputDanceCode;
+    private bool Linput;
+    private string Lmano;
+    private string Lpie;
+    private string LStickUD;
+    private string LStickLR;
+    private bool Rinput;
+    private string Rmano;
+    private string Rpie;
+    private string RStickUD;
+    private string RStickLR;
+
+
+    public bool recivedInput = false;
+    //public Queue<string> inputRegist = new Queue<string>();
     [SerializeField] InputAction IA;
+
+    public BeatReciever BeatRecieverEnemyzone;
+
 
     public static PlayerInputReciever Instance { get; private set; }
 
@@ -35,6 +50,7 @@ public class PlayerInputReciever : BeatReciever
         else
         {
             Instance = this;
+            ResetInputs();
         }
     }
     public void Update()
@@ -54,68 +70,147 @@ public class PlayerInputReciever : BeatReciever
         }        
     }
 
-    public override void PreBeatAction()
-    {
-        inputRegist.Clear();
-        reciveInput = true;
-    }
-    public override void BeatAction()
-    {
-        //
-    }
-
-    public override void PostBeatAction()
-    {
-        //
-        inputRegist.Clear();
-        reciveInput = false;
-    }
-
-
     public void OnLeftArmTrigger(InputAction.CallbackContext callback)
-    {
-        Debug.Log(callback.ToString());
-    }
-    public void OnLeftFeetTrigger(InputAction.CallbackContext callback)
-    {
-        Debug.Log(callback.ToString());
-    }
-
-    public void GetLeftMove(InputAction.CallbackContext callback)
     {
         if (callback.performed)
         {
-            Debug.Log(callback.ToString());
+            Linput = true;
+            inputClockActive = true;
+            Lmano = "L1";
         }
-   
+        
+    }
+    public void OnLeftFeetTrigger(InputAction.CallbackContext callback)
+    {
+        if (callback.started)
+        {
+            Linput = true;
+            inputClockActive = true;
+            Lpie = "L2";
+        }
+    }
+
+    public void GetLeftUD(InputAction.CallbackContext callback)
+    {
+        if (callback.performed && inputClockActive)
+        {
+            //Debug.Log(callback);
+            float value = callback.ReadValue<float>();
+            if(value > 0f)
+            {
+                LStickUD = "U";
+            }
+            else
+            {
+                LStickUD = "D";
+            }
+        }
+    }
+    public void GetLeftLR(InputAction.CallbackContext callback)
+    {
+        if (callback.performed && inputClockActive)
+        {
+            float value = callback.ReadValue<float>();
+            if (value > 0f)
+            {
+                LStickLR = "R";
+            }
+            else
+            {
+                LStickLR = "L";
+            }
+
+        }
     }
 
     public void OnRightArmTrigger(InputAction.CallbackContext callback)
     {
-        Debug.Log(callback.ToString());
+        if (callback.performed)
+        {
+            Rinput = true;
+            inputClockActive = true;
+            Rmano = "R1";
+        }
     }
     public void OnRightFeetTrigger(InputAction.CallbackContext callback)
     {
-        Debug.Log(callback.ToString());
-    }
-
-    public void GetRightMove(InputAction.CallbackContext callback)
-    {
         if (callback.started)
         {
-            Debug.Log(callback.ToString());
+            Rinput = true;
+            inputClockActive = true;
+            Rpie = "R2";
+        }
+    }
+
+    public void GetRightUD(InputAction.CallbackContext callback)
+    {
+        
+        if (callback.performed && inputClockActive)
+        {
+            float value = callback.ReadValue<float>();
+            if (value > 0f)
+            {
+                RStickUD = "U";
+            }
+            else
+            {
+                RStickUD = "D";
+            }
+
+        }
+    }
+    public void GetRightLR(InputAction.CallbackContext callback)
+    {
+        if (callback.performed && inputClockActive)
+        {
+            float value = callback.ReadValue<float>();
+            if (value > 0f)
+            {
+                RStickLR = "R";
+            }
+            else
+            {
+                RStickLR = "L";
+            }
         }
     }
 
 
     private void MakeDanceMove()
     {
+        inputDanceCode = "";
+        if (Linput)
+        {
+            inputDanceCode += Lmano + Lpie + LStickUD + LStickLR;
+        }
+        if (Rinput)
+        {
+            inputDanceCode += Rmano + Rpie + RStickUD + RStickLR;
+        }
+        SendDanceMove();
+        ResetInputs();
 
+    }
+
+    private void ResetInputs()
+    {
+        Lmano = string.Empty;
+        Lpie = string.Empty;
+        LStickUD = "x";
+        LStickLR = "x";
+        Rmano = string.Empty;
+        Rpie = string.Empty;
+        RStickUD = "x";
+        RStickLR = "x";
+        inputDanceCode = string.Empty;
+        Linput = false;
+        Rinput = false;
     }
 
     public void SendDanceMove()
     {
-        ///
+        //BeatRecieverEnemyzone.SendMessage(inputDanceCode) /// le envia a ALGO el baile hecho para validarlo.
+        Debug.Log(inputDanceCode);
     }
 
 }

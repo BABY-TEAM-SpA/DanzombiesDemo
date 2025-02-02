@@ -721,7 +721,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 571542772}
         m_TargetAssemblyTypeName: PlayerInputReciever, Assembly-CSharp
-        m_MethodName: GetLeftMove
+        m_MethodName: GetLeftUD
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -769,7 +769,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 571542772}
         m_TargetAssemblyTypeName: PlayerInputReciever, Assembly-CSharp
-        m_MethodName: GetRightMove
+        m_MethodName: GetRightUD
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -781,6 +781,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: cea4ea41-b104-41ee-a385-19b2fd306b68
     m_ActionName: Dance/RightMove[/XInputControllerWindows/rightStick/up,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/rightStick/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 571542772}
+        m_TargetAssemblyTypeName: PlayerInputReciever, Assembly-CSharp
+        m_MethodName: GetLeftLR
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3905e184-fb24-4a60-b257-18d0f00e1759
+    m_ActionName: Dance/LeftMoveLR[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 571542772}
+        m_TargetAssemblyTypeName: PlayerInputReciever, Assembly-CSharp
+        m_MethodName: GetRightLR
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d2b8d003-e84a-4a42-a712-ad2ea1a1fbb0
+    m_ActionName: Dance/RightMoveLR
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Dance
@@ -798,9 +830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1da154b2893254588df2ba343051b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBeatType: 0
-  reciveInput: 0
-  inputMargen: 0.5
+  inputMargen: 0.25
+  recivedInput: 0
   IA:
     m_Name: IA
     m_Type: 0
@@ -810,6 +841,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  BeatRecieverEnemyzone: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
