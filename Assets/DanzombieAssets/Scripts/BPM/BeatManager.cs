@@ -26,7 +26,10 @@ public class BeatManager : MonoBehaviour
     
     public delegate void OnHalfBeatEvent();
     public static event OnHalfBeatEvent OnHalfBeat;
-    public delegate void OnBeatEvent(BeatType type);
+    //public delegate void OnBeatEvent(BeatType type);
+    public delegate void OnPlayEvent(float speed);
+    public static event OnPlayEvent OnPlay;
+    public delegate void OnBeatEvent();
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
@@ -38,7 +41,7 @@ public class BeatManager : MonoBehaviour
     public SongsData songData {get; private set;}
     [SerializeField] private List<SongsData> allSongs = new List<SongsData>();
 
-    public float bpmDuration { get; private set; }
+    public float beatDuration { get; private set; }
     private float timer;
     private int counter;
     private int totalcounter;
@@ -113,20 +116,20 @@ public class BeatManager : MonoBehaviour
         {
             float songTime = _audioSource.time;
             
-            if((songTime >= (bpmDuration * counter)-bpmDuration/2) && canHalfBeat)
+            if((songTime >= (beatDuration * counter)- beatDuration / 2) && canHalfBeat)
             {
                 canHalfBeat = false;
                 HalfBeat();
                 canPre = true;
             }
             
-            else if (songTime >= ((bpmDuration * counter) - bpmDuration * margen)&& canPre)
+            else if (songTime >= ((beatDuration * counter) - beatDuration * margen)&& canPre)
             {
                 canPre = false;
                 PreBeat();
                 canBeat = true;
             }
-            else if (songTime >= bpmDuration * counter && canBeat)
+            else if (songTime >= beatDuration * counter && canBeat)
             {
                 canBeat = false;
                 timer = songTime;
@@ -135,7 +138,7 @@ public class BeatManager : MonoBehaviour
                 canPost = true;
             }
             
-            else if (songTime >= ((bpmDuration * counter) + bpmDuration * margen) && canPost)
+            else if (songTime >= ((beatDuration * counter) + beatDuration * margen) && canPost)
             {
                 canPost = false;
                 PostBeat();
@@ -157,7 +160,8 @@ public class BeatManager : MonoBehaviour
         onMargen = true;
         if (OnPreBeat != null)
         {
-            OnPreBeat(BeatType.Negra);
+            OnPreBeat();
+            /*OnPreBeat(BeatType.Negra);
             if (counter%2==0)
             {
                 OnPreBeat(BeatType.Blanca);
@@ -165,8 +169,8 @@ public class BeatManager : MonoBehaviour
                 {
                     OnPreBeat(BeatType.Redonda);
                 }
-            }
-            
+            }*/
+
         }
         
     }
@@ -175,7 +179,8 @@ public class BeatManager : MonoBehaviour
         
         if (OnBeat != null)
         {
-            OnBeat(BeatType.Negra);
+            OnBeat();
+            /*OnBeat(BeatType.Negra);
             if (counter%2==0)
             {
                 OnBeat(BeatType.Blanca);
@@ -183,7 +188,7 @@ public class BeatManager : MonoBehaviour
                 {
                     OnBeat(BeatType.Redonda);
                 }
-            }
+            }*/
             
             
         }
@@ -195,7 +200,8 @@ public class BeatManager : MonoBehaviour
         counter += 1;
         if (OnPostBeat != null)
         {
-            OnPostBeat(BeatType.Negra);
+            OnPostBeat(); 
+            /*OnPostBeat(BeatType.Negra);
             if (counter%2==0)
             {
                 OnPostBeat(BeatType.Blanca);
@@ -203,7 +209,7 @@ public class BeatManager : MonoBehaviour
                 {
                     OnPostBeat(BeatType.Redonda);
                 }
-            }
+            }*/
             
         }
         
@@ -223,8 +229,13 @@ public class BeatManager : MonoBehaviour
         counter=0;
         totalcounter=0;
         _audioSource.clip = songData.song;
-        bpmDuration = (60f / songData.bpm); // negras por seg.... duracion de una negra...
-        timer = bpmDuration;
+        beatDuration = (60f / songData.bpm); // negras por seg.... duracion de una negra...
+        timer = beatDuration;
+
+        if(OnPlay != null)
+        {
+            OnPlay(beatDuration);
+        }
         _audioSource.Play();
     }
 

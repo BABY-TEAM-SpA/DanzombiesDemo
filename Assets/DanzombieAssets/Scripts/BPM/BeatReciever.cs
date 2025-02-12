@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static BeatManager;
 
 
 
 public abstract class BeatReciever: MonoBehaviour
 {
-    public BeatType myBeatType;
+    //public BeatType myBeatType;
 
     private void OnEnable()
     {
-        BeatManager.OnHalfBeat += HalfBeatAction;
+        //BeatManager.OnHalfBeat += HalfBeatAction;
+        BeatManager.OnPlay += OnPlayEvent;
         BeatManager.OnBeat += OnBeatEvent;
         BeatManager.OnPreBeat += OnPreBeatEvent;
         BeatManager.OnPostBeat += OnPostBeatEvent;
@@ -21,7 +23,8 @@ public abstract class BeatReciever: MonoBehaviour
 
     private void OnDisable()
     {
-        BeatManager.OnHalfBeat -= HalfBeatAction;
+        //BeatManager.OnHalfBeat -= HalfBeatAction;
+        BeatManager.OnPlay -= OnPlayEvent;
         BeatManager.OnBeat -= OnBeatEvent;
         BeatManager.OnPreBeat -= OnPreBeatEvent;
         BeatManager.OnPostBeat -= OnPostBeatEvent;
@@ -29,31 +32,42 @@ public abstract class BeatReciever: MonoBehaviour
     }
     
     //Event Reactions
-    private void OnPreBeatEvent(BeatType type)
+
+    private void OnPlayEvent(float beatDuration)
     {
-        if (type == myBeatType)
+        OnPlaySongAction(beatDuration);
+    }
+    private void OnPreBeatEvent()//(BeatType type)
+    {
+        /*if (type == myBeatType)
         {
             PreBeatAction();
-        }
-        
+        }*/
+        PreBeatAction();
     }
     
-    private void OnBeatEvent(BeatType type)
+    private void OnBeatEvent()//(BeatType type)
     {
-        if (type == myBeatType)
+        /*if (type == myBeatType)
         {
             BeatAction();
-        }
-        
+        }*/
+        BeatAction();
     }
 
-    private void OnPostBeatEvent(BeatType type)
+    private void OnPostBeatEvent()//(BeatType type)
     {
-        if (type == myBeatType)
+        /*if (type == myBeatType)
         {
             PostBeatAction();
-        }
-        
+        }*/
+        PostBeatAction();
+
+    }
+
+    public virtual void OnPlaySongAction(float beatDuration)
+    {
+
     }
 
     public virtual void PreBeatAction()
