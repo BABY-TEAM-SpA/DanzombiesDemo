@@ -25,6 +25,7 @@ public class DanceBrain : MonoBehaviour
     public void OnPlayEvent(float beatDuration)
     {
         m_Animator.SetFloat("Blend", 1/ beatDuration);
+        m_Animator.Play(0);
     }
     public void LearnDance(string dance)
     {

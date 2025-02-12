@@ -1203,7 +1203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &765730052
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1598,6 +1598,7 @@ GameObject:
   - component: {fileID: 1214347754}
   - component: {fileID: 1214347756}
   - component: {fileID: 1214347755}
+  - component: {fileID: 1214347757}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1618,11 +1619,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 113514404}
-  m_Father: {fileID: 2045168329}
+  m_Father: {fileID: 1242692522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -569, y: -248.39996}
+  m_AnchoredPosition: {x: 0, y: -402.39996}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1214347755
@@ -1663,6 +1664,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214347753}
   m_CullTransparentMesh: 1
+--- !u!114 &1214347757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214347753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db4fcedf239f6a4d851aeb20d47a561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 0
+  m_Animator: {fileID: 113514405}
+  danceStepLearned: []
 --- !u!1 &1242692518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1778,7 @@ RectTransform:
   - {fileID: 893155890}
   - {fileID: 765730052}
   - {fileID: 2045168329}
+  - {fileID: 1214347754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1853,8 +1870,6 @@ MonoBehaviour:
   margen: 0
   onMargen: 0
   allSongs:
-  - song: {fileID: 8300000, guid: 4b69acb1b5fd4964493e23c161953c7d, type: 3}
-    bpm: 130
   - song: {fileID: 8300000, guid: d899bb3e0d27ee948ab67010ca2b27c1, type: 3}
     bpm: 130
 --- !u!4 &1358500238
@@ -2519,7 +2534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2045168329
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2531,8 +2546,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1214347754}
+  m_Children: []
   m_Father: {fileID: 1242692522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2646,7 +2660,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 571542770}
   - {fileID: 1658532598}
-  - {fileID: 1358500238}
   - {fileID: 1242692522}
   - {fileID: 409054244}
+  - {fileID: 1358500238}
   - {fileID: 1305481476}
