@@ -75,7 +75,8 @@ public class PlayerInputReciever : MonoBehaviour
 
     public void OnLeftArmTrigger(InputAction.CallbackContext callback)
     {
-        if (callback.performed)
+        Debug.Log(callback.ToString());
+        if (callback.started)
         {
             Linput = true;
             inputClockActive = true;
@@ -89,6 +90,7 @@ public class PlayerInputReciever : MonoBehaviour
     }
     public void OnLeftFeetTrigger(InputAction.CallbackContext callback)
     {
+        Debug.Log(callback.ToString());
         if (callback.started)
         {
             Linput = true;
@@ -116,7 +118,7 @@ public class PlayerInputReciever : MonoBehaviour
             }
             if (callback.canceled)
             {
-                LStickUD = "_";
+                LStickUD = "x";
             }
         }
     }
@@ -136,12 +138,13 @@ public class PlayerInputReciever : MonoBehaviour
         }
         if (callback.canceled)
         {
-            LStickLR = "_";
+            LStickLR = "x";
         }
     }
 
     public void OnRightArmTrigger(InputAction.CallbackContext callback)
     {
+        Debug.Log(callback.ToString());
         if (callback.started)
         {
             Rinput = true;
@@ -155,6 +158,7 @@ public class PlayerInputReciever : MonoBehaviour
     }
     public void OnRightFeetTrigger(InputAction.CallbackContext callback)
     {
+        Debug.Log(callback.ToString());
         if (callback.started)
         {
             Rinput = true;
@@ -183,7 +187,7 @@ public class PlayerInputReciever : MonoBehaviour
         }
         if (callback.canceled)
         {
-            RStickUD = "_";
+            RStickUD = "x";
         }
     }
     public void GetRightLR(InputAction.CallbackContext callback)
@@ -202,7 +206,7 @@ public class PlayerInputReciever : MonoBehaviour
         }
         if (callback.canceled)
         {
-            RStickLR = "_";
+            RStickLR = "x";
         }
     }
 

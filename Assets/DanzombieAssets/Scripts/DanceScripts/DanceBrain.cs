@@ -50,7 +50,7 @@ public class DanceBrain : MonoBehaviour
         }
         else
         {
-            Debug.Log("No danceStep Found");
+            //Debug.Log("No danceStep Found");
         }
         
     }

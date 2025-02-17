@@ -498,6 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 409054244}
+  - component: {fileID: 409054245}
   m_Layer: 0
   m_Name: TutorialController
   m_TagString: Untagged
@@ -520,6 +521,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &409054245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409054243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3de6fcb1f26e7479fa244e08e62d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choreoData: {fileID: 0}
+  stepsToComplete: 3
 --- !u!1 &445424825
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,8 +1011,7 @@ MonoBehaviour:
   isPlayer: 0
   m_Animator: {fileID: 622136080}
   danceStepLearned:
-  - L1xx
-  - R1xx
+  - L1xRR1xR
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,12 +1168,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 854912612, guid: 6ec3d42e41e64d74ebc7e8684b71c385, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 19.270603, y: 10.874999}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1175,7 +1189,7 @@ Animator:
   m_GameObject: {fileID: 622136077}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 892d5842e94b28a4e971e7e9a64f736d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6d7c04528236afa42b244420162271a2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1600,7 +1614,7 @@ GameObject:
   - component: {fileID: 1214347755}
   - component: {fileID: 1214347757}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Brain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1832,10 +1846,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allposesData:
     animations:
-    - poseCode: L1xx
+    - poseCode: L1xRR1xR
       overrideController: {fileID: 22100000, guid: 655e29888503fe04a8a8db1f0e17d2cb, type: 2}
-    - poseCode: R1xx
-      overrideController: {fileID: 22100000, guid: 19e27631f6951384d83ab0fa4e9ff2d0, type: 2}
 --- !u!1 &1358500236
 GameObject:
   m_ObjectHideFlags: 0

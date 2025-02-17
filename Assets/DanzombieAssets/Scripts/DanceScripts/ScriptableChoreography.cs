@@ -39,11 +39,11 @@ public class DancePose
         string poseCode = "";
         if (LeftHand || LeftFoot)
         {
-            poseCode += (LeftHand ? "L1":"")+(LeftFoot ? "L2":"")+ LeftStick.ToString();
+            poseCode += (LeftHand ? "L1":"")+(LeftFoot ? "L2":"")+LeftStick.ToString();
         }
         if (RightHand || RightFoot)
         {
-            poseCode += (RightHand ? "R1" : "") + (RightFoot ? "R2" : "") + RightStick.ToString();
+            poseCode += (RightHand ? "R1":"")+(RightFoot ? "R2":"")+RightStick.ToString();
         }
         return poseCode;
     }
