@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -20,6 +21,7 @@ public class SongsData
     public bool shouldLoop;
     public int  Metrica = 4; // Tempo: m/4
 }
+
 public class BeatManager : MonoBehaviour
 {
     
@@ -31,6 +33,7 @@ public class BeatManager : MonoBehaviour
     
     public delegate void OnMusicEvent(float speed);
     public static event OnMusicEvent OnPlay;
+    public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
     
     public delegate void OnBeatEvent(int metrica);
@@ -65,6 +68,16 @@ public class BeatManager : MonoBehaviour
         
     }
     
+    void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     void Update()
     {
         if (_audioSource.isPlaying)
@@ -126,7 +139,7 @@ public class BeatManager : MonoBehaviour
     public void PauseSong()
     {
         _audioSource.Pause();
-        OnStop?.Invoke(beatDuration);
+        OnPause?.Invoke(beatDuration);
     }
     public void ResumeSong()
     {

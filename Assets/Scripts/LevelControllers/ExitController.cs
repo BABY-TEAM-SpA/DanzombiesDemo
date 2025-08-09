@@ -12,7 +12,7 @@ public class ExitController : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             if(shouldStopMusic) BeatManager.Instance.StopSong();
-            SceneManager.LoadScene(levelToLoad);
+            SceneChangeController.Instance.LoadScene(levelToLoad);
         }
     }
 }

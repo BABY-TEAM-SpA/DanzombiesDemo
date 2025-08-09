@@ -10,35 +10,38 @@ using static BeatManager;
 public abstract class BeatReciever: MonoBehaviour
 {
     //public BeatType myBeatType;
+    
+    ///////////--- Events Management ---///////////
 
     private void OnEnable()
     {
-        //BeatManager.OnHalfBeat += HalfBeatAction;
-        
         BeatManager.OnPlay += OnPlayEvent;
-        BeatManager.OnBeat += OnBeatEvent;
-        //BeatManager.OnCompass += OnCompassStartEvent;
+        BeatManager.OnPause += OnPauseEvent;
         BeatManager.OnPreBeat += OnPreBeatEvent;
+        BeatManager.OnBeat += OnBeatEvent;
         BeatManager.OnPostBeat += OnPostBeatEvent;
-        //LevelController.OnPauseEvent += OnPauseEventReceiver;
+        BeatManager.OnStop += OnStopEvent;
+        
     }
 
     private void OnDisable()
     {
-        //BeatManager.OnHalfBeat -= HalfBeatAction;
         BeatManager.OnPlay -= OnPlayEvent;
-        BeatManager.OnBeat -= OnBeatEvent;
-        //BeatManager.OnCompass -= OnCompassStartEvent;
+        BeatManager.OnPause -= OnPauseEvent;
         BeatManager.OnPreBeat -= OnPreBeatEvent;
+        BeatManager.OnBeat -= OnBeatEvent;
         BeatManager.OnPostBeat -= OnPostBeatEvent;
-        //LevelController.OnPauseEvent -= OnPauseEventReceiver;
+        BeatManager.OnStop -= OnStopEvent;
     }
     
-    //Event Reactions
-
     private void OnPlayEvent(float beatDuration)
     {
         OnPlaySongAction(beatDuration);
+    }
+
+    private void OnPauseEvent(float beatDuration)
+    {
+        OnPauseSongAction();
     }
     private void OnPreBeatEvent(int compass)//(BeatType type)
     {
@@ -65,35 +68,41 @@ public abstract class BeatReciever: MonoBehaviour
             PostBeatAction();
         }*/
         PostBeatAction(compass);
-
     }
 
+    private void OnStopEvent(float beatDuration)
+    {
+        OnStopSongAction();
+    }
+    
+    ///////////--- virtual Actions Management ---///////////
     public virtual void OnPlaySongAction(float beatDuration)
     {
-
+        /// implement when Song Plays;
     }
-
+    public virtual void OnPauseSongAction()
+    {
+        /// implement when Song Pause;
+    }
+    public virtual void CompassAction()
+    {
+        // implement On first beat of Compass
+    }
     public virtual void PreBeatAction(int compass)
     {
-        /// implement 
+        /// implement On: the beat-margen
     }
-
-    
     public virtual void BeatAction(int compass)
     {
         if(compass == 0)CompassAction();
-        /// implement 
+        /// implement On: the beat;
     }
-    
-    public virtual void CompassAction()
-    {
-        // implement OnFirstBeat of Compass
-    }
-    
     public virtual void PostBeatAction(int compass)
     {
-        /// implement 
+        /// implement On: the beat+margen;
     }
-    
-    
+    public virtual void OnStopSongAction()
+    {
+        /// implement when song Stops
+    }
 }
