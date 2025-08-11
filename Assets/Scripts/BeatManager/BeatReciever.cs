@@ -43,31 +43,31 @@ public abstract class BeatReciever: MonoBehaviour
     {
         OnPauseSongAction();
     }
-    private void OnPreBeatEvent(int compass)//(BeatType type)
+    private void OnPreBeatEvent(int counter, int counterCompass)//(BeatType type)
     {
         /*if (type == myBeatType)
         {
             PreBeatAction();
         }*/
-        PreBeatAction(compass);
+        PreBeatAction(counter, counterCompass);
     }
     
-    private void OnBeatEvent(int compass) //(BeatType type)
+    private void OnBeatEvent(int counter, int counterCompass) //(BeatType type)
     {
         /*if (type == myBeatType)
         {
             BeatAction();
         }*/
-        BeatAction(compass);
+        BeatAction(counter, counterCompass);
     }
 
-    private void OnPostBeatEvent(int compass) //(BeatType type)
+    private void OnPostBeatEvent(int counter, int counterCompass) //(BeatType type)
     {
         /*if (type == myBeatType)
         {
             PostBeatAction();
         }*/
-        PostBeatAction(compass);
+        PostBeatAction(counter, counterCompass);
     }
 
     private void OnStopEvent(float beatDuration)
@@ -88,16 +88,16 @@ public abstract class BeatReciever: MonoBehaviour
     {
         // implement On first beat of Compass
     }
-    public virtual void PreBeatAction(int compass)
+    public virtual void PreBeatAction(int counter, int counterCompass)
     {
         /// implement On: the beat-margen
     }
-    public virtual void BeatAction(int compass)
+    public virtual void BeatAction(int counter, int counterCompass)
     {
-        if(compass == 0)CompassAction();
+        if(counterCompass == 0)CompassAction();
         /// implement On: the beat;
     }
-    public virtual void PostBeatAction(int compass)
+    public virtual void PostBeatAction(int counter, int counterCompass)
     {
         /// implement On: the beat+margen;
     }

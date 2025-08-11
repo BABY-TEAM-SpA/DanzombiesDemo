@@ -28,9 +28,14 @@ public class PulseObjectAnimatorController : BeatReciever
 
     public override void OnPauseSongAction()
     {
-        DanceAnimator.SetTrigger("Stop");
+        SetBeatDuration(0f);
+        //DanceAnimator.SetTrigger("Stop");
     }
 
+    public override void BeatAction(int counter, int counterCompass)
+    {
+        DanceAnimator.SetTrigger("OnBeat");
+    }
     public override void OnStopSongAction()
     {
         DanceAnimator.SetTrigger("Stop");

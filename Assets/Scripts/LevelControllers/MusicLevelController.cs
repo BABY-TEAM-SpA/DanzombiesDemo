@@ -29,7 +29,7 @@ public class MusicLevelController : MonoBehaviour
     {
         //BeatManager.Instance.SetAudioSource(allSongs[currentSong],BeatManager.Instance.CurrentAudioSourceIndex);
         //BeatManager.Instance.SetAudioSource(allSongs[currentSong+1],BeatManager.Instance.CurrentAudioSourceIndex+1);
-        if(shouldStartPlaying) PlayLevelSong();
+        if(shouldStartPlaying && !BeatManager.Instance.IsPlaying()) PlayLevelSong();
         
     }
 

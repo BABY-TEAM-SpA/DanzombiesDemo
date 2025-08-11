@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 public enum BeatType
 {
@@ -17,74 +14,80 @@ public enum BeatType
 public class SongsData
 {
     public AudioClip song;
-    public int bpm;
-    public bool shouldLoop;
-    public int  Metrica = 4; // Tempo: m/4
+    public int bpm = 120;
+    public bool shouldLoop = true;
+    public int Metrica = 4; // m/4
 }
 
 public class BeatManager : MonoBehaviour
 {
-    
-    //public List<AudioSourceData> _audioSources = new List<AudioSourceData>();
+    [Header("Audio")] 
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] public SongsData currenSongData{ get; private set;}
+    [SerializeField] public SongsData currentSongData { get; private set; }
     
-    public bool nextSongMustPlay;
-    
+    private Queue<SongsData> playlist = new Queue<SongsData>();
+
+    [Header("Sincronización")]
+    [Range(0f, 1f)] public float margen = 0.25f;
+    public int subdivisiones = 1; // 1 = negras, 2 = corcheas, etc.
+    public bool onMargen { get; private set; }
+    public float beatDuration { get; private set; }
+    public int metrica { get; private set; }
+
+    [Header("Eventos por Inspector")]
+    public UnityEvent<int,int> onPreBeatInspector;
+    public UnityEvent<int,int> onBeatInspector;
+    public UnityEvent<int,int> onPostBeatInspector;
+
+    // Eventos por código
     public delegate void OnMusicEvent(float speed);
     public static event OnMusicEvent OnPlay;
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
-    
-    public delegate void OnBeatEvent(int metrica);
+
+    public delegate void OnBeatEvent(int counter, int metricaCounter);
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
-    
-    [SerializeField][Range(0f, 1f)] public float margen { get;private set; }=0.25f;
-    public bool onMargen { get;private set;}
-    public float beatDuration { get; private set; }
+
+    // Estado interno
     private int counter;
-    
-    //auxiliares
     private bool canPre;
     private bool canBeat;
     private bool canPost;
-    
-    public static BeatManager Instance { get; private set; }
-    private void Awake() 
-    { 
-        // If there is an instance, and it's not me, delete myself.
-    
-        if (Instance != null && Instance != this) 
-        { 
-            Destroy(this.gameObject); 
-        } 
-        else 
-        { 
-            Instance = this;
-            //DontDestroyOnLoad(this);
-        }
-        
-    }
-    
-    void OnEnable()
-    {
-        
-    }
 
-    private void OnDisable()
+    // DSP timing
+    private double dspSongStartTime;
+    private float songTime;
+    private float lastSongTime;
+    public static BeatManager Instance { get; private set; }
+
+    private void Awake()
     {
-        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
 
     void Update()
     {
         if (_audioSource.isPlaying)
         {
-            float songTime = _audioSource.time;
-            
-            if (songTime >= ((beatDuration * counter) - beatDuration * margen)&& canPre)
+            songTime = (float)(AudioSettings.dspTime - dspSongStartTime);
+            if (songTime < lastSongTime)
+            {
+                counter = 0;
+                canPre = false;
+                canBeat = true;
+                canPost = false;
+            }
+            lastSongTime = songTime;
+
+            // Comprobación de eventos
+            if (songTime >= ((beatDuration * counter) - beatDuration * margen) && canPre)
             {
                 PreBeat();
             }
@@ -99,27 +102,38 @@ public class BeatManager : MonoBehaviour
         }
         else
         {
-            OnSongEndedOrStoped();
+            OnSongEndedOrStopped();
         }
     }
-    
+
     void PreBeat()
     {
         canPre = false;
         onMargen = true;
-        OnPreBeat?.Invoke(counter % currenSongData.Metrica);
+
+        OnPreBeat?.Invoke(counter, counter%metrica);
+        onPreBeatInspector?.Invoke(counter, counter%metrica);
+
         canBeat = true;
     }
+
     void Beat()
     {
         canBeat = false;
-        OnBeat?.Invoke(counter % currenSongData.Metrica);
+
+        OnBeat?.Invoke(counter,counter%metrica);
+        onBeatInspector?.Invoke(counter, counter%metrica);
+
         canPost = true;
     }
+
     void PostBeat()
     {
         onMargen = false;
-        OnPostBeat?.Invoke(counter % currenSongData.Metrica);
+
+        OnPostBeat?.Invoke(counter,counter % metrica);
+        onPostBeatInspector?.Invoke(counter, counter % metrica);
+
         counter += 1;
         canPost = false;
         canPre = true;
@@ -127,22 +141,33 @@ public class BeatManager : MonoBehaviour
 
     public void PlaySongData(SongsData songData)
     {
+        if (songData == null || songData.song == null || songData.bpm <= 0)
+        {
+            Debug.LogError("Datos de canción inválidos");
+            return;
+        }
+
         SetAudioSource(songData);
+        dspSongStartTime = AudioSettings.dspTime;
         onMargen = false;
         canPre = false;
         canBeat = true;
         canPost = false;
-        if (_audioSource.clip != null)_audioSource.Play();
+
+        _audioSource.PlayScheduled(dspSongStartTime);
+
         OnPlay?.Invoke(beatDuration);
     }
-    
+
     public void PauseSong()
     {
         _audioSource.Pause();
         OnPause?.Invoke(beatDuration);
     }
+
     public void ResumeSong()
     {
+        dspSongStartTime = AudioSettings.dspTime - songTime;
         _audioSource.Play();
         OnPlay?.Invoke(beatDuration);
     }
@@ -150,22 +175,38 @@ public class BeatManager : MonoBehaviour
     public void StopSong()
     {
         _audioSource.Stop();
-        OnStop?.Invoke(beatDuration); 
+        OnStop?.Invoke(beatDuration);
     }
 
-    private void OnSongEndedOrStoped()
+    private void OnSongEndedOrStopped()
     {
-        Debug.Log("OnSongEndedOrStoped");
-        OnStop?.Invoke(beatDuration);
+        if (playlist.Count > 0)
+        {
+            PlaySongData(playlist.Dequeue());
+        }
+        else
+        {
+            OnStop?.Invoke(beatDuration);
+        }
     }
 
     private void SetAudioSource(SongsData data)
     {
-        currenSongData = data;
+        currentSongData = data;
         _audioSource.clip = data.song;
         _audioSource.loop = data.shouldLoop;
-        beatDuration = (60f / currenSongData.bpm); // negras por seg.... duracion de una negra...
-        counter=0;
+        beatDuration = (60f / currentSongData.bpm) / subdivisiones;
+        metrica = currentSongData.Metrica;
+        counter = 0;
     }
-    
+
+    public void AddToPlaylist(SongsData song)
+    {
+        if (song != null) playlist.Enqueue(song);
+    }
+
+    public bool IsPlaying()
+    {
+        return _audioSource.isPlaying;
+    }
 }

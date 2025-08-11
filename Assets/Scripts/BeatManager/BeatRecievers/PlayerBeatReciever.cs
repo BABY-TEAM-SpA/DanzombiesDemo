@@ -26,11 +26,11 @@ public class PlayerBeatReciever : BeatReciever
         SetBeatDuration(beatDuration);
     }
 
-    public override void BeatAction(int compass)
+    public override void BeatAction(int counter, int counterCompass)
     {
-        base.BeatAction(compass);
+        base.BeatAction(counter, counterCompass);
         DanceAnimator.SetTrigger("Idle");
-        Invoke("ResetIdle",0.1f);
+        //Invoke("ResetIdle",0.1f);
     }
 
     public override void CompassAction()
