@@ -18,7 +18,7 @@ public class PulseObjectAnimatorController : BeatReciever
         {
             Debug.Log("Playing Dance Animator");
             DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
-            DanceAnimator.SetTrigger("Play");
+            DanceAnimator.SetTrigger("OnBeat");
         }
     }
     public override void OnPlaySongAction(float beatDuration)

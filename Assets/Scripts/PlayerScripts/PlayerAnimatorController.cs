@@ -79,7 +79,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            
             animator.SetTrigger("DanceEast");
         }
         if (context.canceled)
@@ -113,7 +112,6 @@ public class PlayerAnimatorController : MonoBehaviour
            animator.SetBool("RightTrigger", false); 
         }
     }
-
     
     public void OnIDLE()
     {
@@ -136,8 +134,6 @@ public class PlayerAnimatorController : MonoBehaviour
     }
     public void OnStandAction()
     {
-        Debug.Log("Stand");
-        
         isDancing = false;
         playerMovCtrl.SetSpeed();
         animator.ResetTrigger("Idle");

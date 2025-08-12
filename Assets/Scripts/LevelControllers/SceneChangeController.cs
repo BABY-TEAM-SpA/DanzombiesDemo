@@ -9,7 +9,7 @@ public class SceneChangeController : MonoBehaviour
     { 
         if (Instance != null && Instance != this) 
         { 
-            Destroy(this); 
+            Destroy(this.gameObject); 
         } 
         else 
         { 
@@ -24,5 +24,10 @@ public class SceneChangeController : MonoBehaviour
     public void LoadScene(string name)
     {
         this.LoadScene(name, false);
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
