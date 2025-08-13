@@ -17,6 +17,7 @@ public class SongsData
     public int bpm = 120;
     public bool shouldLoop = true;
     public int Metrica = 4; // m/4
+    public int compasesTotales;
 }
 
 public class BeatManager : MonoBehaviour
@@ -111,8 +112,8 @@ public class BeatManager : MonoBehaviour
         canPre = false;
         onMargen = true;
 
-        if(counter!=0)OnPreBeat?.Invoke((counter-1), (counter-1)%metrica);
-        if(counter!=0)onPreBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
+        if(counter>0)OnPreBeat?.Invoke((counter-1), (counter-1)%metrica);
+        if(counter>0)onPreBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
 
         canBeat = true;
     }
@@ -121,8 +122,8 @@ public class BeatManager : MonoBehaviour
     {
         canBeat = false;
         Debug.Log(counter);
-        if(counter!=0)OnBeat?.Invoke((counter-1),(counter-1)%metrica);
-        if(counter!=0)onBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
+        if(counter>0)OnBeat?.Invoke((counter-1),(counter-1)%metrica);
+        if(counter>0)onBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
 
         canPost = true;
     }
@@ -131,8 +132,8 @@ public class BeatManager : MonoBehaviour
     {
         onMargen = false;
 
-        if(counter!=0)OnPostBeat?.Invoke((counter-1),(counter-1)% metrica);
-        if(counter!=0)onPostBeatInspector?.Invoke((counter-1), (counter-1) % metrica);
+        if(counter>0)OnPostBeat?.Invoke((counter-1),(counter-1)% metrica);
+        if(counter>0)onPostBeatInspector?.Invoke((counter-1), (counter-1) % metrica);
 
         counter += 1;
         canPost = false;
