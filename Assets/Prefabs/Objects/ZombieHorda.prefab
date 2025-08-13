@@ -47,16 +47,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a31e72b14b00e4a80cbdec6c4d3000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActivateOnStart: 1
   useCompass: 0
-  ShouldRepeat: 0
-  DanceSteps: 
+  ShouldRepeat: 1
+  DanceSteps: 0000000000000000000000000000000000000000000000000000000000000000
   OnRhythmPuzzleCompleted:
     m_PersistentCalls:
       m_Calls: []
   player: {fileID: 0}
+  playerDanceStep: 0
   zombies: []
   zone: {fileID: 3975196565072534413}
-  Colores: []
+  Colores:
+  - {r: 1, g: 1, b: 1, a: 0.09803922}
+  - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.09803922}
+  - {r: 1, g: 1, b: 1, a: 0.09803922}
+  - {r: 0.48235297, g: 0.48235297, b: 0.48235297, a: 0.09803922}
+  ColoresPlayer:
+  - {r: 0.015686275, g: 1, b: 0.25882354, a: 0.09803922}
+  - {r: 0.93725497, g: 0.015686275, b: 1, a: 0.09803922}
+  - {r: 0.015686275, g: 1, b: 0.25882354, a: 0.09803922}
+  - {r: 0.93725497, g: 0.015686275, b: 1, a: 0.09803922}
 --- !u!61 &5206970857167012124
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -101,7 +112,7 @@ BoxCollider2D:
     drawMode: 2
     adaptiveTiling: 1
   m_AutoTiling: 0
-  m_Size: {x: 24.17184, y: 25.233969}
+  m_Size: {x: 25, y: 25.233969}
   m_EdgeRadius: 0
 --- !u!1 &5976586730880803271
 GameObject:
@@ -180,7 +191,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: c64865f686178814b9468ad52c36f654, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.09803922}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.007843138}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2

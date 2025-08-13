@@ -17,7 +17,7 @@ public class PlayerBeatReciever : BeatReciever
         base.OnPlaySongAction(currentBeatOnPlayer);
         if (DanceAnimator != null)
         {
-            Debug.Log("Playing Dance Animator");
+            //Debug.Log("Playing Dance Animator");
             DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
         }
     }

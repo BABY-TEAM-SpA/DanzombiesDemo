@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +19,8 @@ public enum DanceStep
 
 public class RhythmPuzzle : BeatReciever
 {
+    private bool isActive = false;
+    [SerializeField] bool ActivateOnStart;
     [SerializeField] protected bool useCompass = false;
     [SerializeField] protected bool ShouldRepeat =false;
     [SerializeField] protected List<DanceStep> DanceSteps = new List<DanceStep>();
@@ -28,34 +31,54 @@ public class RhythmPuzzle : BeatReciever
     public event OnMusicEvent OnReleaseStep;
     public UnityEvent OnRhythmPuzzleCompleted;
     [SerializeField] protected PlayerAnimatorController player;
+    [SerializeField] protected DanceStep playerDanceStep;
+
+    private void Awake()
+    {
+        if(ActivateOnStart) isActive = true;
+    }
 
     public override void PreBeatAction(int counter, int counterCompass)
     {
-        
-        if (useCompass) currentDanceStep = DanceSteps[counterCompass];
-        else
+        if (isActive)
         {
-            int aux = counter;
-            if (ShouldRepeat) aux = counter % DanceSteps.Count;
-            currentDanceStep = DanceSteps[aux];
+            if (useCompass) currentDanceStep = DanceSteps[counterCompass];
+            else
+            {
+                int aux = counter-1;
+                if (ShouldRepeat) aux = counter % DanceSteps.Count;
+                currentDanceStep = DanceSteps[aux];
+            }
+            OnPrepareStep?.Invoke(currentDanceStep);
+            
         }
-        OnPrepareStep?.Invoke(currentDanceStep);
     }
 
     public override void BeatAction(int counter, int counterCompass)
     {
-        OnDanceStep?.Invoke(currentDanceStep);
+        if (isActive)
+        {
+            OnDanceStep?.Invoke(currentDanceStep);
+            if(OnDanceStep != null) Debug.Log("DanceZombies");
+        }
+        
     }
 
     public override void PostBeatAction(int counter, int counterCompass)
     {
-        OnReleaseStep?.Invoke(currentDanceStep);
-        
+        playerDanceStep = DanceStep.None;
+        if (isActive)
+        {
+            OnReleaseStep?.Invoke(currentDanceStep);
+        }
     }
 
-    public void playerInput(DanceStep step)
+    public virtual void OnPlayerInputAction(DanceStep step)
     {
-        
+        if (isActive)
+        {
+            playerDanceStep = step;
+        }
     }
     
 }

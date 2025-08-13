@@ -131,13 +131,14 @@ public class PlayerAnimatorController : MonoBehaviour
         }
         animator.SetBool("isWalking", moving);
     }
-    private void OnDanceBegin(int danceIndex)
+    
+    public void OnDanceBegin(int danceIndex)
     {
         playerMovCtrl.SetSpeed(danceWalkingSpeed);
         isDancing = true;
         DanceStep step = (DanceStep)danceIndex;
-        Debug.Log(step.ToString());
         OnDance?.Invoke(step);
+        //playerMovCtrl.EventDance(step);
     }
     public void OnStandAction()
     {
@@ -150,5 +151,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("DanceEast");
         OnDanceEnd?.Invoke();   
     }
+    
     
 }

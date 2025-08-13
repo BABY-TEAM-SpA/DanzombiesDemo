@@ -28,7 +28,7 @@ public class BeatManager : MonoBehaviour
     private Queue<SongsData> playlist = new Queue<SongsData>();
 
     [Header("Sincronización")]
-    [Range(0f, 1f)] public float margen = 0.25f;
+    [Range(0f, 0.5f)] public float margen = 0.25f;
     public int subdivisiones = 1; // 1 = negras, 2 = corcheas, etc.
     public bool onMargen { get; private set; }
     public float beatDuration { get; private set; }
@@ -111,8 +111,8 @@ public class BeatManager : MonoBehaviour
         canPre = false;
         onMargen = true;
 
-        OnPreBeat?.Invoke(counter, counter%metrica);
-        onPreBeatInspector?.Invoke(counter, counter%metrica);
+        if(counter!=0)OnPreBeat?.Invoke((counter-1), (counter-1)%metrica);
+        if(counter!=0)onPreBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
 
         canBeat = true;
     }
@@ -120,9 +120,9 @@ public class BeatManager : MonoBehaviour
     void Beat()
     {
         canBeat = false;
-
-        OnBeat?.Invoke(counter,counter%metrica);
-        onBeatInspector?.Invoke(counter, counter%metrica);
+        Debug.Log(counter);
+        if(counter!=0)OnBeat?.Invoke((counter-1),(counter-1)%metrica);
+        if(counter!=0)onBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
 
         canPost = true;
     }
@@ -131,8 +131,8 @@ public class BeatManager : MonoBehaviour
     {
         onMargen = false;
 
-        OnPostBeat?.Invoke(counter,counter % metrica);
-        onPostBeatInspector?.Invoke(counter, counter % metrica);
+        if(counter!=0)OnPostBeat?.Invoke((counter-1),(counter-1)% metrica);
+        if(counter!=0)onPostBeatInspector?.Invoke((counter-1), (counter-1) % metrica);
 
         counter += 1;
         canPost = false;
