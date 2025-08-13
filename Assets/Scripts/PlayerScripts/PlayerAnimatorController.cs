@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
+    [SerializeField] public UnityAction<DanceStep> OnDance;
     [SerializeField] public UnityAction OnDanceEnd;
     [SerializeField] private PlayerMovementController playerMovCtrl;
     [SerializeField] private float danceWalkingSpeed;
@@ -38,6 +39,7 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
+            Debug.Log("North");
             animator.SetTrigger("DanceNorth");
         }
 
@@ -52,6 +54,7 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
+            Debug.Log("South");
             animator.SetTrigger("DanceSouth");
         }
         if (context.canceled)
@@ -65,7 +68,7 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            
+            Debug.Log("West");
             animator.SetTrigger("DanceWest");
         }
         if (context.canceled)
@@ -79,6 +82,7 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
+            Debug.Log("East");
             animator.SetTrigger("DanceEast");
         }
         if (context.canceled)
@@ -127,10 +131,13 @@ public class PlayerAnimatorController : MonoBehaviour
         }
         animator.SetBool("isWalking", moving);
     }
-    private void OnDanceBegin()
+    private void OnDanceBegin(int danceIndex)
     {
         playerMovCtrl.SetSpeed(danceWalkingSpeed);
         isDancing = true;
+        DanceStep step = (DanceStep)danceIndex;
+        Debug.Log(step.ToString());
+        OnDance?.Invoke(step);
     }
     public void OnStandAction()
     {
