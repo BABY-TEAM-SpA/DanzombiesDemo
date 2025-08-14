@@ -36,8 +36,5 @@ public class PulseObjectAnimatorController : BeatReciever
     {
         DanceAnimator.SetTrigger("OnBeat");
     }
-    public override void OnStopSongAction()
-    {
-        DanceAnimator.SetTrigger("Stop");
-    }
+   
 }

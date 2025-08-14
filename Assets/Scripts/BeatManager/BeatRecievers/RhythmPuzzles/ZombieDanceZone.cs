@@ -56,24 +56,22 @@ public class ZombieDanceZone : RhythmPuzzle
         {
             int aux = counter;
             if (ShouldRepeat) aux = counter % Colores.Length;
-            zone.color = (player!=null)?ColoresPlayer[aux]:Colores[aux];
+            if(zone!=null) zone.color = (player!=null)?ColoresPlayer[aux]:Colores[aux];
         }
+    }
+
+    public override void PostBeatAction(int counter, int counterCompass)
+    {
+        
+        if (currentDanceStep != DanceStep.None && player != null)
+        {
+            DanceLevelController.Instance?.ModificarVida(currentDanceStep == playerDanceStep);
+        }
+        base.PostBeatAction(counter, counterCompass);
     }
 
     public override void OnPlayerInputAction(DanceStep step)
     {
         base.OnPlayerInputAction(step);
-        
-    }
-
-    public override void PostBeatAction(int counter, int counterCompass)
-    {
-        base.PostBeatAction(counter, counterCompass);
-        if (playerDanceStep == DanceStep.None && player != null)
-        {
-            //hacer daño al player
-            //player.Hurt();
-        }
-        
     }
 }

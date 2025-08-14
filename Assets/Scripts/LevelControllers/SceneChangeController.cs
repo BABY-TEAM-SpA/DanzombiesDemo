@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneChangeController : MonoBehaviour
 {
     public static SceneChangeController Instance { get; private set; }
+    public bool ShouldDestroyGameManager = false;
 
     private void Awake() 
     { 
@@ -23,6 +24,11 @@ public class SceneChangeController : MonoBehaviour
 
     public void LoadScene(string name)
     {
+        if (ShouldDestroyGameManager)
+        {
+            Destroy(BeatManager.Instance.gameObject);
+            Destroy(GameManager.Instance.gameObject);
+        }
         this.LoadScene(name, false);
     }
 

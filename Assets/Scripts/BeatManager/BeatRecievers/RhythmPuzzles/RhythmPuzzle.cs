@@ -40,6 +40,7 @@ public class RhythmPuzzle : BeatReciever
 
     public override void PreBeatAction(int counter, int counterCompass)
     {
+        playerDanceStep = DanceStep.None;
         if (isActive)
         {
             if (useCompass) currentDanceStep = DanceSteps[counterCompass];
@@ -59,18 +60,18 @@ public class RhythmPuzzle : BeatReciever
         if (isActive)
         {
             OnDanceStep?.Invoke(currentDanceStep);
-            if(OnDanceStep != null) Debug.Log("DanceZombies");
+            //if(OnDanceStep != null) Debug.Log("DanceZombies");
         }
         
     }
 
     public override void PostBeatAction(int counter, int counterCompass)
     {
-        playerDanceStep = DanceStep.None;
         if (isActive)
         {
             OnReleaseStep?.Invoke(currentDanceStep);
         }
+        playerDanceStep = DanceStep.None;
     }
 
     public virtual void OnPlayerInputAction(DanceStep step)
