@@ -121,7 +121,7 @@ public class BeatManager : MonoBehaviour
     void Beat()
     {
         canBeat = false;
-        Debug.Log(counter);
+        //Debug.Log(counter);
         if(counter>0)OnBeat?.Invoke((counter-1),(counter-1)%metrica);
         if(counter>0)onBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
 

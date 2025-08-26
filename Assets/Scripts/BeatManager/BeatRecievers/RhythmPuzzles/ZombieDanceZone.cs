@@ -6,13 +6,13 @@ using UnityEngine;
 public class ZombieDanceZone : RhythmPuzzle
 {
     [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
-    [SerializeField] private SpriteRenderer zone;
-    [SerializeField] private Color[] Colores;
-    [SerializeField] private Color[] ColoresPlayer;
-    
-    
-    
-    private void Start()
+
+    [SerializeField] private Color[] defaultColors = new Color[] { Color.gray, Color.white };
+    [SerializeField] private Color[] PlayerInsideColors = new Color[] { Color.magenta, Color.forestGreen };
+    [SerializeField] private Color SuccesColor = Color.yellow;
+    [SerializeField] private Color FailureColor = Color.red;
+
+private void Start()
     {
         foreach (ZombieDanceBrain zombie in zombies)
         {
@@ -48,30 +48,26 @@ public class ZombieDanceZone : RhythmPuzzle
             this.player = null;
         }
     }
-    public override void BeatAction(int counter, int counterCompass)
+    public override void VisualFeedback(int counter, int counterCompass)
     {
-        base.BeatAction(counter, counterCompass);
-        if (useCompass) zone.color = (player!=null)?ColoresPlayer[counterCompass]:Colores[counterCompass];
-        else
+        if (!hasRecieveInput)
         {
-            int aux = counter;
-            if (ShouldRepeat) aux = counter % Colores.Length;
-            if(zone!=null) zone.color = (player!=null)?ColoresPlayer[aux]:Colores[aux];
+            if (useCompass) feedBack.color = (player!=null)?PlayerInsideColors[counterCompass]:defaultColors[counterCompass];
+            else
+            {
+                int aux = counter;
+                if (ShouldRepeat) aux = counter % defaultColors.Length;
+                if(feedBack!=null) feedBack.color = (player!=null)?PlayerInsideColors[aux]:defaultColors[aux];
+            }
         }
     }
-
-    public override void PostBeatAction(int counter, int counterCompass)
+    public override void PlayerDanceReaction(bool IsPlayerDanceCorrect)
     {
-        
-        if (currentDanceStep != DanceStep.None && player != null)
+        DanceLevelController.Instance?.ModificarVida(IsPlayerDanceCorrect);
+        if (feedBack != null)
         {
-            DanceLevelController.Instance?.ModificarVida(currentDanceStep == playerDanceStep);
+            feedBack.color=(IsPlayerDanceCorrect)?SuccesColor:FailureColor;   
         }
-        base.PostBeatAction(counter, counterCompass);
     }
-
-    public override void OnPlayerInputAction(DanceStep step)
-    {
-        base.OnPlayerInputAction(step);
-    }
+    
 }

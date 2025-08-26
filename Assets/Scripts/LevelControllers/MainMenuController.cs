@@ -12,5 +12,13 @@ public class MainMenuController : MonoBehaviour
         animator.SetTrigger("Animate");
     }
 
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
+    }
+
     
 }

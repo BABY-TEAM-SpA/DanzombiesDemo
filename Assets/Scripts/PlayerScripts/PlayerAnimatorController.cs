@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
-    [SerializeField] public UnityAction<DanceStep> OnDance;
-    [SerializeField] public UnityAction OnDanceEnd;
+    
     [SerializeField] private PlayerMovementController playerMovCtrl;
     [SerializeField] private float danceWalkingSpeed;
     [SerializeField] private Animator animator;
@@ -16,7 +15,11 @@ public class PlayerAnimatorController : MonoBehaviour
     private bool moving =false;
     private bool isDancing = false;
     [SerializeField] private bool ShouldEnter= false;
-
+    
+    [Header("Events")]
+    public UnityAction<DanceStep> OnDance;
+    public UnityAction OnDanceEnd;
+    
     private void Start()
     {
         animator.runtimeAnimatorController = animatorOverrideControllers[0];
@@ -39,7 +42,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            Debug.Log("North");
             animator.SetTrigger("DanceNorth");
         }
 
@@ -54,7 +56,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            Debug.Log("South");
             animator.SetTrigger("DanceSouth");
         }
         if (context.canceled)
@@ -68,7 +69,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            Debug.Log("West");
             animator.SetTrigger("DanceWest");
         }
         if (context.canceled)
@@ -82,7 +82,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            Debug.Log("East");
             animator.SetTrigger("DanceEast");
         }
         if (context.canceled)
@@ -151,6 +150,4 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("DanceEast");
         OnDanceEnd?.Invoke();   
     }
-    
-    
 }

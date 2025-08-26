@@ -51,23 +51,27 @@ MonoBehaviour:
   useCompass: 0
   ShouldRepeat: 1
   DanceSteps: 0000000000000000000000000000000000000000000000000000000000000000
-  OnRhythmPuzzleCompleted:
+  OnRhythmPuzzleStartedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRhythmPuzzleCompletedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRhythmPuzzleFailedEvent:
     m_PersistentCalls:
       m_Calls: []
   player: {fileID: 0}
   playerDanceStep: 0
+  feedBack: {fileID: 3975196565072534413}
   zombies: []
-  zone: {fileID: 3975196565072534413}
-  Colores:
-  - {r: 1, g: 1, b: 1, a: 0.09803922}
-  - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.09803922}
-  - {r: 1, g: 1, b: 1, a: 0.09803922}
-  - {r: 0.48235297, g: 0.48235297, b: 0.48235297, a: 0.09803922}
-  ColoresPlayer:
-  - {r: 0.015686275, g: 1, b: 0.25882354, a: 0.09803922}
-  - {r: 0.93725497, g: 0.015686275, b: 1, a: 0.09803922}
-  - {r: 0.015686275, g: 1, b: 0.25882354, a: 0.09803922}
-  - {r: 0.93725497, g: 0.015686275, b: 1, a: 0.09803922}
+  defaultColors:
+  - {r: 0.5, g: 0.5, b: 0.5, a: 0.11764706}
+  - {r: 1, g: 1, b: 1, a: 0.11764706}
+  PlayerInsideColors:
+  - {r: 0, g: 1, b: 0, a: 0.11764706}
+  - {r: 0, g: 0, b: 1, a: 0.11764706}
+  SuccesColor: {r: 1, g: 0.81960785, b: 0, a: 0.5019608}
+  FailureColor: {r: 1, g: 0, b: 0, a: 0.5019608}
 --- !u!61 &5206970857167012124
 BoxCollider2D:
   m_ObjectHideFlags: 0

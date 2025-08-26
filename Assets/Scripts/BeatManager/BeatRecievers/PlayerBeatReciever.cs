@@ -8,7 +8,7 @@ public class PlayerBeatReciever : BeatReciever
 
     public void Start()
     {
-        SetBeatDuration(BeatManager.Instance.beatDuration);
+        if(BeatManager.Instance!=null) SetBeatDuration(BeatManager.Instance.beatDuration);
     }
 
     private void SetBeatDuration(float duration)
