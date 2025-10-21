@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4061564846686539954}
   - component: {fileID: 3831767191630153557}
   m_Layer: 0
-  m_Name: AudioSource (1)
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,8 +139,9 @@ GameObject:
   m_Component:
   - component: {fileID: 213270410435810108}
   - component: {fileID: 6818305367430288827}
+  - component: {fileID: 2874951390886501778}
   m_Layer: 0
-  m_Name: BeatManager
+  m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +177,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 6510255127178991860}
-  nextSongMustPlay: 0
+  margen: 0.25
+  subdivisiones: 1
+  onPreBeatInspector:
+    m_PersistentCalls:
+      m_Calls: []
+  onBeatInspector:
+    m_PersistentCalls:
+      m_Calls: []
+  onPostBeatInspector:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2874951390886501778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8874700405571119761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a1419a78f4b164ebf2ca51c7f007f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
 --- !u!1 &8974240636003315153
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +211,7 @@ GameObject:
   - component: {fileID: 3460066704715568227}
   - component: {fileID: 6510255127178991860}
   m_Layer: 0
-  m_Name: AudioSource
+  m_Name: BeatAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
