@@ -1,26 +1,69 @@
 using UnityEngine;
 
+[ExecuteAlways] // Permite ejecutarse también en Edit Mode
+[RequireComponent(typeof(Animator))]
 public class PulseObjectAnimatorController : BeatReciever
 {
-    [SerializeField] Animator DanceAnimator;
+    [Header("Animator Settings")]
+    [SerializeField] private Animator danceAnimator;
+    [SerializeField] private RuntimeAnimatorController controllerToAssign;
+
     private float currentBeatOnPlayer = 0f;
 
-    public void Start()
+    private void OnValidate()
     {
-        SetBeatDuration(BeatManager.Instance.beatDuration);
+        // Se ejecuta automáticamente cuando cambias valores en el Inspector
+        EnsureAnimator();
+    }
+
+    private void Awake()
+    {
+        EnsureAnimator();
+    }
+
+    private void EnsureAnimator()
+    {
+        if (danceAnimator == null)
+        {
+            danceAnimator = GetComponent<Animator>();
+            if (danceAnimator == null)
+            {
+                danceAnimator = gameObject.AddComponent<Animator>();
+                Debug.Log("[PulseObjectAnimatorController] Animator agregado automáticamente.");
+            }
+        }
+
+        if (controllerToAssign != null && danceAnimator.runtimeAnimatorController != controllerToAssign)
+        {
+            danceAnimator.runtimeAnimatorController = controllerToAssign;
+            Debug.Log("[PulseObjectAnimatorController] AnimatorController asignado automáticamente.");
+        }
+    }
+
+    private void Start()
+    {
+        if (!Application.isPlaying) return;
+
+        SetBeatDuration(.5f);
+        if (BeatManager.Instance != null)
+        {
+            SetBeatDuration(BeatManager.Instance.beatDuration);
+        }
     }
 
     private void SetBeatDuration(float duration)
     {
         currentBeatOnPlayer = duration;
+
         base.OnPlaySongAction(currentBeatOnPlayer);
-        if (DanceAnimator != null)
+
+        if (danceAnimator != null && currentBeatOnPlayer > 0f)
         {
-            Debug.Log("Playing Dance Animator");
-            DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
-            DanceAnimator.SetTrigger("OnBeat");
+            danceAnimator.SetFloat("Beat", 1f / currentBeatOnPlayer);
+            danceAnimator.SetTrigger("OnBeat");
         }
     }
+
     public override void OnPlaySongAction(float beatDuration)
     {
         SetBeatDuration(beatDuration);
@@ -29,12 +72,11 @@ public class PulseObjectAnimatorController : BeatReciever
     public override void OnPauseSongAction()
     {
         SetBeatDuration(0f);
-        //DanceAnimator.SetTrigger("Stop");
     }
 
     public override void BeatAction(int counter, int counterCompass)
     {
-        DanceAnimator.SetTrigger("OnBeat");
+        if (danceAnimator != null)
+            danceAnimator.SetTrigger("OnBeat");
     }
-   
 }
