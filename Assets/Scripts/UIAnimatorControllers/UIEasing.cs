@@ -13,9 +13,7 @@ public enum UiEasingType
     EaseInQuart,
     EaseOutQuart,
     EaseInOutQuart,
-    EaseInQuint,
-    EaseOutQuint,
-    EaseInOutQuint
+    EaseBounce
 }
 
 public static class UiEasing
@@ -35,9 +33,21 @@ public static class UiEasing
             case UiEasingType.EaseInQuart: return t * t * t * t;
             case UiEasingType.EaseOutQuart: return 1f - (--t) * t * t * t;
             case UiEasingType.EaseInOutQuart: return t < 0.5f ? 8f * t * t * t * t : 1f - 8f * (--t) * t * t * t;
-            case UiEasingType.EaseInQuint: return t * t * t * t * t;
-            case UiEasingType.EaseOutQuint: return 1f + (--t) * t * t * t * t;
-            case UiEasingType.EaseInOutQuint: return t < 0.5f ? 16f * t * t * t * t * t : 1f + 16f * (--t) * t * t * t * t;
+            case UiEasingType.EaseBounce:{
+                const float n1 = 7.5625f;
+                const float d1 = 2.75f;
+
+                if (t < 1f / d1) {
+                    return n1 * t * t;
+                } else if (t < 2f / d1) {
+                    return n1 * (t -= 1.5f / d1) * t + 0.75f;
+                } else if (t < 2.5f / d1) {
+                    return n1 * (t -= 2.25f / d1) * t + 0.9375f;
+                } else {
+                    return n1 * (t -= 2.625f / d1) * t + 0.984375f;
+                }
+                
+            }
         }
     }
 }

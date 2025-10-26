@@ -136,10 +136,10 @@ public class UiAnimatorControllerEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("▶ Play Sequence", GUILayout.Height(25)))
-            controller.PlayAll();
+            controller.PlaySequence();
 
         if (GUILayout.Button("⏹ Stop", GUILayout.Height(25)))
-            controller.StopAll();
+            controller.StopSequence();
         EditorGUILayout.EndHorizontal();
 
         GUI.enabled = true;

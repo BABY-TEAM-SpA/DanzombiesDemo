@@ -16,22 +16,22 @@ public class UiAnimatorController : MonoBehaviour
     {
         if(target == null) target = GetComponent<RectTransform>();
         if (playOnEnable)
-            PlayAll();
+            PlaySequence();
     }
 
     private void OnDisable()
     {
-        StopAll();
+        StopSequence();
     }
 
     private void OnDestroy()
     {
-        StopAll();
+        StopSequence();
     }
 
-    public void PlayAll()
+    public void PlaySequence()
     {
-        StopAll();
+        StopSequence();
         if (target == null) target = GetComponent<RectTransform>();
         runningCoroutine = StartCoroutine(PlayRoutine());
     }
@@ -43,7 +43,7 @@ public class UiAnimatorController : MonoBehaviour
         runningCoroutine = null;
     }
 
-    public void StopAll()
+    public void StopSequence()
     {
         if (runningCoroutine != null)
         {
