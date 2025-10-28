@@ -29,7 +29,7 @@ public class UiAnimationSequence
     [SerializeField] public UnityEvent onSequenceStart;
     
 
-    public IEnumerator Play(MonoBehaviour host, RectTransform target)
+    public IEnumerator Play(MonoBehaviour host)
     {
 
         int count = loop ? Mathf.Max(1, loopCount) : 1;
@@ -51,7 +51,7 @@ public class UiAnimationSequence
 
                         foreach (var anim in step.animations)
                         {
-                            host.StartCoroutine(PlayAndNotify(host, target, anim, step.duration,() => remaining--));
+                            host.StartCoroutine(PlayAndNotify(host, anim, step.duration,() => remaining--));
                         }
 
                         // Espera hasta que todas terminen
@@ -64,9 +64,9 @@ public class UiAnimationSequence
         
     }
 
-    private IEnumerator PlayAndNotify(MonoBehaviour host, RectTransform target, UiAnimation anim, float duration,Action onComplete)
+    private IEnumerator PlayAndNotify(MonoBehaviour host, UiAnimation anim, float duration,Action onComplete)
     {
-        yield return anim.Play(host, target, duration);
+        yield return anim.Play(host, duration);
         onComplete?.Invoke();
     }
 }

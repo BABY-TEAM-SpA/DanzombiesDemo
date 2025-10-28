@@ -13,7 +13,8 @@ public enum UiEasingType
     EaseInQuart,
     EaseOutQuart,
     EaseInOutQuart,
-    EaseBounce
+    EaseBounce,
+    EaseElastic,
 }
 
 public static class UiEasing
@@ -46,6 +47,18 @@ public static class UiEasing
                 } else {
                     return n1 * (t -= 2.625f / d1) * t + 0.984375f;
                 }
+                
+            }
+            case UiEasingType.EaseElastic:
+            {
+                const float c4 = (2f * Mathf.PI) / 3f;
+
+                if (t == 0f)
+                    return 0f;
+                if (t == 1f)
+                    return 1f;
+
+                return Mathf.Pow(2f, -10f * t) * Mathf.Sin((t * 10f - 0.75f) * c4) + 1f;
                 
             }
         }

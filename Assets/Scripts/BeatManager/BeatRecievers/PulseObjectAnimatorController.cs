@@ -12,7 +12,6 @@ public class PulseObjectAnimatorController : BeatReciever
 
     private void OnValidate()
     {
-        // Se ejecuta automáticamente cuando cambias valores en el Inspector
         EnsureAnimator();
     }
 
@@ -29,14 +28,12 @@ public class PulseObjectAnimatorController : BeatReciever
             if (danceAnimator == null)
             {
                 danceAnimator = gameObject.AddComponent<Animator>();
-                Debug.Log("[PulseObjectAnimatorController] Animator agregado automáticamente.");
             }
         }
 
         if (controllerToAssign != null && danceAnimator.runtimeAnimatorController != controllerToAssign)
         {
             danceAnimator.runtimeAnimatorController = controllerToAssign;
-            Debug.Log("[PulseObjectAnimatorController] AnimatorController asignado automáticamente.");
         }
     }
 

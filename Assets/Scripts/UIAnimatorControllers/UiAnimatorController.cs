@@ -39,7 +39,7 @@ public class UiAnimatorController : MonoBehaviour
     private IEnumerator PlayRoutine()
     {
         if (sequence != null)
-            yield return sequence.Play(this, target);
+            yield return sequence.Play(this);
         runningCoroutine = null;
     }
 
