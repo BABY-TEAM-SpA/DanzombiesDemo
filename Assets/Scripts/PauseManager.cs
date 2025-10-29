@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class PauseManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PauseManager : MonoBehaviour
     private InputActionMap gameplayMap;
     private InputActionMap uiMap;
     private bool isPaused = false;
+    public bool canPause = false;
+    
+    public UnityEvent<bool> PauseEvent;
 
     public static PauseManager Instance { get; private set; }
 
@@ -47,13 +51,14 @@ public class PauseManager : MonoBehaviour
         pauseController.sequence.onSequenceComplete.RemoveAllListeners();
         unpauseController.sequence.onSequenceStart.RemoveAllListeners();
         unpauseController.sequence.onSequenceComplete.RemoveAllListeners();
+        PauseEvent.RemoveAllListeners();
         gameplayMap.FindAction("PauseAction", true).started -= OnPausePressed;
         uiMap.FindAction("PauseAction", true).started -= OnPausePressed;
     }
 
     private void OnPausePressed(InputAction.CallbackContext context)
     {
-        if (!isPaused)
+        if (!isPaused&& canPause)
             Pause();
         else
             Unpause();
@@ -61,19 +66,22 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
+        
+        Debug.Log("Pause");
         unpauseController.StopSequence();
         pauseController.PlaySequence();
     }
 
     public void Unpause()
     {
+        Debug.Log("Unpause");
         pauseController.StopSequence();
         unpauseController.PlaySequence();
     }
 
     private void OnPauseStart()
     {
-        
+        PauseEvent.Invoke(!isPaused);
         Time.timeScale = 0f;
         gameplayMap.Disable();
     }
@@ -83,17 +91,17 @@ public class PauseManager : MonoBehaviour
         isPaused = true;
         uiMap.Enable();
     }
-    private void OnResumeStart()
-    {
-        
-        uiMap.Disable();
-        
-    }
 
     private void OnResumeEnd()
     {
+        PauseEvent.Invoke(!isPaused);
+        gameplayMap.Enable();
         isPaused = false;
         Time.timeScale = 1f;
-        gameplayMap.Enable();
+    }
+
+    private void OnResumeStart()
+    {
+        uiMap.Disable();
     }
 }
