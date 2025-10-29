@@ -18,9 +18,7 @@ public class UiAnimation
 
     [Header("Timing")]
     public UiEasingType easing = UiEasingType.Linear;
-
     
-
     private Coroutine runningCoroutine;
 
     public IEnumerator Play(MonoBehaviour host,float duration)
@@ -37,7 +35,7 @@ public class UiAnimation
                     host, duration, t =>
                     {
                         target.anchoredPosition = Vector3.LerpUnclamped(from, from+to, t);
-                    }, easing,Unscaled));
+                    }, easing));
                 break;
             case UiAnimType.MoveTo:
                 from= (Vector3)target.anchoredPosition;
@@ -45,7 +43,7 @@ public class UiAnimation
                     host, duration, t =>
                     {
                         target.anchoredPosition = Vector3.LerpUnclamped(from, to, t);
-                    }, easing,Unscaled));
+                    }, easing));
                 break;
             case UiAnimType.Rotate:
                 Quaternion fromRotation = target.rotation;
@@ -53,7 +51,7 @@ public class UiAnimation
                     host, duration, t =>
                     {
                         target.rotation = Quaternion.LerpUnclamped(fromRotation, Quaternion.Euler(to), t);
-                    },easing,Unscaled));
+                    },easing));
                 break;
             case UiAnimType.Scale:
                 from = (Vector3)target.localScale;
@@ -61,28 +59,28 @@ public class UiAnimation
                     host, duration, t =>
                     {
                         target.localScale = Vector3.LerpUnclamped(from, to, t);
-                    }, easing,Unscaled));
+                    }, easing));
                 break;
 
             case UiAnimType.Fade:
-                var graphic = target.GetComponent<Graphic>();
+                var graphic = target.GetComponent<CanvasGroup>();
                 if (graphic != null)
                 {
-                    float startAlpha = graphic.color.a;
+                    float startAlpha = graphic.alpha;
                     float endAlpha = to.x;
-                    Color initialColor = graphic.color;
+                    float initialColor = graphic.alpha;
 
                     runningCoroutine = host.StartCoroutine(UiTween.Value(
                         host, duration, t =>
                         {
                             float alpha = Mathf.LerpUnclamped(startAlpha, endAlpha, t);
-                            graphic.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
-                        }, easing,Unscaled));
+                            graphic.alpha = alpha;
+                        }, easing));
                 }
                 break;
         }
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSecondsRealtime(duration);
     }
 
     public void Stop(MonoBehaviour host)

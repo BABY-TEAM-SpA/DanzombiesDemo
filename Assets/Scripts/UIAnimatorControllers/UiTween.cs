@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class UiTween
 {
-    public static IEnumerator Value(MonoBehaviour host, float duration, Action<float> onUpdate, UiEasingType easing, bool ignoreTimeScale = false)
+    public static IEnumerator Value(MonoBehaviour host, float duration, Action<float> onUpdate, UiEasingType easing, bool ignoreTimeScale = true)
     {
         if (host == null || onUpdate == null) yield break;
 
@@ -13,8 +13,10 @@ public static class UiTween
         {
             if (host == null) yield break;
 
-            if (ignoreTimeScale) time += Time.unscaledDeltaTime;
-            else time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
+
+            if (!ignoreTimeScale) time += Time.deltaTime;
+
             float t = Mathf.Clamp01(time / duration);
             onUpdate(UiEasing.Evaluate(easing, t));
             yield return null;
