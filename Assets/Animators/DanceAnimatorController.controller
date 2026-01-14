@@ -130,14 +130,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceSouth
+    m_ConditionEvent: DanceStepS
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4083975701402847581}
@@ -186,14 +186,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepS
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceSouth
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -19564694643228423}
@@ -266,14 +266,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceEast
+    m_ConditionEvent: DanceStepE
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 625240649847341835}
@@ -370,14 +370,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepW
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceWest
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8382040565316946452}
@@ -521,14 +521,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceWest
+    m_ConditionEvent: DanceStepW
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3284207560155813823}
@@ -663,41 +663,11 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: LeftTrigger
+  - m_Name: RightLook
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: RightTrigger
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceNorth
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceSouth
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceWest
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceEast
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: isWalking
     m_Type: 4
@@ -713,6 +683,36 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: Enter
     m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Dance
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepN
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepW
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepE
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepS
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -738,14 +738,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepE
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceEast
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8869607890104400618}
@@ -865,14 +865,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepN
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceNorth
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -297036258477468017}
@@ -896,14 +896,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: RightLook
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceNorth
+    m_ConditionEvent: DanceStepN
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7076144960638277154}
@@ -980,7 +980,7 @@ AnimatorStateTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -888309949473646813}
   m_Solo: 0
-  m_Mute: 0
+  m_Mute: 1
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0

@@ -42,12 +42,14 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            animator.SetTrigger("DanceNorth");
+            animator.SetBool("DanceStepN", true);
+            //animator.SetTrigger("Dance");
         }
 
         if (context.canceled)
         {
-            animator.ResetTrigger("DanceNorth");
+            animator.SetBool("DanceStepN", false);
+            //animator.ResetTrigger("Dance");
         }
     }
 
@@ -56,11 +58,14 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            animator.SetTrigger("DanceSouth");
+            animator.SetBool("DanceStepS", true);
+            //animator.SetTrigger("Dance");
         }
+
         if (context.canceled)
         {
-            animator.ResetTrigger("DanceSouth");
+            animator.SetBool("DanceStepS", false);
+            //animator.ResetTrigger("Dance");
         }
     }
 
@@ -69,11 +74,14 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            animator.SetTrigger("DanceWest");
+            animator.SetBool("DanceStepW", true);
+            //animator.SetTrigger("Dance");
         }
+
         if (context.canceled)
         {
-            animator.ResetTrigger("DanceWest");
+            animator.SetBool("DanceStepW", false);
+            //animator.ResetTrigger("Dance");
         }
     }
 
@@ -82,37 +90,51 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.performed)
         {
-            animator.SetTrigger("DanceEast");
+            animator.SetBool("DanceStepE", true);
+            //animator.SetTrigger("Dance");
         }
+
         if (context.canceled)
         {
-            animator.ResetTrigger("DanceEast");
+            animator.SetBool("DanceStepE", false);
+            //animator.ResetTrigger("Dance");
         }
     }
 
     public void OnLeftUPButtonPressed(InputAction.CallbackContext context)
     {
+        animator.ResetTrigger("Idle");
+        if (context.started)
+        {
+            animator.SetBool("RightLook", false);
+        }
         if (context.performed)
         {
-            animator.SetBool("LeftTrigger", true);
+            animator.SetTrigger("Dance");
         }
-
         if (context.canceled)
         {
-            animator.SetBool("LeftTrigger", false); 
+            
+            animator.ResetTrigger("Dance");
         }
     }
 
     public void OnRightUPButtonPressed(InputAction.CallbackContext context)
     {
+        animator.ResetTrigger("Idle");
+        if (context.started)
+        {
+            animator.SetBool("RightLook", true);
+        }
         if (context.performed)
         {
-            animator.SetBool("RightTrigger", true);
+            animator.SetTrigger("Dance");
         }
 
         if (context.canceled)
         {
-           animator.SetBool("RightTrigger", false); 
+           
+           animator.ResetTrigger("Dance");
         }
     }
     
@@ -144,10 +166,7 @@ public class PlayerAnimatorController : MonoBehaviour
         isDancing = false;
         playerMovCtrl.SetSpeed();
         animator.ResetTrigger("Idle");
-        animator.ResetTrigger("DanceNorth");
-        animator.ResetTrigger("DanceSouth");
-        animator.ResetTrigger("DanceWest");
-        animator.ResetTrigger("DanceEast");
+        animator.ResetTrigger("Dance");
         OnDanceEnd?.Invoke();   
     }
 }

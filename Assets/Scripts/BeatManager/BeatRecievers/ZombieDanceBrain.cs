@@ -25,8 +25,8 @@ public class ZombieDanceBrain : MonoBehaviour
         if (step != DanceStep.None)
         {
             string view = step.ToString()[0].ToString();
-            if(view == "R") danceAnimator.SetBool("RightTrigger", true);
-            else danceAnimator.SetBool("LeftTrigger", true);
+            if(view == "R") danceAnimator.SetBool("RightLook", true);
+            else danceAnimator.SetBool("RightLook", false);
         }
     }
     private void OnDanceStepAction(DanceStep step)
@@ -34,17 +34,18 @@ public class ZombieDanceBrain : MonoBehaviour
         if (step != DanceStep.None)
         {
             string orientation = step.ToString().Remove(0,2);
-            danceAnimator.SetTrigger("Dance"+orientation);
+            danceAnimator.SetBool("DanceStep"+orientation[0],true);
+            danceAnimator.SetTrigger("Dance");
         }
     }
     private void OnReleaseStepAction(DanceStep step)
     {
-        danceAnimator.SetBool("RightTrigger", false);
-        danceAnimator.SetBool("LeftTrigger", false);
+        danceAnimator.SetBool("RightLook", false);
         if (step != DanceStep.None)
         {
             string orientation = step.ToString().Remove(0,2);
-            danceAnimator.ResetTrigger("Dance"+orientation);
+            danceAnimator.SetBool("DanceStep" + orientation[0], false);
+            danceAnimator.ResetTrigger("Dance");
         }
     }
 
