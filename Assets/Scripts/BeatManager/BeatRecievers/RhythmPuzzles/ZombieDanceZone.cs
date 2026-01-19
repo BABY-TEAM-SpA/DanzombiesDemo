@@ -8,11 +8,10 @@ public class ZombieDanceZone : RhythmPuzzle
     [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
 
     [SerializeField] private Color[] defaultColors = new Color[] { Color.gray, Color.white };
+    
     [SerializeField] private Color[] PlayerInsideColors = new Color[] { Color.magenta, Color.forestGreen };
-    [SerializeField] private Color SuccesColor = Color.yellow;
-    [SerializeField] private Color FailureColor = Color.red;
 
-private void Start()
+    private void Start()
     {
         foreach (ZombieDanceBrain zombie in zombies)
         {
@@ -31,43 +30,30 @@ private void Start()
     private void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log(other.name);
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
         {
-            Debug.Log("Player entered");
-            this.player = other.GetComponentInChildren<PlayerAnimatorController>();
-            //suscribirse a que el player entregue un input
-            player.OnDance += OnPlayerInputAction;
+            PlayerEnter(player);
         }
     }
-
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
         {
-            player.OnDance -= OnPlayerInputAction;
-            this.player = null;
+            player.RemoveTargetPuzzle(this);
+            playersInside.Remove(player);
         }
     }
     public override void VisualFeedback(int counter, int counterCompass)
     {
-        if (!hasRecieveInput)
-        {
-            if (useCompass) feedBack.color = (player!=null)?PlayerInsideColors[counterCompass]:defaultColors[counterCompass];
-            else
-            {
-                int aux = counter;
-                if (ShouldRepeat) aux = counter % defaultColors.Length;
-                if(feedBack!=null) feedBack.color = (player!=null)?PlayerInsideColors[aux]:defaultColors[aux];
-            }
-        }
+        int aux = counter;
+        if (ShouldRepeat) aux = counter % defaultColors.Length;
+        if(feedBack!=null) feedBack.color = (playersInside.Count>0)?PlayerInsideColors[aux]:defaultColors[aux];
+        // Esto va a cambiar cuando usemos shader
     }
-    public override void PlayerDanceReaction(bool IsPlayerDanceCorrect)
+    
+    public override void OnPlayerInputAction(DanceStep step)
     {
-        DanceLevelController.Instance?.ModificarVida(IsPlayerDanceCorrect);
-        if (feedBack != null)
-        {
-            feedBack.color=(IsPlayerDanceCorrect)?SuccesColor:FailureColor;   
-        }
+        
     }
     
 }

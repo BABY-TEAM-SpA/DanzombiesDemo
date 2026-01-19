@@ -16,7 +16,6 @@ public class PulseObjectAnimatorController : BeatReciever
         base.OnPlaySongAction(currentBeatOnPlayer);
         if (DanceAnimator != null)
         {
-            Debug.Log("Playing Dance Animator");
             DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
             DanceAnimator.SetTrigger("OnBeat");
         }

@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2425359846088772492}
+  - component: {fileID: 5214771201940626125}
   - component: {fileID: 1944987239380434349}
+  - component: {fileID: 3279488030120961210}
   - component: {fileID: 3630670231084340477}
   - component: {fileID: 4146240392959961186}
-  - component: {fileID: 5214771201940626125}
-  - component: {fileID: 3279488030120961210}
-  - component: {fileID: 4269117531293614065}
   m_Layer: 0
   m_Name: NPCController
   m_TagString: Untagged
@@ -38,6 +37,33 @@ Transform:
   - {fileID: 4800180245375766510}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &5214771201940626125
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289113837907152225}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!70 &1944987239380434349
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -75,61 +101,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.22}
   m_Size: {x: 4.91, y: 2.29}
   m_Direction: 1
---- !u!114 &3630670231084340477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4289113837907152225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CanMove: 1
-  isWalking: 0
-  moveSpeed: 5
---- !u!114 &4146240392959961186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4289113837907152225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DanceAnimator: {fileID: 6072593270596461221}
---- !u!50 &5214771201940626125
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4289113837907152225}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!114 &3279488030120961210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,9 +114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovCtrl: {fileID: 3630670231084340477}
-  playerAnimatorController: {fileID: 4269117531293614065}
-  danceAnimator: {fileID: 6072593270596461221}
---- !u!114 &4269117531293614065
+  playerAnimCtrl: {fileID: 3778446384912519008}
+--- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,16 +124,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 4289113837907152225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovCtrl: {fileID: 3630670231084340477}
-  danceWalkingSpeed: 5
-  animator: {fileID: 6072593270596461221}
-  renderer: {fileID: 6673237200574166684}
-  animatorOverrideControllers:
-  - {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
-  ShouldEnter: 0
+  _danceBrain: {fileID: 3279488030120961210}
+  RightLooking: 0
+  AllowInput: 0
+  speed: 15
+  acceleration: 0
+  CanMove: 1
+--- !u!114 &4146240392959961186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289113837907152225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DanceAnimator: {fileID: 6072593270596461221}
 --- !u!1 &4969418884321069956
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +159,7 @@ GameObject:
   - component: {fileID: 379218205658937483}
   - component: {fileID: 6072593270596461221}
   - component: {fileID: 287483953286599970}
+  - component: {fileID: 3778446384912519008}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -219,6 +202,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -240,6 +225,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1366706313
   m_SortingLayer: 2
   m_SortingOrder: 0
@@ -302,4 +288,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381be946daf32734093a04c01d3afc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 4269117531293614065}
+  playerAnimator: {fileID: 3778446384912519008}
+--- !u!114 &3778446384912519008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969418884321069956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _danceBrain: {fileID: 3279488030120961210}
+  animator: {fileID: 6072593270596461221}
+  renderer: {fileID: 6673237200574166684}
+  animatorOverrideControllers:
+  - {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
+  - {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}

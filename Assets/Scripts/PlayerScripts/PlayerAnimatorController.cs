@@ -6,49 +6,43 @@ using UnityEngine.InputSystem;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
-    
-    [SerializeField] private PlayerMovementController playerMovCtrl;
-    [SerializeField] private float danceWalkingSpeed;
-    [SerializeField] private Animator animator;
+    [SerializeField] private DanceBrain _danceBrain;
+    [SerializeField] public Animator animator;
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private AnimatorOverrideController[] animatorOverrideControllers;
-    private bool moving =false;
-    private bool isDancing = false;
-    [SerializeField] private bool ShouldEnter= false;
-    
-    [Header("Events")]
-    public UnityAction<DanceStep> OnDance;
-    public UnityAction OnDanceEnd;
-    
+
     private void Start()
     {
         animator.runtimeAnimatorController = animatorOverrideControllers[0];
-        if(ShouldEnter)animator.SetTrigger("Enter");
+        SetBeatDuration(BeatManager.Instance.beatDuration);
     }
 
-    void Update()
+    private void SetBeatDuration(float duration)
     {
-        moving = false;
-        if (playerMovCtrl != null)
+        if (animator != null)
         {
-            moving = playerMovCtrl.isWalking;
-            if(renderer!=null)renderer.transform.localRotation = Quaternion.Euler(0,(playerMovCtrl.velocity.x<0 &&!isDancing)? 180f : 0f,0f); 
+            animator.SetFloat("Beat",(1f/duration));
         }
-        OnMoving(moving);
     }
     
     public void OnNorthButtonPressed(InputAction.CallbackContext context)
     {
         animator.ResetTrigger("Idle");
+        if (context.started)
+        {
+            animator.SetBool("DanceStepS",false);
+            animator.SetBool("DanceStepW",false);
+            animator.SetBool("DanceStepE",false);
+            animator.SetBool("DanceStepN",true);
+        }
         if (context.performed)
         {
-            animator.SetBool("DanceStepN", true);
-            //animator.SetTrigger("Dance");
+            animator.SetTrigger("Dance");
         }
 
         if (context.canceled)
         {
-            animator.SetBool("DanceStepN", false);
+            animator.SetBool("DanceStepN",false);
             //animator.ResetTrigger("Dance");
         }
     }
@@ -56,15 +50,21 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OnSouthButtonPressed(InputAction.CallbackContext context)
     {
         animator.ResetTrigger("Idle");
+        if (context.started)
+        {
+            animator.SetBool("DanceStepN",false);
+            animator.SetBool("DanceStepW",false);
+            animator.SetBool("DanceStepE",false);
+            animator.SetBool("DanceStepS",true);
+        }
         if (context.performed)
         {
-            animator.SetBool("DanceStepS", true);
-            //animator.SetTrigger("Dance");
+            animator.SetTrigger("Dance");
         }
 
         if (context.canceled)
         {
-            animator.SetBool("DanceStepS", false);
+            animator.SetBool("DanceStepS",false);
             //animator.ResetTrigger("Dance");
         }
     }
@@ -72,15 +72,21 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OnWestButtonPressed(InputAction.CallbackContext context)
     {
         animator.ResetTrigger("Idle");
+        if (context.started)
+        {
+            animator.SetBool("DanceStepN",false);
+            animator.SetBool("DanceStepS",false);
+            animator.SetBool("DanceStepE",false);
+            animator.SetBool("DanceStepW",true);
+        }
         if (context.performed)
         {
-            animator.SetBool("DanceStepW", true);
-            //animator.SetTrigger("Dance");
+            animator.SetTrigger("Dance");
         }
 
         if (context.canceled)
         {
-            animator.SetBool("DanceStepW", false);
+            animator.SetBool("DanceStepW",false);
             //animator.ResetTrigger("Dance");
         }
     }
@@ -88,15 +94,22 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OnEastButtonPressed(InputAction.CallbackContext context)
     {
         animator.ResetTrigger("Idle");
+
+        if (context.started)
+        {
+            animator.SetBool("DanceStepN",false);
+            animator.SetBool("DanceStepS",false);
+            animator.SetBool("DanceStepW",false);
+            animator.SetBool("DanceStepE",true);
+        }
         if (context.performed)
         {
-            animator.SetBool("DanceStepE", true);
-            //animator.SetTrigger("Dance");
+            animator.SetTrigger("Dance");
         }
 
         if (context.canceled)
         {
-            animator.SetBool("DanceStepE", false);
+            animator.SetBool("DanceStepE",false );
             //animator.ResetTrigger("Dance");
         }
     }
@@ -106,7 +119,8 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.started)
         {
-            animator.SetBool("RightLook", false);
+            animator.SetBool("RightDanceDir",false);
+            animator.SetBool("LeftDanceDir",true);
         }
         if (context.performed)
         {
@@ -114,8 +128,7 @@ public class PlayerAnimatorController : MonoBehaviour
         }
         if (context.canceled)
         {
-            
-            animator.ResetTrigger("Dance");
+            animator.SetBool("LeftDanceDir",false );
         }
     }
 
@@ -124,7 +137,8 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Idle");
         if (context.started)
         {
-            animator.SetBool("RightLook", true);
+            animator.SetBool("LeftDanceDir",false);
+            animator.SetBool("RightDanceDir",true);
         }
         if (context.performed)
         {
@@ -133,8 +147,8 @@ public class PlayerAnimatorController : MonoBehaviour
 
         if (context.canceled)
         {
-           
-           animator.ResetTrigger("Dance");
+            animator.SetBool("RightDanceDir",false);
+            
         }
     }
     
@@ -144,29 +158,32 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetTrigger("Idle");
         
     }
-    private void OnMoving(bool moving)
+    public void OnMoving(float moving)
     {
-        if (moving)
+        if (moving!=0f)
         {
             animator.ResetTrigger("Idle");
         }
-        animator.SetBool("isWalking", moving);
+        animator.SetBool("Walking", moving>0);
     }
     
     public void OnDanceBegin(int danceIndex)
     {
-        playerMovCtrl.SetSpeed(danceWalkingSpeed);
-        isDancing = true;
+        _danceBrain?.EnableMovement(false);
         DanceStep step = (DanceStep)danceIndex;
-        OnDance?.Invoke(step);
-        //playerMovCtrl.EventDance(step);
+        _danceBrain.OnDance(step);
+
+        animator.ResetTrigger("Dance");
     }
     public void OnStandAction()
     {
-        isDancing = false;
-        playerMovCtrl.SetSpeed();
+        _danceBrain.EnableMovement(true);
         animator.ResetTrigger("Idle");
         animator.ResetTrigger("Dance");
-        OnDanceEnd?.Invoke();   
+    }
+
+    public void SetAnimatorOverrideDirection(bool isRight)
+    {
+        animator.runtimeAnimatorController = animatorOverrideControllers[isRight?0:1];
     }
 }
