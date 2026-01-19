@@ -1220,17 +1220,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &485681796 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 69007850537643478, guid: 4fd5f8f043a29a64d84430b398225870, type: 3}
-  m_PrefabInstance: {fileID: 384892941}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26a73959ab0f9348bdc8fb8ae04dcc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &486823635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3164,7 +3153,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -3361,7 +3350,7 @@ GameObject:
   - component: {fileID: 1581355764}
   - component: {fileID: 1581355766}
   m_Layer: 0
-  m_Name: LevelController
+  m_Name: LevelControllers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3413,29 +3402,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98168e38335c05c49b31eb5d2cd1c257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NivelDeSeguridad: 0.6
-  Alza: 0.1
   Barras:
   - {fileID: 743831890}
   - {fileID: 1111989508}
   SeguridadNormal: {r: 0.08235294, g: 0.91372555, b: 0.6745098, a: 1}
   SeguridadInsecure: {r: 0.9333334, g: 0.82745105, b: 0.2784314, a: 1}
   SeguridadFlow: {r: 0.9056604, g: 0.15806337, b: 0.8711287, a: 1}
-  OnLifeEnd:
+  OnPlayerDies:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 485681796}
-        m_TargetAssemblyTypeName: SceneChangeController, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: RetryScene
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &1619356313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3773,18 +3748,6 @@ PrefabInstance:
     - target: {fileID: 542709926716473569, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_Name
       value: GregPlayerController
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968905282911785478, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
-      propertyPath: speed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968905282911785478, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
-      propertyPath: RightLooking
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968905282911785478, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
-      propertyPath: acceleration
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8897676056707518989, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_LocalPosition.x
