@@ -50,10 +50,32 @@ public class ZombieDanceZone : RhythmPuzzle
         if(feedBack!=null) feedBack.color = (playersInside.Count>0)?PlayerInsideColors[aux]:defaultColors[aux];
         // Esto va a cambiar cuando usemos shader
     }
-    
-    public override void OnPlayerInputAction(DanceStep step)
+
+    public override void OnRhythmPuzzleBeatReaction()
     {
+        foreach (PlayerManager player in playersInside)
+        {
+            if (currentPuzzleStep != DanceStep.None)
+            {
+                player.GetFlowDamage(player.saveDanceStep != currentPuzzleStep);
+            }
+        }
+    }
+    
+    public override void PlayerEnter(PlayerManager player)
+    {
+        base.PlayerEnter(player);
+        DanceLevelController.Instance.UpdateZombieFeedbackUI(true);
+        
+    }
+
+    public override void PlayerLeave(PlayerManager player)
+    {
+        base.PlayerLeave(player);
+        DanceLevelController.Instance.UpdateZombieFeedbackUI(false);
         
     }
     
+
+
 }

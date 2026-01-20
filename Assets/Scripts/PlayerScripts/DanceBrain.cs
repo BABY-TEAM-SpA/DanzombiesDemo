@@ -4,6 +4,7 @@ public class DanceBrain : MonoBehaviour
 {
     [SerializeField] protected PlayerMovementController playerMovCtrl;
     [SerializeField] protected PlayerAnimatorController playerAnimCtrl;
+    public bool isRightLooking;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     public void EnableMovement(bool isON=false)
@@ -21,8 +22,14 @@ public class DanceBrain : MonoBehaviour
         playerAnimCtrl.OnMoving(speed);
     }
 
-    public void SetBodyDirection(bool isRight)
+    public void SetBodyDirection(float value)
     {
-        playerAnimCtrl.SetAnimatorOverrideDirection(isRight);
+        bool isRight = value > 0;
+        if(isRight != isRightLooking && value!=0)
+        {
+            isRightLooking = isRight;
+            playerAnimCtrl.SetAnimatorOverrideDirection(isRight);
+        }
+        
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private DanceBrain _danceBrain;
-    [SerializeField] private bool RightLooking=true;
     [SerializeField] private bool AllowInput = false;
     [SerializeField] private float speed = 15f;
     [Range(0,15)]public float acceleration;
@@ -34,7 +33,7 @@ public class PlayerMovementController : MonoBehaviour
     public void SetDirectionToMove(Vector3 dir)
     {
         direction = dir;
-        CheckDirectionChange(dir);
+        _danceBrain.SetBodyDirection(dir.x);
     }
     private void HandleMovement()
     {
@@ -63,15 +62,5 @@ public class PlayerMovementController : MonoBehaviour
     public void SetSpeed(float speed=10f)
     {
         speed = speed;
-    }
-
-    private void CheckDirectionChange(Vector3 input)
-    {
-        bool isRight = input.x > 0;
-        if(isRight != RightLooking && input.x!=0)
-        {
-            RightLooking = isRight;
-            _danceBrain.SetBodyDirection(isRight);
-        }
     }
 }

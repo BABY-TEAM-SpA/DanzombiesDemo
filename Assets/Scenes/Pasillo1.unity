@@ -3402,12 +3402,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98168e38335c05c49b31eb5d2cd1c257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Barras:
-  - {fileID: 743831890}
-  - {fileID: 1111989508}
-  SeguridadNormal: {r: 0.08235294, g: 0.91372555, b: 0.6745098, a: 1}
-  SeguridadInsecure: {r: 0.9333334, g: 0.82745105, b: 0.2784314, a: 1}
-  SeguridadFlow: {r: 0.9056604, g: 0.15806337, b: 0.8711287, a: 1}
+  zombieEye: {fileID: 0}
+  zombieClosedEye: {fileID: 0}
+  zombieReactions: []
+  ZombieBars: []
+  barReactions: []
+  hearts: []
+  GregHead: {fileID: 0}
+  spriteGregHappy: []
   OnPlayerDies:
     m_PersistentCalls:
       m_Calls: []
@@ -3748,6 +3750,10 @@ PrefabInstance:
     - target: {fileID: 542709926716473569, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_Name
       value: GregPlayerController
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530795612346585224, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
+      propertyPath: isRightLooking
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8897676056707518989, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_LocalPosition.x

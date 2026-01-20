@@ -13,16 +13,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void Start()
     {
-        animator.runtimeAnimatorController = animatorOverrideControllers[0];
-        SetBeatDuration(BeatManager.Instance.beatDuration);
-    }
-
-    private void SetBeatDuration(float duration)
-    {
-        if (animator != null)
-        {
-            animator.SetFloat("Beat",(1f/duration));
-        }
+        SetAnimatorOverrideDirection(_danceBrain.isRightLooking);
     }
     
     public void OnNorthButtonPressed(InputAction.CallbackContext context)

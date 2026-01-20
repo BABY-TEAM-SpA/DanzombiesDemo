@@ -13,20 +13,27 @@ public class PlayerManager : DanceBrain
     [SerializeField] [Range(0f,1f)] private float NivelDeSeguridad = 0.5f;
     [SerializeField] [Range(0f,0.25f)] private float Alza = 0.1f;
     public RhythmPuzzle targetPuzzle;
+    public DanceStep saveDanceStep { get; private set; }
+    
 
     public void GetFlowDamage(bool danho=true)
     {
-            float value =Mathf.Clamp((danho)?NivelDeSeguridad+Alza:NivelDeSeguridad-Alza,0f,1f);
-            if (value == 0)
-            {
-                //Restar un corazon y hacer invulnerable
-                targetPuzzle =null;
-            }
-            else
-            {
-                NivelDeSeguridad = value;
-            }
-            //UILevelControler.ShowFlowBar(NivelDeSeguridad);
+        
+        saveDanceStep = DanceStep.None;
+        float value =Mathf.Clamp((danho)?NivelDeSeguridad+Alza:NivelDeSeguridad-Alza,0f,1f);
+        if (value == 0)
+        {
+            //Restar un corazon y hacer invulnerable
+            targetPuzzle.PlayerLeave(this);
+            lifes = -1;
+            DanceLevelController.Instance.UpdateLifesPlayer(lifes);
+        }
+        else
+        {
+            NivelDeSeguridad = value;
+        }
+        DanceLevelController.Instance.UpdateFlowBars(NivelDeSeguridad);
+        
     }
 
     public void GetLifeDamage(bool danho=true)
@@ -45,11 +52,9 @@ public class PlayerManager : DanceBrain
 
     public override void OnDance(DanceStep step)
     {
-        if (targetPuzzle!=null)
-        {
-            DanceResult value = targetPuzzle.CheckPlayerDance(step);
-            if (value != DanceResult.Neutral) GetFlowDamage(value != DanceResult.Succes);
-        }
+        saveDanceStep = step;
     }
+    
+    
 }
 
