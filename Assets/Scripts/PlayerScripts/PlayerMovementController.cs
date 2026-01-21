@@ -6,7 +6,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private DanceBrain _danceBrain;
     [SerializeField] private bool AllowInput = false;
     [SerializeField] private float speed = 15f;
-    [Range(0,15)]public float acceleration;
+    [Range(0,50)]public float acceleration;
     private Vector3 direction;
     public bool CanMove = false;
     public Vector3 velocity { private set; get; } = Vector3.zero;

@@ -47,15 +47,15 @@ public class DanceLevelController : MonoBehaviour
     
     public void UpdateFlowBars(float value)
     {
-        if (value < 0.2f) currentReaction = 2;
-        else if (value <= 0.5f) currentReaction = 1;
+        if (value <= 2f) currentReaction = 2;
+        else if (value <= 5f) currentReaction = 1;
         else currentReaction = 0;
         
         if(zombieEye !=null) zombieEye.sprite = zombieReactions[currentReaction];
         
         foreach (Image barra in ZombieBars)
         {
-            barra.fillAmount = value;
+            barra.fillAmount = value/10;
             barra.color = barReactions[currentReaction];
         }
     }

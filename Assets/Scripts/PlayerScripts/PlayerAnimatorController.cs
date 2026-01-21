@@ -151,11 +151,12 @@ public class PlayerAnimatorController : MonoBehaviour
     }
     public void OnMoving(float moving)
     {
-        if (moving!=0f)
+        bool walking = moving>0.1;
+        if (walking)
         {
             animator.ResetTrigger("Idle");
         }
-        animator.SetBool("Walking", moving>0);
+        animator.SetBool("Walking", walking);
     }
     
     public void OnDanceBegin(int danceIndex)
@@ -169,6 +170,7 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OnStandAction()
     {
         _danceBrain.EnableMovement(true);
+        _danceBrain.OnDance(DanceStep.None);
         animator.ResetTrigger("Idle");
         animator.ResetTrigger("Dance");
     }

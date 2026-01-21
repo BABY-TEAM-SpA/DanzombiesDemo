@@ -39,8 +39,7 @@ public class ZombieDanceZone : RhythmPuzzle
     {
         if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
         {
-            player.RemoveTargetPuzzle(this);
-            playersInside.Remove(player);
+            PlayerLeave(player);
         }
     }
     public override void VisualFeedback(int counter, int counterCompass)
@@ -53,13 +52,16 @@ public class ZombieDanceZone : RhythmPuzzle
 
     public override void OnRhythmPuzzleBeatReaction()
     {
-        foreach (PlayerManager player in playersInside)
-        {
-            if (currentPuzzleStep != DanceStep.None)
+        if(playersInside.Count>0){
+            foreach (PlayerManager player in playersInside)
             {
-                player.GetFlowDamage(player.saveDanceStep != currentPuzzleStep);
+                if (currentPuzzleStep != DanceStep.None)
+                {
+                    player.GetFlowDamage(player.saveDanceStep != currentPuzzleStep);
+                }
             }
         }
+        
     }
     
     public override void PlayerEnter(PlayerManager player)

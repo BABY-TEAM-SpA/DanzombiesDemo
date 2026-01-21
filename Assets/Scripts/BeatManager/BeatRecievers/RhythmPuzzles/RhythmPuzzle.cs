@@ -38,7 +38,7 @@ public class RhythmPuzzle : BeatReciever
     [SerializeField] protected bool useCompass = false;
     [SerializeField] protected bool ShouldRepeat =false;
     [SerializeField] protected List<DanceStep> DanceSteps = new List<DanceStep>();
-    protected DanceStep currentPuzzleStep = DanceStep.None;
+    [SerializeField] protected DanceStep currentPuzzleStep = DanceStep.None;
     
     
     public delegate void OnMusicEvent(DanceStep danceStep);
@@ -98,8 +98,9 @@ public class RhythmPuzzle : BeatReciever
     {
         if (isActive)
         {
-            OnRhythmPuzzleBeatReaction();
+
             OnReleaseStep?.Invoke(currentPuzzleStep);
+            OnRhythmPuzzleBeatReaction();
             
         }
     }
@@ -140,8 +141,9 @@ public class RhythmPuzzle : BeatReciever
     public virtual void PlayerLeave(PlayerManager player)
     {
         Debug.Log("Player Leave");
-        player.RemoveTargetPuzzle(this);
         playersInside.Remove(player);
+        player.RemoveTargetPuzzle(this);
+        
         //To implement in Sons
     }
 }

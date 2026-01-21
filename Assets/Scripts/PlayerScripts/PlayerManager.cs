@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 
 public enum SeguridadState
@@ -7,25 +8,30 @@ public enum SeguridadState
     Insecure,
     Flow
 }
+
+[Serializable]
 public class PlayerManager : DanceBrain
 {
     public int lifes =3;
-    [SerializeField] [Range(0f,1f)] private float NivelDeSeguridad = 0.5f;
-    [SerializeField] [Range(0f,0.25f)] private float Alza = 0.1f;
+    [SerializeField] [Range(0,10)] private float NivelDeSeguridad = 5;
+    [SerializeField] [Range(0f,2f)] private float Alza = 1f;
     public RhythmPuzzle targetPuzzle;
     public DanceStep saveDanceStep { get; private set; }
     
+    public void Start(){
+        DanceLevelController.Instance.UpdateFlowBars(NivelDeSeguridad);
+    }
 
     public void GetFlowDamage(bool danho=true)
     {
-        
+
         saveDanceStep = DanceStep.None;
-        float value =Mathf.Clamp((danho)?NivelDeSeguridad+Alza:NivelDeSeguridad-Alza,0f,1f);
-        if (value == 0)
+        float value =Mathf.Clamp((danho)?NivelDeSeguridad-Alza:NivelDeSeguridad+Alza,-1f,10f);
+        if (value <= Alza)
         {
             //Restar un corazon y hacer invulnerable
             targetPuzzle.PlayerLeave(this);
-            lifes = -1;
+            GetLifeDamage(true);
             DanceLevelController.Instance.UpdateLifesPlayer(lifes);
         }
         else
@@ -38,7 +44,7 @@ public class PlayerManager : DanceBrain
 
     public void GetLifeDamage(bool danho=true)
     {
-        lifes += (danho) ? -1 : 1;
+        lifes += (danho) ? -1 : -1;
     }
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
