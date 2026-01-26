@@ -19,31 +19,34 @@ public class PlayerManager : DanceBrain
     public DanceStep saveDanceStep { get; private set; }
     
     public void Start(){
-        DanceLevelController.Instance.UpdateFlowBars(NivelDeSeguridad);
+        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad);
     }
 
     public void GetFlowDamage(bool danho=true)
     {
 
+        
         saveDanceStep = DanceStep.None;
+        Debug.Log(danho?"Bajando Seguridad":"" );
         float value =Mathf.Clamp((danho)?NivelDeSeguridad-Alza:NivelDeSeguridad+Alza,-1f,10f);
         if (value <= Alza)
         {
             //Restar un corazon y hacer invulnerable
             targetPuzzle.PlayerLeave(this);
             GetLifeDamage(true);
-            DanceLevelController.Instance.UpdateLifesPlayer(lifes);
+            PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
         }
         else
         {
             NivelDeSeguridad = value;
         }
-        DanceLevelController.Instance.UpdateFlowBars(NivelDeSeguridad);
+        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad);
         
     }
 
     public void GetLifeDamage(bool danho=true)
     {
+        Debug.Log($"vida dañada");
         lifes += (danho) ? -1 : -1;
     }
 

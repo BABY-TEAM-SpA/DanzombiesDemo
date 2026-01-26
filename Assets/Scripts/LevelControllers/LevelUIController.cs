@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-
-public class DanceLevelController : MonoBehaviour
+public class LevelUIController : MonoBehaviour
 {
-
     [Header("Barras de Flow")] 
     [SerializeField] private Image zombieEye;
     private int currentReaction = 0;
@@ -23,7 +21,7 @@ public class DanceLevelController : MonoBehaviour
     [SerializeField] private Sprite[] spriteGregHappy;
 
     public UnityEvent OnPlayerDies;
-    public static DanceLevelController Instance { get; private set; }
+    public static LevelUIController Instance { get; private set; }
 
     private void Awake()
     {
@@ -60,8 +58,5 @@ public class DanceLevelController : MonoBehaviour
         }
     }
 
-    public void UpdateLifesPlayer(int lifes, int player = 0)
-    {
-        Debug.Log("Update Lifes");
-    }
+    
 }

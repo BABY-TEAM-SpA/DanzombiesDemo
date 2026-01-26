@@ -99,6 +99,7 @@ public class RhythmPuzzle : BeatReciever
         if (isActive)
         {
 
+            //Debug.Log("PostBeat");
             OnReleaseStep?.Invoke(currentPuzzleStep);
             OnRhythmPuzzleBeatReaction();
             
@@ -142,6 +143,7 @@ public class RhythmPuzzle : BeatReciever
     {
         Debug.Log("Player Leave");
         playersInside.Remove(player);
+
         player.RemoveTargetPuzzle(this);
         
         //To implement in Sons

@@ -52,11 +52,15 @@ public class ZombieDanceZone : RhythmPuzzle
 
     public override void OnRhythmPuzzleBeatReaction()
     {
+        
         if(playersInside.Count>0){
-            foreach (PlayerManager player in playersInside)
+            Debug.Log("Puzzle Reaction to Players");
+            List<PlayerManager> players = new List<PlayerManager>(playersInside);
+            foreach (PlayerManager player in players)
             {
-                if (currentPuzzleStep != DanceStep.None)
+                if (currentPuzzleStep != DanceStep.None && player!=null)
                 {
+                    Debug.Log($"Send Call to{player}");
                     player.GetFlowDamage(player.saveDanceStep != currentPuzzleStep);
                 }
             }
@@ -67,14 +71,14 @@ public class ZombieDanceZone : RhythmPuzzle
     public override void PlayerEnter(PlayerManager player)
     {
         base.PlayerEnter(player);
-        DanceLevelController.Instance.UpdateZombieFeedbackUI(true);
+        LevelUIController.Instance?.UpdateZombieFeedbackUI(true);
         
     }
 
     public override void PlayerLeave(PlayerManager player)
     {
         base.PlayerLeave(player);
-        DanceLevelController.Instance.UpdateZombieFeedbackUI(false);
+        LevelUIController.Instance?.UpdateZombieFeedbackUI(false);
         
     }
     
