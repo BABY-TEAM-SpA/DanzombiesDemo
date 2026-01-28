@@ -19,7 +19,7 @@ public class PlayerManager : DanceBrain
     public DanceStep saveDanceStep { get; private set; }
     
     public void Start(){
-        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad);
+        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
     }
 
     public void GetFlowDamage(bool danho=true)
@@ -40,7 +40,7 @@ public class PlayerManager : DanceBrain
         {
             NivelDeSeguridad = value;
         }
-        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad);
+        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
         
     }
 

@@ -13,14 +13,6 @@ public class LevelUIController : MonoBehaviour
     [SerializeField] private Sprite[] zombieReactions = new Sprite[] {};
     [SerializeField] private List<Image> ZombieBars = new List<Image>();
     [SerializeField] private Color[] barReactions = new Color[] {};
-    
-    [Header("Player Lifes")]
-    [SerializeField] private List<Image> hearts = new List<Image>();
-
-    [SerializeField] private Image GregHead;
-    [SerializeField] private Sprite[] spriteGregHappy;
-
-    public UnityEvent OnPlayerDies;
     public static LevelUIController Instance { get; private set; }
 
     private void Awake()
@@ -39,23 +31,23 @@ public class LevelUIController : MonoBehaviour
     }
 
     public void UpdateZombieFeedbackUI(bool inDanger)
-    {
+    {   
         if(zombieEye !=null) zombieEye.sprite = inDanger ? zombieReactions[currentReaction] : zombieClosedEye;
     }
+
     
-    public void UpdateFlowBars(float value)
+    public void UpdateFlowBars(float value, bool isInside =false)
     {
         if (value <= 2f) currentReaction = 2;
         else if (value <= 5f) currentReaction = 1;
-        else currentReaction = 0;
-        
-        if(zombieEye !=null) zombieEye.sprite = zombieReactions[currentReaction];
         
         foreach (Image barra in ZombieBars)
         {
             barra.fillAmount = value/10;
             barra.color = barReactions[currentReaction];
         }
+        UpdateZombieFeedbackUI(isInside);
+        
     }
 
     

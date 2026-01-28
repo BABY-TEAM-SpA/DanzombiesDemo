@@ -51,7 +51,8 @@ public class PlayerUIController : MonoBehaviour
     public void UpdateLifesPlayer(int lifes, int player = 0)
     {
         Debug.Log("Update Lifes");
-        
+        Heart heart = hearts[lifes];
+        heart.HeartContainer.sprite = heart.DamageHeart;
         
     }
 }

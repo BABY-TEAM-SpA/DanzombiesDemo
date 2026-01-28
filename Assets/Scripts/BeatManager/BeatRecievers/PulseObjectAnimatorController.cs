@@ -1,20 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PulseObjectAnimatorController : BeatReciever
 {
-    [SerializeField] Animator DanceAnimator;
+    [SerializeField] List<Animator> DanceAnimators = new List<Animator>();
     private float currentBeatOnPlayer = 0f;
+    [SerializeField] AnimatorOverrideController animatorOverrideController;
 
     public void Start()
     {
         SetBeatDuration(BeatManager.Instance.beatDuration);
+        if( animatorOverrideController !=null){
+            foreach(Animator animator in DanceAnimators)
+            {
+                animator.runtimeAnimatorController = animatorOverrideController;
+            }
+        }
+            
     }
 
     private void SetBeatDuration(float duration)
     {
         currentBeatOnPlayer = duration;
         base.OnPlaySongAction(currentBeatOnPlayer);
-        if (DanceAnimator != null)
+        foreach(Animator DanceAnimator in DanceAnimators)
         {
             DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
             DanceAnimator.SetTrigger("OnBeat");
@@ -33,7 +42,10 @@ public class PulseObjectAnimatorController : BeatReciever
 
     public override void BeatAction(int counter, int counterCompass)
     {
-        DanceAnimator.SetTrigger("OnBeat");
+        foreach(Animator DanceAnimator in DanceAnimators)
+        {
+            DanceAnimator.SetTrigger("OnBeat");
+        }
     }
    
 }
