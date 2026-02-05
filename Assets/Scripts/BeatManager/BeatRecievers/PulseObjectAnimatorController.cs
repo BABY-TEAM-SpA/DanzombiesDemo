@@ -44,7 +44,8 @@ public class PulseObjectAnimatorController : BeatReciever
     {
         foreach(Animator DanceAnimator in DanceAnimators)
         {
-            DanceAnimator.SetTrigger("OnBeat");
+            //DanceAnimator.SetTrigger("OnBeat");
+            DanceAnimator.Play("PulseAnimator");
         }
     }
    
