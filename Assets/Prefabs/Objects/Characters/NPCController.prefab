@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovCtrl: {fileID: 3630670231084340477}
   playerAnimCtrl: {fileID: 3778446384912519008}
+  isRightLooking: 0
 --- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _danceBrain: {fileID: 3279488030120961210}
-  RightLooking: 0
   AllowInput: 0
   speed: 15
   acceleration: 0
@@ -265,7 +265,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c1d83c67836c57b4f8f99bf0c71339a2, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
