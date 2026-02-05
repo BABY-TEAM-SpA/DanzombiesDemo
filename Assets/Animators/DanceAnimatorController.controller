@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isWalking
+    m_ConditionEvent: Walking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6917397502364857695}
@@ -25,14 +25,14 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-8355445682676209239
+--- !u!1102 &-8240762875942460262
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GregEnterAnimation
+  m_Name: NoAnimationState
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -45,7 +45,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fc1d7fc78b745724a9cfcdb45382b752, type: 2}
+  m_Motion: {fileID: 0}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -131,13 +131,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: LeftDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceSouth
+    m_ConditionEvent: DanceStepS
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4083975701402847581}
@@ -151,6 +151,28 @@ AnimatorStateTransition:
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 2
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &-6435255324212620131
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8240762875942460262}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.100000024
+  m_TransitionOffset: 0
+  m_ExitTime: 0.89
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1101 &-6224216817884149134
@@ -186,14 +208,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepS
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceSouth
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -19564694643228423}
@@ -209,33 +231,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-5911554918448031551
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EnterAnimation
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -1192246206032239945}
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6b3265ed404345243a7cbf28c5a715dd, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &-4860959891018703961
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -267,13 +262,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: LeftDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceEast
+    m_ConditionEvent: DanceStepE
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 625240649847341835}
@@ -323,27 +318,21 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GregDances
+  m_Name: DanceLayer
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -3366618441310621208}
     m_Position: {x: 160, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6917397502364857695}
-    m_Position: {x: 160, y: 430, z: 0}
+    m_Position: {x: 260, y: 400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -888309949473646813}
-    m_Position: {x: 20, y: 310, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5911554918448031551}
-    m_Position: {x: 30, y: 0, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -8355445682676209239}
-    m_Position: {x: 410, y: -50, z: 0}
+    m_Position: {x: 80, y: 300, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -3244534228108271267}
-    m_Position: {x: 440, y: 120, z: 0}
+    m_Position: {x: 160, y: 0, z: 0}
   m_AnyStateTransitions:
   - {fileID: 2935441156960329869}
   - {fileID: -1552187321243761934}
@@ -353,13 +342,12 @@ AnimatorStateMachine:
   - {fileID: -5988945038859305104}
   - {fileID: -3426936453796628992}
   - {fileID: 358645498636841171}
-  - {fileID: 4376259527939570726}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 170, y: -100, z: 0}
-  m_EntryPosition: {x: -110, y: 120, z: 0}
-  m_ExitPosition: {x: -110, y: 180, z: 0}
+  m_AnyStatePosition: {x: 180, y: -50, z: 0}
+  m_EntryPosition: {x: -20, y: 120, z: 0}
+  m_ExitPosition: {x: -20, y: 180, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -3366618441310621208}
 --- !u!1101 &-3426936453796628992
@@ -370,14 +358,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepW
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceWest
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8382040565316946452}
@@ -522,13 +510,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: LeftDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceWest
+    m_ConditionEvent: DanceStepW
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3284207560155813823}
@@ -542,28 +530,6 @@ AnimatorStateTransition:
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 2
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
---- !u!1101 &-1192246206032239945
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -3366618441310621208}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 0.99
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1102 &-888309949473646813
@@ -663,50 +629,14 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: LeftTrigger
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: RightTrigger
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceNorth
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceSouth
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceWest
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: DanceEast
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: isWalking
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: Idle
     m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Walking
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -717,10 +647,64 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: Dance
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: LeftDanceDir
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: RightDanceDir
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepN
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepS
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepW
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: DanceStepE
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: Base Layer
+    m_Name: DanceLayer
     m_StateMachine: {fileID: -3567854979364881083}
+    m_Mask: {fileID: 0}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 0
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
+    m_Name: Interactions Layer
+    m_StateMachine: {fileID: 8713954791426546045}
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
@@ -738,14 +722,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepE
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceEast
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8869607890104400618}
@@ -819,7 +803,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isWalking
+    m_ConditionEvent: Walking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6917397502364857695}
@@ -865,14 +849,14 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: LeftTrigger
+  - m_ConditionMode: 1
+    m_ConditionEvent: RightDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: DanceStepN
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceNorth
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -297036258477468017}
@@ -897,13 +881,13 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LeftTrigger
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: RightTrigger
+    m_ConditionEvent: LeftDanceDir
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: DanceNorth
+    m_ConditionEvent: DanceStepN
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7076144960638277154}
@@ -941,7 +925,7 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &4376259527939570726
+--- !u!1101 &4311879407811070982
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -953,7 +937,7 @@ AnimatorStateTransition:
     m_ConditionEvent: Enter
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -5911554918448031551}
+  m_DstState: {fileID: 8493399081831808691}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
@@ -961,11 +945,11 @@ AnimatorStateTransition:
   m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0
-  m_HasExitTime: 0
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_HasExitTime: 1
+  m_HasFixedDuration: 0
+  m_InterruptionSource: 2
+  m_OrderedInterruption: 0
+  m_CanTransitionToSelf: 0
 --- !u!1101 &4842362750051115059
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1020,7 +1004,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Running
+  m_Name: RunningR
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1049,7 +1033,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isWalking
+    m_ConditionEvent: Walking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3366618441310621208}
@@ -1092,6 +1076,59 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &8493399081831808691
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EnterAnimation
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -6435255324212620131}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 6b3265ed404345243a7cbf28c5a715dd, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1107 &8713954791426546045
+AnimatorStateMachine:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Interactions Layer
+  m_ChildStates:
+  - serializedVersion: 1
+    m_State: {fileID: 8493399081831808691}
+    m_Position: {x: 360, y: 100, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8240762875942460262}
+    m_Position: {x: 260, y: 210, z: 0}
+  m_ChildStateMachines: []
+  m_AnyStateTransitions:
+  - {fileID: 4311879407811070982}
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 470, y: -10, z: 0}
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: -8240762875942460262}
 --- !u!1102 &8869607890104400618
 AnimatorState:
   serializedVersion: 6

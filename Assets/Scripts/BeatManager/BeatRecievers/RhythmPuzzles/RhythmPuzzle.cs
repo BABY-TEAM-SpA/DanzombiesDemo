@@ -17,6 +17,13 @@ public enum DanceStep
     R_East
 }
 
+public enum DanceResult
+{
+    Neutral,
+    Succes,
+    Failed
+}
+
 [Serializable]
 public class SequenceStep
 {
@@ -27,29 +34,26 @@ public class SequenceStep
 public class RhythmPuzzle : BeatReciever
 {
     protected bool isActive = false;
-    protected bool canRecieveInput = false;
-    protected bool hasRecieveInput = false;
     [SerializeField] bool ActivateOnStart;
     [SerializeField] protected bool useCompass = false;
     [SerializeField] protected bool ShouldRepeat =false;
     [SerializeField] protected List<DanceStep> DanceSteps = new List<DanceStep>();
-    protected DanceStep currentPuzzleStep = DanceStep.None;
+    [SerializeField] protected DanceStep currentPuzzleStep = DanceStep.None;
     
-    [Header("Rhythm Puzzle Events")]
-    public UnityEvent OnRhythmPuzzleStartedEvent = new UnityEvent();
-    public UnityEvent OnRhythmPuzzleCompletedEvent = new UnityEvent();
-    public UnityEvent OnRhythmPuzzleFailedEvent = new UnityEvent();
+    
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
     public event OnMusicEvent OnDanceStep;
     public event OnMusicEvent OnReleaseStep;
+    public UnityEvent OnRhythmPuzzleStartedEvent = new UnityEvent();
+    public UnityEvent OnRhythmPuzzleCompletedEvent = new UnityEvent();
     
-    [Header("Player References")]
-    [SerializeField] protected PlayerAnimatorController player;
-    [SerializeField] protected DanceStep playerDanceStep;
     
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
+    
+    [Header("Players")]
+    protected List<PlayerManager> playersInside = new List<PlayerManager>();
 
     private void Awake()
     {
@@ -75,11 +79,9 @@ public class RhythmPuzzle : BeatReciever
     
     public override void PreBeatAction(int counter, int counterCompass)
     {
-        playerDanceStep = DanceStep.None;
         if (isActive)
         {
             currentPuzzleStep = GetDanceStep(counter, counterCompass);
-            if(currentPuzzleStep!= DanceStep.None) canRecieveInput = true;
             OnPrepareStep?.Invoke(currentPuzzleStep);
         }
     }
@@ -92,47 +94,26 @@ public class RhythmPuzzle : BeatReciever
             VisualFeedback(counter, counterCompass);
         }
     }
-
-    public virtual void VisualFeedback(int counter, int counterCompass)
-    {
-        // To implement in Sons.
-    }
-
     public override void PostBeatAction(int counter, int counterCompass)
     {
         if (isActive)
         {
+
+            //Debug.Log("PostBeat");
             OnReleaseStep?.Invoke(currentPuzzleStep);
-            if (!hasRecieveInput)PlayerDanceCheck();
-        }
-        canRecieveInput = false;
-        hasRecieveInput = false;
-        playerDanceStep = DanceStep.None;
-    }
-    
-    private void PlayerDanceCheck()
-    {
-        if (currentPuzzleStep != DanceStep.None && player != null)
-        {
-            Debug.Log("Checking Dance: " + ((currentPuzzleStep==playerDanceStep)?"Succes":"Failed"));
-            PlayerDanceReaction(currentPuzzleStep==playerDanceStep);
+            OnRhythmPuzzleBeatReaction();
+            
         }
     }
 
-    public virtual void PlayerDanceReaction(bool IsPlayerDanceCorrect)
+    public virtual void VisualFeedback(int counter, int counterCompass)
     {
-        ///To implement in sons.
+        // To implement in Sons
     }
-    
 
     public virtual void OnPlayerInputAction(DanceStep step)
     {
-        if (isActive && canRecieveInput && !hasRecieveInput)
-        {
-            playerDanceStep = step;
-            hasRecieveInput = true;
-            PlayerDanceCheck();
-        }
+        //To implement in Sons
     }
 
     public void OnRhythmPuzzleStarted()
@@ -143,10 +124,28 @@ public class RhythmPuzzle : BeatReciever
     public void OnRhythmPuzzleCompleted()
     {
         OnRhythmPuzzleCompletedEvent?.Invoke();
+        
     }
-    public void OnRhythmPuzzleFailed()
+    public virtual void OnRhythmPuzzleBeatReaction()
     {
-        OnRhythmPuzzleFailedEvent?.Invoke();
+        
     }
-    
+
+    public virtual void PlayerEnter(PlayerManager player)
+    {
+        Debug.Log("Player entered");
+        player.AddTargetPuzzle(this);
+        playersInside.Add(player);
+        //To implement in Sons
+    }
+
+    public virtual void PlayerLeave(PlayerManager player)
+    {
+        Debug.Log("Player Leave");
+        playersInside.Remove(player);
+
+        player.RemoveTargetPuzzle(this);
+        
+        //To implement in Sons
+    }
 }

@@ -3,21 +3,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private bool CanMove = false;
-    public bool isWalking = false;
-    [SerializeField] private float moveSpeed = 0f;
-    private float currentSpeed = 0f;
+    [SerializeField] private DanceBrain _danceBrain;
+    [SerializeField] private bool AllowInput = false;
+    [SerializeField] private float speed = 15f;
+    [Range(0,50)]public float acceleration;
     private Vector3 direction;
+    public bool CanMove = false;
     public Vector3 velocity { private set; get; } = Vector3.zero;
-    private Animator movementAnimator;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        movementAnimator = GetComponent<Animator>();
+        SetSpeed();
     }
-
-    // Update is called once per frame
     void Update()
     {
         HandleMovement();
@@ -25,46 +23,32 @@ public class PlayerMovementController : MonoBehaviour
 
     public void OnMoveEvent(InputAction.CallbackContext context)
     {
-        if (CanMove)
+        Vector2 input = context.ReadValue<Vector2>();
+        if (AllowInput)
         {
-            Vector2 input = context.ReadValue<Vector2>();
-            Move(new Vector3(input.x, input.y, 0));
+            
+            SetDirectionToMove(new Vector3(input.x, input.y, 0));
         }
     }
-
-    public void Move(Vector3 dir)
+    public void SetDirectionToMove(Vector3 dir)
     {
-        if(dir!= Vector3.zero) isWalking=true;
-        else{ isWalking = false; }
         direction = dir;
-    }
-
-    public void SetSpeed(float speed=-1f)
-    {
-        if (speed == -1f)
-        {
-            currentSpeed = moveSpeed;
-        }
-        else
-        {
-            currentSpeed = speed;
-        }
+        _danceBrain.SetBodyDirection(dir.x);
     }
     private void HandleMovement()
     {
-        if (isWalking)
-        {  
-            velocity = Vector3.Lerp(velocity, direction * currentSpeed, currentSpeed);
-            if(movementAnimator!=null) movementAnimator.SetBool("LookingLeft",velocity.x<0);
+        if (CanMove)
+        {
+            velocity = Vector3.Lerp(velocity, direction * speed, acceleration * Time.deltaTime);
         }
-        else {
+        else
+        {
             velocity = Vector3.zero;
         }
         transform.position += velocity * Time.deltaTime;
+        _danceBrain.OnMoving(velocity.magnitude);
     }
-
     
-
     public void EnableMovement()
     {
         CanMove = true;   
@@ -73,5 +57,10 @@ public class PlayerMovementController : MonoBehaviour
     public void DisableMovement()
     {
         CanMove = false;
+    }
+    
+    public void SetSpeed(float speed=10f)
+    {
+        speed = speed;
     }
 }

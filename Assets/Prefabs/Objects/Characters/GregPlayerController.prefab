@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8897676056707518989}
   - component: {fileID: 719892519200694072}
+  - component: {fileID: 6530795612346585224}
   - component: {fileID: 3968905282911785478}
   - component: {fileID: 3465130852895728156}
-  - component: {fileID: 6365411211100306919}
   - component: {fileID: 3308144933667447571}
   - component: {fileID: 1450538241836724591}
-  - component: {fileID: 1723823300838994173}
   m_Layer: 0
   m_Name: GregPlayerController
   m_TagString: Player
@@ -76,6 +75,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.22}
   m_Size: {x: 5.5, y: 2.29}
   m_Direction: 1
+--- !u!114 &6530795612346585224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542709926716473569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f77188784b2d7a44877cda4460cb466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  playerMovCtrl: {fileID: 3968905282911785478}
+  playerAnimCtrl: {fileID: 4086932025709530668}
+  isRightLooking: 0
+  lifes: 3
+  NivelDeSeguridad: 0.5
+  Alza: 0.1
+  targetPuzzle: {fileID: 0}
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,9 +106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _danceBrain: {fileID: 6530795612346585224}
+  AllowInput: 1
+  speed: 10
+  acceleration: 15
   CanMove: 1
-  isWalking: 0
-  moveSpeed: 15
 --- !u!114 &3465130852895728156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,25 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DanceAnimator: {fileID: 6969242347076242797}
---- !u!114 &6365411211100306919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542709926716473569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovCtrl: {fileID: 3968905282911785478}
-  danceWalkingSpeed: 1
-  animator: {fileID: 6969242347076242797}
-  renderer: {fileID: 922934949481849677}
-  animatorOverrideControllers:
-  - {fileID: 22100000, guid: 2d677eb01c4cbe44783e36db47b288e4, type: 2}
-  ShouldEnter: 0
 --- !u!114 &3308144933667447571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +171,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6365411211100306919}
+      - m_Target: {fileID: 4086932025709530668}
         m_TargetAssemblyTypeName: PlayerAnimatorController, Assembly-CSharp
         m_MethodName: OnNorthButtonPressed
         m_Mode: 0
@@ -186,7 +187,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Touchscreen/primaryTouch/tap,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6365411211100306919}
+      - m_Target: {fileID: 4086932025709530668}
         m_TargetAssemblyTypeName: PlayerAnimatorController, Assembly-CSharp
         m_MethodName: OnSouthButtonPressed
         m_Mode: 0
@@ -202,7 +203,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6365411211100306919}
+      - m_Target: {fileID: 4086932025709530668}
         m_TargetAssemblyTypeName: PlayerAnimatorController, Assembly-CSharp
         m_MethodName: OnWestButtonPressed
         m_Mode: 0
@@ -218,7 +219,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6365411211100306919}
+      - m_Target: {fileID: 4086932025709530668}
         m_TargetAssemblyTypeName: PlayerAnimatorController, Assembly-CSharp
         m_MethodName: OnEastButtonPressed
         m_Mode: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6365411211100306919}
+      - m_Target: {fileID: 4086932025709530668}
         m_TargetAssemblyTypeName: PlayerAnimatorController, Assembly-CSharp
         m_MethodName: OnLeftUPButtonPressed
         m_Mode: 0
@@ -302,7 +303,7 @@ MonoBehaviour:
     m_ActionName: 'Player/LeftUp[/Keyboard/u]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6365411211100306919}
+      - m_Target: {fileID: 4086932025709530668}
         m_TargetAssemblyTypeName: PlayerAnimatorController, Assembly-CSharp
         m_MethodName: OnRightUPButtonPressed
         m_Mode: 0
@@ -317,7 +318,7 @@ MonoBehaviour:
     m_ActionId: c8af23e4-db10-4f42-aff1-d33cfb1feeb2
     m_ActionName: 'Player/RightUp[/Keyboard/o]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -348,28 +349,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!95 &1723823300838994173
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542709926716473569}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 62ee9dfbf4ca32841b187f04fec0002a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3527966112122585668
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +362,7 @@ GameObject:
   - component: {fileID: 4476923910232832655}
   - component: {fileID: 6969242347076242797}
   - component: {fileID: 8122907570382711468}
+  - component: {fileID: 4086932025709530668}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -425,6 +405,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -446,6 +428,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1366706313
   m_SortingLayer: 2
   m_SortingOrder: 0
@@ -508,4 +491,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381be946daf32734093a04c01d3afc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 6365411211100306919}
+  playerAnimator: {fileID: 4086932025709530668}
+--- !u!114 &4086932025709530668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527966112122585668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _danceBrain: {fileID: 6530795612346585224}
+  animator: {fileID: 6969242347076242797}
+  renderer: {fileID: 922934949481849677}
+  animatorOverrideControllers:
+  - {fileID: 22100000, guid: 2d677eb01c4cbe44783e36db47b288e4, type: 2}
+  - {fileID: 22100000, guid: 747b2f1f69d209544b9318d0727e280d, type: 2}

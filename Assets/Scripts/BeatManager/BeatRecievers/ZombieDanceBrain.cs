@@ -1,12 +1,8 @@
 using System;
 using UnityEngine;
 
-public class ZombieDanceBrain : MonoBehaviour
+public class ZombieDanceBrain : DanceBrain
 {
-    [SerializeField] private PlayerMovementController playerMovCtrl;
-    [SerializeField] private PlayerAnimatorController playerAnimatorController;
-    [SerializeField] private Animator danceAnimator;
-    
     public void Connect(RhythmPuzzle puzzle)
     {
         puzzle.OnPrepareStep += OnPrepareStepAction;
@@ -25,8 +21,8 @@ public class ZombieDanceBrain : MonoBehaviour
         if (step != DanceStep.None)
         {
             string view = step.ToString()[0].ToString();
-            if(view == "R") danceAnimator.SetBool("RightTrigger", true);
-            else danceAnimator.SetBool("LeftTrigger", true);
+            if(view == "R") playerAnimCtrl?.animator.SetBool("RightDanceDir", true);
+            else playerAnimCtrl?.animator.SetBool("LeftDanceDir", true);
         }
     }
     private void OnDanceStepAction(DanceStep step)
@@ -34,24 +30,28 @@ public class ZombieDanceBrain : MonoBehaviour
         if (step != DanceStep.None)
         {
             string orientation = step.ToString().Remove(0,2);
-            danceAnimator.SetTrigger("Dance"+orientation);
+            playerAnimCtrl?.animator.SetBool("DanceStep"+orientation[0],true);
+            playerAnimCtrl?.animator.SetTrigger("Dance");
         }
     }
     private void OnReleaseStepAction(DanceStep step)
     {
-        danceAnimator.SetBool("RightTrigger", false);
-        danceAnimator.SetBool("LeftTrigger", false);
+        playerAnimCtrl?.animator.SetBool("RightDanceDir", false);
+        playerAnimCtrl?.animator.SetBool("LeftDanceDir", false);
         if (step != DanceStep.None)
         {
             string orientation = step.ToString().Remove(0,2);
-            danceAnimator.ResetTrigger("Dance"+orientation);
+            playerAnimCtrl?.animator.SetBool("DanceStep" + orientation[0], false);
+            playerAnimCtrl?.animator.ResetTrigger("Dance");
         }
     }
 
-    private void MoveToPoint(Vector3 point)
+    private void MoveToPoint(Vector3 point, float time)
     {
         Vector3 dif = new Vector3(this.transform.localPosition.x-point.x,this.transform.localPosition.y-point.y,0f);
         dif = dif.normalized;
-        playerMovCtrl.Move(dif);
+        playerMovCtrl.SetDirectionToMove(dif);
+        EnableMovement(true);
+        Invoke("EnableMovement", time);
     }
 }
