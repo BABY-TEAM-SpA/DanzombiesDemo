@@ -44,9 +44,9 @@ public class ZombieDanceZone : RhythmPuzzle
     }
     public override void VisualFeedback(int counter, int counterCompass)
     {
-        int aux = counter;
+        /*int aux = counter;
         if (ShouldRepeat) aux = counter % defaultColors.Length;
-        if(feedBack!=null) feedBack.color = (playersInside.Count>0)?PlayerInsideColors[aux]:defaultColors[aux];
+        if(feedBack!=null) feedBack.color = (playersInside.Count>0)?PlayerInsideColors[aux]:defaultColors[aux];*/
         // Esto va a cambiar cuando usemos shader
     }
 

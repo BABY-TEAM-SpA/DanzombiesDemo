@@ -35,7 +35,6 @@ public class RhythmPuzzle : BeatReciever
 {
     protected bool isActive = false;
     [SerializeField] bool ActivateOnStart;
-    [SerializeField] protected bool useCompass = false;
     [SerializeField] protected bool ShouldRepeat =false;
     [SerializeField] protected List<DanceStep> DanceSteps = new List<DanceStep>();
     [SerializeField] protected DanceStep currentPuzzleStep = DanceStep.None;
@@ -62,13 +61,19 @@ public class RhythmPuzzle : BeatReciever
 
     private DanceStep GetDanceStep(int counter, int counterCompass)
     {
-        if (useCompass) return (DanceSteps.Count>0)?DanceSteps[counterCompass]:DanceStep.None;
-        else
+        // recibi un -1
+        if(counter<0) return DanceStep.None;
+        if (counter < DanceSteps.Count)
         {
-            int aux = counter-1;
-            if (ShouldRepeat) aux = counter % DanceSteps.Count;
-            return (DanceSteps.Count>0)?DanceSteps[aux]:DanceStep.None;
+            return DanceSteps[counter];
         }
+        else{
+            return (ShouldRepeat)?DanceSteps[(counter) % DanceSteps.Count]:DanceStep.None;
+        }
+        //si esta dentro
+        //si esta fuera
+        //si debo repetir y esta dentro
+        //si debo repetir y esta fuera 
     }
 
     public virtual void ActivatePuzzle(bool activate)
