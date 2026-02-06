@@ -43,6 +43,7 @@ public class BeatManager : MonoBehaviour
     // Eventos por código
     public delegate void OnMusicEvent(float speed);
     public static event OnMusicEvent OnPlay;
+    public static event OnMusicEvent OnResume;
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
 

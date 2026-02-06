@@ -23,6 +23,7 @@ public class PlayerBeatReciever : BeatReciever
     }
     public override void OnPlaySongAction(float beatDuration)
     {
+        DanceAnimator.enabled = true;
         SetBeatDuration(beatDuration);
     }
 
@@ -37,6 +38,11 @@ public class PlayerBeatReciever : BeatReciever
     {
         
         
+    }
+
+    public override void OnPauseSongAction()
+    {
+        DanceAnimator.enabled = false;
     }
 
     public void ResetIdle()
