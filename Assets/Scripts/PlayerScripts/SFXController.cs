@@ -6,21 +6,23 @@ public class SFXController : MonoBehaviour
 {
     public void OnWalkingStep()
     {
-        PlaySFX(AudioManager.Instance.playerStepSFX);
+        if(null!=AudioManager.Instance)PlaySFX(AudioManager.Instance.playerStepSFX);
     }
 
     public void OnClappingEvent()
     {
-         PlaySFX(AudioManager.Instance.playerClapSFX);
+         if(null!=AudioManager.Instance)PlaySFX(AudioManager.Instance.playerClapSFX);
     }
 
     public void OnHardMove()
     {
         //To Implement
+        //if(null!=AudioManager.Instance)
     }
 
     private void PlaySFX(AudioClip clip)
     {
+        
         AudioSource oneShot = Instantiate<AudioSource>(AudioManager.Instance.SFXplayer);
         oneShot.volume = AudioManager.Instance.SFXsettings.Volume;
         oneShot.pitch = UnityEngine.Random.Range(AudioManager.Instance.SFXsettings.pitchMin, AudioManager.Instance.SFXsettings.pitchMax);

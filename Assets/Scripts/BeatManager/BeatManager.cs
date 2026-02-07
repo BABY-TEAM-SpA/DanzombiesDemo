@@ -159,7 +159,7 @@ public class BeatManager : MonoBehaviour
         _audioSource.PlayScheduled(dspSongStartTime);
 
         OnPlay?.Invoke(beatDuration);
-        PauseManager.Instance.PauseEvent.AddListener(OnPauseEvent);
+        if(PauseManager.Instance!=null)PauseManager.Instance.PauseEvent.AddListener(OnPauseEvent);
     }
 
     public void OnPauseEvent(bool pause)
