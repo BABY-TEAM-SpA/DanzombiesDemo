@@ -9,14 +9,18 @@ public class PulseObjectAnimatorController : BeatReciever
 
     public void Start()
     {
-        SetBeatDuration(BeatManager.Instance.beatDuration);
-        if( animatorOverrideController !=null){
-            foreach(Animator animator in DanceAnimators)
+        if (BeatManager.Instance != null)
+        {
+            SetBeatDuration(BeatManager.Instance.beatDuration);
+            if (animatorOverrideController != null)
             {
-                animator.runtimeAnimatorController = animatorOverrideController;
+                foreach (Animator animator in DanceAnimators)
+                {
+                    animator.runtimeAnimatorController = animatorOverrideController;
+                    animator.enabled = true;
+                }
             }
         }
-            
     }
 
     private void SetBeatDuration(float duration)
@@ -25,19 +29,25 @@ public class PulseObjectAnimatorController : BeatReciever
         base.OnPlaySongAction(currentBeatOnPlayer);
         foreach(Animator DanceAnimator in DanceAnimators)
         {
+            DanceAnimator.enabled = true;
             DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
-            DanceAnimator.SetTrigger("OnBeat");
+            //DanceAnimator.SetTrigger("OnBeat");
+            DanceAnimator.Play("Pulse");
         }
     }
     public override void OnPlaySongAction(float beatDuration)
     {
         SetBeatDuration(beatDuration);
+        
     }
 
     public override void OnPauseSongAction()
     {
-        SetBeatDuration(0f);
-        //DanceAnimator.SetTrigger("Stop");
+        //SetBeatDuration(0f);
+        foreach(Animator DanceAnimator in DanceAnimators)
+        {
+            DanceAnimator.enabled = false;
+        }
     }
 
     public override void BeatAction(int counter, int counterCompass)
@@ -45,7 +55,7 @@ public class PulseObjectAnimatorController : BeatReciever
         foreach(Animator DanceAnimator in DanceAnimators)
         {
             //DanceAnimator.SetTrigger("OnBeat");
-            DanceAnimator.Play("PulseAnimator");
+            DanceAnimator.Play("Pulse");
         }
     }
    

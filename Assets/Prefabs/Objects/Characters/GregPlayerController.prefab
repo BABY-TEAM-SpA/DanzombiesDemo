@@ -89,10 +89,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   playerMovCtrl: {fileID: 3968905282911785478}
   playerAnimCtrl: {fileID: 4086932025709530668}
-  isRightLooking: 0
+  isRightLooking: 1
   lifes: 3
-  NivelDeSeguridad: 0.5
-  Alza: 0.1
+  NivelDeSeguridad: 10
+  Alza: 1
   targetPuzzle: {fileID: 0}
 --- !u!114 &3968905282911785478
 MonoBehaviour:
@@ -109,7 +109,7 @@ MonoBehaviour:
   _danceBrain: {fileID: 6530795612346585224}
   AllowInput: 1
   speed: 10
-  acceleration: 15
+  acceleration: 25
   CanMove: 1
 --- !u!114 &3465130852895728156
 MonoBehaviour:
@@ -317,6 +317,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c8af23e4-db10-4f42-aff1-d33cfb1feeb2
     m_ActionName: 'Player/RightUp[/Keyboard/o]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ab0534c5-3b6c-4fd7-a4c2-267086d52174
+    m_ActionName: 'Player/PauseAction[/Keyboard/p,/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1bbfface-3afe-4f4a-834f-5567b761907f
+    m_ActionName: 'UI/PauseAction[/Keyboard/p,/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -363,6 +371,7 @@ GameObject:
   - component: {fileID: 6969242347076242797}
   - component: {fileID: 8122907570382711468}
   - component: {fileID: 4086932025709530668}
+  - component: {fileID: 2368539183560539363}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -509,4 +518,16 @@ MonoBehaviour:
   renderer: {fileID: 922934949481849677}
   animatorOverrideControllers:
   - {fileID: 22100000, guid: 2d677eb01c4cbe44783e36db47b288e4, type: 2}
-  - {fileID: 22100000, guid: 747b2f1f69d209544b9318d0727e280d, type: 2}
+  - {fileID: 22100000, guid: e4e1faaff2140ab42a17c2aeb06a34af, type: 2}
+--- !u!114 &2368539183560539363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527966112122585668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85de2aa6a58e8444db4366c73c2f8c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXController

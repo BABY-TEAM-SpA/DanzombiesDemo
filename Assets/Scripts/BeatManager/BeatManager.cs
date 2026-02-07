@@ -43,6 +43,7 @@ public class BeatManager : MonoBehaviour
     // Eventos por código
     public delegate void OnMusicEvent(float speed);
     public static event OnMusicEvent OnPlay;
+    public static event OnMusicEvent OnResume;
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
 
@@ -158,7 +159,7 @@ public class BeatManager : MonoBehaviour
         _audioSource.PlayScheduled(dspSongStartTime);
 
         OnPlay?.Invoke(beatDuration);
-        PauseManager.Instance.PauseEvent.AddListener(OnPauseEvent);
+        if(PauseManager.Instance!=null)PauseManager.Instance.PauseEvent.AddListener(OnPauseEvent);
     }
 
     public void OnPauseEvent(bool pause)

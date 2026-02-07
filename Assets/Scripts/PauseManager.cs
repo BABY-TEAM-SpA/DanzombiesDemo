@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -16,6 +19,15 @@ public class PauseManager : MonoBehaviour
     public bool canPause = false;
     
     public UnityEvent<bool> PauseEvent;
+    
+    
+    [Header("PauseSettings")]
+    [SerializeField] private TMP_Dropdown resolutionsDropdown;
+    private Resolution resolution;
+    [SerializeField] private Toggle fullscreenToggle;
+    private bool isFullscreen = false;
+    private List<Resolution> resolutions = new List<Resolution>();
+    private int SelectedResolution = 0;
 
     public static PauseManager Instance { get; private set; }
 
@@ -43,6 +55,24 @@ public class PauseManager : MonoBehaviour
             gameplayMap.FindAction("PauseAction", true).started += OnPausePressed;
             uiMap.FindAction("PauseAction", true).started += OnPausePressed;
         }
+    }
+
+    private void Start()
+    {
+        isFullscreen = Screen.fullScreen;
+        fullscreenToggle.isOn = isFullscreen;
+        List<string> resStrings = new List<string>();
+        foreach (Resolution res in Screen.resolutions)
+        {
+            string newRes = res.width.ToString() + "x" + res.height.ToString();
+            if (!resStrings.Contains(newRes))
+            {
+                resStrings.Add(newRes);
+                resolutions.Add(res);
+            }
+        }
+        resolutionsDropdown.AddOptions(resStrings);
+        
     }
 
     private void OnDestroy()
@@ -103,5 +133,15 @@ public class PauseManager : MonoBehaviour
     private void OnResumeStart()
     {
         uiMap.Disable();
+    }
+    public void OnResolutionUpdate()
+    {
+        SelectedResolution = resolutionsDropdown.value;
+        Screen.SetResolution(resolutions[SelectedResolution].width, resolutions[SelectedResolution].height, isFullscreen);
+    }
+    
+    public void OnFullScreenUpdate()
+    {
+        isFullscreen = fullscreenToggle.isOn;
     }
 }
