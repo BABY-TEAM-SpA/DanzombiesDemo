@@ -21,7 +21,9 @@ public abstract class BeatReciever: MonoBehaviour
         BeatManager.OnBeat += OnBeatEvent;
         BeatManager.OnPostBeat += OnPostBeatEvent;
         BeatManager.OnStop += OnStopEvent;
-        
+        BeatManager.OnPause+= OnPauseEvent;
+        BeatManager.OnResume += OnResumeEvent;
+
     }
 
     private void OnDisable()
@@ -32,6 +34,8 @@ public abstract class BeatReciever: MonoBehaviour
         BeatManager.OnBeat -= OnBeatEvent;
         BeatManager.OnPostBeat -= OnPostBeatEvent;
         BeatManager.OnStop -= OnStopEvent;
+        BeatManager.OnPause -= OnPauseEvent;
+        BeatManager.OnResume -= OnResumeEvent;
     }
     
     private void OnPlayEvent(float beatDuration)
@@ -42,6 +46,11 @@ public abstract class BeatReciever: MonoBehaviour
     private void OnPauseEvent(float beatDuration)
     {
         OnPauseSongAction();
+    }
+
+    private void OnResumeEvent(float beatDuration)
+    {
+        //OnResumeAction();
     }
     private void OnPreBeatEvent(int counter, int counterCompass)//(BeatType type)
     {

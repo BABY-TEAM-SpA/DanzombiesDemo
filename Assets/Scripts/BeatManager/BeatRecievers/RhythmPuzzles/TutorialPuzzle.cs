@@ -21,13 +21,13 @@ public class TutorialPuzzle : RhythmPuzzle
     private void Start()
     {
         Steph?.Connect(this);
-        player.OnDance += OnPlayerInputAction;
+        //player.OnDance += OnPlayerInputAction;
     }
 
     private void OnDisable()
     {
         Steph?.Disconnect(this);
-        player.OnDance -= OnPlayerInputAction;
+        //player.OnDance -= OnPlayerInputAction;
     }
     public override void ActivatePuzzle(bool activate)
     {
@@ -37,7 +37,7 @@ public class TutorialPuzzle : RhythmPuzzle
     }
     
     
-    public override void PlayerDanceReaction(bool IsPlayerDanceCorrect)
+    public void PlayerDanceReaction(bool IsPlayerDanceCorrect)
     {
         if (feedBack != null)
         {
@@ -74,6 +74,5 @@ public class TutorialPuzzle : RhythmPuzzle
             DanceSteps = TutorialSteps[currentTutorialStepIndex].DanceSteps;
             OnSequenceCompletedEvent?.Invoke();
         }
-
     }
 }

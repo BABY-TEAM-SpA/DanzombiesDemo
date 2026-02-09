@@ -1,16 +1,26 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
+
+[Serializable]
+public class SoundSettings
+{
+    [Range(0f, 1f)]public float Volume;
+    [Range(0.5f, 1f)]public float pitchMin;
+    [Range(1f, 1.5f)]public float pitchMax;
+}
+
+
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource _MusicSource;
-    [SerializeField] private AudioSource _SFXSource;
-    
-    public float minPitch = 0.8f;
-    public float maxPitch = 1.2f;
-   
+    public SoundSettings MusicSettings = new SoundSettings();
+    public SoundSettings SFXsettings = new SoundSettings();
+
+    public AudioSource SFXplayer;
+    public AudioClip playerStepSFX;
+    public AudioClip playerClapSFX;
+
+
     public static AudioManager Instance { get; private set; }
     private void Awake() 
     { 
@@ -23,33 +33,8 @@ public class AudioManager : MonoBehaviour
         else 
         { 
             Instance = this;
-            //DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
         
     }
-
-    public void PlayMusic(AudioClip clip)
-    {
-        _MusicSource.clip = clip;
-        _MusicSource.Play();
-    }
-
-
-    public void PlaySFX(AudioClip clip, bool randomPitch = true)
-    {
-        if (randomPitch)
-        {
-            AudioSource audioSource = this.gameObject.AddComponent<AudioSource>();
-            audioSource.pitch = Random.Range(minPitch, maxPitch);
-            //audioSource.volume = GeneralVolume;
-            audioSource.clip = clip;
-            audioSource.Play();
-            Destroy(audioSource, clip.length / Math.Abs(audioSource.pitch));
-        }
-        else
-        {
-            _SFXSource.PlayOneShot(clip);
-        }
-    }
-    
 }
