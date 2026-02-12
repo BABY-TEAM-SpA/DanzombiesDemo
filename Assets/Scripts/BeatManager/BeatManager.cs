@@ -12,23 +12,28 @@ public enum BeatType
 
 public class BeatManager : MonoBehaviour
 {
-    
+
     public bool ActiveOnStart = false;
 
     [Header("Sincronización")] /////////////////////////////////////////////////////////
-    [Range(0f, 0.4f)] public double margen = 0.25d;
+    [Range(0f, 0.4f)]
+    public double margen = 0.25d;
+
     public bool onMargen { get; private set; }
     public double beatDuration { get; private set; } = 0d;
     public int counter { get; private set; } = 0;
 
-    private bool canPre =true;
+    private bool canPre = true;
     private bool canBeat;
     private bool canPost;
-    
+
     [Header("Eventos por Inspector")] /////////////////////////////////////////////////////////
     public UnityEvent<int> onPreBeatInspector;
+
     public UnityEvent<int> onBeatInspector;
     public UnityEvent<int> onPostBeatInspector;
+    public delegate void OnUpdate(double bpm);
+    public static event OnUpdate OnUpdateEvent;
     public delegate void OnBeatEvent(int counter);
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
@@ -49,7 +54,23 @@ public class BeatManager : MonoBehaviour
 
     public void Start()
     {
-        if(ActiveOnStart) ResetBeatManager();
+        //if(ActiveOnStart) ResetBeatManager();
+    }
+
+    public void OnEnable()
+    {
+        AudioManager.OnPlay += OnPlayEvent;
+        //AudioManager.OnStop += OnStopEvent;
+        //AudioManager.OnPause+= OnPauseEvent;
+        //AudioManager.OnResume += OnResumeEvent;
+    }
+
+    public void OnDisable()
+    {
+        AudioManager.OnPlay -= OnPlayEvent;
+        //AudioManager.OnStop += OnStopEvent;
+        //AudioManager.OnPause+= OnPauseEvent;
+        //AudioManager.OnResume += OnResumeEvent;
     }
 
     void Update()
@@ -57,7 +78,6 @@ public class BeatManager : MonoBehaviour
         if (AudioManager.Instance.IsPlaying())
         {
             double currentSongTime = AudioSettings.dspTime - AudioManager.Instance.dspSongStartTime;
-            beatDuration = AudioManager.Instance.beatDuration;
 
             // Comprobación de eventos
             if (currentSongTime >= (( beatDuration * counter) - beatDuration * margen) && canPre)
@@ -75,12 +95,18 @@ public class BeatManager : MonoBehaviour
         }
     }
 
+    void OnPlayEvent()
+    {
+        ResetBeatManager();
+        OnUpdateEvent?.Invoke(beatDuration);
+    }
+
     void PreBeat()
     {
         canPre = false;
         onMargen = true;
-        OnPreBeat?.Invoke((counter));
-        onPreBeatInspector?.Invoke((counter));
+        OnPreBeat?.Invoke((counter-1));
+        onPreBeatInspector?.Invoke((counter-1));
 
         canBeat = true;
     }
@@ -89,8 +115,8 @@ public class BeatManager : MonoBehaviour
     {
         canBeat = false;
         //Debug.Log("Beat " +counter+" at "+ AudioSettings.dspTime.ToString());
-        OnBeat?.Invoke((counter));
-        onBeatInspector?.Invoke((counter));
+        OnBeat?.Invoke((counter-1));
+        onBeatInspector?.Invoke((counter-1));
         canPost = true;
         
     }
@@ -112,7 +138,8 @@ public class BeatManager : MonoBehaviour
         canPre =false;
         canBeat = true;
         canPost = false;
-        counter = 0;
-        beatDuration = 0d;
+        counter = 1;
+        beatDuration = AudioManager.Instance.beatDuration;
+        
     }
 }
