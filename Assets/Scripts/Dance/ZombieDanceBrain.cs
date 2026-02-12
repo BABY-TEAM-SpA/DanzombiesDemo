@@ -31,6 +31,7 @@ public class ZombieDanceBrain : DanceBrain
         {
             string orientation = step.ToString().Remove(0,2);
             playerAnimCtrl?.animator.SetBool("DanceStep"+orientation[0],true);
+            //Debug.Log("____________Zombie Danced "+step.ToString()+" at "+ AudioSettings.dspTime.ToString());
             playerAnimCtrl?.animator.SetTrigger("Dance");
         }
     }

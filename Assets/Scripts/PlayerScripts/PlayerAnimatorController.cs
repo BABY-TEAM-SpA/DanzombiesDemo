@@ -8,17 +8,19 @@ public class PlayerAnimatorController : MonoBehaviour
 {
     [SerializeField] private DanceBrain _danceBrain;
     [SerializeField] public Animator animator;
-    [SerializeField] private SpriteRenderer renderer;
+    //[SerializeField] private SpriteRenderer renderer;
     [SerializeField] private AnimatorOverrideController[] animatorOverrideControllers;
+    private double currentBeatOnPlayer = 0d;
 
     private void Start()
     {
         SetAnimatorOverrideDirection(_danceBrain.isRightLooking);
+        
     }
     
     public void OnNorthButtonPressed(InputAction.CallbackContext context)
     {
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
         if (context.started)
         {
             animator.SetBool("DanceStepS",false);
@@ -40,7 +42,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void OnSouthButtonPressed(InputAction.CallbackContext context)
     {
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
         if (context.started)
         {
             animator.SetBool("DanceStepN",false);
@@ -62,7 +64,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void OnWestButtonPressed(InputAction.CallbackContext context)
     {
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
         if (context.started)
         {
             animator.SetBool("DanceStepN",false);
@@ -84,7 +86,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void OnEastButtonPressed(InputAction.CallbackContext context)
     {
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
 
         if (context.started)
         {
@@ -107,7 +109,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void OnLeftUPButtonPressed(InputAction.CallbackContext context)
     {
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
         if (context.started)
         {
             animator.SetBool("RightDanceDir",false);
@@ -125,7 +127,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void OnRightUPButtonPressed(InputAction.CallbackContext context)
     {
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
         if (context.started)
         {
             animator.SetBool("LeftDanceDir",false);
@@ -143,10 +145,10 @@ public class PlayerAnimatorController : MonoBehaviour
         }
     }
     
-    public void OnIDLE()
+    public void OnPulse()
     {
-        animator.ResetTrigger("Idle");
-        animator.SetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
+        animator.SetTrigger("Pulse");
         
     }
     public void OnMoving(float moving)
@@ -154,7 +156,7 @@ public class PlayerAnimatorController : MonoBehaviour
         bool walking = moving>0.1;
         if (walking)
         {
-            animator.ResetTrigger("Idle");
+            animator.ResetTrigger("Pulse");
         }
         animator.SetBool("Walking", walking);
     }
@@ -171,7 +173,7 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         _danceBrain.EnableMovement(true);
         _danceBrain.OnDance(DanceStep.None);
-        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
         animator.ResetTrigger("Dance");
     }
 
@@ -179,4 +181,12 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         animator.runtimeAnimatorController = animatorOverrideControllers[isRight?0:1];
     }
+    private void SetBeatDuration()
+    {
+        currentBeatOnPlayer = AudioManager.Instance.beatDuration;
+        animator.enabled = true;
+        animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
+    }
+    
+    
 }

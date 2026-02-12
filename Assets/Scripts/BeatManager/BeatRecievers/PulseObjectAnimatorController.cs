@@ -1,62 +1,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class PulseObjectAnimatorController : BeatReciever
 {
-    [SerializeField] List<Animator> DanceAnimators = new List<Animator>();
-    private float currentBeatOnPlayer = 0f;
+    
+    private double currentBeatOnPlayer = 0d;
+    [SerializeField]  Animator animator ;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
-
-    public void Start()
+    
+    public void Awake()
     {
-        if (BeatManager.Instance != null)
-        {
-            SetBeatDuration(BeatManager.Instance.beatDuration);
-            if (animatorOverrideController != null)
-            {
-                foreach (Animator animator in DanceAnimators)
-                {
-                    animator.runtimeAnimatorController = animatorOverrideController;
-                    animator.enabled = true;
-                }
-            }
+        animator = GetComponent<Animator>();
+        if (animatorOverrideController != null)
+        { 
+            animator.runtimeAnimatorController = animatorOverrideController;
+            animator.enabled = true;
         }
     }
 
-    private void SetBeatDuration(float duration)
+    public override void BeatAction(int counter)
     {
-        currentBeatOnPlayer = duration;
-        base.OnPlaySongAction(currentBeatOnPlayer);
-        foreach(Animator DanceAnimator in DanceAnimators)
-        {
-            DanceAnimator.enabled = true;
-            DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
-            //DanceAnimator.SetTrigger("OnBeat");
-            DanceAnimator.Play("Pulse");
-        }
+        animator.Play("Pulse");
+        //Debug.Log(transform.name +": Pulsed at "+ AudioSettings.dspTime);
     }
-    public override void OnPlaySongAction(float beatDuration)
+    
+    public override void OnPlaySongAction()
     {
-        SetBeatDuration(beatDuration);
-        
+        SetBeatDuration();
     }
-
+    private void SetBeatDuration()
+    {
+        currentBeatOnPlayer = AudioManager.Instance.beatDuration;
+        animator.enabled = true;
+        animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
+    }
     public override void OnPauseSongAction()
     {
-        //SetBeatDuration(0f);
-        foreach(Animator DanceAnimator in DanceAnimators)
-        {
-            DanceAnimator.enabled = false;
-        }
+        animator.enabled = false;
     }
 
-    public override void BeatAction(int counter, int counterCompass)
+    public void ResetIdle()
     {
-        foreach(Animator DanceAnimator in DanceAnimators)
-        {
-            //DanceAnimator.SetTrigger("OnBeat");
-            DanceAnimator.Play("Pulse");
-        }
+        animator.ResetTrigger("Pulse");
     }
+
    
 }

@@ -31,6 +31,7 @@ public class PlayerManager : DanceBrain
         float value =Mathf.Clamp((danho)?NivelDeSeguridad-Alza:NivelDeSeguridad+Alza,-1f,10f);
         if (value <= Alza)
         {
+            NivelDeSeguridad = value;
             //Restar un corazon y hacer invulnerable
             targetPuzzle.PlayerLeave(this);
             GetLifeDamage(true);

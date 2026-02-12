@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _danceBrain: {fileID: 6530795612346585224}
   AllowInput: 1
-  speed: 10
+  Speed: 15
   acceleration: 25
   CanMove: 1
 --- !u!114 &3465130852895728156
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DanceAnimator: {fileID: 6969242347076242797}
+  animator: {fileID: 0}
 --- !u!114 &3308144933667447571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +369,6 @@ GameObject:
   - component: {fileID: 922934949481849677}
   - component: {fileID: 4476923910232832655}
   - component: {fileID: 6969242347076242797}
-  - component: {fileID: 8122907570382711468}
   - component: {fileID: 4086932025709530668}
   - component: {fileID: 2368539183560539363}
   m_Layer: 0
@@ -488,19 +487,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8122907570382711468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3527966112122585668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 381be946daf32734093a04c01d3afc59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 4086932025709530668}
 --- !u!114 &4086932025709530668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,7 +501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _danceBrain: {fileID: 6530795612346585224}
   animator: {fileID: 6969242347076242797}
-  renderer: {fileID: 922934949481849677}
   animatorOverrideControllers:
   - {fileID: 22100000, guid: 2d677eb01c4cbe44783e36db47b288e4, type: 2}
   - {fileID: 22100000, guid: e4e1faaff2140ab42a17c2aeb06a34af, type: 2}

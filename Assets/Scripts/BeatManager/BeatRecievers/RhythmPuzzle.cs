@@ -59,7 +59,7 @@ public class RhythmPuzzle : BeatReciever
         if (ActivateOnStart) ActivatePuzzle(true);
     }
 
-    private DanceStep GetDanceStep(int counter, int counterCompass)
+    private DanceStep GetDanceStep(int counter)
     {
         // recibi un -1
         if(counter<0) return DanceStep.None;
@@ -82,24 +82,25 @@ public class RhythmPuzzle : BeatReciever
         OnRhythmPuzzleStartedEvent?.Invoke();
     }
     
-    public override void PreBeatAction(int counter, int counterCompass)
+    public override void PreBeatAction(int counter)
     {
         if (isActive)
         {
-            currentPuzzleStep = GetDanceStep(counter, counterCompass);
+            currentPuzzleStep = GetDanceStep(counter);
             OnPrepareStep?.Invoke(currentPuzzleStep);
         }
     }
 
-    public override void BeatAction(int counter, int counterCompass)
+    public override void BeatAction(int counter)
     {
         if (isActive)
         {
+            //Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+ AudioSettings.dspTime.ToString());
             OnDanceStep?.Invoke(currentPuzzleStep);
-            VisualFeedback(counter, counterCompass);
+            VisualFeedback(counter);
         }
     }
-    public override void PostBeatAction(int counter, int counterCompass)
+    public override void PostBeatAction(int counter)
     {
         if (isActive)
         {
@@ -111,7 +112,7 @@ public class RhythmPuzzle : BeatReciever
         }
     }
 
-    public virtual void VisualFeedback(int counter, int counterCompass)
+    public virtual void VisualFeedback(int counter)
     {
         // To implement in Sons
     }

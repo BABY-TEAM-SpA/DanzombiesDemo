@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DanceBrain : MonoBehaviour
+public abstract class DanceBrain : MonoBehaviour
 {
     [SerializeField] protected PlayerMovementController playerMovCtrl;
     [SerializeField] protected PlayerAnimatorController playerAnimCtrl;
@@ -15,6 +15,7 @@ public class DanceBrain : MonoBehaviour
 
     public virtual void OnDance(DanceStep step)
     {
+        
     }
 
     public void OnMoving(float speed)
@@ -30,6 +31,6 @@ public class DanceBrain : MonoBehaviour
             isRightLooking = isRight;
             playerAnimCtrl.SetAnimatorOverrideDirection(isRight);
         }
-        
     }
+    
 }

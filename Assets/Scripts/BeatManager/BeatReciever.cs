@@ -15,77 +15,78 @@ public abstract class BeatReciever: MonoBehaviour
 
     private void OnEnable()
     {
-        BeatManager.OnPlay += OnPlayEvent;
-        BeatManager.OnPause += OnPauseEvent;
+        AudioManager.OnPlay += OnPlayEvent;
+        AudioManager.OnPause += OnPauseEvent;
         BeatManager.OnPreBeat += OnPreBeatEvent;
         BeatManager.OnBeat += OnBeatEvent;
         BeatManager.OnPostBeat += OnPostBeatEvent;
-        BeatManager.OnStop += OnStopEvent;
-        BeatManager.OnPause+= OnPauseEvent;
-        BeatManager.OnResume += OnResumeEvent;
+        AudioManager.OnStop += OnStopEvent;
+        AudioManager.OnPause+= OnPauseEvent;
+        AudioManager.OnResume += OnResumeEvent;
 
     }
 
     private void OnDisable()
     {
-        BeatManager.OnPlay -= OnPlayEvent;
-        BeatManager.OnPause -= OnPauseEvent;
+        AudioManager.OnPlay -= OnPlayEvent;
+        AudioManager.OnPause -= OnPauseEvent;
         BeatManager.OnPreBeat -= OnPreBeatEvent;
         BeatManager.OnBeat -= OnBeatEvent;
         BeatManager.OnPostBeat -= OnPostBeatEvent;
-        BeatManager.OnStop -= OnStopEvent;
-        BeatManager.OnPause -= OnPauseEvent;
-        BeatManager.OnResume -= OnResumeEvent;
+        AudioManager.OnStop -= OnStopEvent;
+        AudioManager.OnPause -= OnPauseEvent;
+        AudioManager.OnResume -= OnResumeEvent;
     }
     
-    private void OnPlayEvent(float beatDuration)
+    private void OnPlayEvent()//double beatDuration)
     {
-        OnPlaySongAction(beatDuration);
+        
+        OnPlaySongAction();
     }
 
-    private void OnPauseEvent(float beatDuration)
+    private void OnPauseEvent()//double beatDuration)
     {
         OnPauseSongAction();
     }
 
-    private void OnResumeEvent(float beatDuration)
+    private void OnResumeEvent()//double beatDuration)
     {
-        //OnResumeAction();
+        OnResumeAction();
     }
-    private void OnPreBeatEvent(int counter, int counterCompass)//(BeatType type)
+    private void OnPreBeatEvent(int counter)//(BeatType type)
     {
         /*if (type == myBeatType)
         {
             PreBeatAction();
         }*/
-        PreBeatAction(counter, counterCompass);
+        PreBeatAction(counter);
     }
     
-    private void OnBeatEvent(int counter, int counterCompass) //(BeatType type)
+    private void OnBeatEvent(int counter ) //(BeatType type)
     {
         /*if (type == myBeatType)
         {
             BeatAction();
         }*/
-        BeatAction(counter, counterCompass);
+        BeatAction(counter);
     }
 
-    private void OnPostBeatEvent(int counter, int counterCompass) //(BeatType type)
+    private void OnPostBeatEvent(int counter) //(BeatType type)
     {
         /*if (type == myBeatType)
         {
             PostBeatAction();
         }*/
-        PostBeatAction(counter, counterCompass);
+        PostBeatAction(counter);
     }
 
-    private void OnStopEvent(float beatDuration)
+    private void OnStopEvent()//double beatDuration)
     {
         OnStopSongAction();
     }
     
     ///////////--- virtual Actions Management ---///////////
-    public virtual void OnPlaySongAction(float beatDuration)
+    public virtual void OnPlaySongAction()//double beatDuration)
     {
         /// implement when Song Plays;
     }
@@ -93,20 +94,20 @@ public abstract class BeatReciever: MonoBehaviour
     {
         /// implement when Song Pause;
     }
-    public virtual void CompassAction()
+
+    public virtual void OnResumeAction()
     {
-        // implement On first beat of Compass
+        /// implement when Song Resume;
     }
-    public virtual void PreBeatAction(int counter, int counterCompass)
+    public virtual void PreBeatAction(int counter)
     {
         /// implement On: the beat-margen
     }
-    public virtual void BeatAction(int counter, int counterCompass)
+    public virtual void BeatAction(int counter)
     {
-        if(counterCompass == 0)CompassAction();
         /// implement On: the beat;
     }
-    public virtual void PostBeatAction(int counter, int counterCompass)
+    public virtual void PostBeatAction(int counter)
     {
         /// implement On: the beat+margen;
     }

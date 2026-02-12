@@ -5,7 +5,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private DanceBrain _danceBrain;
     [SerializeField] private bool AllowInput = false;
-    [SerializeField] private float speed = 15f;
+    [SerializeField] private float Speed = 15f;
     [Range(0,50)]public float acceleration;
     private Vector3 direction;
     public bool CanMove = false;
@@ -39,7 +39,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (CanMove)
         {
-            velocity = Vector3.Lerp(velocity, direction * speed, acceleration * Time.deltaTime);
+            velocity = Vector3.Lerp(velocity, direction * Speed, acceleration * Time.deltaTime);
         }
         else
         {
@@ -61,6 +61,6 @@ public class PlayerMovementController : MonoBehaviour
     
     public void SetSpeed(float speed=10f)
     {
-        speed = speed;
+        Speed = speed;
     }
 }
