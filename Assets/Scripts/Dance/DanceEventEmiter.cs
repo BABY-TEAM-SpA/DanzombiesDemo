@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerDanceEmiter : MonoBehaviour
+public class DanceEventEmiter : MonoBehaviour
 {
-    
     [SerializeField] PlayerAnimatorController playerAnimator;
     public UnityAction OnEnterAnimationEnd;
     
@@ -21,5 +20,4 @@ public class PlayerDanceEmiter : MonoBehaviour
     {
         playerAnimator.OnStandAction();
     }
-
 }

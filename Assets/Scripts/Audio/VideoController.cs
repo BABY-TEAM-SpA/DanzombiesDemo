@@ -29,7 +29,7 @@ public class VideoController : MonoBehaviour
     {
         videoPlayer.clip = videoClip;
         videoPlayer.Play();
-        if (shouldStopMusic) BeatManager.Instance.StopSong();
+        if (shouldStopMusic) AudioManager.Instance.StopSong();
     }
     void OnVideoEnd(VideoPlayer vp)
     {

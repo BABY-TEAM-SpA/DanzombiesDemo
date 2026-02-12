@@ -3,50 +3,40 @@ using UnityEngine;
 
 public class PlayerBeatReciever : BeatReciever
 {
-    [SerializeField] Animator DanceAnimator;
-    private float currentBeatOnPlayer = 0f;
+    [SerializeField] Animator animator;
+    private double currentBeatOnPlayer = 0d;
 
-    public void Start()
+    public override void OnPlaySongAction()//double beatDuration)
     {
-        if(BeatManager.Instance!=null) SetBeatDuration(BeatManager.Instance.beatDuration);
+        animator.enabled = true;
+        SetBeatDuration();
     }
-
-    private void SetBeatDuration(float duration)
+    
+    private void SetBeatDuration()
     {
-        currentBeatOnPlayer = duration;
-        base.OnPlaySongAction(currentBeatOnPlayer);
-        if (DanceAnimator != null)
+        currentBeatOnPlayer = AudioManager.Instance.beatDuration;
+        if (animator != null)
         {
             //Debug.Log("Playing Dance Animator");
-            DanceAnimator.SetFloat("Beat",(1f/currentBeatOnPlayer));
+            animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
         }
     }
-    public override void OnPlaySongAction(float beatDuration)
-    {
-        DanceAnimator.enabled = true;
-        SetBeatDuration(beatDuration);
-    }
 
-    public override void BeatAction(int counter, int counterCompass)
+    public override void BeatAction(int counter)
     {
-        base.BeatAction(counter, counterCompass);
-        DanceAnimator.SetTrigger("Idle");
+        base.BeatAction(counter);
+        animator.SetTrigger("Pulse");
         //Invoke("ResetIdle",0.1f);
     }
-
-    public override void CompassAction()
-    {
-        
-        
-    }
+    
 
     public override void OnPauseSongAction()
     {
-        DanceAnimator.enabled = false;
+        animator.enabled = false;
     }
 
     public void ResetIdle()
     {
-        DanceAnimator.ResetTrigger("Idle");
+        animator.ResetTrigger("Pulse");
     }
 }

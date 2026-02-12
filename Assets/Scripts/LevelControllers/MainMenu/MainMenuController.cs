@@ -12,6 +12,18 @@ public class MainMenuController : MonoBehaviour
         animator.SetTrigger("Animate");
     }
 
+    public void PlayGame()
+    {
+        SceneChangeController.Instance.LoadScene("TutorialVideo", true,true);
+    }
+    
+    
+    public void LoadCredits()
+    {
+        SceneChangeController.Instance.LoadScene("Credits", true,true);
+    }
+    
+
     public void ExitGame()
     {
         #if UNITY_EDITOR

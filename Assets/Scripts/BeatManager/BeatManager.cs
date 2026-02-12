@@ -10,59 +10,32 @@ public enum BeatType
     Redonda
 }
 
-[Serializable]
-public class SongsData
-{
-    public AudioClip song;
-    public int bpm = 120;
-    public bool shouldLoop = true;
-    public int Metrica = 4; // m/4
-    public int compasesTotales;
-}
-
 public class BeatManager : MonoBehaviour
 {
-    [Header("Audio")] 
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] public SongsData currentSongData { get; private set; }
     
-    private Queue<SongsData> playlist = new Queue<SongsData>();
+    public bool ActiveOnStart = false;
 
-    [Header("Sincronización")]
-    [Range(0f, 0.5f)] public float margen = 0.25f;
-    public int subdivisiones = 1; // 1 = negras, 2 = corcheas, etc.
+    [Header("Sincronización")] /////////////////////////////////////////////////////////
+    [Range(0f, 0.4f)] public double margen = 0.25d;
     public bool onMargen { get; private set; }
-    public float beatDuration { get; private set; }
-    public int metrica { get; private set; }
+    public double beatDuration { get; private set; } = 0d;
+    public int counter { get; private set; } = 0;
 
-    [Header("Eventos por Inspector")]
-    public UnityEvent<int,int> onPreBeatInspector;
-    public UnityEvent<int,int> onBeatInspector;
-    public UnityEvent<int,int> onPostBeatInspector;
-
-    // Eventos por código
-    public delegate void OnMusicEvent(float speed);
-    public static event OnMusicEvent OnPlay;
-    public static event OnMusicEvent OnResume;
-    public static event OnMusicEvent OnPause;
-    public static event OnMusicEvent OnStop;
-
-    public delegate void OnBeatEvent(int counter, int metricaCounter);
+    private bool canPre =true;
+    private bool canBeat;
+    private bool canPost;
+    
+    [Header("Eventos por Inspector")] /////////////////////////////////////////////////////////
+    public UnityEvent<int> onPreBeatInspector;
+    public UnityEvent<int> onBeatInspector;
+    public UnityEvent<int> onPostBeatInspector;
+    public delegate void OnBeatEvent(int counter);
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
-
-    // Estado interno
-    private int counter;
-    private bool canPre;
-    private bool canBeat;
-    private bool canPost;
-
-    // DSP timing
-    private double dspSongStartTime;
-    private float songTime;
-    private float lastSongTime;
     public static BeatManager Instance { get; private set; }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Awake()
     {
@@ -74,37 +47,31 @@ public class BeatManager : MonoBehaviour
         Instance = this;
     }
 
+    public void Start()
+    {
+        if(ActiveOnStart) ResetBeatManager();
+    }
+
     void Update()
     {
-        if (_audioSource.isPlaying)
+        if (AudioManager.Instance.IsPlaying())
         {
-            songTime = (float)(AudioSettings.dspTime - dspSongStartTime);
-            if (songTime < lastSongTime)
-            {
-                counter = 0;
-                canPre = false;
-                canBeat = true;
-                canPost = false;
-            }
-            lastSongTime = songTime;
+            double currentSongTime = AudioSettings.dspTime - AudioManager.Instance.dspSongStartTime;
+            beatDuration = AudioManager.Instance.beatDuration;
 
             // Comprobación de eventos
-            if (songTime >= ((beatDuration * counter) - beatDuration * margen) && canPre)
+            if (currentSongTime >= (( beatDuration * counter) - beatDuration * margen) && canPre)
             {
                 PreBeat();
             }
-            else if (songTime >= beatDuration * counter && canBeat)
+            else if (currentSongTime >= beatDuration * counter && canBeat)
             {
                 Beat();
             }
-            else if (songTime >= ((beatDuration * counter) + beatDuration * margen) && canPost)
+            else if (currentSongTime >= ((beatDuration * counter) + beatDuration * margen) && canPost)
             {
                 PostBeat();
             }
-        }
-        else
-        {
-            OnSongEndedOrStopped();
         }
     }
 
@@ -112,9 +79,8 @@ public class BeatManager : MonoBehaviour
     {
         canPre = false;
         onMargen = true;
-
-        if(counter>0)OnPreBeat?.Invoke((counter-1), (counter-1)%metrica);
-        if(counter>0)onPreBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
+        OnPreBeat?.Invoke((counter));
+        onPreBeatInspector?.Invoke((counter));
 
         canBeat = true;
     }
@@ -122,107 +88,31 @@ public class BeatManager : MonoBehaviour
     void Beat()
     {
         canBeat = false;
-        Debug.Log(counter-1);
-        if(counter>0)OnBeat?.Invoke((counter-1),(counter-1)%metrica);
-        if(counter>0)onBeatInspector?.Invoke((counter-1), (counter-1)%metrica);
-
+        //Debug.Log("Beat " +counter+" at "+ AudioSettings.dspTime.ToString());
+        OnBeat?.Invoke((counter));
+        onBeatInspector?.Invoke((counter));
         canPost = true;
+        
     }
 
     void PostBeat()
     {
         onMargen = false;
-
-        if(counter>0)OnPostBeat?.Invoke((counter-1),(counter-1)% metrica);
-        if(counter>0)onPostBeatInspector?.Invoke((counter-1), (counter-1) % metrica);
+        OnPostBeat?.Invoke((counter-1));
+        onPostBeatInspector?.Invoke((counter-1));
 
         counter += 1;
         canPost = false;
         canPre = true;
     }
 
-    public void PlaySongData(SongsData songData)
+    public void ResetBeatManager()
     {
-        if (songData == null || songData.song == null || songData.bpm <= 0)
-        {
-            Debug.LogError("Datos de canción inválidos");
-            return;
-        }
-
-        SetAudioSource(songData);
-        dspSongStartTime = AudioSettings.dspTime;
         onMargen = false;
-        canPre = false;
+        canPre =false;
         canBeat = true;
         canPost = false;
-
-        _audioSource.PlayScheduled(dspSongStartTime);
-
-        OnPlay?.Invoke(beatDuration);
-        if(PauseManager.Instance!=null)PauseManager.Instance.PauseEvent.AddListener(OnPauseEvent);
-    }
-
-    public void OnPauseEvent(bool pause)
-    {
-        
-        if (pause)
-        {
-            PauseSong();
-        }
-        else
-        {
-            ResumeSong();
-        }
-    }
-    
-    public void PauseSong()
-    {
-        _audioSource.Pause();
-        OnPause?.Invoke(beatDuration);
-    }
-
-    public void ResumeSong()
-    {
-        dspSongStartTime = AudioSettings.dspTime - songTime;
-        _audioSource.Play();
-        OnPlay?.Invoke(beatDuration);
-    }
-
-    public void StopSong()
-    {
-        _audioSource.Stop();
-        OnStop?.Invoke(beatDuration);
-    }
-
-    private void OnSongEndedOrStopped()
-    {
-        if (playlist.Count > 0)
-        {
-            PlaySongData(playlist.Dequeue());
-        }
-        else
-        {
-            OnStop?.Invoke(beatDuration);
-        }
-    }
-
-    private void SetAudioSource(SongsData data)
-    {
-        currentSongData = data;
-        _audioSource.clip = data.song;
-        _audioSource.loop = data.shouldLoop;
-        beatDuration = (60f / currentSongData.bpm) / subdivisiones;
-        metrica = currentSongData.Metrica;
         counter = 0;
-    }
-
-    public void AddToPlaylist(SongsData song)
-    {
-        if (song != null) playlist.Enqueue(song);
-    }
-
-    public bool IsPlaying()
-    {
-        return _audioSource.isPlaying;
+        beatDuration = 0d;
     }
 }

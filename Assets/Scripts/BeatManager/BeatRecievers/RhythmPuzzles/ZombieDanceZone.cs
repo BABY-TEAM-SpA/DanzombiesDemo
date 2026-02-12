@@ -42,7 +42,7 @@ public class ZombieDanceZone : RhythmPuzzle
             PlayerLeave(player);
         }
     }
-    public override void VisualFeedback(int counter, int counterCompass)
+    public override void VisualFeedback(int counter)
     {
         /*int aux = counter;
         if (ShouldRepeat) aux = counter % defaultColors.Length;
