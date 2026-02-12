@@ -39,7 +39,6 @@ public class RhythmPuzzle : BeatReciever
     [SerializeField] protected List<DanceStep> DanceSteps = new List<DanceStep>();
     [SerializeField] protected DanceStep currentPuzzleStep = DanceStep.None;
     
-    
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
     public event OnMusicEvent OnDanceStep;
@@ -53,6 +52,9 @@ public class RhythmPuzzle : BeatReciever
     
     [Header("Players")]
     protected List<PlayerManager> playersInside = new List<PlayerManager>();
+    
+    [Header("Admin")]
+    [SerializeField] protected bool debug;
 
     private void Awake()
     {
@@ -95,7 +97,7 @@ public class RhythmPuzzle : BeatReciever
     {
         if (isActive)
         {
-            //Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+ AudioSettings.dspTime.ToString());
+            if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
             OnDanceStep?.Invoke(currentPuzzleStep);
             VisualFeedback(counter);
         }
@@ -154,4 +156,5 @@ public class RhythmPuzzle : BeatReciever
         
         //To implement in Sons
     }
+    
 }

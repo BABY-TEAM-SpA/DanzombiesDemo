@@ -5,7 +5,6 @@ using UnityEngine;
 public class PulseObjectAnimatorController : BeatReciever
 {
     
-    private double currentBeatOnPlayer = 0d;
     [SerializeField]  Animator animator ;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
     
@@ -25,15 +24,14 @@ public class PulseObjectAnimatorController : BeatReciever
         //Debug.Log(transform.name +": Pulsed at "+ AudioSettings.dspTime);
     }
     
-    public override void OnPlaySongAction()
+    public override void OnUpdateSongAction()
     {
+        animator.enabled=true;
         SetBeatDuration();
     }
     private void SetBeatDuration()
     {
-        currentBeatOnPlayer = AudioManager.Instance.beatDuration;
-        animator.enabled = true;
-        animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
+        animator.SetFloat("Beat",(float)(1f/this.beatTime));
     }
     public override void OnPauseSongAction()
     {

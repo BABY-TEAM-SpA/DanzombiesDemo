@@ -4,9 +4,8 @@ using UnityEngine;
 public class PlayerBeatReciever : BeatReciever
 {
     [SerializeField] Animator animator;
-    private double currentBeatOnPlayer = 0d;
 
-    public override void OnPlaySongAction()//double beatDuration)
+    public override void OnUpdateSongAction()
     {
         animator.enabled = true;
         SetBeatDuration();
@@ -14,11 +13,10 @@ public class PlayerBeatReciever : BeatReciever
     
     private void SetBeatDuration()
     {
-        currentBeatOnPlayer = AudioManager.Instance.beatDuration;
         if (animator != null)
         {
             //Debug.Log("Playing Dance Animator");
-            animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
+            animator.SetFloat("Beat",(float)(1f/beatTime));
         }
     }
 

@@ -12,36 +12,30 @@ public abstract class BeatReciever: MonoBehaviour
     //public BeatType myBeatType;
     
     ///////////--- Events Management ---///////////
+    protected double beatTime=1d;
 
     private void OnEnable()
     {
-        AudioManager.OnPlay += OnPlayEvent;
-        AudioManager.OnPause += OnPauseEvent;
+        BeatManager.OnUpdateEvent += OnUpdateSongEvent;
         BeatManager.OnPreBeat += OnPreBeatEvent;
         BeatManager.OnBeat += OnBeatEvent;
         BeatManager.OnPostBeat += OnPostBeatEvent;
-        AudioManager.OnStop += OnStopEvent;
-        AudioManager.OnPause+= OnPauseEvent;
-        AudioManager.OnResume += OnResumeEvent;
+        
 
     }
 
     private void OnDisable()
     {
-        AudioManager.OnPlay -= OnPlayEvent;
-        AudioManager.OnPause -= OnPauseEvent;
+        BeatManager.OnUpdateEvent -= OnUpdateSongEvent;
         BeatManager.OnPreBeat -= OnPreBeatEvent;
         BeatManager.OnBeat -= OnBeatEvent;
         BeatManager.OnPostBeat -= OnPostBeatEvent;
-        AudioManager.OnStop -= OnStopEvent;
-        AudioManager.OnPause -= OnPauseEvent;
-        AudioManager.OnResume -= OnResumeEvent;
     }
     
-    private void OnPlayEvent()//double beatDuration)
+    private void OnUpdateSongEvent(double beatDuration)
     {
-        
-        OnPlaySongAction();
+        beatTime = beatDuration;
+        OnUpdateSongAction();
     }
 
     private void OnPauseEvent()//double beatDuration)
@@ -86,7 +80,7 @@ public abstract class BeatReciever: MonoBehaviour
     }
     
     ///////////--- virtual Actions Management ---///////////
-    public virtual void OnPlaySongAction()//double beatDuration)
+    public virtual void OnUpdateSongAction()//double beatDuration)
     {
         /// implement when Song Plays;
     }
