@@ -1181,6 +1181,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6450182317306645003, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: MusicSettings.Volume
+      value: 0.127
+      objectReference: {fileID: 0}
     - target: {fileID: 8874700405571119761, guid: ed5411465da445045ba84757f34286ab, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -1454,6 +1458,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1168065921 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+  m_PrefabInstance: {fileID: 8448435808521674755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1168065922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168065921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f464ba27eff8004a9a64cf510f6333f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldStartPlaying: 1
+  levelSongData:
+    song: {fileID: 8300000, guid: e60fdf3c0c8e9cd48aa838abe71c6673, type: 3}
+    bpm: 118
+    shouldLoop: 1
 --- !u!1 &1350125027
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,7 +3932,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -136.10918
+      value: -136.09187
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4433,6 +4459,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongData.bpm
       value: 107
       objectReference: {fileID: 0}
@@ -4491,7 +4521,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1168065922}
   m_SourcePrefab: {fileID: 100100000, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

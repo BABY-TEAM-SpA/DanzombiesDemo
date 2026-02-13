@@ -82,6 +82,7 @@ public class AudioManager : MonoBehaviour
 
         int nextSource = 1 - sourceActive;
         _audioSources[nextSource].clip = songData.song;
+        _audioSources[nextSource].volume = MusicSettings.Volume;
         _audioSources[nextSource].loop = songData.shouldLoop;
         _audioSources[nextSource].PlayScheduled(nextSongStartTime);
         activeCoroutine = StartCoroutine(WaitForScheduledTime(songData,nextSongStartTime));
