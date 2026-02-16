@@ -2688,7 +2688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf99b5fa5490249b42ec46c8aaf2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DanceAnimators: []
+  animator: {fileID: 0}
   animatorOverrideController: {fileID: 0}
 --- !u!114 &1687509860
 MonoBehaviour:
@@ -2841,8 +2841,6 @@ MonoBehaviour:
     song: {fileID: 8300000, guid: e60fdf3c0c8e9cd48aa838abe71c6673, type: 3}
     bpm: 118
     shouldLoop: 1
-    Metrica: 4
-    compasesTotales: 0
 --- !u!4 &1793237347
 Transform:
   m_ObjectHideFlags: 0
@@ -3069,7 +3067,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivateOnStart: 1
-  useCompass: 0
   ShouldRepeat: 1
   DanceSteps: 00000000000000000000000000000000
   currentPuzzleStep: 0
@@ -3104,6 +3101,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   feedBack: {fileID: 0}
+  debug: 0
   TutorialSteps:
   - DanceSteps: 00000000000000000000000002000000
   - DanceSteps: 00000000000000000000000001000000

@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+public enum DanceState{
+	None,
+	North,
+	South,
+	West,
+	East
+}
+
 public class PlayerAnimatorController : MonoBehaviour
 {
     [SerializeField] private DanceBrain _danceBrain;
@@ -11,6 +19,8 @@ public class PlayerAnimatorController : MonoBehaviour
     //[SerializeField] private SpriteRenderer renderer;
     [SerializeField] private AnimatorOverrideController[] animatorOverrideControllers;
     private double currentBeatOnPlayer = 0d;
+	private bool isDirectionPulsed;
+	private DanceState isDancePulsed;
 
     private void Start()
     {
@@ -23,10 +33,7 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Pulse");
         if (context.started)
         {
-            animator.SetBool("DanceStepS",false);
-            animator.SetBool("DanceStepW",false);
-            animator.SetBool("DanceStepE",false);
-            animator.SetBool("DanceStepN",true);
+        	    animator.SetBool("DanceStepN",true);
         }
         if (context.performed)
         {
@@ -45,9 +52,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Pulse");
         if (context.started)
         {
-            animator.SetBool("DanceStepN",false);
-            animator.SetBool("DanceStepW",false);
-            animator.SetBool("DanceStepE",false);
             animator.SetBool("DanceStepS",true);
         }
         if (context.performed)
@@ -67,9 +71,6 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Pulse");
         if (context.started)
         {
-            animator.SetBool("DanceStepN",false);
-            animator.SetBool("DanceStepS",false);
-            animator.SetBool("DanceStepE",false);
             animator.SetBool("DanceStepW",true);
         }
         if (context.performed)
@@ -90,9 +91,6 @@ public class PlayerAnimatorController : MonoBehaviour
 
         if (context.started)
         {
-            animator.SetBool("DanceStepN",false);
-            animator.SetBool("DanceStepS",false);
-            animator.SetBool("DanceStepW",false);
             animator.SetBool("DanceStepE",true);
         }
         if (context.performed)
@@ -151,9 +149,9 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetTrigger("Pulse");
         
     }
-    public void OnMoving(float moving)
+    public void OnMoving(bool moving)
     {
-        bool walking = moving>0.1;
+        bool walking = moving;//>0.1;
         if (walking)
         {
             animator.ResetTrigger("Pulse");
