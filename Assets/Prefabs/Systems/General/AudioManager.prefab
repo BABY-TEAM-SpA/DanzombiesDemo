@@ -268,6 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 213270410435810108}
   - component: {fileID: 6450182317306645003}
+  - component: {fileID: 7036951948407971296}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -319,6 +320,29 @@ MonoBehaviour:
   SFXplayer: {fileID: 3831767191630153557}
   playerStepSFX: {fileID: 8300000, guid: 6df696edd41da7945a008f9d4f20a643, type: 3}
   playerClapSFX: {fileID: 8300000, guid: c9f24f32a7c418f48b0c1f5156ee039c, type: 3}
+--- !u!114 &7036951948407971296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8874700405571119761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa0952c6f7bd31d438cb650e026d7fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BeatManager
+  ActiveOnStart: 0
+  margen: 0.25
+  onPreBeatInspector:
+    m_PersistentCalls:
+      m_Calls: []
+  onBeatInspector:
+    m_PersistentCalls:
+      m_Calls: []
+  onPostBeatInspector:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8974240636003315153
 GameObject:
   m_ObjectHideFlags: 0
