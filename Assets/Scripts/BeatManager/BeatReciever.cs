@@ -9,7 +9,7 @@ using static BeatManager;
 
 public abstract class BeatReciever: MonoBehaviour
 {
-    //public BeatType myBeatType;
+    public bool isActive=true;
     
     ///////////--- Events Management ---///////////
     protected double beatTime=1d;
@@ -53,7 +53,7 @@ public abstract class BeatReciever: MonoBehaviour
         {
             PreBeatAction();
         }*/
-        PreBeatAction(counter);
+        if(isActive)PreBeatAction(counter);
     }
     
     private void OnBeatEvent(int counter ) //(BeatType type)
@@ -62,7 +62,7 @@ public abstract class BeatReciever: MonoBehaviour
         {
             BeatAction();
         }*/
-        BeatAction(counter);
+        if(isActive)BeatAction(counter);
     }
 
     private void OnPostBeatEvent(int counter) //(BeatType type)
@@ -71,7 +71,7 @@ public abstract class BeatReciever: MonoBehaviour
         {
             PostBeatAction();
         }*/
-        PostBeatAction(counter);
+        if(isActive)PostBeatAction(counter);
     }
 
     private void OnStopEvent()//double beatDuration)

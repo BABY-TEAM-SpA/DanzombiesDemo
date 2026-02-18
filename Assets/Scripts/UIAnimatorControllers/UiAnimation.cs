@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UiAnimation
 {
     public bool Unscaled = false;
-    public enum UiAnimType { Move,MoveTo, Rotate, Scale, Fade }
+    public enum UiAnimType { Move,MoveTo, Rotate, Scale, Fade, Color}
     public UiAnimType animationType = UiAnimType.Move;
     
     public RectTransform target;
@@ -75,6 +75,19 @@ public class UiAnimation
                         {
                             float alpha = Mathf.LerpUnclamped(startAlpha, endAlpha, t);
                             graphic.alpha = alpha;
+                        }, easing));
+                }
+                break;
+            case UiAnimType.Color:
+                var render = target.GetComponent<Image>();
+                if (render != null)
+                {
+                    Vector3 startColor = new Vector4(render.color.r, render.color.g, render.color.b);
+                    runningCoroutine = host.StartCoroutine(UiTween.Value(
+                        host, duration, t =>
+                        {
+                            Vector3 current = Vector3.LerpUnclamped(startColor, to, t);
+                            render.color = new Color(current.x, current.y, current.z, 1f);
                         }, easing));
                 }
                 break;

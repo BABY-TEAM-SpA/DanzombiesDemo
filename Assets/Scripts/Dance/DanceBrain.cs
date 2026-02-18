@@ -2,8 +2,10 @@ using UnityEngine;
 
 public abstract class DanceBrain : MonoBehaviour
 {
+    public bool isActive = true;
     [SerializeField] protected PlayerMovementController playerMovCtrl;
     [SerializeField] protected PlayerAnimatorController playerAnimCtrl;
+    [SerializeField] protected BeatReciever beatReciever;
     public bool isRightLooking;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
@@ -11,6 +13,11 @@ public abstract class DanceBrain : MonoBehaviour
     {
         if (isON) playerMovCtrl?.EnableMovement();
         else playerMovCtrl?.DisableMovement();
+    }
+    public void EnableDance(bool isON=false)
+    {
+        if (isON) playerAnimCtrl?.Activate();
+        else playerAnimCtrl?.Disactivate();
     }
 
     public virtual void OnDance(DanceStep step)

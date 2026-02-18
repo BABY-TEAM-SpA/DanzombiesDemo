@@ -12,6 +12,7 @@ public enum SeguridadState
 [Serializable]
 public class PlayerManager : DanceBrain
 {
+    [SerializeField]private bool ActivateOnStart;
     public int lifes =3;
     [SerializeField] [Range(0,10)] private float NivelDeSeguridad = 5;
     [SerializeField] [Range(0f,2f)] private float Alza = 1f;
@@ -20,12 +21,11 @@ public class PlayerManager : DanceBrain
     
     public void Start(){
         LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
+        if (ActivateOnStart) ActivatePlayer();
     }
 
     public void GetFlowDamage(bool danho=true)
     {
-
-        
         saveDanceStep = DanceStep.None;
         Debug.Log(danho?"Bajando Seguridad":"" );
         float value =Mathf.Clamp((danho)?NivelDeSeguridad-Alza:NivelDeSeguridad+Alza,-1f,10f);
@@ -63,6 +63,22 @@ public class PlayerManager : DanceBrain
     public override void OnDance(DanceStep step)
     {
         saveDanceStep = step;
+    }
+
+    public void ActivatePlayer()
+    {
+        isActive=true;
+        EnableMovement(true);
+        EnableDance(true);
+        beatReciever.isActive = true;
+    }
+
+    public void DesactivatePlayer()
+    {
+        isActive=false;
+        EnableMovement(false);
+        EnableDance(false);
+        beatReciever.isActive = false;
     }
     
     

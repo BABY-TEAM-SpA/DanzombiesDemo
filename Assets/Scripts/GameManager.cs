@@ -1,8 +1,9 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+    public Languages language;
     
     public static GameManager Instance { get; private set; }
     private void Awake() 

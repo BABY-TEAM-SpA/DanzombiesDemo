@@ -16,11 +16,14 @@ public class TutorialPuzzle : RhythmPuzzle
     public UnityAction OnSequenceCompletedEvent;
     
     [SerializeField] private ZombieDanceBrain Steph;
+	[SerializeField] private TutorialDanceBrain HUD;
     
     
     private void Start()
     {
         Steph?.Connect(this);
+        HUD?.Connect(this);
+        
         //player.OnDance += OnPlayerInputAction;
     }
 

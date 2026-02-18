@@ -33,7 +33,6 @@ public class SequenceStep
 
 public class RhythmPuzzle : BeatReciever
 {
-    protected bool isActive = false;
     [SerializeField] bool ActivateOnStart;
     [SerializeField] protected bool ShouldRepeat =false;
     [SerializeField] protected List<DanceStep> DanceSteps = new List<DanceStep>();

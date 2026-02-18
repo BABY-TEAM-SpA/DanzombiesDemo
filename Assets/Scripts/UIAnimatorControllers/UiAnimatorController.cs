@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,10 @@ public class UiAnimatorController : MonoBehaviour
     private void OnEnable()
     {
         if (target == null) target = GetComponent<RectTransform>();
+    }
+
+    private void Start()
+    {
         if (playOnEnable)
             PlaySequence();
     }

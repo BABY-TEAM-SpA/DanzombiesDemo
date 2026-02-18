@@ -87,9 +87,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f77188784b2d7a44877cda4460cb466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  isActive: 1
   playerMovCtrl: {fileID: 3968905282911785478}
   playerAnimCtrl: {fileID: 4086932025709530668}
+  beatReciever: {fileID: 0}
   isRightLooking: 1
+  ActivateOnStart: 1
   lifes: 3
   NivelDeSeguridad: 10
   Alza: 1
@@ -110,7 +113,6 @@ MonoBehaviour:
   AllowInput: 1
   Speed: 15
   acceleration: 25
-  CanMove: 1
 --- !u!114 &3465130852895728156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
   animator: {fileID: 6969242347076242797}
 --- !u!114 &3308144933667447571
 MonoBehaviour:
@@ -438,7 +441,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1366706313
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cac90452d9363f0449d80fa7f9cd4357, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -500,6 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _danceBrain: {fileID: 6530795612346585224}
+  allowInput: 1
   animator: {fileID: 6969242347076242797}
   animatorOverrideControllers:
   - {fileID: 22100000, guid: 2d677eb01c4cbe44783e36db47b288e4, type: 2}

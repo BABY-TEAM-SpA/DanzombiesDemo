@@ -4,12 +4,12 @@ public class MainMenuController : MonoBehaviour
 {
     
     [SerializeField] MusicLevelController musicController;
-    [SerializeField] Animator animator;
+    [SerializeField] UiAnimatorController animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        musicController.PlayLevelSong(0);
-        animator.SetTrigger("Animate");
+        musicController?.PlayLevelSong(0);
+        animator?.PlaySequence();
     }
 
     public void PlayGame()
