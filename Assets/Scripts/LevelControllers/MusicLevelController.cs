@@ -2,44 +2,40 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MusicLevelController : MonoBehaviour
 {
+    [Serializable]
+    class MusicToQueue
+    {
+        public bool useName;
+        public string songName;
+        public int songIndex;
+    }
     
     [SerializeField] private bool shouldStartPlaying = false;
-    //[SerializeField] private List<SongsData> allSongs = new List<SongsData>();
-    //public int currentSong { get; private set; } = 0;
-    [SerializeField] private SongsData levelSongData;
-    
-    /*
-    private void OnEnable()
-    {
-        AudioManager.OnPlay += OnPlayEvent;
-        AudioManager.OnStop += OnStopEvent;
-    }
-
-    private void OnDisable()
-    {
-        AudioManager.OnPlay -= OnPlayEvent;
-        AudioManager.OnStop -= OnStopEvent;
-    }
-	*/
+    [SerializeField] private List<MusicToQueue> LevelSongs = new List<MusicToQueue>();
+    public bool ForceStartPlaying { get { return shouldStartPlaying; } set { shouldStartPlaying = value; } }
 
     public void Start()
     {
-        if(shouldStartPlaying && !AudioManager.Instance.IsPlaying()) PlayLevelSong();        
+        if (shouldStartPlaying)
+        {
+            SetPlayMusic();
+        }  
     }
 
-    public void PlayLevelSong(int index=0)
+    public void SetPlayMusic(bool force=false)
     {
-        AudioManager.Instance.PlaySongData(levelSongData);
-    }
-    
-    private void OnPlayEvent()
-    {
-    }
-
-    private void OnStopEvent()
-    {
+        if (LevelSongs.Count > 0)
+        {
+            for (int i = 0; i < LevelSongs.Count; i++)
+            {
+                MusicToQueue mtq = LevelSongs[i];
+                bool interrupt = (i == 0 && ForceStartPlaying);
+                if (mtq.useName) AudioManager.Instance.PlaySong(mtq.songName,interrupt ); else AudioManager.Instance.PlaySong(mtq.songIndex,interrupt);
+            }
+        }
         
     }
 }

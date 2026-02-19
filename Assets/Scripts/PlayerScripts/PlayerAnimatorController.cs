@@ -204,7 +204,7 @@ public class PlayerAnimatorController : MonoBehaviour
     }
     private void SetBeatDuration()
     {
-        currentBeatOnPlayer = AudioManager.Instance.beatDuration;
+        currentBeatOnPlayer = AudioManager.Instance.currentSongPlaying.beatDuration;
         animator.enabled = true;
         animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
     }

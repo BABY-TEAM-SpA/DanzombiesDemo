@@ -77,7 +77,7 @@ public class BeatManager : MonoBehaviour
     {
         if (AudioManager.Instance.IsPlaying())
         {
-            double currentSongTime = AudioSettings.dspTime - AudioManager.Instance.dspSongStartTime;
+            double currentSongTime = AudioSettings.dspTime - AudioManager.Instance.currentSongPlaying.dspSongStartTime;
 
             // Comprobación de eventos
             if (currentSongTime >= (( beatDuration * counter) - beatDuration * margen) && canPre)
@@ -135,11 +135,11 @@ public class BeatManager : MonoBehaviour
     public void ResetBeatManager()
     {
         onMargen = false;
-        canPre =false;
+        canPre = false;
         canBeat = true;
         canPost = false;
         counter = 1;
-        beatDuration = AudioManager.Instance.beatDuration;
+        beatDuration = AudioManager.Instance.currentSongPlaying.beatDuration;
         
     }
 }

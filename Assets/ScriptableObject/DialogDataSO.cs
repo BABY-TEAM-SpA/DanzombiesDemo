@@ -12,6 +12,7 @@ public enum Languages
 public class Dialog
 {
     public Sprite profile;
+    public string Character;
     public List<DialogText> texts = new List<DialogText>();
 }
 

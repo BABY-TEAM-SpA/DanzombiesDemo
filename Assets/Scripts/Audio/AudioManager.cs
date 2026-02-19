@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -11,11 +13,32 @@ public class SoundSettings
 }
 
 [Serializable]
-public class SongsData
+public class SongPlayingData
 {
-    public AudioClip song;
-    public int bpm = 120;
-    public bool shouldLoop = true;
+    public SongDataSO songData; // { get; private set; }
+    public double songDuration; // { get; private set; }
+    public double beatDuration; // { get; private set; }
+    public double dspSongStartTime; // { get;private set; }
+    public List<double> cutFlags; // { get; private set; }
+
+    public SongPlayingData(SongDataSO data, double startDSPTime)
+    {
+        songData = data;
+        dspSongStartTime = startDSPTime;
+        songDuration = (double)data.clip.samples / songData.clip.frequency;
+        beatDuration = (60d / songData.bpm);
+        cutFlags = new List<double>();
+        foreach (int cut in data.cutFlags)
+        {
+            cutFlags.Add(cut*beatDuration + startDSPTime);
+        }
+        cutFlags.Add(songDuration + startDSPTime);
+    }
+
+    public void UpdateDataDSPTime(double dspNewTime)
+    {
+        /// To Implement
+    }
 }
 
 public class AudioManager : MonoBehaviour
@@ -24,14 +47,12 @@ public class AudioManager : MonoBehaviour
     public SoundSettings MusicSettings = new SoundSettings();
     
     [SerializeField] private AudioSource[] _audioSources = new AudioSource[2];
-    private int sourceActive = 0;
+    private int audioSourceActive = 0;
     private AudioSource musicPlayer { get;set; }
-    
-    public double songDuration { get; private set; }
-    public double beatDuration { get; private set; }
-    public double dspSongStartTime { get;private set; }
-    
-    
+    [SerializeField] private List<SongDataSO> musicLibrary  = new List<SongDataSO>();
+    //private Queue<SongPlayingData> songsPlayingQueue = new Queue<SongPlayingData>();
+    [SerializeField] private List<SongPlayingData> songsPlayingQueue = new List<SongPlayingData>();
+    public SongPlayingData currentSongPlaying =null;
     
     // Eventos por código
     public delegate void OnMusicEvent();
@@ -48,8 +69,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource SFXplayer;
     public AudioClip playerStepSFX;
     public AudioClip playerClapSFX;
-     
-    [SerializeField] public SongsData currentSongData { get; private set; }
+    
     public static AudioManager Instance { get; private set; }
     private void Awake() 
     { 
@@ -65,47 +85,86 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-        
     }
     
-    public void PlaySongData(SongsData songData, int delay=1)
+    
+    public void PlaySong(string name, bool interrupt =false)
     {
-        if (songData == null || songData.song == null || songData.bpm <= 0)
+        SongDataSO songData = musicLibrary.FirstOrDefault(x => x.name == name);
+        if (songData != null)
         {
-            Debug.LogError("Datos de canción inválidos");
-            return;
+            if (interrupt) ForcePlaySong(songData); ///Salta la Queue y pone la cancion a sonar
+                else QueueSongData(songData);
         }
+    }
 
-        double nextSongStartTime = AudioSettings.dspTime; //Now
-        if(IsPlaying()) nextSongStartTime= dspSongStartTime + BeatManager.Instance.beatDuration*(BeatManager.Instance.counter+delay); // delayed on some Beats
+    public void PlaySong(int index, bool interrupt =false)
+    {
+        SongDataSO songData = null;
+        if(index >= 0 && index < musicLibrary.Count) songData = musicLibrary[index];
+        if (songData != null)
+        {
+            if (interrupt) ForcePlaySong(songData); ///Salta la Queue y pone la cancion a sonar
+            else QueueSongData(songData);
+        }
+    }
 
-
-        int nextSource = 1 - sourceActive;
-        _audioSources[nextSource].clip = songData.song;
-        _audioSources[nextSource].volume = MusicSettings.Volume;
-        _audioSources[nextSource].loop = songData.shouldLoop;
-        _audioSources[nextSource].PlayScheduled(nextSongStartTime);
+    private void ForcePlaySong(SongDataSO songData)
+    {
+        double nextSongStartTime = AudioSettings.dspTime;
+        SongPlayingData nextSongData = new SongPlayingData(songData,nextSongStartTime);
+        songsPlayingQueue.Clear();
+        songsPlayingQueue.Add(nextSongData);
+        _audioSources[audioSourceActive].Stop();
+        PrepareNextSong(songData,nextSongStartTime);
         activeCoroutine = StartCoroutine(WaitForScheduledTime(songData,nextSongStartTime));
     }
     
-    private IEnumerator WaitForScheduledTime(SongsData songData,double startTime)
+    private void QueueSongData(SongDataSO songData)
+    {
+        double nextSongStartTime = AudioSettings.dspTime; //Now
+        // SET THE NewSong AT THE NEXT ENDFLAG OF THE CurrentSong <<<<
+        if(songsPlayingQueue.Count>0) nextSongStartTime = GetNextEndPoint(); //El proximo endPoint  
+        _audioSources[audioSourceActive].SetScheduledEndTime(nextSongStartTime);
+        //NextSong
+        SongPlayingData nextSongData = new SongPlayingData(songData,nextSongStartTime);
+        songsPlayingQueue.Add(nextSongData);
+        PrepareNextSong(songData,nextSongStartTime);
+        activeCoroutine = StartCoroutine(WaitForScheduledTime(songData,nextSongStartTime));
+    }
+
+    private double GetNextEndPoint()
+    {
+        SongPlayingData songData = songsPlayingQueue[0];
+        foreach (double cut in songData.cutFlags)
+        {
+            if( cut>= AudioSettings.dspTime) return cut;
+        }
+        return songData.songDuration+songData.dspSongStartTime;
+    }
+    private void PrepareNextSong(SongDataSO songData,double starTime)
+    {
+        int nextSource = 1 - audioSourceActive;
+        _audioSources[nextSource].clip = songData.clip;
+        ///_audioSources[nextSource].loop = songData.loopeable; NO SIRVE LOOPEAR ASI PORQUE AGREGA DELAY
+        _audioSources[nextSource].volume = MusicSettings.Volume;
+        _audioSources[nextSource].PlayScheduled(starTime);
+    } 
+    private IEnumerator WaitForScheduledTime(SongDataSO songData,double startTime)
     {
         while (AudioSettings.dspTime < startTime)
         {
             yield return null;
         }
         OnSongStarted(songData,startTime);
-    }
-
-    private void OnSongStarted(SongsData songData,double startTime)
+    } 
+    private void OnSongStarted(SongDataSO songData,double startTime)
     {
-        /// logica de cambiar de audiosource y actualizar la info
-        sourceActive = 1 -sourceActive ;
-        musicPlayer = _audioSources[sourceActive];
-        songDuration = (double)songData.song.samples / songData.song.frequency;
-        dspSongStartTime = startTime;
-        currentSongData = songData;
-        beatDuration = (60d / songData.bpm);
+        audioSourceActive = 1 - audioSourceActive ;
+        musicPlayer = _audioSources[audioSourceActive]; 
+        // if(songsPlayingQueue.Count>0){ if(songsPlayingQueue[0].songData.name != songData.songName) songsPlayingQueue.RemoveAt(0);}
+        currentSongPlaying = songsPlayingQueue[0];//songsPlayingQueue.Dequeue();
+        songsPlayingQueue.RemoveAt(0);
         OnPlay?.Invoke();
     }
     
@@ -121,7 +180,7 @@ public class AudioManager : MonoBehaviour
 
     public void ResumeSong()
     {
-        dspSongStartTime = AudioSettings.dspTime;
+        songsPlayingQueue[0]?.UpdateDataDSPTime(AudioSettings.dspTime);
         musicPlayer.UnPause();
         OnPlay?.Invoke();
     }
