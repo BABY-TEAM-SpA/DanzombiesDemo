@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Languages language;
+    public static Languages language;
+    [SerializeField] [Range(0f,2f)] public static float Alza = 1f;
     
     public static GameManager Instance { get; private set; }
     private void Awake() 

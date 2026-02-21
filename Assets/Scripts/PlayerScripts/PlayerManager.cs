@@ -15,7 +15,7 @@ public class PlayerManager : DanceBrain
     [SerializeField]private bool ActivateOnStart;
     public int lifes =3;
     [SerializeField] [Range(0,10)] private float NivelDeSeguridad = 5;
-    [SerializeField] [Range(0f,2f)] private float Alza = 1f;
+    
     public RhythmPuzzle targetPuzzle;
     public DanceStep saveDanceStep { get; private set; }
     
@@ -24,31 +24,19 @@ public class PlayerManager : DanceBrain
         if (ActivateOnStart) ActivatePlayer();
     }
 
-    public void GetFlowDamage(bool danho=true)
+    public float GetFlowDamage(bool danho=true)
     {
         saveDanceStep = DanceStep.None;
-        Debug.Log(danho?"Bajando Seguridad":"" );
-        float value =Mathf.Clamp((danho)?NivelDeSeguridad-Alza:NivelDeSeguridad+Alza,-1f,10f);
-        if (value <= Alza)
-        {
-            NivelDeSeguridad = value;
-            //Restar un corazon y hacer invulnerable
-            targetPuzzle.PlayerLeave(this);
-            GetLifeDamage(true);
-            PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
-        }
-        else
-        {
-            NivelDeSeguridad = value;
-        }
+        float value =Mathf.Clamp((danho)?NivelDeSeguridad-GameManager.Alza:NivelDeSeguridad+GameManager.Alza,-1f,10f);
+        NivelDeSeguridad = value;
         LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
-        
+        return value;
     }
 
     public void GetLifeDamage(bool danho=true)
     {
-        Debug.Log($"vida dañada");
         lifes += (danho) ? -1 : -1;
+        PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
     }
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)

@@ -6,24 +6,18 @@ using UnityEngine.Events;
 
 public class TutorialPuzzle : RhythmPuzzle
 {
-    public List<SequenceStep> TutorialSteps = new List<SequenceStep>();
+    public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
     public int currentTutorialStepIndex = 0;
-
-    [SerializeField] private int playerSucceses=0;
-    [SerializeField] private Color SuccesColor = Color.yellow;
-    [SerializeField] private Color FailureColor = Color.red;
-    
-    public UnityAction OnSequenceCompletedEvent;
-    
+    [SerializeField] private int playerSucceses = 0;
     [SerializeField] private ZombieDanceBrain Steph;
-	[SerializeField] private TutorialDanceBrain HUD;
-    
-    
+    [SerializeField] private TutorialDanceBrain HUD;
+
+
     private void Start()
     {
         Steph?.Connect(this);
         HUD?.Connect(this);
-        
+
         //player.OnDance += OnPlayerInputAction;
     }
 
@@ -32,28 +26,41 @@ public class TutorialPuzzle : RhythmPuzzle
         Steph?.Disconnect(this);
         //player.OnDance -= OnPlayerInputAction;
     }
+
     public override void ActivatePuzzle(bool activate)
     {
-       
+        playerSucceses = 0;
         base.ActivatePuzzle(activate);
-        if(currentTutorialStepIndex< TutorialSteps.Count) DanceSteps = TutorialSteps[currentTutorialStepIndex].DanceSteps;
+        if (currentTutorialStepIndex < TutorialSequences.Count)
+            currentDanceSequence = TutorialSequences[currentTutorialStepIndex];
     }
-    
-    
-    public void PlayerDanceReaction(bool IsPlayerDanceCorrect)
+
+    public override void VisualFeedbackToPlayerDance(bool isCorrect)
     {
-        if (feedBack != null)
+        //throw new NotImplementedException();
+    }
+
+
+    public override void PlayerHasNoFlow(PlayerManager player)
+    {
+        //throw new NotImplementedException();
+    }
+
+
+    public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
+    {
+        if (step == DanceStep.None)
         {
-            feedBack.color=(IsPlayerDanceCorrect)?SuccesColor:FailureColor;   
+            return;
         }
-        
+        bool IsPlayerDanceCorrect = player.saveDanceStep == step;
         if (IsPlayerDanceCorrect)
         {
             playerSucceses+=1;
-            if (playerSucceses >= 2)
+            if (playerSucceses >= 4)
             {
                 playerSucceses = 0;
-                OnRhythmSequenceCompleted();
+                CompleteRhythmSequence();
             }
         }
         else
@@ -62,20 +69,11 @@ public class TutorialPuzzle : RhythmPuzzle
         }
     }
 
-    private void OnRhythmSequenceCompleted()
+    public void CompleteRhythmSequence()
     {
+        currentDanceSequence.OnSequenceCompletedEvent?.Invoke();
         currentTutorialStepIndex += 1;
+        ActivatePuzzle(false);
         
-        if (currentTutorialStepIndex >= TutorialSteps.Count)
-        {
-            ActivatePuzzle(false);
-            OnRhythmPuzzleCompletedEvent?.Invoke();
-        }
-        else
-        {
-            //ActivatePuzzle(false);
-            DanceSteps = TutorialSteps[currentTutorialStepIndex].DanceSteps;
-            OnSequenceCompletedEvent?.Invoke();
-        }
     }
 }

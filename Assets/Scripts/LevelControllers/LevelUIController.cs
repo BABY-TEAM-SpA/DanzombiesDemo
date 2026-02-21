@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class LevelUIController : MonoBehaviour
 {
     [Header("Barras de Flow")] 
-    [SerializeField] private Image zombieEye;
+    [SerializeField] private Image IconImage;
     private int currentReaction = 0;
-    [SerializeField] private Sprite zombieClosedEye;
-    [SerializeField] private Sprite[] zombieReactions = new Sprite[] {};
-    [SerializeField] private List<Image> ZombieBars = new List<Image>();
+    [SerializeField] private Sprite IconDefaultState;
+    [SerializeField] private Sprite[] IconStates = new Sprite[] {};
+    [SerializeField] private List<Image> FlowBars = new List<Image>();
     [SerializeField] private Color[] barReactions = new Color[] {};
     public static LevelUIController Instance { get; private set; }
 
@@ -32,7 +32,7 @@ public class LevelUIController : MonoBehaviour
 
     public void UpdateZombieFeedbackUI(bool inDanger)
     {   
-        if(zombieEye !=null) zombieEye.sprite = inDanger ? zombieReactions[currentReaction] : zombieClosedEye;
+        if(IconImage !=null) IconImage.sprite = inDanger ? IconStates[currentReaction] : IconDefaultState;
     }
 
     
@@ -41,7 +41,7 @@ public class LevelUIController : MonoBehaviour
         if (value <= 2f) currentReaction = 2;
         else if (value <= 5f) currentReaction = 1;
         
-        foreach (Image barra in ZombieBars)
+        foreach (Image barra in FlowBars)
         {
             barra.fillAmount = value/10;
             barra.color = barReactions[currentReaction];

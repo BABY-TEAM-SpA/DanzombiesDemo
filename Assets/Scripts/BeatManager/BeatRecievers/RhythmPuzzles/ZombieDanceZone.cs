@@ -42,7 +42,7 @@ public class ZombieDanceZone : RhythmPuzzle
             PlayerLeave(player);
         }
     }
-    public override void VisualFeedback(int counter)
+    public override void VisualFeedbackToPlayerDance(bool isCorrect)
     {
         /*int aux = counter;
         if (ShouldRepeat) aux = counter % defaultColors.Length;
@@ -50,22 +50,24 @@ public class ZombieDanceZone : RhythmPuzzle
         // Esto va a cambiar cuando usemos shader
     }
 
-    public override void OnRhythmPuzzleBeatReaction()
+
+    public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
-        
-        if(playersInside.Count>0){
-            Debug.Log("Puzzle Reaction to Players");
-            List<PlayerManager> players = new List<PlayerManager>(playersInside);
-            foreach (PlayerManager player in players)
-            {
-                if (currentPuzzleStep != DanceStep.None && player!=null)
-                {
-                    Debug.Log($"Send Call to{player}");
-                    player.GetFlowDamage(player.saveDanceStep != currentPuzzleStep);
-                }
-            }
+        if (step == DanceStep.None)
+        {
+            return;
         }
-        
+        float flow = player.GetFlowDamage(player.saveDanceStep != step);
+        if (flow < GameManager.Alza)
+        {
+            PlayerHasNoFlow(player);
+        }
+    }
+
+    public override void PlayerHasNoFlow(PlayerManager player)
+    {
+        player.GetLifeDamage(true);
+        PlayerLeave(player);
     }
     
     public override void PlayerEnter(PlayerManager player)

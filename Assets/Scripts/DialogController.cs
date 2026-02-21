@@ -23,7 +23,7 @@ public class DialogController : MonoBehaviour
     [SerializeField] private Image profileImage;
     [SerializeField] private TMP_Text textContainer;
     [SerializeField] private GameObject pin;
-    public int currentSequence { get; private set; } = 0;
+    public int currentScriptSequence { get; private set; } = 0;
     public List<DialogSequence> dialogScripts = new List<DialogSequence>();
     
     // Sequence variables
@@ -34,19 +34,19 @@ public class DialogController : MonoBehaviour
         if (currentWrittingRoutine != null) StopCoroutine(currentWrittingRoutine);
     }
 
-    public void Start()
+    private void Start()
     {
-        if(activeOnStart) WriteDialog(0);
+        if(activeOnStart) ActivateDialogScript(0);
     }
 
-    public void WriteDialog(int dialogNumber = -1)
+    public void ActivateDialogScript(int scriptNumber = -1)
     {
-        if (dialogNumber != -1)
+        if (scriptNumber >=0)
         {
-            currentSequence = dialogNumber;
+            currentScriptSequence = scriptNumber;
         }
-        int currentDialog = dialogScripts[currentSequence].currentDialogText;
-        profileImage.sprite = dialogScripts[currentSequence].dialogData.dialogs[currentDialog].profile;
+        int currentDialog = dialogScripts[currentScriptSequence].currentDialogText;
+        profileImage.sprite = dialogScripts[currentScriptSequence].dialogData.dialogs[currentDialog].profile;
         Container.SetActive(true);
         
         if (animateWriting)
@@ -61,24 +61,25 @@ public class DialogController : MonoBehaviour
 
     private void OnWrittingComplete()
     {
-        int currentDialog = dialogScripts[currentSequence].currentDialogText;
-        DialogText dialogText = dialogScripts[currentSequence].dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.Instance.language);
+        int currentDialog = dialogScripts[currentScriptSequence].currentDialogText;
+        DialogText dialogText = dialogScripts[currentScriptSequence].dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
         textContainer.text = (dialogText!=null)?dialogText.text:"";
         currentWrittingRoutine = null;
         pin.gameObject.SetActive(true);
     }
 
-    public void ContinueWritting()
+    private void ContinueWritting()
     {
-        int value =dialogScripts[currentSequence].currentDialogText+1;
-        if (value >= dialogScripts[currentSequence].dialogData.dialogs.Count)
+        Debug.Log("Continue writting");
+        int value =dialogScripts[currentScriptSequence].currentDialogText+1;
+        if (value >= dialogScripts[currentScriptSequence].dialogData.dialogs.Count)
         {
-            dialogScripts[currentSequence].OnDialogEndEvent?.Invoke();
+            dialogScripts[currentScriptSequence].OnDialogEndEvent?.Invoke();
         }
         else
         {
-            dialogScripts[currentSequence].currentDialogText=value;
-            WriteDialog();
+            dialogScripts[currentScriptSequence].currentDialogText=value;
+            ActivateDialogScript();
         }
     }
 
