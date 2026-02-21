@@ -762,28 +762,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 820d60426adba5f4da89393968581f1b, type: 3}
---- !u!1 &1168065921 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-  m_PrefabInstance: {fileID: 8448435808521674755}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1168065922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168065921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f464ba27eff8004a9a64cf510f6333f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldStartPlaying: 1
-  levelSongData:
-    song: {fileID: 8300000, guid: e60fdf3c0c8e9cd48aa838abe71c6673, type: 3}
-    bpm: 118
-    shouldLoop: 1
 --- !u!4 &1519904836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7616565451340806692, guid: 3e86af31ea604ef4eb98025199a0908a, type: 3}
@@ -1218,11 +1196,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8897676056707518989, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -59.1
+      value: -145.2
       objectReference: {fileID: 0}
     - target: {fileID: 8897676056707518989, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.9
+      value: -5.9
       objectReference: {fileID: 0}
     - target: {fileID: 8897676056707518989, guid: e6e363f0f167eb542ad5af372832854d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1526,11 +1504,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -49.100006
+      value: -135.20001
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.1
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 1870258112484744389, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_Name
@@ -1643,11 +1621,11 @@ PrefabInstance:
       objectReference: {fileID: 649659699}
     - target: {fileID: 763872021651696868, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.139767
+      value: -105.23976
       objectReference: {fileID: 0}
     - target: {fileID: 763872021651696868, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.71995
+      value: 13.71995
       objectReference: {fileID: 0}
     - target: {fileID: 796848386840105751, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: Lens.OrthographicSize
@@ -1719,11 +1697,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8184408606771940663, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.1397743
+      value: -88.23978
       objectReference: {fileID: 0}
     - target: {fileID: 8184408606771940663, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.71995
+      value: 13.71995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1744,7 +1722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongData.bpm
@@ -1757,6 +1735,18 @@ PrefabInstance:
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: shouldStartPlaying
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: LevelSongs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: LevelSongs.Array.data[0].songName
+      value: Stage1_Intro
+      objectReference: {fileID: 0}
+    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: LevelSongs.Array.data[1].songName
+      value: Stage1_Loop
       objectReference: {fileID: 0}
     - target: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: m_Name
@@ -1805,10 +1795,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1168065922}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

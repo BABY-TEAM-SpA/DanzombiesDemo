@@ -2,15 +2,8 @@ using UnityEngine;
 
 public class GenericSceneController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void OnLoadSceneButton(string sceneName)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SceneChangeController.Instance.LoadScene(sceneName);
     }
 }
