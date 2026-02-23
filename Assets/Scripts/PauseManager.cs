@@ -44,12 +44,6 @@ public class PauseManager : MonoBehaviour
             
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            
-            pauseController.sequence.onSequenceStart.AddListener(OnPauseStart);
-            pauseController.sequence.onSequenceComplete.AddListener(OnPauseEnd);
-            unpauseController.sequence.onSequenceStart.AddListener(OnResumeStart);
-            unpauseController.sequence.onSequenceComplete.AddListener(OnResumeEnd);
-            
             gameplayMap = inputActions.FindActionMap("Player", true);
             uiMap = inputActions.FindActionMap("UI", true);
             gameplayMap.FindAction("PauseAction", true).started += OnPausePressed;
@@ -77,10 +71,7 @@ public class PauseManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        pauseController.sequence.onSequenceStart.RemoveAllListeners();
-        pauseController.sequence.onSequenceComplete.RemoveAllListeners();
-        unpauseController.sequence.onSequenceStart.RemoveAllListeners();
-        unpauseController.sequence.onSequenceComplete.RemoveAllListeners();
+        
         PauseEvent.RemoveAllListeners();
         gameplayMap.FindAction("PauseAction", true).started -= OnPausePressed;
         uiMap.FindAction("PauseAction", true).started -= OnPausePressed;
@@ -96,17 +87,18 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
-        
-        Debug.Log("Pause");
-        unpauseController.StopSequence();
-        pauseController.PlaySequence();
+        //unpauseController.StopSequence();
+        //pauseController.PlaySequence();
+        OnPauseStart();
+        OnPauseEnd();
     }
 
     public void Unpause()
     {
-        Debug.Log("Unpause");
-        pauseController.StopSequence();
-        unpauseController.PlaySequence();
+        //pauseController.StopSequence();
+        //unpauseController.PlaySequence();
+        OnResumeStart();
+        OnResumeEnd();
     }
 
     private void OnPauseStart()

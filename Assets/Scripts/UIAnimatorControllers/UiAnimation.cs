@@ -21,7 +21,7 @@ public class UiAnimation
     
     private Coroutine runningCoroutine;
 
-    public IEnumerator Play(MonoBehaviour host,float duration)
+    public IEnumerator Play(MonoBehaviour host,double duration)
     {
         Vector3 from;
         if (target == null || host == null)
@@ -34,7 +34,7 @@ public class UiAnimation
                 runningCoroutine = host.StartCoroutine(UiTween.Value(
                     host, duration, t =>
                     {
-                        target.anchoredPosition = Vector3.LerpUnclamped(from, from+to, t);
+                        target.anchoredPosition = Vector3.LerpUnclamped(from, from+to, (float)t);
                     }, easing));
                 break;
             case UiAnimType.MoveTo:
@@ -42,7 +42,7 @@ public class UiAnimation
                 runningCoroutine = host.StartCoroutine(UiTween.Value(
                     host, duration, t =>
                     {
-                        target.anchoredPosition = Vector3.LerpUnclamped(from, to, t);
+                        target.anchoredPosition = Vector3.LerpUnclamped(from, to, (float)t);
                     }, easing));
                 break;
             case UiAnimType.Rotate:
@@ -50,7 +50,7 @@ public class UiAnimation
                 runningCoroutine = host.StartCoroutine(UiTween.Value(
                     host, duration, t =>
                     {
-                        target.rotation = Quaternion.LerpUnclamped(fromRotation, Quaternion.Euler(to), t);
+                        target.rotation = Quaternion.LerpUnclamped(fromRotation, Quaternion.Euler(to), (float)t);
                     },easing));
                 break;
             case UiAnimType.Scale:
@@ -58,7 +58,7 @@ public class UiAnimation
                 runningCoroutine = host.StartCoroutine(UiTween.Value(
                     host, duration, t =>
                     {
-                        target.localScale = Vector3.LerpUnclamped(from, to, t);
+                        target.localScale = Vector3.LerpUnclamped(from, to, (float)t);
                     }, easing));
                 break;
 
@@ -73,7 +73,7 @@ public class UiAnimation
                     runningCoroutine = host.StartCoroutine(UiTween.Value(
                         host, duration, t =>
                         {
-                            float alpha = Mathf.LerpUnclamped(startAlpha, endAlpha, t);
+                            float alpha = Mathf.LerpUnclamped(startAlpha, endAlpha, (float)t);
                             graphic.alpha = alpha;
                         }, easing));
                 }
@@ -86,14 +86,14 @@ public class UiAnimation
                     runningCoroutine = host.StartCoroutine(UiTween.Value(
                         host, duration, t =>
                         {
-                            Vector3 current = Vector3.LerpUnclamped(startColor, to, t);
+                            Vector3 current = Vector3.LerpUnclamped(startColor, to, (float)t);
                             render.color = new Color(current.x, current.y, current.z, 1f);
                         }, easing));
                 }
                 break;
         }
 
-        yield return new WaitForSecondsRealtime(duration);
+        yield return new WaitForSecondsRealtime((float)duration);
     }
 
     public void Stop(MonoBehaviour host)

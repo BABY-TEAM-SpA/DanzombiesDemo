@@ -8,7 +8,7 @@ public class UiAnimatorController : MonoBehaviour
 {
     [SerializeField] private RectTransform target;
     [SerializeField] private bool playOnEnable = false;
-    [SerializeField] public UiAnimationSequence sequence = new UiAnimationSequence();
+    [SerializeField] public List<UiAnimationSequence> sequences = new List<UiAnimationSequence>();
 
     private Coroutine runningCoroutine;
     private readonly List<UiAnimation> activeAnimations = new List<UiAnimation>();
@@ -20,26 +20,24 @@ public class UiAnimatorController : MonoBehaviour
 
     private void Start()
     {
-        if (playOnEnable)
-            PlaySequence();
+        //if (playOnEnable) PlaySequence();
     }
 
     private void OnDisable() => StopSequence();
     private void OnDestroy() => StopSequence();
 
-    public void PlaySequence()
+    public void PlaySequence(string name)
     {
         StopSequence();
         if (target == null) target = GetComponent<RectTransform>();
-        runningCoroutine = StartCoroutine(PlayRoutine());
+        //runningCoroutine = StartCoroutine(PlayRoutine());
     }
 
-    private IEnumerator PlayRoutine()
+    /*private IEnumerator PlayRoutine()
     {
-        if (sequence != null)
-            yield return sequence.Play(this, activeAnimations);
+        //if (sequence != null) yield return sequence.Play(this, activeAnimations);
         runningCoroutine = null;
-    }
+    }*/
 
     public void StopSequence()
     {

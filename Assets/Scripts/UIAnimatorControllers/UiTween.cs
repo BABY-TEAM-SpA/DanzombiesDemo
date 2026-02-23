@@ -4,20 +4,19 @@ using UnityEngine;
 
 public static class UiTween
 {
-    public static IEnumerator Value(MonoBehaviour host, float duration, Action<float> onUpdate, UiEasingType easing, bool ignoreTimeScale = true)
+    public static IEnumerator Value(MonoBehaviour host, double duration, Action<double> onUpdate, UiEasingType easing, bool scaleTime = true)
     {
         if (host == null || onUpdate == null) yield break;
 
-        float time = 0f;
+        double time = 0d;
         while (time < duration)
         {
             if (host == null) yield break;
+            
+            if (scaleTime) time += Time.deltaTime;
+            else time += Time.unscaledDeltaTime;
 
-            time += Time.unscaledDeltaTime;
-
-            if (!ignoreTimeScale) time += Time.deltaTime;
-
-            float t = Mathf.Clamp01(time / duration);
+            float t = Mathf.Clamp01((float)(time / duration));
             onUpdate(UiEasing.Evaluate(easing, t));
             yield return null;
         }

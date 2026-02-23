@@ -4,7 +4,7 @@ using UnityEngine.Video;
 
 public class VideoController : MonoBehaviour
 {
-    [SerializeField] private string levelToLoad;
+    [SerializeField] private SceneChangeController.LoadScenePack levelToLoad;
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private VideoClip videoClip;
     [SerializeField] private bool shouldStopMusic;
@@ -33,6 +33,12 @@ public class VideoController : MonoBehaviour
     }
     void OnVideoEnd(VideoPlayer vp)
     {
-        SceneChangeController.Instance.LoadScene(levelToLoad);
+        SceneChangeController.Instance.LoadScenes(levelToLoad);
+    }
+
+    public void ForceVideoEnd()
+    {
+        videoPlayer.Stop();
+        OnVideoEnd(videoPlayer);
     }
 }

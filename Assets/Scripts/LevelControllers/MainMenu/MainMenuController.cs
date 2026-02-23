@@ -1,30 +1,35 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
     
     [SerializeField] MusicLevelController musicController;
     [SerializeField] UiAnimatorController animator;
+    
+    [SerializeField] SceneChangeController.LoadScenePack levelToLoad;
+    [SerializeField] string creditsSceneLoadConfig;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        animator?.PlaySequence();
+        SceneManager.LoadSceneAsync("GUI", LoadSceneMode.Additive);
     }
 
     public void PlayGame()
     {
-        SceneChangeController.Instance.LoadScene("TutorialVideo", true,true);
+        SceneChangeController.Instance.LoadScenes(levelToLoad);
     }
     
     
     public void LoadCredits()
     {
-        SceneChangeController.Instance.LoadScene("Credits", true,true);
+        SceneManager.LoadScene(creditsSceneLoadConfig);
     }
     
 
     public void ExitGame()
     {
+        StopAllCoroutines();
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #endif

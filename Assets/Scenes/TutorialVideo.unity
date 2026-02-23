@@ -201,10 +201,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 383635271}
-        m_TargetAssemblyTypeName: GenericSceneController, Assembly-CSharp
-        m_MethodName: OnLoadSceneButton
-        m_Mode: 5
+      - m_Target: {fileID: 1344677928}
+        m_TargetAssemblyTypeName: VideoController, Assembly-CSharp
+        m_MethodName: ForceVideoEnd
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -352,7 +352,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 383635272}
-  - component: {fileID: 383635271}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -360,18 +359,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &383635271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383635270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd66f647b6500834c93de78a581ba9ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GenericSceneController
 --- !u!4 &383635272
 Transform:
   m_ObjectHideFlags: 0
@@ -695,7 +682,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c653e4fae1471974b83ed32ff2e656bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelToLoad: Tutorial
+  levelToLoad:
+    scenes:
+    - Tutorial
+    shouldStopMusic: 0
   videoPlayer: {fileID: 1021649040}
   videoClip: {fileID: 32900000, guid: efcda1e55be8c4a4fa305d63076afb5a, type: 3}
   shouldStopMusic: 0

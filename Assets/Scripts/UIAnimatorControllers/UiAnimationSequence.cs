@@ -7,6 +7,8 @@ using UnityEngine.Events;
 [Serializable]
 public class UiAnimationSequence
 {
+    public string SequenceName;
+    
     [Serializable]
     public class SequenceStep
     {
