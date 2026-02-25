@@ -491,6 +491,85 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 977854871585507625, guid: 0b51cefb8235d1b4baf4c15ab171f72b, type: 3}
   m_PrefabInstance: {fileID: 852921841}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1162366013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1162366016}
+  - component: {fileID: 1162366015}
+  - component: {fileID: 1162366014}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1162366014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162366013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &1162366015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162366013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1162366016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162366013}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1313396335
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,50 +925,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: useName
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: songName
-      value: Tutorial_Intro
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: levelSongData.bpm
-      value: 118
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: levelSongData.song
-      value: 
-      objectReference: {fileID: 8300000, guid: e60fdf3c0c8e9cd48aa838abe71c6673, type: 3}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: shouldStartPlaying
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: LevelSongs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: LevelSongs.Array.data[0].useName
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: LevelSongs.Array.data[1].useName
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: LevelSongs.Array.data[0].songName
-      value: Tutorial_Intro
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: LevelSongs.Array.data[1].songName
-      value: Tutorial_Loop
-      objectReference: {fileID: 0}
-    - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      propertyPath: LevelSongs.Array.data[0].actionToPlay
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: m_Name
       value: SceneController
@@ -934,163 +969,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: Steph
+      value: 
+      objectReference: {fileID: 1342278704}
+    - target: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: TutorialSequences.Array.data[0].OnSequenceCompletedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1325767226}
+    - target: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: TutorialSequences.Array.data[1].OnSequenceCompletedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1325767226}
+    - target: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: TutorialSequences.Array.data[2].OnSequenceCompletedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1325767226}
+    - target: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: TutorialSequences.Array.data[3].OnSequenceCompletedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1325767226}
+    - target: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+      propertyPath: TutorialSequences.Array.data[4].OnSequenceCompletedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1325767226}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1820305815}
-    - targetCorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1820305814}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
---- !u!1 &1820305813 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+--- !u!114 &1820305815 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8558842800700994173, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
   m_PrefabInstance: {fileID: 1820305812}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1820305814
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820305813}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -8.870036}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 40, y: 10.424814}
-  m_EdgeRadius: 0
---- !u!114 &1820305815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820305813}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6f5f6cac489e4843a995b7fcb1155a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  ActivateOnStart: 0
-  ShouldRepeat: 1
-  currentDanceSequence:
-    DanceSteps: 
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  currentPuzzleStep: 0
-  OnPuzzleGetsActivateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  feedBack: {fileID: 0}
-  debug: 0
-  TutorialSequences:
-  - DanceSteps: 00000000000000000200000000000000
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - DanceSteps: 00000000020000000000000001000000
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - DanceSteps: 0000000002000000000000000100000000000000060000000000000005000000
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - DanceSteps: 0000000000000000000000000000000002000000010000000400000003000000
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  currentTutorialStepIndex: 0
-  playerSucceses: 0
-  Steph: {fileID: 1342278704}
-  HUD: {fileID: 0}
 --- !u!1 &1866402054 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 798546745921024665, guid: 0b51cefb8235d1b4baf4c15ab171f72b, type: 3}
@@ -1134,11 +1052,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8872306027448740795, guid: 18da214f48eaf504087733d23edd22dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.66
+      value: -3.79
       objectReference: {fileID: 0}
     - target: {fileID: 8872306027448740795, guid: 18da214f48eaf504087733d23edd22dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.45
+      value: -8.7
       objectReference: {fileID: 0}
     - target: {fileID: 8872306027448740795, guid: 18da214f48eaf504087733d23edd22dd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1210,11 +1128,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8905244471892853122, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.45
+      value: 7.61
       objectReference: {fileID: 0}
     - target: {fileID: 8905244471892853122, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.59
+      value: -7.36
       objectReference: {fileID: 0}
     - target: {fileID: 8905244471892853122, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2293,3 +2211,4 @@ SceneRoots:
   - {fileID: 4416453963142573652}
   - {fileID: 1820305812}
   - {fileID: 5948633253412623193}
+  - {fileID: 1162366016}
