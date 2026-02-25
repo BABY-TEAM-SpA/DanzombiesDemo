@@ -25,9 +25,9 @@ public abstract class DanceBrain : MonoBehaviour
         
     }
 
-    public void OnMoving(bool moving)
+    public void OnMoving(Vector3 direction)
     {
-        playerAnimCtrl.OnMoving(moving);
+        playerAnimCtrl.OnMoving(direction);
     }
 
     public void SetBodyDirection(float value)

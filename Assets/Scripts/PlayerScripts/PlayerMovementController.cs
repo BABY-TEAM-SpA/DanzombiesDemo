@@ -44,7 +44,7 @@ public class PlayerMovementController : MonoBehaviour
             velocity = Vector3.zero;
         }
         transform.position += velocity * Time.deltaTime;
-        _danceBrain.OnMoving(direction!=Vector3.zero);
+        _danceBrain.OnMoving(direction);
     }
     
     public void EnableMovement()
