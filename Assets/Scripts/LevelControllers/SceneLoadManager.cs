@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,7 @@ public class SceneChangeController : MonoBehaviour
     public static SceneChangeController Instance { get; private set; }
     
     private LoadScenePack scenesToLoad;
+    public bool isBusy = false;
 
     private void Awake() 
     { 
@@ -24,7 +26,7 @@ public class SceneChangeController : MonoBehaviour
         else 
         { 
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         } 
     }
 
@@ -35,18 +37,40 @@ public class SceneChangeController : MonoBehaviour
         LoadInterScene();
     }
 
-    public void LoadSceneAdditive(string sceneName)
+    public Coroutine ExecuteLoadPlan()
     {
-        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        if(isBusy) return null; /// Hay Escenas Cargando
+        isBusy = true;
+        return StartCoroutine(ChangeSceneCoroutine(scenesToLoad));
+        
     }
 
-    public void ActivateQueueScenesLoad()
+    public IEnumerator ChangeSceneCoroutine(LoadScenePack scenesToLoad)
     {
         for (int i = 0; i < scenesToLoad.scenes.Count; i++)
         {
-            SceneManager.LoadSceneAsync(scenesToLoad.scenes[i], (i==0)?LoadSceneMode.Single:LoadSceneMode.Additive);
+            yield return LoadAdditive(scenesToLoad.scenes[i]);
         }
         scenesToLoad = null;
+        isBusy = false;
+        SceneManager.UnloadSceneAsync("LoadingScreen");
+    }
+
+    private IEnumerator LoadAdditive(string sceneName)
+    {
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        if(loadOp == null) yield break;
+        loadOp.allowSceneActivation = false;
+        while (loadOp.progress < 0.9f)
+        {
+            yield return null;
+        }
+        loadOp.allowSceneActivation = true;
+        while (!loadOp.isDone)
+        {
+            yield return null;
+        }
+        
     }
 
     private void LoadInterScene()
