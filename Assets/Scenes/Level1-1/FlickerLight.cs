@@ -4,8 +4,8 @@ using UnityEngine.U2D;
 
 public class FlickerLight : MonoBehaviour
 {
-    [SerializeField, Min(0f)] private float minIntensity = 0.5f;
-    [SerializeField, Min(0f)] private float maxIntensity = 1.2f;
+    [SerializeField,Min(0f)] private float minIntensity = 0.5f;
+    private float maxIntensity = 1.2f;
     [SerializeField, Min(0f)] private float timeBetweenIntensity = 0.1f;
 
     private Light2D lightToFlicker;
@@ -20,6 +20,7 @@ public class FlickerLight : MonoBehaviour
         if (lightToFlicker == null)
         {
             lightToFlicker = GetComponent<Light2D>();
+            maxIntensity = lightToFlicker.intensity;   
         }
         
     }
