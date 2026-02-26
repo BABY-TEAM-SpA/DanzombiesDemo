@@ -1,37 +1,30 @@
-Shader "Custom/CircularRainbowPulse_URP"
+Shader "Custom/DanceZoneSplashCurvado_URP"
 {
     Properties
     {
-        _Speed("Base Flow Speed", Float) = 1.0
-        _Frequency("Wave Frequency", Float) = 8.0
-        _WaveAmplitude("Wave Amplitude", Float) = 0.25
-        _LineSharpness("Line Sharpness", Float) = 25.0
-        _Alpha("Alpha", Range(0,1)) = 0.8
-        _Intensity("Base Intensity", Range(0,3)) = 1.5
-        _BeatPulse("Beat Pulse", Float) = 0
-        _PulseStrength("Pulse Strength", Range(0,5)) = 1.0
-        _FlowPulseStrength("Flow Pulse Strength", Range(0,5)) = 1.0
-        _EdgeGlow("Edge Glow Strength", Range(0,5)) = 2.0
-        _EdgeRadius("Edge Radius", Range(0,1)) = 0.9
-        _EdgeSoftness("Edge Softness", Range(0.001,0.5)) = 0.1
+        _LineCount("Line Count", Int) = 3
+        _LineSharpness("Line Sharpness", Float) = 60
+        _DeformAmplitude("Splash Amplitude", Float) = 0.05
+        _DeformFrequency("Splash Frequency", Float) = 5
+        _DeformSpeed("Splash Speed", Float) = 3
 
-        // Nuevo parámetro para activar color o gris
-        _ActiveState("Active State (0 = Gray, 1 = Color)", Range(0,1)) = 0
+        _BackgroundStrength("Background Strength", Range(0,2)) = 0.6
+        _BackgroundFade("Background Fade", Float) = 2.5
+
+        _Alpha("Alpha", Range(0,1)) = 0.9
+        _BeatPulse("Beat Pulse", Float) = 0
+        _PulseStrength("Pulse Strength", Float) = 1
+
+        _ActiveState("Active (0 Gray / 1 Color)", Range(0,1)) = 0
+        _Shape("Shape (0 Oval / 1 Rect)", Range(0,1)) = 1
     }
 
     SubShader
     {
-        Tags
-        {
-            "RenderType"="Transparent"
-            "Queue"="Transparent"
-            "IgnoreProjector"="True"
-            "RenderPipeline"="UniversalPipeline"
-        }
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" "RenderPipeline"="UniversalPipeline" }
 
         Pass
         {
-            Name "Unlit"
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
             ZWrite Off
@@ -53,41 +46,25 @@ Shader "Custom/CircularRainbowPulse_URP"
                 float2 uv : TEXCOORD0;
             };
 
-            float _Speed;
-            float _Frequency;
-            float _WaveAmplitude;
+            int _LineCount;
             float _LineSharpness;
+            float _DeformAmplitude;
+            float _DeformFrequency;
+            float _DeformSpeed;
+
+            float _BackgroundStrength;
+            float _BackgroundFade;
+
             float _Alpha;
-            float _Intensity;
             float _BeatPulse;
             float _PulseStrength;
-            float _FlowPulseStrength;
-            float _EdgeGlow;
-            float _EdgeRadius;
-            float _EdgeSoftness;
             float _ActiveState;
-
-            float hash(float2 p)
-            {
-                return frac(sin(dot(p, float2(127.1,311.7))) * 43758.5453123);
-            }
-
-            float noise(float2 p)
-            {
-                float2 i = floor(p);
-                float2 f = frac(p);
-                float a = hash(i);
-                float b = hash(i + float2(1.0, 0.0));
-                float c = hash(i + float2(0.0, 1.0));
-                float d = hash(i + float2(1.0, 1.0));
-                float2 u = f*f*(3.0-2.0*f);
-                return lerp(a, b, u.x) + (c - a)*u.y*(1.0 - u.x) + (d - b)*u.x*u.y;
-            }
+            float _Shape; // 0 = oval, 1 = rect
 
             float3 HSVtoRGB(float3 c)
             {
-                float4 K = float4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
-                float3 p = abs(frac(c.xxx + K.xyz) * 6.0 - K.www);
+                float4 K = float4(1., 2./3., 1./3., 3.);
+                float3 p = abs(frac(c.xxx + K.xyz) * 6. - K.www);
                 return c.z * lerp(K.xxx, saturate(p - K.xxx), c.y);
             }
 
@@ -101,49 +78,51 @@ Shader "Custom/CircularRainbowPulse_URP"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                float2 uv = IN.uv - 0.5; // centrar
-                float r = length(uv) * 2.0; // radio
-                float angle = atan2(uv.y, uv.x);
+                float2 uv = IN.uv * 2 - 1; // Transformar a [-1,1]
+                float t = _Time.y;
 
-                // Variación dinámica de flujo con el beat
-                float dynamicSpeed = _Speed * (1.0 + _BeatPulse * _FlowPulseStrength);
-                float t = _Time.y * dynamicSpeed;
+                // Background semirectangular y suave
+                float2 fadeUV = abs(uv);
+                float bgFade = pow(1.0 - fadeUV.x, _BackgroundFade) * pow(1.0 - fadeUV.y, _BackgroundFade);
+                float3 bgRainbow = HSVtoRGB(float3(frac(atan2(uv.y, uv.x)/6.2831), 1, 1));
+                float gray = dot(bgRainbow, float3(0.3,0.59,0.11));
+                float3 bgColor = lerp(float3(gray,gray,gray), bgRainbow, _ActiveState);
+                float3 background = bgColor * _BackgroundStrength * bgFade;
 
-                // Ondas radiales que se abren y ramifican
-                float wave = sin(r * _Frequency - t + noise(uv * 5.0 + t) * 2.0);
-                float branch = sin(r * (_Frequency * 0.6) + angle * 4.0 + t * 0.8);
-                float combined = wave + branch * 0.5;
+                // Líneas blancas con ondulación tipo splash en el perímetro (borde)
+                float lineIntensity = 0;
 
-                // Definir líneas y patrones circulares
-                float linePattern = abs(sin((r + combined * _WaveAmplitude) * 3.14159 * _Frequency));
-                float lines = exp(-_LineSharpness * linePattern);
+                for (int i = 0; i < 10; i++)
+                {
+                    if (i >= _LineCount) break;
 
-                // Borde circular brillante
-                float edgeMask = smoothstep(_EdgeRadius, _EdgeRadius - _EdgeSoftness, r);
-                float edgePulse = 1.0 + (_BeatPulse * _PulseStrength);
-                float edgeGlow = edgeMask * _EdgeGlow * edgePulse;
+                    float lineOffset = i / (float)_LineCount; // Distribución uniforme
+                    float baseRadius = 0.3 + lineOffset * 0.6;
 
-                // Pulso global
-                float pulse = 1.0 + (_BeatPulse * _PulseStrength);
-                float brightness = (lines + edgeGlow) * _Intensity * pulse;
+                    // Curvatura del perímetro (deformación sinusoidal solo en el borde)
+                    float deformX = sin(uv.y * _DeformFrequency + t * _DeformSpeed + i * 10) * _DeformAmplitude;
+                    float deformY = cos(uv.x * _DeformFrequency + t * _DeformSpeed + i * 15) * _DeformAmplitude;
+                    float2 deformedUV = uv + float2(deformX, deformY);
 
-                // Arcoíris circular animado
-                float hue = frac(angle / 6.2831 + t * 0.1);
-                float sat = 1.0 - r * 0.3;
-                float val = 0.8 + 0.2 * sin(t + r * 4.0);
-                float3 rgb = HSVtoRGB(float3(hue, sat, val));
+                    // Mantener el centro fijo, deformar solo el perímetro
+                    float distOval = length(deformedUV); // Óvalo
+                    float distRect = max(abs(deformedUV.x), abs(deformedUV.y)); // Rectángulo
+                    float dist = lerp(distOval, distRect, _Shape); // Interpolamos entre óvalo y rectángulo
 
-                // Convertir a gris
-                float gray = dot(rgb, float3(0.3, 0.59, 0.11));
+                    // Calcular la diferencia de distancias y dibujar el perímetro
+                    float ringPattern = abs(dist - baseRadius);
+                    float lineVal = exp(-_LineSharpness * ringPattern);
+                    lineVal *= 1.0 + _BeatPulse * _PulseStrength;
 
-                // Interpolación: gris (0) → color (1)
-                float3 color = lerp(float3(gray, gray, gray), rgb, _ActiveState);
+                    lineIntensity += lineVal;
+                }
 
-                // Fade fuera del borde
-                float fade = smoothstep(1.0, 0.8, r);
+                float3 finalColor = background + float3(1,1,1) * lineIntensity;
+                float finalAlpha = saturate((_BackgroundStrength * bgFade + lineIntensity) * _Alpha);
 
-                return half4(color * brightness * fade, brightness * _Alpha * fade);
+                return half4(finalColor, finalAlpha);
             }
+
             ENDHLSL
         }
     }

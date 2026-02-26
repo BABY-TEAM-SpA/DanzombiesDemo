@@ -98,7 +98,7 @@ public abstract class RhythmPuzzle : BeatReciever
         {
             if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
             OnDanceStep?.Invoke(currentPuzzleStep);
-            //GeneralVisualFeedback(counter);
+            GeneralVisualFeedback(counter);
         }
     }
     public override void PostBeatAction(int counter)
@@ -129,6 +129,8 @@ public abstract class RhythmPuzzle : BeatReciever
     
     public abstract void VisualFeedbackToPlayerDance(bool isPlayerDanceCorrect);
 
+    public abstract void GeneralVisualFeedback(int counter);
+
     public abstract void PlayerHasNoFlow(PlayerManager player);
     
     public virtual void PlayerEnter(PlayerManager player)
@@ -136,7 +138,6 @@ public abstract class RhythmPuzzle : BeatReciever
         if(debug)Debug.Log("Player entered");
         player.AddTargetPuzzle(this);
         playersInside.Add(player);
-        //To implement in Sons
     }
 
     public virtual void PlayerLeave(PlayerManager player)
@@ -144,7 +145,6 @@ public abstract class RhythmPuzzle : BeatReciever
         if(debug)Debug.Log("Player Leave");
         playersInside.Remove(player);
         player.RemoveTargetPuzzle(this);
-        //To implement in Sons
     }
     
 }

@@ -40,6 +40,11 @@ public class TutorialPuzzle : RhythmPuzzle
         //throw new NotImplementedException();
     }
 
+    public override void GeneralVisualFeedback(int counter)
+    {
+        //throw new NotImplementedException();
+    }
+
 
     public override void PlayerHasNoFlow(PlayerManager player)
     {
