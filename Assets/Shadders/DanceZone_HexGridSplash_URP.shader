@@ -1,4 +1,4 @@
-Shader "Custom/CurvedWaveLines_URP"
+Shader "Custom/CurvedWaveLines_URP_Tiled"
 {
     Properties
     {
@@ -6,7 +6,7 @@ Shader "Custom/CurvedWaveLines_URP"
         _LineThickness("Line Thickness", Float) = 0.006
 
         _WaveAmplitude("Wave Amplitude", Float) = 0.035
-        _WaveFrequency("Wave Frequency", Float) = 9
+        _WaveFrequency("Wave Frequency (Integer Recommended)", Float) = 9
         _WaveSpeed("Wave Speed", Float) = 1.2
 
         _Randomness("Randomness", Float) = 0.6
@@ -16,11 +16,12 @@ Shader "Custom/CurvedWaveLines_URP"
 
         _Alpha("Alpha", Range(0,1)) = 1
         _BackgroundStrength("Background Strength", Range(0,1)) = 0.5
-        _EdgeFade("Edge Fade Power", Float) = 1.5
-        _ActiveState("Active (0 Gray/1 Color)", Range(0,1)) = 1
+        _ActiveState("Active (0 Inactive / 1 Active)", Range(0,1)) = 1
         
-        // Nueva propiedad para elegir el fondo
-        _RainbowColor("Rainbow Color", Color) = (1,1,1,1)
+        _RainbowColor("Active Color", Color) = (1,1,1,1)
+        _InactiveColor("Inactive Color", Color) = (0.4,0.4,0.4,1)
+
+        _Tiling("Tiling XY", Vector) = (1,1,0,0)
     }
 
     SubShader
@@ -68,20 +69,11 @@ Shader "Custom/CurvedWaveLines_URP"
 
             float _Alpha;
             float _BackgroundStrength;
-            float _EdgeFade;
             float _ActiveState;
 
-            // Nuevo color del rainbow
             float4 _RainbowColor;
-
-            float hash(float n) { return frac(sin(n) * 43758.5453123); }
-
-            float3 HSVtoRGB(float3 c)
-            {
-                float4 K = float4(1., 2./3., 1./3., 3.);
-                float3 p = abs(frac(c.xxx + K.xyz) * 6. - K.www);
-                return c.z * lerp(K.xxx, saturate(p - K.xxx), c.y);
-            }
+            float4 _InactiveColor;
+            float4 _Tiling;
 
             Varyings vert(Attributes IN)
             {
@@ -93,50 +85,50 @@ Shader "Custom/CurvedWaveLines_URP"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                float2 uv = IN.uv;
+                float2 uv = IN.uv * _Tiling.xy;
+                uv = frac(uv);
+
                 float t = _Time.y;
 
-                // Usamos el color rainbow pasado por el script solo si el jugador está dentro
-                float3 bgColor = _RainbowColor.rgb;
+                // ===== COLOR FONDO (activo / inactivo) =====
+                float3 activeColor = _RainbowColor.rgb;
+                float3 inactiveColor = _InactiveColor.rgb;
+                float3 baseColor = lerp(inactiveColor, activeColor, _ActiveState);
 
-                // ===== Fade en los 4 bordes =====
-                float distX = abs(uv.x - 0.5) * 2.0;
-                float distY = abs(uv.y - 0.5) * 2.0;
+                float3 background = baseColor * _BackgroundStrength;
 
-                float fadeX = 1.0 - distX;
-                float fadeY = 1.0 - distY;
-
-                float edgeFade = pow(saturate(fadeX * fadeY), _EdgeFade);
-
-                // Fondo final con intensidad de color y fade
-                float3 background = bgColor * _BackgroundStrength * edgeFade * (1.0 + _BeatPulse * 0.2);
-
-                // ===== Líneas =====
+                // ===== LÍNEAS =====
                 float lineIntensity = 0;
+
+                float wave = sin(uv.y * _WaveFrequency * 6.2831853 + t * _WaveSpeed);
+                float offset = wave * _WaveAmplitude;
 
                 for (int i = 0; i < 32; i++)
                 {
                     if (i >= _LineCount) break;
 
-                    float lineID = i;
-                    float baseX = (lineID + 0.5) / _LineCount;
-
-                    float phase = hash(lineID) * 6.2831853 * _Randomness;
-                    float speed = lerp(0.8, 1.8, hash(lineID + 5.7));
-                    float offset = sin(uv.y * _WaveFrequency + t * _WaveSpeed * speed + phase) * _WaveAmplitude;
-
+                    float baseX = (i + 0.5) / _LineCount;
                     float distortedX = baseX + offset;
+
                     float dist = abs(uv.x - distortedX);
 
-                    float thickness = _LineThickness * (1.0 + _BeatPulse * 0.25);
-                    float lineVal = 1.0 - smoothstep(0.0, thickness, dist);
+                    float thickness = (_LineThickness / _Tiling.x) * (1.0 + _BeatPulse * 0.25);
 
+                    float lineVal = 1.0 - smoothstep(0.0, thickness, dist);
                     lineVal *= 1.0 + _BeatPulse * _PulseStrength;
+
                     lineIntensity += lineVal;
                 }
 
-                float3 finalColor = lerp(background, float3(1,1,1), lineIntensity);
-                float finalAlpha = saturate((_BackgroundStrength * edgeFade + lineIntensity) * _Alpha);
+                lineIntensity = saturate(lineIntensity);
+
+                // 👇 Línea SIEMPRE blanca
+                float3 lineColor = float3(1.0, 1.0, 1.0);
+
+                float3 finalColor = background * (1.0 - lineIntensity)
+                                  + lineColor * lineIntensity;
+
+                float finalAlpha = saturate((_BackgroundStrength + lineIntensity) * _Alpha);
 
                 return half4(finalColor, finalAlpha);
             }
