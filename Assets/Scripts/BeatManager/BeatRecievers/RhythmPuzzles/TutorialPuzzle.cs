@@ -6,33 +6,33 @@ using UnityEngine.Events;
 
 public class TutorialPuzzle : RhythmPuzzle
 {
-    public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
-    public int currentTutorialStepIndex = 0;
-    [SerializeField] private int playerSucceses = 0;
     [SerializeField] private ZombieDanceBrain Steph;
     [SerializeField] private TutorialDanceBrain HUD;
-
-
+    [SerializeField] private int playerSucceses = 0;
+    public int currentTutorialSequence = 0;
+    public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
+    
     private void Start()
     {
         Steph?.Connect(this);
         HUD?.Connect(this);
-
         //player.OnDance += OnPlayerInputAction;
     }
 
     private void OnDisable()
     {
         Steph?.Disconnect(this);
+        HUD?.Disconnect(this);
         //player.OnDance -= OnPlayerInputAction;
     }
 
     public override void ActivatePuzzle(bool activate)
     {
+        innerCounter = 0;
         playerSucceses = 0;
         base.ActivatePuzzle(activate);
-        if (currentTutorialStepIndex < TutorialSequences.Count)
-            currentDanceSequence = TutorialSequences[currentTutorialStepIndex];
+        if (currentTutorialSequence < TutorialSequences.Count)
+            activeDanceSequence = TutorialSequences[currentTutorialSequence];
     }
 
     public override void VisualFeedbackToPlayerDance(bool isCorrect)
@@ -44,14 +44,12 @@ public class TutorialPuzzle : RhythmPuzzle
     {
         //throw new NotImplementedException();
     }
-
-
+    
     public override void PlayerHasNoFlow(PlayerManager player)
     {
         //throw new NotImplementedException();
     }
-
-
+    
     public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
         if (step == DanceStep.None)
@@ -59,6 +57,7 @@ public class TutorialPuzzle : RhythmPuzzle
             return;
         }
         bool IsPlayerDanceCorrect = player.saveDanceStep == step;
+        VisualFeedbackToPlayerDance(IsPlayerDanceCorrect);
         if (IsPlayerDanceCorrect)
         {
             playerSucceses+=1;
@@ -76,8 +75,9 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public void CompleteRhythmSequence()
     {
-        currentDanceSequence.OnSequenceCompletedEvent?.Invoke();
-        currentTutorialStepIndex += 1;
+        activeDanceSequence.OnSequenceCompletedEvent?.Invoke();
+        currentTutorialSequence += 1;
+        innerCounter = 0;
         ActivatePuzzle(false);
         
     }

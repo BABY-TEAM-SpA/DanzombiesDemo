@@ -17,10 +17,16 @@ public class TutorialDanceBrain : MonoBehaviour
     private string currentScheme;
     
     [SerializeField] private DanceIcon danceIcon;
+    private DanceIcon.SchemesSpritesControls currentDanceScheme = new DanceIcon.SchemesSpritesControls();
     [SerializeField] private DanceIcon leftDirIcon;
+    private DanceIcon.SchemesSpritesControls currentLeftScheme = new DanceIcon.SchemesSpritesControls();
     [SerializeField] private DanceIcon rightDirIcon;
+    private DanceIcon.SchemesSpritesControls currentRightScheme = new DanceIcon.SchemesSpritesControls();
+    
+    [SerializeField, Range(0f,1f)] private float  unactiveAlpha;
 
-    private DanceIcon currentDirectionIcon;
+    private DanceStep futureDanceStep = DanceStep.None;
+    
 
     public void Start()
     {
@@ -42,13 +48,19 @@ public class TutorialDanceBrain : MonoBehaviour
 
     private void OnPrepareStepAction(DanceStep step)
     {
-        PrepareUI();
         if (step != DanceStep.None)
         {
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
-            if(view == "R")   Debug.Log("Play R Settup");
-            else Debug.Log("Play L Settup");
+            danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).active;
+            /*if (view == "R")
+            {
+                rightDirIcon.iconRenderer.color = Color.white;
+            }
+            else
+            {
+                leftDirIcon.iconRenderer.color = Color.white;
+            };*/
             
         }
     }
@@ -59,43 +71,79 @@ public class TutorialDanceBrain : MonoBehaviour
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
             
-            if(view == "R") Debug.Log("Play R Animation");
-            else Debug.Log("Play L Animation");//rightDirIcon?.animator.Play();
-            //playerAnimCtrl?.animator.SetBool("DanceStep"+orientation[0],true);
-            //playerAnimCtrl?.animator.SetTrigger("Dance");
+            danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).pressed;
+            if (view == "R")
+            {
+                
+                rightDirIcon.iconRenderer.sprite = currentRightScheme.buttons[0].pressed;
+            }
+            else
+            {
+                leftDirIcon.iconRenderer.color = Color.white;
+                leftDirIcon.iconRenderer.sprite = currentLeftScheme.buttons[0].pressed;
+            };
         }
     }
-    private void OnReleaseStepAction(DanceStep step)
+    private void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
     {
         
         if (step != DanceStep.None)
         {
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
+            danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).active;
+            if (view == "R")
+            {
+                rightDirIcon.iconRenderer.sprite = currentRightScheme.buttons[0].active;
+            }
+            else
+            {
+                leftDirIcon.iconRenderer.sprite = currentLeftScheme.buttons[0].active;
+            };
         }
+        futureDanceStep = futureStep;
+        PrepareUI();
     }
 
     public void PrepareUI()
     {
+        danceIcon.iconRenderer.color = new Color(1, 1, 1, unactiveAlpha);
+        rightDirIcon.iconRenderer.color = new Color(1, 1, 1, unactiveAlpha);
+        leftDirIcon.iconRenderer.color = new Color(1, 1, 1, unactiveAlpha);
+        string view = futureDanceStep.ToString()[0].ToString();
+        string orientation = futureDanceStep.ToString().Remove(0,2);
+        
+        //Orientacion
         currentScheme = _playerInput.currentControlScheme;
-        DanceIcon.SchemesSpritesControls schemeDance = danceIcon.schemes.FirstOrDefault(x=>x.schemeName==currentScheme);
-        danceIcon.iconRenderer.sprite = schemeDance.defaultSprite;
+        currentDanceScheme = danceIcon.schemes.FirstOrDefault(x=>x.schemeName==currentScheme);
+        DanceIcon.SchemesSpritesControls.ControlButtons button = currentDanceScheme.buttons.FirstOrDefault(x => x.buttonName == orientation);
+        danceIcon.iconRenderer.sprite = (button!=null)?button.active:currentDanceScheme.defaultSprite;
         danceIcon.iconRenderer.SetNativeSize();
-        danceIcon.iconFXRenderer.sprite = schemeDance.spriteFX;
+        danceIcon.iconFXRenderer.sprite = currentDanceScheme.spriteFX;
         danceIcon.iconFXRenderer.SetNativeSize();
-        DanceIcon.SchemesSpritesControls schemeLeft = leftDirIcon.schemes.FirstOrDefault(x=>x.schemeName==currentScheme);
-        leftDirIcon.iconRenderer.sprite = schemeLeft.buttons[0].active;
+        
+        // Costados
+        currentLeftScheme = leftDirIcon.schemes.FirstOrDefault(x=>x.schemeName==currentScheme);
+        leftDirIcon.iconRenderer.sprite = currentLeftScheme.buttons[0].active;
         leftDirIcon.iconRenderer.SetNativeSize();
-        leftDirIcon.iconFXRenderer.sprite = schemeLeft.spriteFX;
+        leftDirIcon.iconFXRenderer.sprite = currentLeftScheme.spriteFX;
         leftDirIcon.iconFXRenderer.SetNativeSize();
-        DanceIcon.SchemesSpritesControls schemeRight = rightDirIcon.schemes.FirstOrDefault(x=>x.schemeName==currentScheme);
-        rightDirIcon.iconRenderer.sprite = schemeRight.buttons[0].active;
+        currentRightScheme = rightDirIcon.schemes.FirstOrDefault(x=>x.schemeName==currentScheme);
+        rightDirIcon.iconRenderer.sprite = currentRightScheme.buttons[0].active;
         rightDirIcon.iconRenderer.SetNativeSize();
-        rightDirIcon.iconFXRenderer.sprite = schemeRight.spriteFX;
+        rightDirIcon.iconFXRenderer.sprite = currentRightScheme.spriteFX;
         rightDirIcon.iconFXRenderer.SetNativeSize();
+
+        if (futureDanceStep != DanceStep.None)
+        {
+            danceIcon.iconRenderer.color = Color.white;
+            if(view =="R") rightDirIcon.iconRenderer.color = Color.white;
+            else leftDirIcon.iconRenderer.color = Color.white;
+        }
+        
     }
     
-    ////////////////////////////////////////////////////summary>
+    ///////////////////////////////////////////////////
     
     [Serializable]
     public class DanceIcon

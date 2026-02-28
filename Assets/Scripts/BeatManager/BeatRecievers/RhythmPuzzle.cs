@@ -36,13 +36,16 @@ public abstract class RhythmPuzzle : BeatReciever
 {
     [SerializeField] bool ActivateOnStart;
     [SerializeField] protected bool ShouldRepeat =false;
-    [SerializeField] protected SequenceStep currentDanceSequence;
-    [SerializeField] protected DanceStep currentPuzzleStep = DanceStep.None;
+    protected SequenceStep activeDanceSequence;
+    protected DanceStep currentPuzzleStep = DanceStep.None;
+    protected DanceStep futurePuzzleStep = DanceStep.None;
+    protected int innerCounter = 0;
     
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
     public event OnMusicEvent OnDanceStep;
-    public event OnMusicEvent OnReleaseStep;
+    public delegate void OnMusicEvent2(DanceStep danceStep, DanceStep futureStep);
+    public event OnMusicEvent2 OnReleaseStep;
     public UnityEvent OnPuzzleGetsActivateEvent = new UnityEvent();
     
     
@@ -60,22 +63,35 @@ public abstract class RhythmPuzzle : BeatReciever
         if (ActivateOnStart) ActivatePuzzle(true);
     }
 
-    private DanceStep GetDanceStep(int counter)
+    private DanceStep GetDanceStep()
     {
         // recibi un -1
-        if(counter<0) return DanceStep.None;
-        if (counter < currentDanceSequence.DanceSteps.Count)
+        if(innerCounter<0) return DanceStep.None;
+        if (innerCounter < activeDanceSequence.DanceSteps.Count)
         {
-            return currentDanceSequence.DanceSteps[counter];
+            return activeDanceSequence.DanceSteps[innerCounter];
         }
         else{
-            return (ShouldRepeat)?currentDanceSequence.DanceSteps[(counter) % currentDanceSequence.DanceSteps.Count]:DanceStep.None;
+            return (ShouldRepeat)?activeDanceSequence.DanceSteps[(innerCounter) % activeDanceSequence.DanceSteps.Count]:DanceStep.None;
         }
         //si esta dentro
         //si esta fuera
         //si debo repetir y esta dentro
         //si debo repetir y esta fuera 
     }
+
+    private DanceStep GetNextDanceStep() ///largo 4, estoy en el 49 (beat2), y el siguiente es en el 3 (beat4)
+    {
+        for (int i = 0; i < activeDanceSequence.DanceSteps.Count; i++)
+        {
+            int aux = i+innerCounter+1;
+            aux = aux % activeDanceSequence.DanceSteps.Count;
+            if(activeDanceSequence.DanceSteps[aux]!=DanceStep.None) return activeDanceSequence.DanceSteps[aux];
+        }
+        return DanceStep.None;
+    }
+    
+    
 
     public virtual void ActivatePuzzle(bool activate)
     {
@@ -87,7 +103,7 @@ public abstract class RhythmPuzzle : BeatReciever
     {
         if (isActive)
         {
-            currentPuzzleStep = GetDanceStep(counter);
+            currentPuzzleStep = GetDanceStep();
             OnPrepareStep?.Invoke(currentPuzzleStep);
         }
     }
@@ -98,7 +114,7 @@ public abstract class RhythmPuzzle : BeatReciever
         {
             if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
             OnDanceStep?.Invoke(currentPuzzleStep);
-            GeneralVisualFeedback(counter);
+            GeneralVisualFeedback(innerCounter);
         }
     }
     public override void PostBeatAction(int counter)
@@ -106,9 +122,10 @@ public abstract class RhythmPuzzle : BeatReciever
         if (isActive)
         {
             //Debug.Log("PostBeat");
-            OnReleaseStep?.Invoke(currentPuzzleStep);
             OnRhythmPuzzleBeatReaction();
-            
+            futurePuzzleStep = GetNextDanceStep();
+            OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
+            innerCounter=innerCounter+1;
         }
     }
 
