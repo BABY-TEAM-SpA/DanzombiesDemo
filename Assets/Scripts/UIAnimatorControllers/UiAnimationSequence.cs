@@ -1,78 +1,60 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
+[System.Serializable]
 public class UiAnimationSequence
 {
-    public string SequenceName;
-    
-    [Serializable]
-    public class SequenceStep
-    {
-        public enum StepType { Wait, Animation }
-        public StepType stepType = StepType.Animation;
-        public float duration = 0f;
-        public List<UiAnimation> animations = new List<UiAnimation>();
-        public UnityEvent onStepComplete;
-    }
-
-    [SerializeField] private List<SequenceStep> steps = new List<SequenceStep>();
-    [SerializeField] private bool loop = false;
+    [Header("Sequence Settings")]
+    [SerializeField] private string sequenceName;
+    [SerializeField] private bool loop;
     [SerializeField] private int loopCount = 1;
-    [SerializeField] public UnityEvent onSequenceStart;
-    [SerializeField] public UnityEvent onSequenceComplete;
+    [Header("Animations")]
+    [SerializeField] private List<UiAnimation> animations = new();
+    [Header("Sequence Events")]
+    public UnityEvent OnSequenceStart;
+    public UnityEvent OnSequenceComplete;
 
-    public IEnumerator Play(MonoBehaviour host, List<UiAnimation> activeAnimations)
+    public string SequenceName => sequenceName;
+
+    public IEnumerator Play()
     {
-        int count = loop ? Mathf.Max(1, loopCount) : 1;
+        if (animations == null || animations.Count == 0)
+            yield break;
 
-        for (int i = 0; i < count; i++)
+        int iterations = loop ? Mathf.Max(1, loopCount) : 1;
+
+        for (int i = 0; i < iterations; i++)
         {
-            onSequenceStart.Invoke();
+            OnSequenceStart?.Invoke();
 
-            foreach (var step in steps)
+            List<IEnumerator> running = new();
+
+            foreach (var anim in animations)
+                running.Add(anim.Play());
+
+            bool runningAny = true;
+
+            while (runningAny)
             {
-                switch (step.stepType)
+                runningAny = false;
+
+                for (int j = 0; j < running.Count; j++)
                 {
-                    case SequenceStep.StepType.Wait:
-                        yield return new WaitForSecondsRealtime(step.duration);
-                        break;
-
-                    case SequenceStep.StepType.Animation:
-                        int remaining = step.animations.Count;
-                        if (remaining == 0) yield break;
-
-                        foreach (var anim in step.animations)
-                        {
-                            // Registrar la animación activa
-                            if (!activeAnimations.Contains(anim))
-                                activeAnimations.Add(anim);
-
-                            host.StartCoroutine(PlayAndNotify(host, anim, step.duration, () =>
-                            {
-                                remaining--;
-                                activeAnimations.Remove(anim);
-                            }));
-                        }
-
-                        while (remaining > 0)
-                            yield return null;
-                        break;
+                    if (running[j] != null)
+                    {
+                        if (!running[j].MoveNext())
+                            running[j] = null;
+                        else
+                            runningAny = true;
+                    }
                 }
 
-                step.onStepComplete?.Invoke();
+                yield return null;
             }
 
-            onSequenceComplete.Invoke();
+            OnSequenceComplete?.Invoke();
         }
-    }
-
-    private IEnumerator PlayAndNotify(MonoBehaviour host, UiAnimation anim, float duration, Action onComplete)
-    {
-        yield return anim.Play(host, duration);
-        onComplete?.Invoke();
     }
 }

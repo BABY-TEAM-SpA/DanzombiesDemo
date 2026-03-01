@@ -1,16 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UiAnimator : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private List<UiAnimationSequence> sequences = new();
+
+    private Coroutine runningCoroutine;
+
+    public void PlaySequence(string sequenceName)
     {
-        
+        StopSequence();
+
+        var sequence = sequences.Find(s => s.SequenceName == sequenceName);
+        if (sequence == null)
+        {
+            Debug.LogWarning($"Sequence '{sequenceName}' not found.");
+            return;
+        }
+
+        runningCoroutine = StartCoroutine(sequence.Play());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StopSequence()
     {
-        
+        if (runningCoroutine != null)
+        {
+            StopCoroutine(runningCoroutine);
+            runningCoroutine = null;
+        }
     }
 }
