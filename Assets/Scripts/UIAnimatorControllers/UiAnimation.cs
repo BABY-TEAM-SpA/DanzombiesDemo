@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,15 +10,16 @@ public enum UiTimeMode
     Unscaled,
     DSP
 }
+
 [System.Serializable]
 public class UiAnimation
 {
     [SerializeField] private bool revertOnComplete = false;
-    [SerializeField] private RectTransform target;
-    [SerializeField] private List<AnimationStep> steps = new();
-    
+    [SerializeField] private RectTransform objectToAnimate;
+    [SerializeField] private UiTimeMode timeMode = UiTimeMode.Unscaled;
+    [SerializeField] private List<AnimationStep> animationSteps = new();
 
-    public RectTransform Target => target;
+    public RectTransform Target => objectToAnimate;
 
     private struct TransformState
     {
@@ -32,15 +34,18 @@ public class UiAnimation
 
     private TransformState initialState;
 
-    public IEnumerator Play()
+    public IEnumerator Play(Func<bool> isCancelled)
     {
-        if (!target || steps == null || steps.Count == 0)
+        if (!objectToAnimate || animationSteps == null || animationSteps.Count == 0)
             yield break;
 
         CaptureInitialState();
 
-        foreach (var step in steps)
-            yield return step.Play(target);
+        foreach (var step in animationSteps)
+        {
+            if (isCancelled()) yield break;
+            yield return step.Play(objectToAnimate, timeMode, isCancelled);
+        }
 
         if (revertOnComplete)
             RestoreInitialState();
@@ -48,48 +53,36 @@ public class UiAnimation
 
     private void CaptureInitialState()
     {
-        initialState.anchoredPosition = target.anchoredPosition;
-        initialState.localScale = target.localScale;
-        initialState.localRotation = target.localRotation;
+        initialState.anchoredPosition = objectToAnimate.anchoredPosition;
+        initialState.localScale = objectToAnimate.localScale;
+        initialState.localRotation = objectToAnimate.localRotation;
 
-        if (target.TryGetComponent(out CanvasGroup cg))
+        if (objectToAnimate.TryGetComponent(out CanvasGroup cg))
         {
             initialState.alpha = cg.alpha;
             initialState.hasCanvasGroup = true;
         }
-        else
-        {
-            initialState.hasCanvasGroup = false;
-        }
 
-        if (target.TryGetComponent(out Graphic g))
+        if (objectToAnimate.TryGetComponent(out Graphic g))
         {
             initialState.color = g.color;
             initialState.hasGraphic = true;
-        }
-        else
-        {
-            initialState.hasGraphic = false;
         }
     }
 
     private void RestoreInitialState()
     {
-        target.anchoredPosition = initialState.anchoredPosition;
-        target.localScale = initialState.localScale;
-        target.localRotation = initialState.localRotation;
+        objectToAnimate.anchoredPosition = initialState.anchoredPosition;
+        objectToAnimate.localScale = initialState.localScale;
+        objectToAnimate.localRotation = initialState.localRotation;
 
         if (initialState.hasCanvasGroup &&
-            target.TryGetComponent(out CanvasGroup cg))
-        {
+            objectToAnimate.TryGetComponent(out CanvasGroup cg))
             cg.alpha = initialState.alpha;
-        }
 
         if (initialState.hasGraphic &&
-            target.TryGetComponent(out Graphic g))
-        {
+            objectToAnimate.TryGetComponent(out Graphic g))
             g.color = initialState.color;
-        }
     }
 
     [System.Serializable]
@@ -97,6 +90,7 @@ public class UiAnimation
     {
         public enum UiStepType
         {
+            Wait,
             Move,
             MoveTo,
             Rotate,
@@ -108,7 +102,6 @@ public class UiAnimation
         public UiStepType stepType;
         public double duration = 0.3d;
         public UiEasingType easing = UiEasingType.Linear;
-        public UiTimeMode timeMode = UiTimeMode.Unscaled;
 
         public Vector2 position;
         public Vector3 scale = Vector3.one;
@@ -116,14 +109,17 @@ public class UiAnimation
         [Range(0f, 1f)] public float alpha = 1f;
         public Color color = Color.white;
 
-        public IEnumerator Play(RectTransform target)
+        public IEnumerator Play(
+            RectTransform target,
+            UiTimeMode timeMode,
+            Func<bool> isCancelled)
         {
-            if (!target)
+            if (!target || duration <= 0f)
                 yield break;
 
-            if (duration <= 0f)
+            if (stepType == UiStepType.Wait)
             {
-                ApplyInstant(target);
+                yield return WaitForDuration(duration, timeMode, isCancelled);
                 yield break;
             }
 
@@ -132,6 +128,8 @@ public class UiAnimation
             Quaternion startRot = target.localRotation;
 
             CanvasGroup canvasGroup = null;
+            Graphic graphic = null;
+
             if (stepType == UiStepType.Fade)
             {
                 canvasGroup = target.GetComponent<CanvasGroup>();
@@ -139,19 +137,19 @@ public class UiAnimation
                     canvasGroup = target.gameObject.AddComponent<CanvasGroup>();
             }
 
-            float startAlpha = canvasGroup ? canvasGroup.alpha : 0f;
-
-            Graphic graphic = null;
             if (stepType == UiStepType.Color)
                 graphic = target.GetComponent<Graphic>();
 
+            float startAlpha = canvasGroup ? canvasGroup.alpha : 0f;
             Color startColor = graphic ? graphic.color : Color.white;
 
-            double startDspTime = AudioSettings.dspTime;
-            double elapsed = 0f;
+            double startDsp = AudioSettings.dspTime;
+            double elapsed = 0;
 
             while (elapsed < duration)
             {
+                if (isCancelled()) yield break;
+
                 switch (timeMode)
                 {
                     case UiTimeMode.Scaled:
@@ -163,50 +161,51 @@ public class UiAnimation
                         break;
 
                     case UiTimeMode.DSP:
-                        elapsed = (float)(AudioSettings.dspTime - startDspTime);
+                        elapsed = AudioSettings.dspTime - startDsp;
                         break;
                 }
 
-                float t = Mathf.Clamp01((float)elapsed / (float)duration);
+                float t = Mathf.Clamp01((float)(elapsed / duration));
                 t = UiEasing.Evaluate(easing, t);
 
-                Apply(target, t, startPos, startScale, startRot, startAlpha, startColor);
+                Apply(target, t, startPos, startScale, startRot,
+                      startAlpha, startColor, canvasGroup, graphic);
 
                 yield return null;
             }
 
-            Apply(target, 1f, startPos, startScale, startRot, startAlpha, startColor);
+            Apply(target, 1f, startPos, startScale, startRot,
+                  startAlpha, startColor, canvasGroup, graphic);
         }
 
-        private void ApplyInstant(RectTransform target)
+        private IEnumerator WaitForDuration(
+            double duration,
+            UiTimeMode mode,
+            Func<bool> isCancelled)
         {
-            switch (stepType)
+            double startDsp = AudioSettings.dspTime;
+            double elapsed = 0;
+
+            while (elapsed < duration)
             {
-                case UiStepType.Move:
-                    target.anchoredPosition += position;
-                    break;
+                if (isCancelled()) yield break;
 
-                case UiStepType.MoveTo:
-                    target.anchoredPosition = position;
-                    break;
+                switch (mode)
+                {
+                    case UiTimeMode.Scaled:
+                        elapsed += Time.deltaTime;
+                        break;
 
-                case UiStepType.Scale:
-                    target.localScale = scale;
-                    break;
+                    case UiTimeMode.Unscaled:
+                        elapsed += Time.unscaledDeltaTime;
+                        break;
 
-                case UiStepType.Rotate:
-                    target.localRotation = Quaternion.Euler(rotation);
-                    break;
+                    case UiTimeMode.DSP:
+                        elapsed = AudioSettings.dspTime - startDsp;
+                        break;
+                }
 
-                case UiStepType.Fade:
-                    if (target.TryGetComponent(out CanvasGroup cg))
-                        cg.alpha = alpha;
-                    break;
-
-                case UiStepType.Color:
-                    if (target.TryGetComponent(out Graphic g))
-                        g.color = color;
-                    break;
+                yield return null;
             }
         }
 
@@ -217,7 +216,9 @@ public class UiAnimation
             Vector3 startScale,
             Quaternion startRot,
             float startAlpha,
-            Color startColor)
+            Color startColor,
+            CanvasGroup canvasGroup,
+            Graphic graphic)
         {
             switch (stepType)
             {
@@ -242,13 +243,15 @@ public class UiAnimation
                     break;
 
                 case UiStepType.Fade:
-                    if (target.TryGetComponent(out CanvasGroup cg))
-                        cg.alpha = Mathf.LerpUnclamped(startAlpha, alpha, t);
+                    if (canvasGroup)
+                        canvasGroup.alpha =
+                            Mathf.LerpUnclamped(startAlpha, alpha, t);
                     break;
 
                 case UiStepType.Color:
-                    if (target.TryGetComponent(out Graphic g))
-                        g.color = Color.LerpUnclamped(startColor, color, t);
+                    if (graphic)
+                        graphic.color =
+                            Color.LerpUnclamped(startColor, color, t);
                     break;
             }
         }

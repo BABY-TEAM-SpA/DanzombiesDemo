@@ -5,7 +5,7 @@ public class MainMenuController : MonoBehaviour
 {
     
     [SerializeField] MusicLevelController musicController;
-    [SerializeField] UiAnimatorController animator;
+    [SerializeField] UiAnimator animator;
     
     [SerializeField] SceneChangeController.LoadScenePack levelToLoad;
     [SerializeField] string creditsSceneLoadConfig;
@@ -13,6 +13,8 @@ public class MainMenuController : MonoBehaviour
     void Start()
     {
         SceneManager.LoadSceneAsync("GUI", LoadSceneMode.Additive);
+        musicController.SetPlayMusic();
+        animator.PlaySequence();
     }
 
     public void PlayGame()
