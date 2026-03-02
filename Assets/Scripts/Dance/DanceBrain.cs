@@ -36,7 +36,7 @@ public abstract class DanceBrain : MonoBehaviour
         if(isRight != isRightLooking && value!=0)
         {
             isRightLooking = isRight;
-            playerAnimCtrl.SetAnimatorOverrideDirection(isRight);
+            playerAnimCtrl.SetAnimatorOverrideDirection();
         }
     }
     

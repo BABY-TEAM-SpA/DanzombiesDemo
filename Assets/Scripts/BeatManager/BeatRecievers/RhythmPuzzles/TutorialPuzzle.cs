@@ -10,6 +10,8 @@ public class TutorialPuzzle : RhythmPuzzle
     [SerializeField] private TutorialDanceBrain HUD;
     [SerializeField] private int playerSucceses = 0;
     public int currentTutorialSequence = 0;
+    
+    [Header("Tutorial Dance Settings")]
     public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
     
     private void Start()

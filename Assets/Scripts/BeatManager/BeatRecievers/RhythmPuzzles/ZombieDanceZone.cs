@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class ZombieDanceZone : RhythmPuzzle
 {
-    [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
-
-    [Header("Shader Pulse Settings")]
+    [Header("Shader Feedback Settings")]
+    [SerializeField] private List<Color> gradientColors = new List<Color>(); // Lista de colores para el gradiente
     [SerializeField] private float pulseRiseSpeed = 8f;
     [SerializeField] private float preBeatPulse = 0.3f;
     [SerializeField] private float beatPulse = 1.2f;
-
-    [Header("Background Gradient Colors")]
-    [SerializeField] private List<Color> gradientColors = new List<Color>(); // Lista de colores para el gradiente
-
     private Material zoneMaterial;
     private float currentPulse = 0f;
     private float targetPulse = 0f;
+    
+    [Header("Zombies Dance Settings")]
+    [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
+    public SequenceStep danceSequence;
 
     private void Start()
     {
+        activeDanceSequence = danceSequence;
         if (feedBack != null && feedBack.material != null)
         {
             zoneMaterial = new Material(feedBack.material);

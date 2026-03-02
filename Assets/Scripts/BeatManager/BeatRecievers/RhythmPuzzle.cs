@@ -34,6 +34,9 @@ public class SequenceStep
 
 public abstract class RhythmPuzzle : BeatReciever
 {
+    [Header("Admin")]
+    [SerializeField] protected bool debug;
+    [Header("Rhythm Puzzle Settings")]
     [SerializeField] bool ActivateOnStart;
     [SerializeField] protected bool ShouldRepeat =false;
     protected SequenceStep activeDanceSequence;
@@ -48,16 +51,12 @@ public abstract class RhythmPuzzle : BeatReciever
     public event OnMusicEvent2 OnReleaseStep;
     public UnityEvent OnPuzzleGetsActivateEvent = new UnityEvent();
     
+    [Header("Players")]
+    protected List<PlayerManager> playersInside = new List<PlayerManager>();
     
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
     
-    [Header("Players")]
-    protected List<PlayerManager> playersInside = new List<PlayerManager>();
-    
-    [Header("Admin")]
-    [SerializeField] protected bool debug;
-
     private void Awake()
     {
         if (ActivateOnStart) ActivatePuzzle(true);
@@ -65,8 +64,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
     private DanceStep GetDanceStep()
     {
-        // recibi un -1
-        if(innerCounter<0) return DanceStep.None;
+        if(activeDanceSequence.DanceSteps.Count==0 || innerCounter<0) return DanceStep.None;
         if (innerCounter < activeDanceSequence.DanceSteps.Count)
         {
             return activeDanceSequence.DanceSteps[innerCounter];
@@ -82,6 +80,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
     private DanceStep GetNextDanceStep() ///largo 4, estoy en el 49 (beat2), y el siguiente es en el 3 (beat4)
     {
+        if(activeDanceSequence.DanceSteps.Count==0) return DanceStep.None;
         for (int i = 0; i < activeDanceSequence.DanceSteps.Count; i++)
         {
             int aux = i+innerCounter+1;
