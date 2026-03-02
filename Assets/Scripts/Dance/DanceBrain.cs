@@ -25,9 +25,9 @@ public abstract class DanceBrain : MonoBehaviour
         
     }
 
-    public void OnMoving(bool moving)
+    public void OnMoving(Vector3 direction)
     {
-        playerAnimCtrl.OnMoving(moving);
+        playerAnimCtrl.OnMoving(direction);
     }
 
     public void SetBodyDirection(float value)
@@ -36,7 +36,7 @@ public abstract class DanceBrain : MonoBehaviour
         if(isRight != isRightLooking && value!=0)
         {
             isRightLooking = isRight;
-            playerAnimCtrl.SetAnimatorOverrideDirection(isRight);
+            playerAnimCtrl.SetAnimatorOverrideDirection();
         }
     }
     

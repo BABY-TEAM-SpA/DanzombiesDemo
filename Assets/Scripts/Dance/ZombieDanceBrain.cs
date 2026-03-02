@@ -35,7 +35,7 @@ public class ZombieDanceBrain : DanceBrain
             playerAnimCtrl?.animator.SetTrigger("Dance");
         }
     }
-    private void OnReleaseStepAction(DanceStep step)
+    private void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
     {
         playerAnimCtrl?.animator.SetBool("RightDanceDir", false);
         playerAnimCtrl?.animator.SetBool("LeftDanceDir", false);

@@ -17,24 +17,44 @@ public class SongPlayingData
 {
     public SongDataSO songData; // { get; private set; }
     public double songDuration; // { get; private set; }
+    public double songDurationCompass;
     public double beatDuration; // { get; private set; }
     public double dspSongStartTime; // { get;private set; }
     public List<double> cutFlags; // { get; private set; }
-    public bool isLoopVersion;
 
-    public SongPlayingData(SongDataSO data, double startDSPTime,bool ILP)
+    public SongPlayingData(SongDataSO data, double startDSPTime=0d)
     {
         songData = data;
-        isLoopVersion = ILP;
-        dspSongStartTime = startDSPTime;
         songDuration = (double)data.clip.samples / songData.clip.frequency;
         beatDuration = (60d / songData.bpm);
+        songDurationCompass = (double) data.compassLong * data.metric* beatDuration;
+        SetStartTime(startDSPTime);
+    }
+    public void SetStartTime(double startDSPTime)
+    {
+        dspSongStartTime = startDSPTime;
         cutFlags = new List<double>();
-        foreach (int cut in data.cutFlags)
+        foreach (int cut in songData.cutFlags)
         {
-            cutFlags.Add(cut*beatDuration);
+            cutFlags.Add(startDSPTime+(cut*beatDuration));
         }
-        cutFlags.Add(songDuration);
+        cutFlags.Add(startDSPTime+songDuration+songData.delayAtEnd);
+    }
+
+    public double GetNextCutFlag()
+    {
+        double now = AudioSettings.dspTime;
+        foreach (double cut in cutFlags)
+        {
+            if (cut > now)
+            {
+                Debug.Log("CutPoint Finded");
+                return cut;
+            }
+        }
+
+        Debug.Log("Return Defaul");
+        return now;
     }
 }
 
@@ -46,12 +66,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] _audioSources = new AudioSource[2];
     [SerializeField] private int audioSourceActive = 1;
     private AudioSource musicPlayer { get;set; }
-    [SerializeField] private double machineDelay = 0.054d;
     [SerializeField] private List<SongDataSO> musicLibrary  = new List<SongDataSO>();
     //Corrutina esperando activarse
     private Coroutine nextSongToPlayCoroutine;
-    [SerializeField] private List<SongPlayingData> nextSongsToPlay = new List<SongPlayingData>();
-    //private SongPlayingData nextSongToPlay = null;
+    [SerializeField] private Queue<SongPlayingData> songsQueue = new Queue<SongPlayingData>(); //FIFO
     public SongPlayingData currentSongPlaying =null;
     private double dspTime;
     
@@ -62,8 +80,6 @@ public class AudioManager : MonoBehaviour
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
     
-    
-
     // SFX
     public SoundSettings SFXsettings = new SoundSettings();
     public AudioSource SFXplayer;
@@ -83,8 +99,9 @@ public class AudioManager : MonoBehaviour
         else 
         { 
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
+        musicPlayer = _audioSources[audioSourceActive];
     }
 
     public void OnEnable()
@@ -100,6 +117,38 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         dspTime = AudioSettings.dspTime;
+        if (nextSongToPlayCoroutine == null)
+        {
+            if (musicPlayer.isPlaying)
+            {
+                if (songsQueue.Count == 0)
+                {
+                    if (currentSongPlaying.songData.loopeable &&
+                        dspTime > currentSongPlaying.cutFlags.Last() - currentSongPlaying.beatDuration * 2)
+                    {
+                        Debug.Log("Queue SomeLoop");
+                        QueueNextSongData(currentSongPlaying.songData);
+                        //PlayClipInQueue();
+                    }
+                }
+                else
+                {
+                    if (dspTime > currentSongPlaying.GetNextCutFlag() - currentSongPlaying.beatDuration * 2)
+                    {
+                        Debug.Log("CutFlagReached Playing NextSong");
+                        PlayClipInQueue();
+                    }
+                }
+            }
+            else
+            {
+                if (songsQueue.Count > 0)
+                {
+                    Debug.Log("Playing Enqueue automatic");
+                    PlayClipInQueue();
+                }
+            }
+        }
     }
 
     public void PlaySong(string name, bool interrupt =false)
@@ -115,81 +164,43 @@ public class AudioManager : MonoBehaviour
         if (songData != null) QueueNextSongData(songData, interrupt);
     }
     
-    private void QueueNextSongData(SongDataSO songData, bool interrupt = false,bool isLoopVersion=false) 
+    private void QueueNextSongData(SongDataSO songData, bool interrupt = false) 
     {
-        
-        double nextSongStartTime = interrupt? AudioSettings.dspTime:GetNextEndPoint(isLoopVersion);
-        SongPlayingData nextSongToPlay = new SongPlayingData(songData,nextSongStartTime,isLoopVersion);
-        
-        if (interrupt)
-        {
-            if (nextSongToPlayCoroutine != null)
-            {
-                Debug.Log("Killed Coroutine");
-                StopCoroutine(nextSongToPlayCoroutine);
-                nextSongToPlayCoroutine = null;
-            }
-            nextSongsToPlay.Clear();
-            nextSongsToPlay.Add(nextSongToPlay);
-            foreach(AudioSource audioSource in _audioSources) audioSource.Stop();
-            int nextSource = 1 - audioSourceActive;
-            _audioSources[nextSource].clip = songData.clip;
-            _audioSources[nextSource].volume = MusicSettings.Volume;
-            _audioSources[nextSource].Play();//.PlayScheduled(nextSongStartTime);
-            OnSongStarted();
-        }
-        else
-        {
-            nextSongsToPlay.Add(nextSongToPlay);
-            int nextSource = 1 - audioSourceActive;
-            _audioSources[nextSource].clip = songData.clip;
-            _audioSources[nextSource].volume = MusicSettings.Volume;
-            _audioSources[nextSource].PlayScheduled(nextSongStartTime);
-            _audioSources[audioSourceActive].SetScheduledEndTime(nextSongStartTime);
-            nextSongToPlayCoroutine = StartCoroutine(WaitForScheduledTime(songData,nextSongStartTime));
-            Debug.Log("Started Coroutine");
-        }
+        if (interrupt) StopSong();
+        SongPlayingData nextSongToPlay = new SongPlayingData(songData);
+        songsQueue.Enqueue(nextSongToPlay);
     }
 
-    private double GetNextEndPoint(bool forceLastCut=false) //Obtener el proximo EndPoint de la cancion 
+    private void PlayClipInQueue()
     {
-        SongPlayingData songData = currentSongPlaying;
-        if(nextSongsToPlay.Count > 0) songData = nextSongsToPlay.Last().isLoopVersion?currentSongPlaying:nextSongsToPlay.Last();
-        if (songData != null)
-        {
-            if(forceLastCut) return songData.cutFlags.Last()+songData.dspSongStartTime-machineDelay;
-            foreach (double cut in songData.cutFlags)
-            {
-                if( cut+songData.dspSongStartTime>= AudioSettings.dspTime) return cut+songData.dspSongStartTime-machineDelay;
-            }
-        }
-        return AudioSettings.dspTime; //Now -> Si todos los cutTimes pasaron (eso incluye el final de la cancion)
+        SongPlayingData nextSongToPlay = songsQueue.Peek() ;
+        int nextSource = 1 - audioSourceActive;
+        _audioSources[nextSource].clip = nextSongToPlay.songData.clip;
+        _audioSources[nextSource].volume = MusicSettings.Volume;
+        double nextSongStartTime = (currentSongPlaying.cutFlags.Count >0) ? currentSongPlaying.GetNextCutFlag() : AudioSettings.dspTime+0.1d;
+        nextSongToPlay.SetStartTime(nextSongStartTime);
+        _audioSources[nextSource].PlayScheduled(nextSongStartTime);
+        //_audioSources[audioSourceActive].SetScheduledEndTime(nextSongStartTime);
+        nextSongToPlayCoroutine = StartCoroutine(WaitForScheduledTime(nextSongStartTime));
     }
-    private IEnumerator WaitForScheduledTime(SongDataSO songData,double startTime)
+
+    
+    private IEnumerator WaitForScheduledTime(double startTime)
     {
         while (AudioSettings.dspTime < startTime)
         {
             yield return null; 
         }
-        Debug.Log("Ended Coroutine");
-        Debug.Log("Playing: "+songData.clip.name);
         OnSongStarted();
+        
     } 
     private void OnSongStarted()
     {
-        currentSongPlaying = nextSongsToPlay.First();
-        nextSongsToPlay.RemoveAt(0);
         nextSongToPlayCoroutine = null;
+        currentSongPlaying = songsQueue.Dequeue();
+        Debug.Log("Playing:"+ currentSongPlaying.songData.name + " Remaing in Queue:" + songsQueue.Count.ToString());
         audioSourceActive = 1 - audioSourceActive ;
         musicPlayer = _audioSources[audioSourceActive];
-        
-        if (currentSongPlaying.songData.loopeable && nextSongsToPlay.Count == 0)
-        {
-            Debug.Log("Loopeable");
-            QueueNextSongData(currentSongPlaying.songData,false,true);
-            
-        }
-        
         OnPlay?.Invoke();
     }
     
@@ -212,7 +223,15 @@ public class AudioManager : MonoBehaviour
 
     public void StopSong()
     {
-        musicPlayer.Stop();
+        if (nextSongToPlayCoroutine != null)
+        {
+            //Debug.Log("Killed Coroutine");
+            StopCoroutine(nextSongToPlayCoroutine);
+            nextSongToPlayCoroutine = null;
+        }
+        songsQueue.Clear();
+        currentSongPlaying = null;
+        foreach(AudioSource audioSource in _audioSources) audioSource.Stop();
         OnStop?.Invoke();
     }
     public void OnPauseEvent(bool pause)
@@ -226,6 +245,7 @@ public class AudioManager : MonoBehaviour
             ResumeSong();
         }
     }
+    
     
     
 }
