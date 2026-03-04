@@ -33,7 +33,6 @@ public class PlayerMovementController : MonoBehaviour
     public void SetDirectionToMove(Vector3 dir)
     {
         direction = dir;
-        if(_danceBrain.isActive && AllowInput) _danceBrain.SetBodyDirection(dir.x);
     }
     
     private void HandleMovement()
@@ -45,6 +44,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         transform.position += velocity * Time.deltaTime;
         _danceBrain.OnMoving(direction);
+        _danceBrain.SetBodyDirection(direction.x);
     }
     
     public void EnableMovement()
