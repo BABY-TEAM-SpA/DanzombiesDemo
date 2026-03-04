@@ -146,7 +146,7 @@ public class AudioManager : MonoBehaviour
             {
                 if (songsQueue.Count > 0)
                 {
-                    Debug.Log("Playing Enqueue automatic");
+                    //Debug.Log("Playing Enqueue automatic");
                     PlayClipInQueue();
                 }
             }

@@ -9,7 +9,7 @@ using static BeatManager;
 
 public abstract class BeatReciever: MonoBehaviour
 {
-    [HideInInspector]public bool isActive=true;
+    public bool isActive =true;
     
     ///////////--- Events Management ---///////////
     protected double beatTime=1d;
@@ -20,8 +20,11 @@ public abstract class BeatReciever: MonoBehaviour
         BeatManager.OnPreBeat += OnPreBeatEvent;
         BeatManager.OnBeat += OnBeatEvent;
         BeatManager.OnPostBeat += OnPostBeatEvent;
-        
+    }
 
+    public void SetActive(bool active)
+    {
+        isActive = active;
     }
 
     private void OnDisable()

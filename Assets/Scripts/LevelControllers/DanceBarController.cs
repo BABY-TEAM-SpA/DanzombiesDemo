@@ -25,33 +25,40 @@ public class DanceBarController : MonoBehaviour
             bar.material = newMat;
         }
         PlayerManager.Player.danceBar = this;
-        UpdateFlowBars(PlayerManager.Player.GetFlowDamage(0));
     }
 
     public void Activate(bool isActive)
     {
+        UpdateFlowBars(PlayerManager.Player.GetFlowDamage(0));
         uiAnimator.PlaySequence(isActive ? "Open" : "Close");
     }
-
-    public void TurnRainbowOnOff(bool isActive)
-    {
-        beatBarMaterial.SetFloat("_RainbowEnabled", isActive?1f:0f);
-    }
     
-    public void UpdateFlowBars(float value, bool isInside =false)
+    
+    public void UpdateFlowBars(int value, bool isInside =false)
     {
-        if (value <= 2f) currentReaction = 2;
-        else if (value <= 5f) currentReaction = 1;
+        if (value <= 2) currentReaction = 2;
+        else if (value <= 5) currentReaction = 1;
+        else currentReaction = 0;
         
         foreach (Image barra in FlowBars)
         {
-            barra.fillAmount = value/10;
+            barra.fillAmount = value/10f;
             barra.color = barReactions[currentReaction];
+            beatBarMaterial.SetFloat("_RainbowEnabled", value==10?1f:0f);
         }
         UpdateIconFeedback(isInside);
     }
     public void UpdateIconFeedback(bool inDanger)
-    {   
+    {
+        if (inDanger)
+        {
+            if(IconImage !=null) IconImage.sprite = IconStates[currentReaction];
+        }
+        else
+        {
+            if(IconImage !=null) IconImage.sprite =  IconDefaultState;
+            beatBarMaterial.SetFloat("_RainbowEnabled", 0f);
+        }
         if(IconImage !=null) IconImage.sprite = inDanger ? IconStates[currentReaction] : IconDefaultState;
     }
 }

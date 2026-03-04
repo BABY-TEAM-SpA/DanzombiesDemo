@@ -14,7 +14,7 @@ public class PlayerManager : DanceBrain
 {
     [SerializeField]private bool ActivateOnStart;
     public int lifes =3;
-    [SerializeField] [Range(0,10)] private float NivelDeSeguridad = 5;
+    [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
     public DanceBarController danceBar;
     
     public RhythmPuzzle targetPuzzle;
@@ -39,12 +39,12 @@ public class PlayerManager : DanceBrain
         if (ActivateOnStart) ActivatePlayer();
     }
 
-    public float GetFlowDamage(int damage)
+    public int GetFlowDamage(int damage)
     {
         saveDanceStep = DanceStep.None;
-        float value =Mathf.Clamp(NivelDeSeguridad-(GameManager.Alza*damage),-1f,10f);
-        NivelDeSeguridad = value;
-        danceBar.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
+        int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
+        nivelDeSeguridad = value;
+        danceBar.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
         return value;
     }
 
@@ -56,7 +56,7 @@ public class PlayerManager : DanceBrain
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
-        danceBar?.Activate(true);
+        danceBar?.Activate(puzzle.activeDanceSequence.flowAffect);
         targetPuzzle = puzzle;
     }
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
@@ -78,7 +78,7 @@ public class PlayerManager : DanceBrain
         isActive=true;
         EnableMovement(true);
         EnableDance(true);
-        beatReciever.isActive = true;
+        beatReciever.SetActive(true);
     }
 
     public void DesactivatePlayer()
@@ -86,7 +86,7 @@ public class PlayerManager : DanceBrain
         isActive=false;
         EnableMovement(false);
         EnableDance(false);
-        beatReciever.isActive = false;
+        beatReciever.SetActive(false);
     }
     
     

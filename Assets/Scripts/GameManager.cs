@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static Languages language;
-    [SerializeField] [Range(0f,2f)] public static float Alza = 1f;
+    [SerializeField] [Range(0,2)] public static int Alza = 1;
     
     public static GameManager Instance { get; private set; }
     private void Awake() 

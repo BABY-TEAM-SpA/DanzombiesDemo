@@ -17,17 +17,19 @@ public enum DanceStep
     R_East
 }
 
-public enum DanceResult
-{
-    Neutral,
-    Succes,
-    Failed
-}
 
 [Serializable]
 public class SequenceStep
 {
-    
+    public enum GoalType
+    {
+        Default,
+        CorrectXTimes,
+        CompleteFullPattern,
+        FillFlow
+    }
+    public GoalType goalType;
+    public bool flowAffect;
     [SerializeField] public List<DanceStep> DanceSteps = new List<DanceStep>();
     public UnityEvent OnSequenceCompletedEvent;
 }
@@ -38,9 +40,8 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] protected bool debug;
     [Header("Rhythm Puzzle Settings")]
     [SerializeField] bool ActivateOnStart;
-    [SerializeField] protected bool ShouldRepeat =false;
-    protected bool affectFlow;
-    protected SequenceStep activeDanceSequence;
+    [SerializeField] protected bool ShouldRepeatSequence = true;
+    [HideInInspector]public SequenceStep activeDanceSequence;
     protected DanceStep currentPuzzleStep = DanceStep.None;
     protected DanceStep futurePuzzleStep = DanceStep.None;
     protected int innerCounter = 0;
@@ -70,13 +71,7 @@ public abstract class RhythmPuzzle : BeatReciever
         {
             return activeDanceSequence.DanceSteps[innerCounter];
         }
-        else{
-            return (ShouldRepeat)?activeDanceSequence.DanceSteps[(innerCounter) % activeDanceSequence.DanceSteps.Count]:DanceStep.None;
-        }
-        //si esta dentro
-        //si esta fuera
-        //si debo repetir y esta dentro
-        //si debo repetir y esta fuera 
+        else return DanceStep.None;
     }
 
     private DanceStep GetNextDanceStep() ///largo 4, estoy en el 49 (beat2), y el siguiente es en el 3 (beat4)
@@ -96,6 +91,7 @@ public abstract class RhythmPuzzle : BeatReciever
     public virtual void ActivatePuzzle(bool activate)
     {
         isActive = activate;
+        innerCounter = 0;
         if(activate)OnPuzzleGetsActivateEvent?.Invoke();
     }
     
@@ -125,7 +121,8 @@ public abstract class RhythmPuzzle : BeatReciever
             OnRhythmPuzzleBeatReaction();
             futurePuzzleStep = GetNextDanceStep();
             OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
-            innerCounter=innerCounter+1;
+            int value = innerCounter+1;
+            innerCounter = activeDanceSequence.DanceSteps.Count>0?value % activeDanceSequence.DanceSteps.Count:0;
         }
     }
 

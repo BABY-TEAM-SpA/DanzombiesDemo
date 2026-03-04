@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  sequences: []
 --- !u!1 &4673506716289821726
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  sequences: []
 --- !u!1 &5118514330475378065
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  sequences: []
 --- !u!1 &6807890888330408535
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +672,6 @@ GameObject:
   - component: {fileID: 548811813407721316}
   - component: {fileID: 2536597401598945149}
   - component: {fileID: 1707382129364674341}
-  - component: {fileID: 4350865754550442437}
   - component: {fileID: 5584085731872573711}
   - component: {fileID: 56076002610781623}
   m_Layer: 0
@@ -774,7 +776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   playerMovCtrl: {fileID: 1707382129364674341}
-  playerAnimCtrl: {fileID: 4350865754550442437}
+  playerAnimCtrl: {fileID: 3112066480399210385}
   beatReciever: {fileID: 0}
   isRightLooking: 0
 --- !u!114 &1707382129364674341
@@ -793,24 +795,6 @@ MonoBehaviour:
   AllowInput: 0
   Speed: 15
   acceleration: 0
---- !u!114 &4350865754550442437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7472942076168638150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _danceBrain: {fileID: 2536597401598945149}
-  allowInput: 0
-  animator: {fileID: 8332991270205824799}
-  animatorOverrideControllers:
-  - {fileID: 22100000, guid: 747b2f1f69d209544b9318d0727e280d, type: 2}
-  - {fileID: 22100000, guid: 747b2f1f69d209544b9318d0727e280d, type: 2}
 --- !u!114 &5584085731872573711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -913,6 +897,7 @@ MonoBehaviour:
       - buttonName: Default
         active: {fileID: 21300000, guid: 64d6299bdf873b746b0b71452a8f9e9b, type: 3}
         pressed: {fileID: 21300000, guid: 5d0f6da5c7ccab7478b14bfafc1ef446, type: 3}
+  unactiveAlpha: 0.25
 --- !u!1 &8090804118760873104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +985,7 @@ GameObject:
   - component: {fileID: 1578431844101746786}
   - component: {fileID: 851039984458689506}
   - component: {fileID: 8332991270205824799}
+  - component: {fileID: 3112066480399210385}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -1067,7 +1053,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1366706313
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -1657910841, guid: 1979baf0d53bcc148ab8e133946026d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1117,6 +1103,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3112066480399210385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426862267633352703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _danceBrain: {fileID: 2536597401598945149}
+  allowInput: 0
+  animator: {fileID: 8332991270205824799}
+  animatorOverrideControllers:
+  - {fileID: 22100000, guid: 747b2f1f69d209544b9318d0727e280d, type: 2}
+  - {fileID: 22100000, guid: 747b2f1f69d209544b9318d0727e280d, type: 2}
 --- !u!1 &9081679204517068323
 GameObject:
   m_ObjectHideFlags: 0

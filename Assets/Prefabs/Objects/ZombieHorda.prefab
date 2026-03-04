@@ -48,24 +48,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  debug: 0
   ActivateOnStart: 1
-  ShouldRepeat: 1
-  currentDanceSequence:
-    DanceSteps: 00000000000000000000000000000000
+  ShouldRepeatSequence: 1
+  activeDanceSequence:
+    goalType: 0
+    flowAffect: 0
+    DanceSteps: 
     OnSequenceCompletedEvent:
       m_PersistentCalls:
         m_Calls: []
-  currentPuzzleStep: 0
   OnPuzzleGetsActivateEvent:
     m_PersistentCalls:
       m_Calls: []
   feedBack: {fileID: 3975196565072534413}
-  debug: 0
-  zombies: []
+  gradientColors: []
   pulseRiseSpeed: 20
   preBeatPulse: 0
   beatPulse: 1
-  gradientColors: []
+  zombies: []
+  danceSequence:
+    goalType: 0
+    flowAffect: 1
+    DanceSteps: 
+    OnSequenceCompletedEvent:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &5206970857167012124
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -189,7 +197,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: c64865f686178814b9468ad52c36f654, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

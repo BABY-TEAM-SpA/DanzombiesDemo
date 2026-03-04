@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,7 @@ public class TutorialPuzzle : RhythmPuzzle
     [SerializeField] private ZombieDanceBrain Steph;
     [SerializeField] private TutorialDanceBrain HUD;
     [SerializeField] private int playerSucceses = 0;
+    public int puzzleGoal;
     public int currentTutorialSequence = 0;
     
     [Header("Tutorial Dance Settings")]
@@ -52,26 +54,53 @@ public class TutorialPuzzle : RhythmPuzzle
     
     public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
-        if (step == DanceStep.None)
-        {
-            return;
-        }
+        if (step == DanceStep.None)return;
         bool IsPlayerDanceCorrect = player.saveDanceStep == step;
+        Debug.Log("Puzzle: "+step.ToString()+ "| Player: "+ player.saveDanceStep.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
         VisualFeedbackToPlayerDance(IsPlayerDanceCorrect);
-        if (IsPlayerDanceCorrect)
+        MissionBuffer(IsPlayerDanceCorrect);
+    }
+
+    public void MissionBuffer(bool isCorrect)
+    {
+        switch (activeDanceSequence.goalType)
         {
-            playerSucceses+=1;
-            if (playerSucceses >= 4)
-            {
-                playerSucceses = 0;
-                CompleteRhythmSequence();
-            }
-        }
-        else
-        {
-            playerSucceses = 0;
+            default:
+                if (isCorrect) CompleteRhythmSequence();
+                break;
+            case SequenceStep.GoalType.CorrectXTimes:
+                if (isCorrect)
+                {
+                    playerSucceses+=1;
+                    if (playerSucceses >= puzzleGoal)
+                    {
+                        playerSucceses = 0;
+                        CompleteRhythmSequence();
+                    }
+                }
+                else
+                {
+                    playerSucceses = 0;
+                }
+
+                break;
+            case SequenceStep.GoalType.CompleteFullPattern:
+                if(isCorrect) playerSucceses+=1;
+                int totaldances = activeDanceSequence.DanceSteps.FindAll(x=>x!=DanceStep.None).Count;
+                if (innerCounter==activeDanceSequence.DanceSteps.Count-1)
+                {
+                    if(playerSucceses == totaldances) CompleteRhythmSequence();
+                    playerSucceses=0;
+                }
+
+                break;
+            case SequenceStep.GoalType.FillFlow:
+                int flow = playersInside[0].GetFlowDamage(!isCorrect?1:-1);
+                if(flow == 10) CompleteRhythmSequence();
+                break;
         }
     }
+    
 
     public void CompleteRhythmSequence()
     {

@@ -70,7 +70,7 @@ public class ZombieDanceZone : RhythmPuzzle
     // Función para generar el color rainbow basado en el tiempo
     private Color GenerateRainbowColor(float time)
     {
-        float hue = Mathf.Repeat(time * 0.1f, 1.0f); // Cambia el valor de 0.1f para velocidad
+        float hue = Mathf.Repeat(time * 0.1f, 1.0f); 
         float saturation = 1.0f;
         float value = 1.0f;
 
@@ -97,7 +97,7 @@ public class ZombieDanceZone : RhythmPuzzle
         {
             if (zoneMaterial != null)
             {
-                zoneMaterial.SetFloat("_ActiveState", 1f);  // Activar el rainbow cuando el jugador entra
+                zoneMaterial.SetFloat("_ActiveState", 1f);
             }
 
             PlayerEnter(player);
@@ -110,7 +110,7 @@ public class ZombieDanceZone : RhythmPuzzle
         {
             if (zoneMaterial != null)
             {
-                zoneMaterial.SetFloat("_ActiveState", 0f);  // Volver a blanco cuando el jugador sale
+                zoneMaterial.SetFloat("_ActiveState", 0f);  
             }
 
             PlayerLeave(player);
@@ -121,12 +121,12 @@ public class ZombieDanceZone : RhythmPuzzle
     {
         if (gradientColors != null && gradientColors.Count > 0)
         {
-            for (int i = 0; i < gradientColors.Count && i < 10; i++) // Usando un máximo de 10 colores
+            for (int i = 0; i < gradientColors.Count && i < 10; i++)
             {
                 zoneMaterial.SetColor($"_ColorArray_{i}", gradientColors[i]);
             }
 
-            zoneMaterial.SetInt("_NumColors", gradientColors.Count);  // Actualizando el número de colores
+            zoneMaterial.SetInt("_NumColors", gradientColors.Count);
         }
     }
 
