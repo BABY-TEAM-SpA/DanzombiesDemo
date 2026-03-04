@@ -4,75 +4,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
+[System.Serializable]
 public class UiAnimationSequence
 {
-    public string SequenceName;
-    
-    [Serializable]
-    public class SequenceStep
-    {
-        public enum StepType { Wait, Animation }
-        public StepType stepType = StepType.Animation;
-        public float duration = 0f;
-        public List<UiAnimation> animations = new List<UiAnimation>();
-        public UnityEvent onStepComplete;
-    }
-
-    [SerializeField] private List<SequenceStep> steps = new List<SequenceStep>();
-    [SerializeField] private bool loop = false;
+    [SerializeField] private string sequenceName;
+    [SerializeField] private bool loop;
     [SerializeField] private int loopCount = 1;
-    [SerializeField] public UnityEvent onSequenceStart;
-    [SerializeField] public UnityEvent onSequenceComplete;
 
-    public IEnumerator Play(MonoBehaviour host, List<UiAnimation> activeAnimations)
+    public UnityEvent OnSequenceStart;
+    public UnityEvent OnSequenceComplete;
+
+    [SerializeField] private List<UiAnimation> animationChannels = new();
+
+    public string SequenceName => sequenceName;
+
+    public IEnumerator Play(MonoBehaviour host, Func<bool> isCancelled)
     {
-        int count = loop ? Mathf.Max(1, loopCount) : 1;
+        if (animationChannels == null || animationChannels.Count == 0)
+            yield break;
 
-        for (int i = 0; i < count; i++)
+        int iterations = loop ? Mathf.Max(1, loopCount) : 1;
+
+        for (int i = 0; i < iterations; i++)
         {
-            onSequenceStart.Invoke();
+            if (isCancelled()) yield break;
 
-            foreach (var step in steps)
+            OnSequenceStart?.Invoke();
+
+            int remaining = animationChannels.Count;
+
+            foreach (var anim in animationChannels)
             {
-                switch (step.stepType)
-                {
-                    case SequenceStep.StepType.Wait:
-                        yield return new WaitForSecondsRealtime(step.duration);
-                        break;
-
-                    case SequenceStep.StepType.Animation:
-                        int remaining = step.animations.Count;
-                        if (remaining == 0) yield break;
-
-                        foreach (var anim in step.animations)
-                        {
-                            // Registrar la animación activa
-                            if (!activeAnimations.Contains(anim))
-                                activeAnimations.Add(anim);
-
-                            host.StartCoroutine(PlayAndNotify(host, anim, step.duration, () =>
-                            {
-                                remaining--;
-                                activeAnimations.Remove(anim);
-                            }));
-                        }
-
-                        while (remaining > 0)
-                            yield return null;
-                        break;
-                }
-
-                step.onStepComplete?.Invoke();
+                host.StartCoroutine(RunChannel(anim, isCancelled, () => remaining--));
             }
 
-            onSequenceComplete.Invoke();
+            while (remaining > 0)
+            {
+                if (isCancelled()) yield break;
+                yield return null;
+            }
+
+            OnSequenceComplete?.Invoke();
         }
     }
 
-    private IEnumerator PlayAndNotify(MonoBehaviour host, UiAnimation anim, float duration, Action onComplete)
+    private IEnumerator RunChannel(
+        UiAnimation anim,
+        Func<bool> isCancelled,
+        Action onComplete)
     {
-        yield return anim.Play(host, duration);
+        yield return anim.Play(isCancelled);
         onComplete?.Invoke();
     }
 }

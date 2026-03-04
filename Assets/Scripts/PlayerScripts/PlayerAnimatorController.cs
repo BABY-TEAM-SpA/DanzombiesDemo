@@ -26,7 +26,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void Start()
     {
-        SetAnimatorOverrideDirection(_danceBrain.isRightLooking);
+        SetAnimatorOverrideDirection();
     }
     
     public void OnNorthButtonPressed(InputAction.CallbackContext context)
@@ -187,8 +187,7 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OnMoving(Vector3 direction)
     {
         bool moving = direction != Vector3.zero;
-        bool isRight = direction.x > 0f;
-        animator.SetBool("RightLooking", isRight);
+        animator.SetBool("RightLooking", _danceBrain.isRightLooking);
         if (moving)
         {
             animator.ResetTrigger("Pulse");
@@ -212,8 +211,9 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.ResetTrigger("Dance");
     }
 
-    public void SetAnimatorOverrideDirection(bool isRight)
+    public void SetAnimatorOverrideDirection()
     {
+        bool isRight = _danceBrain.isRightLooking;
         animator.SetBool("RightLooking", isRight);
         animator.runtimeAnimatorController = animatorOverrideControllers[isRight?0:1];
     }

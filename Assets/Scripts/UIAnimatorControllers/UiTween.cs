@@ -4,23 +4,42 @@ using UnityEngine;
 
 public static class UiTween
 {
-    public static IEnumerator Value(MonoBehaviour host, double duration, Action<double> onUpdate, UiEasingType easing, bool scaleTime = true)
+    public static IEnumerator Value(
+        MonoBehaviour host,
+        double duration,
+        Action<double> onUpdate,
+        UiEasingType easing,
+        bool useScaledTime = true)
     {
-        if (host == null || onUpdate == null) yield break;
+        if (!host || onUpdate == null)
+            yield break;
+
+        // Duración 0 → aplicar valor final inmediato
+        if (duration <= 0d)
+        {
+            onUpdate(UiEasing.Evaluate(easing, 1f));
+            yield break;
+        }
 
         double time = 0d;
+
         while (time < duration)
         {
-            if (host == null) yield break;
-            
-            if (scaleTime) time += Time.deltaTime;
-            else time += Time.unscaledDeltaTime;
+            if (!host) yield break;
+
+            time += useScaledTime
+                ? Time.deltaTime
+                : Time.unscaledDeltaTime;
 
             float t = Mathf.Clamp01((float)(time / duration));
-            onUpdate(UiEasing.Evaluate(easing, t));
+            double eased = UiEasing.Evaluate(easing, t);
+
+            onUpdate(eased);
+
             yield return null;
         }
 
+        // Asegurar valor final exacto
         onUpdate(UiEasing.Evaluate(easing, 1f));
     }
 }
