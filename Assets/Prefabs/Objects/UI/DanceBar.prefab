@@ -181,8 +181,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 168789929976424575}
   - {fileID: 1152613366929737592}
+  - {fileID: 168789929976424575}
   - {fileID: 7410781350104107022}
   m_Father: {fileID: 977854871585507625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 977854871585507625}
-  - component: {fileID: 403928362066104036}
+  - component: {fileID: 7377540372340290396}
   - component: {fileID: 1938398673631077670}
   - component: {fileID: 8277422874104646979}
   m_Layer: 5
@@ -252,7 +252,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -1262}
   m_SizeDelta: {x: 2635.4106, y: 166}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &403928362066104036
+--- !u!114 &7377540372340290396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,9 +261,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 798546745921024665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99c5aa5c4542a5047875ced8dc3bd890, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e2457a104d8e1a4195d65d99252d805, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelUIController
+  m_EditorClassIdentifier: Assembly-CSharp::DanceBarController
   IconImage: {fileID: 6344760114191100369}
   IconDefaultState: {fileID: 21300000, guid: d0d9dd09c6bf76d4aa9eaf694c2626a8, type: 3}
   IconStates:
@@ -274,9 +274,14 @@ MonoBehaviour:
   - {fileID: 7185560596199236438}
   - {fileID: 2361077661694535175}
   barReactions:
-  - {r: 0.3529412, g: 0.5372549, b: 0.42745098, a: 1}
-  - {r: 0.8156863, g: 0.9647059, b: 0.38431373, a: 1}
-  - {r: 0.7176471, g: 0.22352941, b: 0.07450981, a: 1}
+  - {r: 0.3529412, g: 0.5372549, b: 0.427451, a: 1}
+  - {r: 0.81568635, g: 0.96470594, b: 0.38431376, a: 1}
+  - {r: 0.7176471, g: 0.22352943, b: 0.07450981, a: 1}
+  beatBars:
+  - {fileID: 262643197304705683}
+  - {fileID: 6353186759954279768}
+  beatBarMaterial: {fileID: 2100000, guid: 78f68a961843c304f9ed2e0494d26229, type: 2}
+  uiAnimator: {fileID: 8277422874104646979}
 --- !u!222 &1938398673631077670
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -303,7 +308,19 @@ MonoBehaviour:
     loopCount: 0
     OnSequenceStart:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7377540372340290396}
+          m_TargetAssemblyTypeName: DanceBarController, Assembly-CSharp
+          m_MethodName: TurnRainbowOnOff
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     OnSequenceComplete:
       m_PersistentCalls:
         m_Calls: []
@@ -348,7 +365,19 @@ MonoBehaviour:
         m_Calls: []
     OnSequenceComplete:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7377540372340290396}
+          m_TargetAssemblyTypeName: DanceBarController, Assembly-CSharp
+          m_MethodName: TurnRainbowOnOff
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     animationChannels:
     - revertOnComplete: 0
       objectToAnimate: {fileID: 4103834281005320126}
@@ -636,7 +665,7 @@ GameObject:
   - component: {fileID: 1159921645569933601}
   - component: {fileID: 6752824523297733930}
   m_Layer: 5
-  m_Name: Image
+  m_Name: LateralWaveR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -681,7 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 78f68a961843c304f9ed2e0494d26229, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -913,7 +942,7 @@ GameObject:
   - component: {fileID: 9080952561863824100}
   - component: {fileID: 1192644317640911456}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: LateralWaveL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -958,7 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 78f68a961843c304f9ed2e0494d26229, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

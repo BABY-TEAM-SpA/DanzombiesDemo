@@ -140,7 +140,7 @@ public class ZombieDanceZone : RhythmPuzzle
         if (step == DanceStep.None)
             return;
 
-        float flow = player.GetFlowDamage(player.saveDanceStep != step);
+        float flow = player.GetFlowDamage((player.saveDanceStep != step)?1:-1);
 
         if (flow < GameManager.Alza)
         {

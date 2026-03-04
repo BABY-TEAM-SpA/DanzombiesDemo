@@ -1,34 +1,28 @@
-Shader "Custom/DanceZoneSplashCurvado_URP"
+Shader "Custom/RainbowSpritePainter_URP"
 {
     Properties
     {
-        _LineCount("Line Count", Int) = 3
-        _LineSharpness("Line Sharpness", Float) = 60
-        _DeformAmplitude("Splash Amplitude", Float) = 0.05
-        _DeformFrequency("Splash Frequency", Float) = 5
-        _DeformSpeed("Splash Speed", Float) = 3
-
-        _BackgroundStrength("Background Strength", Range(0,2)) = 0.6
-        _BackgroundFade("Background Fade", Float) = 2.5
-
-        _Alpha("Alpha", Range(0,1)) = 0.9
-        _BeatPulse("Beat Pulse", Float) = 0
-        _PulseStrength("Pulse Strength", Float) = 1
-
-        _ActiveState("Active (0 Gray / 1 Color)", Range(0,1)) = 0
-        _Shape("Shape (0 Oval / 1 Rect)", Range(0,1)) = 1
+        _MainTex ("Sprite Texture", 2D) = "white" {}
+        _Speed ("Rainbow Speed", Float) = 1
+        _Intensity ("Rainbow Intensity", Float) = 1
+        [Toggle] _RainbowEnabled ("Enable Rainbow", Float) = 1
     }
 
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" "RenderPipeline"="UniversalPipeline" }
+        Tags
+        {
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
+            "RenderPipeline"="UniversalPipeline"
+        }
+
+        Blend SrcAlpha OneMinusSrcAlpha
+        Cull Off
+        ZWrite Off
 
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha
-            Cull Off
-            ZWrite Off
-
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -37,90 +31,60 @@ Shader "Custom/DanceZoneSplashCurvado_URP"
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;
+                float2 uv         : TEXCOORD0;
+                float4 color      : COLOR;
             };
 
             struct Varyings
             {
                 float4 positionHCS : SV_POSITION;
-                float2 uv : TEXCOORD0;
+                float2 uv          : TEXCOORD0;
+                float4 color       : COLOR;
             };
 
-            int _LineCount;
-            float _LineSharpness;
-            float _DeformAmplitude;
-            float _DeformFrequency;
-            float _DeformSpeed;
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
 
-            float _BackgroundStrength;
-            float _BackgroundFade;
+            float4 _MainTex_ST;
+            float _Speed;
+            float _Intensity;
+            float _RainbowEnabled;
 
-            float _Alpha;
-            float _BeatPulse;
-            float _PulseStrength;
-            float _ActiveState;
-            float _Shape; // 0 = oval, 1 = rect
-
-            float3 HSVtoRGB(float3 c)
-            {
-                float4 K = float4(1., 2./3., 1./3., 3.);
-                float3 p = abs(frac(c.xxx + K.xyz) * 6. - K.www);
-                return c.z * lerp(K.xxx, saturate(p - K.xxx), c.y);
-            }
-
-            Varyings vert(Attributes IN)
+            Varyings vert (Attributes IN)
             {
                 Varyings OUT;
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
-                OUT.uv = IN.uv;
+                OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
+                OUT.color = IN.color;
                 return OUT;
             }
 
-            half4 frag(Varyings IN) : SV_Target
+            float3 HSVtoRGB(float3 hsv)
             {
-                float2 uv = IN.uv * 2 - 1; // Transformar a [-1,1]
-                float t = _Time.y;
+                float3 rgb = saturate(abs(frac(hsv.x + float3(0,2.0/3.0,1.0/3.0)) * 6.0 - 3.0) - 1.0);
+                return hsv.z * lerp(float3(1,1,1), rgb, hsv.y);
+            }
 
-                // Background semirectangular y suave
-                float2 fadeUV = abs(uv);
-                float bgFade = pow(1.0 - fadeUV.x, _BackgroundFade) * pow(1.0 - fadeUV.y, _BackgroundFade);
-                float3 bgRainbow = HSVtoRGB(float3(frac(atan2(uv.y, uv.x)/6.2831), 1, 1));
-                float gray = dot(bgRainbow, float3(0.3,0.59,0.11));
-                float3 bgColor = lerp(float3(gray,gray,gray), bgRainbow, _ActiveState);
-                float3 background = bgColor * _BackgroundStrength * bgFade;
+            half4 frag (Varyings IN) : SV_Target
+            {
+                float4 sprite = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
 
-                // Líneas blancas con ondulación tipo splash en el perímetro (borde)
-                float lineIntensity = 0;
+                float vertical = IN.uv.y;
+                float timeOffset = _Time.y * _Speed;
 
-                for (int i = 0; i < 10; i++)
-                {
-                    if (i >= _LineCount) break;
+                // Flujo hacia abajo (invertido como lo pediste antes)
+                float hue = frac(vertical - timeOffset);
+                float3 rainbow = HSVtoRGB(float3(hue, 1, 1));
 
-                    float lineOffset = i / (float)_LineCount; // Distribución uniforme
-                    float baseRadius = 0.3 + lineOffset * 0.6;
+                // Color blanco cuando está desactivado
+                float3 baseColor = float3(1,1,1);
 
-                    // Curvatura del perímetro (deformación sinusoidal solo en el borde)
-                    float deformX = sin(uv.y * _DeformFrequency + t * _DeformSpeed + i * 10) * _DeformAmplitude;
-                    float deformY = cos(uv.x * _DeformFrequency + t * _DeformSpeed + i * 15) * _DeformAmplitude;
-                    float2 deformedUV = uv + float2(deformX, deformY);
+                // Lerp según toggle (0 = blanco, 1 = rainbow)
+                float3 finalEffect = lerp(baseColor, rainbow * _Intensity, _RainbowEnabled);
 
-                    // Mantener el centro fijo, deformar solo el perímetro
-                    float distOval = length(deformedUV); // Óvalo
-                    float distRect = max(abs(deformedUV.x), abs(deformedUV.y)); // Rectángulo
-                    float dist = lerp(distOval, distRect, _Shape); // Interpolamos entre óvalo y rectángulo
+                float3 finalColor = sprite.rgb * finalEffect;
 
-                    // Calcular la diferencia de distancias y dibujar el perímetro
-                    float ringPattern = abs(dist - baseRadius);
-                    float lineVal = exp(-_LineSharpness * ringPattern);
-                    lineVal *= 1.0 + _BeatPulse * _PulseStrength;
-
-                    lineIntensity += lineVal;
-                }
-
-                float3 finalColor = background + float3(1,1,1) * lineIntensity;
-                float finalAlpha = saturate((_BackgroundStrength * bgFade + lineIntensity) * _Alpha);
-
-                return half4(finalColor, finalAlpha);
+                return float4(finalColor, sprite.a) * IN.color;
             }
 
             ENDHLSL

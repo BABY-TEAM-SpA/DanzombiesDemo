@@ -18,14 +18,12 @@ public class TutorialPuzzle : RhythmPuzzle
     {
         Steph?.Connect(this);
         HUD?.Connect(this);
-        //player.OnDance += OnPlayerInputAction;
     }
 
     private void OnDisable()
     {
         Steph?.Disconnect(this);
         HUD?.Disconnect(this);
-        //player.OnDance -= OnPlayerInputAction;
     }
 
     public override void ActivatePuzzle(bool activate)

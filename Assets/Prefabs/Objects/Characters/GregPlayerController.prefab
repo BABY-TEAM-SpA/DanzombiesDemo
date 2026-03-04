@@ -72,8 +72,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.22}
-  m_Size: {x: 5.5, y: 2.29}
+  m_Offset: {x: 0, y: 0.9}
+  m_Size: {x: 4.51, y: 1.67}
   m_Direction: 1
 --- !u!114 &6530795612346585224
 MonoBehaviour:
@@ -95,7 +95,7 @@ MonoBehaviour:
   ActivateOnStart: 1
   lifes: 3
   NivelDeSeguridad: 10
-  Alza: 1
+  danceBar: {fileID: 0}
   targetPuzzle: {fileID: 0}
 --- !u!114 &3968905282911785478
 MonoBehaviour:
@@ -441,7 +441,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1366706313
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cac90452d9363f0449d80fa7f9cd4357, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -467,7 +467,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whenUse: 1
-  spriteRenderers: []
+  spriteRenderers:
+  - {fileID: 922934949481849677}
+  - {fileID: 922934949481849677}
 --- !u!95 &6969242347076242797
 Animator:
   serializedVersion: 7

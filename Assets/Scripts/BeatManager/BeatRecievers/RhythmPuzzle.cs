@@ -39,6 +39,7 @@ public abstract class RhythmPuzzle : BeatReciever
     [Header("Rhythm Puzzle Settings")]
     [SerializeField] bool ActivateOnStart;
     [SerializeField] protected bool ShouldRepeat =false;
+    protected bool affectFlow;
     protected SequenceStep activeDanceSequence;
     protected DanceStep currentPuzzleStep = DanceStep.None;
     protected DanceStep futurePuzzleStep = DanceStep.None;

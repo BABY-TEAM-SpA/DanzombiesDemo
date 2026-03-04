@@ -14,7 +14,7 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("GUI", LoadSceneMode.Additive);
         musicController.SetPlayMusic();
-        animator.PlaySequence();
+        animator?.PlaySequence();
     }
 
     public void PlayGame()

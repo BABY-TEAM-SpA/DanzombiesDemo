@@ -15,21 +15,36 @@ public class PlayerManager : DanceBrain
     [SerializeField]private bool ActivateOnStart;
     public int lifes =3;
     [SerializeField] [Range(0,10)] private float NivelDeSeguridad = 5;
+    public DanceBarController danceBar;
     
     public RhythmPuzzle targetPuzzle;
     public DanceStep saveDanceStep { get; private set; }
     
+    
+    public static PlayerManager Player;
+
+    private void Awake()
+    {
+        if (Player == null)
+        {
+            Player = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void Start(){
-        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
         if (ActivateOnStart) ActivatePlayer();
     }
 
-    public float GetFlowDamage(bool danho=true)
+    public float GetFlowDamage(int damage)
     {
         saveDanceStep = DanceStep.None;
-        float value =Mathf.Clamp((danho)?NivelDeSeguridad-GameManager.Alza:NivelDeSeguridad+GameManager.Alza,-1f,10f);
+        float value =Mathf.Clamp(NivelDeSeguridad-(GameManager.Alza*damage),-1f,10f);
         NivelDeSeguridad = value;
-        LevelUIController.Instance?.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
+        danceBar.UpdateFlowBars(NivelDeSeguridad, targetPuzzle!=null);
         return value;
     }
 
@@ -41,11 +56,16 @@ public class PlayerManager : DanceBrain
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
+        danceBar?.Activate(true);
         targetPuzzle = puzzle;
     }
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
     {
-        if(puzzle == targetPuzzle)targetPuzzle = null;
+        if (puzzle == targetPuzzle)
+        {
+            danceBar?.Activate(false);
+            targetPuzzle = null;
+        }
     }
 
     public override void OnDance(DanceStep step)
