@@ -11,7 +11,7 @@ public class TutorialPuzzle : RhythmPuzzle
     [SerializeField] private TutorialDanceBrain HUD;
     [SerializeField] private int playerSucceses = 0;
     public int puzzleGoal;
-    public int currentTutorialSequence = 0;
+    [HideInInspector] public int currentTutorialSequence = 0;
     
     [Header("Tutorial Dance Settings")]
     public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
