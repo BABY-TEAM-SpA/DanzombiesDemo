@@ -13,6 +13,7 @@ public abstract class BeatReciever: MonoBehaviour
     
     ///////////--- Events Management ---///////////
     protected double beatTime=1d;
+    
 
     private void OnEnable()
     {
@@ -112,4 +113,5 @@ public abstract class BeatReciever: MonoBehaviour
     {
         /// implement when song Stops
     }
+    
 }
