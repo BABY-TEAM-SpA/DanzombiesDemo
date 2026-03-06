@@ -959,7 +959,7 @@ MonoBehaviour:
   isActive: 0
   debug: 0
   ActivateOnStart: 0
-  ShouldRepeatSequence: 1
+  syncMode: 0
   activeDanceSequence:
     goalType: 0
     flowAffect: 0
@@ -2901,6 +2901,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit
       objectReference: {fileID: 0}
+    - target: {fileID: 7948797707270726918, guid: e247c162cc8d0934a90562496e345014, type: 3}
+      propertyPath: 'levelsToLoad.scenes.Array.data[0]'
+      value: Level1-1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3016,17 +3020,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4232772136355480183, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8288151208510818585, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
       propertyPath: m_Name
       value: MapTutorial
-      objectReference: {fileID: 0}
-    - target: {fileID: 8288151208510818585, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
