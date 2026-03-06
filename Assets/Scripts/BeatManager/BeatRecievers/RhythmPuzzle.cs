@@ -65,11 +65,12 @@ public abstract class RhythmPuzzle : BeatReciever
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
     
-    private void Awake()
+    private void Start()
     {
+        PreparePuzzle();
         if (ActivateOnStart) ActivatePuzzle(true);
     }
-
+    public abstract void PreparePuzzle();
     private DanceStep GetDanceStep()
     {
         if(activeDanceSequence.DanceSteps.Count==0 || innerCounter<0) return DanceStep.None;
@@ -95,7 +96,6 @@ public abstract class RhythmPuzzle : BeatReciever
     public virtual void ActivatePuzzle(bool activate)
     {
         isActive = activate;
-
         if (!activate)
             return;
         startBeat = 0;

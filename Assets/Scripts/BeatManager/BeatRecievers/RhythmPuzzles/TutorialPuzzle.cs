@@ -15,8 +15,9 @@ public class TutorialPuzzle : RhythmPuzzle
     
     [Header("Tutorial Dance Settings")]
     public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
-    
-    private void Start()
+
+
+    public override void PreparePuzzle()
     {
         Steph?.Connect(this);
         HUD?.Connect(this);

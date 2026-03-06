@@ -17,7 +17,7 @@ public class ZombieDanceZone : RhythmPuzzle
     [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
     public SequenceStep danceSequence;
 
-    private void Start()
+    public override void PreparePuzzle()
     {
         activeDanceSequence = danceSequence;
         if (feedBack != null && feedBack.material != null)
@@ -38,6 +38,7 @@ public class ZombieDanceZone : RhythmPuzzle
         {
             zombie.Connect(this);
         }
+        
     }
 
     private void Update()

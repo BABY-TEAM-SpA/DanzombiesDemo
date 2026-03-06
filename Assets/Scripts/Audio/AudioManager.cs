@@ -313,15 +313,14 @@ public class AudioManager : MonoBehaviour
         if (currentSongPlaying == null)
             return 0;
 
-        return AudioSettings.dspTime -
-               currentSongPlaying.dspSongStartTime -
-               pauseOffset;
+        return AudioSettings.dspTime - currentSongPlaying.dspSongStartTime - pauseOffset;
     }
 
     public int SongPositionBeats()
     {
         if (currentSongPlaying == null)
             return 0;
-        return Mathf.FloorToInt((float)(SongPositionDSP()  / currentSongPlaying.beatDuration));
+        int value = Mathf.FloorToInt((float)(SongPositionDSP()  / currentSongPlaying.beatDuration));
+        return value<0 ? 0 : value;
     }
 }

@@ -44,7 +44,7 @@ public class PlayerManager : DanceBrain
         saveDanceStep = DanceStep.None;
         int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
         nivelDeSeguridad = value;
-        danceBar.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
+        danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
         return value;
     }
 
