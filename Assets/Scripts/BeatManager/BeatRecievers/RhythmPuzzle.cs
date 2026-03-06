@@ -36,15 +36,21 @@ public class SequenceStep
 
 public abstract class RhythmPuzzle : BeatReciever
 {
+    public enum RhythmSyncMode
+    {
+        Global,
+        Local
+    }
     [Header("Admin")]
     [SerializeField] protected bool debug;
     [Header("Rhythm Puzzle Settings")]
     [SerializeField] bool ActivateOnStart;
-    [SerializeField] protected bool ShouldRepeatSequence = true;
+    [SerializeField] RhythmSyncMode syncMode = RhythmSyncMode.Global;
     [HideInInspector]public SequenceStep activeDanceSequence;
     protected DanceStep currentPuzzleStep = DanceStep.None;
     protected DanceStep futurePuzzleStep = DanceStep.None;
-    protected int innerCounter = 0;
+    protected int innerCounter;
+    private int startBeat;
     
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
@@ -86,44 +92,45 @@ public abstract class RhythmPuzzle : BeatReciever
         return DanceStep.None;
     }
     
-    
-
     public virtual void ActivatePuzzle(bool activate)
     {
         isActive = activate;
-        innerCounter = 0;
-        if(activate)OnPuzzleGetsActivateEvent?.Invoke();
+
+        if (!activate)
+            return;
+        startBeat = 0;
+        if(syncMode == RhythmSyncMode.Local)
+            startBeat = AudioManager.Instance.SongPositionBeats();
+
+        OnPuzzleGetsActivateEvent?.Invoke();
     }
     
     public override void PreBeatAction(int counter)
     {
-        if (isActive)
-        {
-            currentPuzzleStep = GetDanceStep();
-            OnPrepareStep?.Invoke(currentPuzzleStep);
-        }
+        if (!isActive) return;
+
+        UpdateInnerCounter();
+
+        currentPuzzleStep = GetDanceStep();
+
+        OnPrepareStep?.Invoke(currentPuzzleStep);
     }
 
     public override void BeatAction(int counter)
     {
-        if (isActive)
-        {
-            if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
-            OnDanceStep?.Invoke(currentPuzzleStep);
-            GeneralVisualFeedback(innerCounter);
-        }
+        if (!isActive) return;
+        if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
+        OnDanceStep?.Invoke(currentPuzzleStep);
+        GeneralVisualFeedback(innerCounter);
+        
     }
     public override void PostBeatAction(int counter)
     {
-        if (isActive)
-        {
-            //Debug.Log("PostBeat");
-            OnRhythmPuzzleBeatReaction();
-            futurePuzzleStep = GetNextDanceStep();
-            OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
-            int value = innerCounter+1;
-            innerCounter = activeDanceSequence.DanceSteps.Count>0?value % activeDanceSequence.DanceSteps.Count:0;
-        }
+        if (!isActive) return;
+        //Debug.Log("PostBeat");
+        OnRhythmPuzzleBeatReaction();
+        futurePuzzleStep = GetNextDanceStep();
+        OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
     }
 
     public void OnRhythmPuzzleBeatReaction()
@@ -161,4 +168,18 @@ public abstract class RhythmPuzzle : BeatReciever
         player.RemoveTargetPuzzle(this);
     }
     
+    void UpdateInnerCounter()
+    {
+        if (activeDanceSequence == null ||
+            activeDanceSequence.DanceSteps.Count == 0)
+        {
+            innerCounter = 0;
+            return;
+        }
+
+        int val= (AudioManager.Instance.SongPositionBeats()-startBeat) %
+            activeDanceSequence.DanceSteps.Count;
+        innerCounter = val>=0?val:0;
+        
+    }
 }

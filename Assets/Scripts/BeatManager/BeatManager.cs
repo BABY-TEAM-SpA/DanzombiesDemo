@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,87 +11,66 @@ public enum BeatType
 
 public class BeatManager : MonoBehaviour
 {
-
     public bool ActiveOnStart = false;
 
-    [Header("Sincronización")] /////////////////////////////////////////////////////////
-    [Range(0f, 0.4f)]
+    [Header("Sincronización")]
+    [Range(0f,0.4f)]
     public double margen = 0.25d;
 
     public bool onMargen { get; private set; }
-    public double beatDuration { get; private set; } = 0d;
-    public int counter { get; private set; } = 0;
 
-    private bool canPre = true;
-    private bool canBeat;
-    private bool canPost;
+    public double beatDuration { get; private set; }
 
-    [Header("Eventos por Inspector")] /////////////////////////////////////////////////////////
-    public UnityEvent<int> onPreBeatInspector;
+    public int counter { get; private set; }
 
-    public UnityEvent<int> onBeatInspector;
-    public UnityEvent<int> onPostBeatInspector;
-    public delegate void OnUpdate(double bpm);
+    int lastBeat = -1;
+    int lastHalfBeat = -1;
+
+    double dspStartTime;
+
+    bool preTriggered;
+    bool beatTriggered;
+    bool postTriggered;
+
+    bool preHalfTriggered;
+    bool halfTriggered;
+    bool postHalfTriggered;
+    
+
+
+    public delegate void OnUpdate(double beatDuration);
     public static event OnUpdate OnUpdateEvent;
+
     public delegate void OnBeatEvent(int counter);
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
-    public static BeatManager Instance { get; private set; }
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void Awake()
+    public static event OnBeatEvent OnPreHalfBeat;
+    public static event OnBeatEvent OnHalfBeat;
+    public static event OnBeatEvent OnPostHalfBeat;
+
+    public static BeatManager Instance { get; private set; }
+
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
     }
 
-    public void Start()
-    {
-        //if(ActiveOnStart) ResetBeatManager();
-    }
-
-    public void OnEnable()
+    void OnEnable()
     {
         AudioManager.OnPlay += OnPlayEvent;
-        //AudioManager.OnStop += OnStopEvent;
-        //AudioManager.OnPause+= OnPauseEvent;
-        //AudioManager.OnResume += OnResumeEvent;
     }
 
-    public void OnDisable()
+    void OnDisable()
     {
         AudioManager.OnPlay -= OnPlayEvent;
-        //AudioManager.OnStop += OnStopEvent;
-        //AudioManager.OnPause+= OnPauseEvent;
-        //AudioManager.OnResume += OnResumeEvent;
-    }
-
-    void Update()
-    {
-        if (AudioManager.Instance.IsPlaying())
-        {
-            double currentSongTime = AudioSettings.dspTime - AudioManager.Instance.currentSongPlaying.dspSongStartTime;
-
-            // Comprobación de eventos
-            if (currentSongTime >= (( beatDuration * counter) - beatDuration * margen) && canPre)
-            {
-                PreBeat();
-            }
-            else if (currentSongTime >= beatDuration * counter && canBeat)
-            {
-                Beat();
-            }
-            else if (currentSongTime >= ((beatDuration * counter) + beatDuration * margen) && canPost)
-            {
-                PostBeat();
-            }
-        }
     }
 
     void OnPlayEvent()
@@ -101,45 +79,126 @@ public class BeatManager : MonoBehaviour
         OnUpdateEvent?.Invoke(beatDuration);
     }
 
-    void PreBeat()
+    void Update()
     {
-        canPre = false;
-        onMargen = true;
-        OnPreBeat?.Invoke((counter-1));
-        onPreBeatInspector?.Invoke((counter-1));
+        if (!AudioManager.Instance.IsPlaying())
+            return;
 
-        canBeat = true;
+        double dspTime = AudioSettings.dspTime;
+
+        double songTime =
+            dspTime -
+            AudioManager.Instance.currentSongPlaying.dspSongStartTime;
+
+        UpdateBeat(songTime);
+        UpdateHalfBeat(songTime);
     }
 
-    void Beat()
+    void UpdateBeat(double songTime)
     {
-        canBeat = false;
-        //Debug.Log("Beat " +counter+" at "+ AudioSettings.dspTime.ToString());
-        OnBeat?.Invoke((counter-1));
-        onBeatInspector?.Invoke((counter-1));
-        canPost = true;
-        
+        int currentBeat = (int)(songTime / beatDuration);
+
+        if (currentBeat != lastBeat)
+        {
+            lastBeat = currentBeat;
+
+            preTriggered = false;
+            beatTriggered = false;
+            postTriggered = false;
+
+            counter = currentBeat + 1;
+        }
+
+        double beatStart = currentBeat * beatDuration;
+
+        if (!preTriggered &&
+            songTime >= beatStart - beatDuration * margen)
+        {
+            preTriggered = true;
+            onMargen = true;
+
+            OnPreBeat?.Invoke(currentBeat);
+        }
+
+        if (!beatTriggered &&
+            songTime >= beatStart)
+        {
+            beatTriggered = true;
+
+            OnBeat?.Invoke(currentBeat);
+        }
+
+        if (!postTriggered &&
+            songTime >= beatStart + beatDuration * margen)
+        {
+            postTriggered = true;
+            onMargen = false;
+
+            OnPostBeat?.Invoke(currentBeat);
+        }
     }
 
-    void PostBeat()
+    void UpdateHalfBeat(double songTime)
     {
-        onMargen = false;
-        OnPostBeat?.Invoke((counter-1));
-        onPostBeatInspector?.Invoke((counter-1));
+        double halfDuration = beatDuration * 0.5;
 
-        counter += 1;
-        canPost = false;
-        canPre = true;
+        int currentHalfBeat = (int)(songTime / halfDuration);
+
+        if (currentHalfBeat != lastHalfBeat)
+        {
+            lastHalfBeat = currentHalfBeat;
+
+            preHalfTriggered = false;
+            halfTriggered = false;
+            postHalfTriggered = false;
+        }
+
+        double halfStart = currentHalfBeat * halfDuration;
+
+        if (!preHalfTriggered &&
+            songTime >= halfStart - halfDuration * margen)
+        {
+            preHalfTriggered = true;
+
+            OnPreHalfBeat?.Invoke(currentHalfBeat);
+        }
+
+        if (!halfTriggered &&
+            songTime >= halfStart)
+        {
+            halfTriggered = true;
+
+            OnHalfBeat?.Invoke(currentHalfBeat);
+        }
+
+        if (!postHalfTriggered &&
+            songTime >= halfStart + halfDuration * margen)
+        {
+            postHalfTriggered = true;
+
+            OnPostHalfBeat?.Invoke(currentHalfBeat);
+        }
     }
 
     public void ResetBeatManager()
     {
-        onMargen = false;
-        canPre = false;
-        canBeat = true;
-        canPost = false;
-        counter = 1;
-        beatDuration = AudioManager.Instance.currentSongPlaying.beatDuration;
-        
+        beatDuration =
+            AudioManager.Instance.currentSongPlaying.beatDuration;
+
+        dspStartTime =
+            AudioManager.Instance.currentSongPlaying.dspSongStartTime;
+
+        lastBeat = -1;
+        lastHalfBeat = -1;
+
+        preTriggered = false;
+        beatTriggered = false;
+        postTriggered = false;
+
+        preHalfTriggered = false;
+        halfTriggered = false;
+        postHalfTriggered = false;
+
+        counter = 0;
     }
 }
