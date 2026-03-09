@@ -9,8 +9,13 @@ public class UiAnimationSequenceDrawer : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        float height = 0f;
         float line = EditorGUIUtility.singleLineHeight;
+
+        // Si está colapsado solo ocupa una línea
+        if (!property.isExpanded)
+            return line;
+
+        float height = line + SPACING;
 
         var loop = property.FindPropertyRelative("loop");
         var loopCount = property.FindPropertyRelative("loopCount");
@@ -18,23 +23,13 @@ public class UiAnimationSequenceDrawer : PropertyDrawer
         var onComplete = property.FindPropertyRelative("OnSequenceComplete");
         var channels = property.FindPropertyRelative("animationChannels");
 
-        // sequenceName
         height += line + SPACING;
 
-        // loop
-        height += line + SPACING;
-
-        // loopCount (solo si loop activo)
         if (loop.boolValue)
             height += line + SPACING;
 
-        // OnSequenceStart
         height += EditorGUI.GetPropertyHeight(onStart, true) + SPACING;
-
-        // OnSequenceComplete
         height += EditorGUI.GetPropertyHeight(onComplete, true) + SPACING;
-
-        // animationChannels (array expandible)
         height += EditorGUI.GetPropertyHeight(channels, true) + SPACING;
 
         return height;
@@ -56,16 +51,32 @@ public class UiAnimationSequenceDrawer : PropertyDrawer
 
         Rect rect = new Rect(position.x, y, position.width, line);
 
-        // sequenceName
+        // Mostrar nombre de la secuencia en el foldout
+        string title = string.IsNullOrEmpty(sequenceName.stringValue)
+            ? property.displayName
+            : sequenceName.stringValue;
+
+        property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, title, true);
+
+        if (!property.isExpanded)
+        {
+            EditorGUI.EndProperty();
+            return;
+        }
+
+        y += line + SPACING;
+
+        EditorGUI.indentLevel++;
+
+        rect.y = y;
+        rect.height = line;
         EditorGUI.PropertyField(rect, sequenceName);
         y += line + SPACING;
 
-        // loop
         rect.y = y;
         EditorGUI.PropertyField(rect, loop);
         y += line + SPACING;
 
-        // loopCount condicional
         if (loop.boolValue)
         {
             rect.y = y;
@@ -73,22 +84,21 @@ public class UiAnimationSequenceDrawer : PropertyDrawer
             y += line + SPACING;
         }
 
-        // OnSequenceStart
         rect.y = y;
         rect.height = EditorGUI.GetPropertyHeight(onStart, true);
         EditorGUI.PropertyField(rect, onStart);
         y += rect.height + SPACING;
 
-        // OnSequenceComplete
         rect.y = y;
         rect.height = EditorGUI.GetPropertyHeight(onComplete, true);
         EditorGUI.PropertyField(rect, onComplete);
         y += rect.height + SPACING;
 
-        // animationChannels
         rect.y = y;
         rect.height = EditorGUI.GetPropertyHeight(channels, true);
         EditorGUI.PropertyField(rect, channels, true);
+
+        EditorGUI.indentLevel--;
 
         EditorGUI.EndProperty();
     }

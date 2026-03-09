@@ -6,13 +6,17 @@ using UnityEngine;
 [CustomEditor(typeof(UiAnimator))]
 public class UiAnimatorEditor : Editor
 {
+    private SerializedProperty _playOnStartProp;
+    private SerializedProperty _animNameProp;
     private SerializedProperty sequencesProp;
     private ReorderableList sequenceList;
 
     private void OnEnable()
     {
+        _playOnStartProp = serializedObject.FindProperty("playOnStart");
+        _animNameProp = serializedObject.FindProperty("animName");
         sequencesProp = serializedObject.FindProperty("sequences");
-
+        
         sequenceList = new ReorderableList(
             serializedObject,
             sequencesProp,
@@ -40,6 +44,14 @@ public class UiAnimatorEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+        EditorGUILayout.PropertyField(_playOnStartProp);
+        if (_playOnStartProp.boolValue)
+        {
+            EditorGUILayout.PropertyField(_animNameProp);
+        }
+        EditorGUILayout.Space(8);
+        EditorGUILayout.LabelField("Animation Sequences", GUI.skin.horizontalSlider);
+        EditorGUILayout.Space(2);
         sequenceList.DoLayoutList();
         serializedObject.ApplyModifiedProperties();
     }
