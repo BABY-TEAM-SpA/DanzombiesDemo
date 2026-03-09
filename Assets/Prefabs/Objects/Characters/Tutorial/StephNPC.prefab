@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1138753283542372593}
   - component: {fileID: 1059680190126736400}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: StephCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,7 +399,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
-  sequences: []
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Pulse
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8090804118760873104}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8090804118760873104}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 4005702322828965071}
+      timeMode: 1
+      animationSteps:
+      - stepType: 4
+        duration: 0.001
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 4
+        duration: 0.4
+        easing: 2
+        position: {x: 0, y: 0}
+        scale: {x: 1.2, y: 1.2, z: 1.2}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 4005702322828965071}
+      timeMode: 1
+      animationSteps:
+      - stepType: 6
+        duration: 0.4
+        easing: 7
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &4673506716289821726
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +540,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
-  sequences: []
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Pulse
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9081679204517068323}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9081679204517068323}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 1165745231635706046}
+      timeMode: 1
+      animationSteps:
+      - stepType: 4
+        duration: 0.001
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 4
+        duration: 0.4
+        easing: 2
+        position: {x: 0, y: 0}
+        scale: {x: 1.2, y: 1.2, z: 1.2}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 1165745231635706046}
+      timeMode: 1
+      animationSteps:
+      - stepType: 6
+        duration: 0.4
+        easing: 7
+        position: {x: 0, y: 0}
+        scale: {x: 2, y: 2, z: 2}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &5118514330475378065
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +756,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
-  sequences: []
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Pulse
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1439251580635224987}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1439251580635224987}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 5161823345712933979}
+      timeMode: 1
+      animationSteps:
+      - stepType: 4
+        duration: 0.001
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 4
+        duration: 0.4
+        easing: 2
+        position: {x: 0, y: 0}
+        scale: {x: 1.2, y: 1.2, z: 1.2}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 5161823345712933979}
+      timeMode: 1
+      animationSteps:
+      - stepType: 6
+        duration: 0.4
+        easing: 7
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &6807890888330408535
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,6 +1026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialDanceBrain
   _playerInput: {fileID: 0}
+  danceCanvas: {fileID: 1462625980242375481}
   danceIcon:
     animator: {fileID: 6822249617436100137}
     iconRenderer: {fileID: 7525574687090187962}
@@ -897,7 +1102,7 @@ MonoBehaviour:
       - buttonName: Default
         active: {fileID: 21300000, guid: 64d6299bdf873b746b0b71452a8f9e9b, type: 3}
         pressed: {fileID: 21300000, guid: 5d0f6da5c7ccab7478b14bfafc1ef446, type: 3}
-  unactiveAlpha: 0.25
+  unactiveAlpha: 0
 --- !u!1 &8090804118760873104
 GameObject:
   m_ObjectHideFlags: 0

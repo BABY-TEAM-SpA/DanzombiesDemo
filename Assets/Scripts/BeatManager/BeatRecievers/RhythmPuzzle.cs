@@ -74,16 +74,13 @@ public abstract class RhythmPuzzle : BeatReciever
     private DanceStep GetDanceStep()
     {
         if(activeDanceSequence.DanceSteps.Count==0 || innerCounter<0) return DanceStep.None;
-        if (innerCounter < activeDanceSequence.DanceSteps.Count)
-        {
-            return activeDanceSequence.DanceSteps[innerCounter];
-        }
-        else return DanceStep.None;
+        int value = innerCounter % activeDanceSequence.DanceSteps.Count;
+        return activeDanceSequence.DanceSteps[value];
     }
 
     private DanceStep GetNextDanceStep() ///largo 4, estoy en el 49 (beat2), y el siguiente es en el 3 (beat4)
     {
-        if(activeDanceSequence.DanceSteps.Count==0) return DanceStep.None;
+        if(activeDanceSequence.DanceSteps.Count==0 || innerCounter<0) return DanceStep.None;
         for (int i = 0; i < activeDanceSequence.DanceSteps.Count; i++)
         {
             int aux = i+innerCounter+1;
@@ -176,10 +173,8 @@ public abstract class RhythmPuzzle : BeatReciever
             innerCounter = 0;
             return;
         }
-
-        int val= (AudioManager.Instance.SongPositionBeats()-startBeat) %
-            activeDanceSequence.DanceSteps.Count;
-        innerCounter = val>=0?val:0;
+        
+        innerCounter = BeatManager.Instance.counter;
         
     }
 }

@@ -5,16 +5,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-
-
-
-
-
 public class TutorialDanceBrain : MonoBehaviour
 {
     
     [SerializeField] PlayerInput _playerInput;
     private string currentScheme;
+    
+    [SerializeField] private Canvas danceCanvas;
     
     [SerializeField] private DanceIcon danceIcon;
     private DanceIcon.SchemesSpritesControls currentDanceScheme = new DanceIcon.SchemesSpritesControls();
@@ -48,46 +45,42 @@ public class TutorialDanceBrain : MonoBehaviour
 
     private void OnPrepareStepAction(DanceStep step)
     {
-        if (step != DanceStep.None)
+        if (step != DanceStep.None && danceCanvas.isActiveAndEnabled)
         {
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
             danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).active;
-            /*if (view == "R")
-            {
-                rightDirIcon.iconRenderer.color = Color.white;
-            }
-            else
-            {
-                leftDirIcon.iconRenderer.color = Color.white;
-            };*/
             
         }
     }
     private void OnDanceStepAction(DanceStep step)
     {
-        if (step != DanceStep.None)
+        if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
         {
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
             
             danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).pressed;
+            danceIcon.animator.PlaySequence("Pulse");
+            
             if (view == "R")
             {
-                
+                rightDirIcon.iconRenderer.color = Color.white;
                 rightDirIcon.iconRenderer.sprite = currentRightScheme.buttons[0].pressed;
+                rightDirIcon.animator.PlaySequence("Pulse");
             }
             else
             {
                 leftDirIcon.iconRenderer.color = Color.white;
                 leftDirIcon.iconRenderer.sprite = currentLeftScheme.buttons[0].pressed;
+                leftDirIcon.animator.PlaySequence("Pulse");
             };
         }
     }
     private void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
     {
         
-        if (step != DanceStep.None)
+        if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
         {
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
@@ -141,6 +134,18 @@ public class TutorialDanceBrain : MonoBehaviour
             else leftDirIcon.iconRenderer.color = Color.white;
         }
         
+    }
+
+    public void SetActiveCanvas(bool active)
+    {
+        PrepareUI();
+        danceCanvas.gameObject.SetActive(active);
+        danceIcon.iconFXRenderer.gameObject.SetActive(active);
+        danceIcon.iconRenderer.gameObject.SetActive(active);
+        leftDirIcon.iconRenderer.gameObject.SetActive(active);
+        leftDirIcon.iconFXRenderer.gameObject.SetActive(active);
+        rightDirIcon.iconRenderer.gameObject.SetActive(active);
+        rightDirIcon.iconFXRenderer.gameObject.SetActive(active);
     }
     
     ///////////////////////////////////////////////////

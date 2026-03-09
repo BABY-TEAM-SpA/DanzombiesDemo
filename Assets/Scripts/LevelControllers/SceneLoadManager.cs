@@ -61,7 +61,8 @@ public class SceneChangeController : MonoBehaviour
 
     private IEnumerator LoadAdditive(string sceneName)
     {
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        //AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
         if(loadOp == null) yield break;
         loadOp.allowSceneActivation = false;
         while (loadOp.progress < 0.9f)
