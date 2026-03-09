@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,4 +16,8 @@ public class SongDataSO : ScriptableObject
     public int metric;
     public int compassLong;
 
+    public void OnValidate()
+    {
+        songName = this.name;
+    }
 }

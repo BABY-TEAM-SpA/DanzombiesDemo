@@ -58,12 +58,14 @@ public class SongPlayingData
     {
         double now = AudioSettings.dspTime;
 
-        while (nextCutIndex < cutFlags.Count && cutFlags[nextCutIndex] <= now)
-            nextCutIndex++;
+        while (nextCutIndex < cutFlags.Count &&  now > cutFlags[nextCutIndex] ) nextCutIndex++;
 
         if (nextCutIndex < cutFlags.Count)
+        {
+            Debug.Log(" cut finded at"+ nextCutIndex);
             return cutFlags[nextCutIndex];
-
+        }
+            
         return now + 0.1d;
     }
 }
@@ -82,6 +84,7 @@ public class AudioManager : MonoBehaviour
     private Coroutine nextSongCoroutine;
 
     private readonly List<SongPlayingData> songsQueue = new List<SongPlayingData>();
+    private int queueCount;
 
     public SongPlayingData currentSongPlaying;
 
@@ -124,43 +127,39 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
+        queueCount = songsQueue.Count;
         if (nextSongCoroutine != null)
             return;
 
         if (!IsPlaying())
         {
-            if (songsQueue.Count > 0)
+            if (queueCount > 0)
                 PlayClipInQueue();
 
             return;
         }
 
-        if (songsQueue.Count == 0)
+        if (queueCount== 0)
         {
-            if (currentSongPlaying != null &&
-                currentSongPlaying.songData.loopeable &&
-                currentSongPlaying.cutFlags.Count > 0)
+            if (currentSongPlaying != null && currentSongPlaying.songData.loopeable && currentSongPlaying.cutFlags.Count > 0)
             {
                 double dspTime = AudioSettings.dspTime;
 
-                if (dspTime >
-                    currentSongPlaying.cutFlags.Last() -
-                    currentSongPlaying.beatDuration * 2)
+                if (dspTime > currentSongPlaying.cutFlags.Last() - currentSongPlaying.beatDuration * 2)
                 {
                     QueueNextSongData(currentSongPlaying.songData);
                 }
             }
-
             return;
         }
 
+        if (nextSongCoroutine != null) return;
+
         double now = AudioSettings.dspTime;
 
-        if (currentSongPlaying != null &&
-            now >
-            currentSongPlaying.GetNextCutFlag() -
-            currentSongPlaying.beatDuration * 2)
+        if (currentSongPlaying != null && now > currentSongPlaying.GetNextCutFlag() - currentSongPlaying.beatDuration * 2)
         {
+            Debug.Log("Setting up the next song");
             PlayClipInQueue();
         }
     }
