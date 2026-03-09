@@ -146,7 +146,7 @@ RectTransform:
   m_GameObject: {fileID: 121607076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.02, y: 2.02, z: 2.02}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1843545568}
@@ -300,7 +300,7 @@ RectTransform:
   m_GameObject: {fileID: 749131296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1843545568}
@@ -572,8 +572,8 @@ GameObject:
   - component: {fileID: 1843545567}
   - component: {fileID: 1843545566}
   - component: {fileID: 1843545565}
-  - component: {fileID: 1843545563}
   - component: {fileID: 1843545569}
+  - component: {fileID: 1843545570}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -581,28 +581,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1843545563
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843545562}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1007a7c1ffc9551418ce4b0cd0ceb652, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1843545565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -697,73 +675,102 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843545562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02704397f3df87348bec96ca22190d14, type: 3}
+  m_Script: {fileID: 11500000, guid: 72751775c0e51d04db81cfd634c723f0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneLoaderTrigger
-  levelsToLoad:
-    scenes:
-    - MainMenu
-    shouldStopMusic: 0
-  levelsToUnLoad:
-    scenes: []
-    shouldStopMusic: 0
---- !u!1001 &1983115793
-PrefabInstance:
+  m_EditorClassIdentifier: Assembly-CSharp::IntroLogosController
+--- !u!114 &1843545570
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -142.45737
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.84537
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176308987285831705, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6861835003544163992, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-      propertyPath: m_Name
-      value: GameManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843545562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 1
+  animName: Intro
+  sequences:
+  - sequenceName: Intro
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1843545569}
+          m_TargetAssemblyTypeName: IntroLogosController, Assembly-CSharp
+          m_MethodName: LoadMenu
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 1470149756}
+      timeMode: 0
+      animationSteps:
+      - stepType: 4
+        duration: 1
+        easing: 8
+        position: {x: 0, y: 0}
+        scale: {x: 1.1, y: 1.1, z: 1.1}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 1470149756}
+      timeMode: 0
+      animationSteps:
+      - stepType: 3
+        duration: 1
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0.58}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 121607077}
+      timeMode: 0
+      animationSteps:
+      - stepType: 4
+        duration: 2
+        easing: 8
+        position: {x: 0, y: 0}
+        scale: {x: 1, y: 1, z: 1}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 749131297}
+      timeMode: 0
+      animationSteps:
+      - stepType: 4
+        duration: 1
+        easing: 8
+        position: {x: 0, y: 0}
+        scale: {x: 1, y: 1, z: 1}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 4
+        duration: 2
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0.9, y: 0.9, z: 0.9}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -771,4 +778,3 @@ SceneRoots:
   - {fileID: 1228399902}
   - {fileID: 520747203}
   - {fileID: 1843545568}
-  - {fileID: 1983115793}

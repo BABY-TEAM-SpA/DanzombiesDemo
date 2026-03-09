@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangeController : MonoBehaviour
 {
+    [SerializeField] Canvas loadingCanvas;
+    private bool loading = false;
+    
     [Serializable]
     public class LoadScenePack
     {
@@ -39,7 +42,7 @@ public class SceneChangeController : MonoBehaviour
 
     public Coroutine ExecuteLoadPlan()
     {
-        if(isBusy) return null; /// Hay Escenas Cargando
+        if(isBusy) return null;
         isBusy = true;
         return StartCoroutine(ChangeSceneCoroutine(scenesToLoad));
         
@@ -53,7 +56,7 @@ public class SceneChangeController : MonoBehaviour
         }
         scenesToLoad = null;
         isBusy = false;
-        SceneManager.UnloadSceneAsync("LoadingScreen");
+        loadingCanvas.gameObject.SetActive(false);
     }
 
     private IEnumerator LoadAdditive(string sceneName)
@@ -75,7 +78,8 @@ public class SceneChangeController : MonoBehaviour
 
     private void LoadInterScene()
     {
-        SceneManager.LoadScene("LoadingScreen");
+        loadingCanvas.gameObject.SetActive(false);
+        ExecuteLoadPlan();
     }
 
     public void ForceLoadScene(string sceneName)

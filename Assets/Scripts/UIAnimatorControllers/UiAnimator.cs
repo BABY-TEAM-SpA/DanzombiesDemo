@@ -1,13 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UiAnimator : MonoBehaviour
 {
+    public bool playOnStart = false;
+    [SerializeField] string animName = "";
     [SerializeField] private List<UiAnimationSequence> sequences = new();
 
     private Coroutine currentSequence;
     private bool isCancelling;
+
+
+    private void Start()
+    {
+        UiAnimationSequence defaulSeq = sequences.FirstOrDefault(x=>x.SequenceName == animName);
+        if (playOnStart && defaulSeq != null)
+        {
+            PlaySequence(animName);
+        }
+    }
 
     public void PlaySequence(string sequenceName)
     {
