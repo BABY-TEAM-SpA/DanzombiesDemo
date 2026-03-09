@@ -88,7 +88,7 @@ public class TutorialPuzzle : RhythmPuzzle
             case SequenceStep.GoalType.CompleteFullPattern:
                 if(isCorrect) playerSucceses+=1;
                 int totaldances = activeDanceSequence.DanceSteps.FindAll(x=>x!=DanceStep.None).Count;
-                if (innerCounter==activeDanceSequence.DanceSteps.Count-1)
+                if (innerCounter%activeDanceSequence.DanceSteps.Count==activeDanceSequence.DanceSteps.Count-1)
                 {
                     if(playerSucceses == totaldances) CompleteRhythmSequence();
                     playerSucceses=0;

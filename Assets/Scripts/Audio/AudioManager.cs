@@ -85,11 +85,12 @@ public class AudioManager : MonoBehaviour
 
     public SongPlayingData currentSongPlaying;
 
-    public delegate void OnMusicEvent();
+    public delegate void OnMusicEvent(bool reset);
     public static event OnMusicEvent OnPlay;
     public static event OnMusicEvent OnResume;
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
+    private bool shouldReset;
 
     public SoundSettings SFXsettings = new SoundSettings();
     public AudioSource SFXplayer;
@@ -247,7 +248,8 @@ public class AudioManager : MonoBehaviour
 
         musicPlayer = _audioSources[audioSourceActive];
 
-        OnPlay?.Invoke();
+        OnPlay?.Invoke(shouldReset);
+        shouldReset = false;
     }
 
     public bool IsPlaying()
@@ -264,7 +266,7 @@ public class AudioManager : MonoBehaviour
 
         musicPlayer.Pause();
 
-        OnPause?.Invoke();
+        OnPause?.Invoke(false);
     }
 
     public void ResumeSong()
@@ -276,7 +278,7 @@ public class AudioManager : MonoBehaviour
 
         musicPlayer.UnPause();
 
-        OnResume?.Invoke();
+        OnResume?.Invoke(false);
     }
 
     public void StopSong()
@@ -297,7 +299,8 @@ public class AudioManager : MonoBehaviour
                 source.Stop();
         }
 
-        OnStop?.Invoke();
+        shouldReset = true;
+        OnStop?.Invoke(shouldReset);
     }
 
     public void OnPauseEvent(bool pause)

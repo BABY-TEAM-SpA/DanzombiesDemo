@@ -73,9 +73,9 @@ public class BeatManager : MonoBehaviour
         AudioManager.OnPlay -= OnPlayEvent;
     }
 
-    void OnPlayEvent()
+    void OnPlayEvent(bool resetCounter)
     {
-        ResetBeatManager();
+        ResetBeatManager(resetCounter);
         OnUpdateEvent?.Invoke(beatDuration);
     }
 
@@ -96,20 +96,20 @@ public class BeatManager : MonoBehaviour
 
     void UpdateBeat(double songTime)
     {
-        int currentBeat = (int)(songTime / beatDuration);
+        int songCurrenBeat = (int)(songTime / beatDuration); /// 0,1,2,3,4,0,1,2,3,4,5,6,7
 
-        if (currentBeat != lastBeat)
+        if (songCurrenBeat != lastBeat)
         {
-            lastBeat = currentBeat;
+            lastBeat = songCurrenBeat;
 
             preTriggered = false;
             beatTriggered = false;
             postTriggered = false;
 
-            counter = currentBeat + 1;
+            counter+=1;
         }
 
-        double beatStart = currentBeat * beatDuration;
+        double beatStart = songCurrenBeat * beatDuration;
 
         if (!preTriggered &&
             songTime >= beatStart - beatDuration * margen)
@@ -117,7 +117,7 @@ public class BeatManager : MonoBehaviour
             preTriggered = true;
             onMargen = true;
 
-            OnPreBeat?.Invoke(currentBeat);
+            OnPreBeat?.Invoke(songCurrenBeat);
         }
 
         if (!beatTriggered &&
@@ -125,7 +125,7 @@ public class BeatManager : MonoBehaviour
         {
             beatTriggered = true;
 
-            OnBeat?.Invoke(currentBeat);
+            OnBeat?.Invoke(songCurrenBeat);
         }
 
         if (!postTriggered &&
@@ -134,7 +134,7 @@ public class BeatManager : MonoBehaviour
             postTriggered = true;
             onMargen = false;
 
-            OnPostBeat?.Invoke(currentBeat);
+            OnPostBeat?.Invoke(songCurrenBeat);
         }
     }
 
@@ -180,17 +180,14 @@ public class BeatManager : MonoBehaviour
         }
     }
 
-    public void ResetBeatManager()
+    public void ResetBeatManager(bool resetCounter)
     {
         beatDuration =
             AudioManager.Instance.currentSongPlaying.beatDuration;
 
         dspStartTime =
             AudioManager.Instance.currentSongPlaying.dspSongStartTime;
-
-        lastBeat = -1;
-        lastHalfBeat = -1;
-
+        
         preTriggered = false;
         beatTriggered = false;
         postTriggered = false;
@@ -199,6 +196,12 @@ public class BeatManager : MonoBehaviour
         halfTriggered = false;
         postHalfTriggered = false;
 
-        counter = 0;
+        if (resetCounter)
+        {
+            Debug.Log("Counter Reset");
+            counter = 0;
+            lastBeat = -1;
+            lastHalfBeat = -1;
+        }
     }
 }

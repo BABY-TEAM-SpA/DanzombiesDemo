@@ -228,11 +228,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8194010380262974281, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
   m_PrefabInstance: {fileID: 5648338270326737643}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &443419290 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 158959657649610474, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
-  m_PrefabInstance: {fileID: 4416453963142573652}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &472659129 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5459047289198947867, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
@@ -959,7 +954,7 @@ MonoBehaviour:
   isActive: 0
   debug: 0
   ActivateOnStart: 0
-  syncMode: 0
+  syncMode: 1
   activeDanceSequence:
     goalType: 0
     flowAffect: 0
@@ -1002,14 +997,14 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
+            m_IntArgument: 2
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 443419290}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1342278708}
+          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
+          m_MethodName: SetActiveCanvas
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1044,14 +1039,14 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
+            m_IntArgument: 3
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 443419290}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1342278708}
+          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
+          m_MethodName: SetActiveCanvas
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1086,14 +1081,14 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
+            m_IntArgument: 4
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 443419290}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1342278708}
+          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
+          m_MethodName: SetActiveCanvas
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1128,14 +1123,14 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
+            m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 443419290}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1342278708}
+          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
+          m_MethodName: SetActiveCanvas
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1170,14 +1165,14 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
+            m_IntArgument: 6
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 443419290}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1342278708}
+          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
+          m_MethodName: SetActiveCanvas
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1187,7 +1182,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - goalType: 2
+  - goalType: 3
     flowAffect: 1
     DanceSteps: 00000000080000000000000001000000
     OnSequenceCompletedEvent:
@@ -1212,14 +1207,14 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 6
+            m_IntArgument: 7
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 443419290}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1342278708}
+          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
+          m_MethodName: SetActiveCanvas
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1551,6 +1546,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4266059521729005466 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 666606980676070988, guid: 18da214f48eaf504087733d23edd22dd, type: 3}
+  m_PrefabInstance: {fileID: 4266059521729005459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4416453963142573652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1642,7 +1648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].dialogData
@@ -1651,30 +1657,34 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: 1bc04e235740fa747a7e6395fb68062e, type: 2}
+      objectReference: {fileID: 11400000, guid: 3d000f0633bc00d4ebdfc54007398860, type: 2}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: 11fed36cd747b394faec39006f30a0d7, type: 2}
+      objectReference: {fileID: 11400000, guid: 1bc04e235740fa747a7e6395fb68062e, type: 2}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: ffadc9665df0e1840b5678888b91aefb, type: 2}
+      objectReference: {fileID: 11400000, guid: 11fed36cd747b394faec39006f30a0d7, type: 2}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: 4daaa6f5d620a1f419be50ea71f68eed, type: 2}
+      objectReference: {fileID: 11400000, guid: ffadc9665df0e1840b5678888b91aefb, type: 2}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[5].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: a7ccdd05793ffc94eaec9c96bc0f70ac, type: 2}
+      objectReference: {fileID: 11400000, guid: 4daaa6f5d620a1f419be50ea71f68eed, type: 2}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].dialogData
+      value: 
+      objectReference: {fileID: 11400000, guid: a7ccdd05793ffc94eaec9c96bc0f70ac, type: 2}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].dialogData
       value: 
       objectReference: {fileID: 11400000, guid: 2e9e81b697d428540915722771e87aa8, type: 2}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1698,6 +1708,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
@@ -1706,11 +1720,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
@@ -1726,11 +1740,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
@@ -1738,7 +1752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1746,11 +1760,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
@@ -1758,7 +1772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
@@ -1838,36 +1852,56 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 472659129}
+      objectReference: {fileID: 4266059521729005466}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1808593042}
+      objectReference: {fileID: 1325767226}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 4266059521729005460}
+      objectReference: {fileID: 1694453850}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 1808593042}
+      objectReference: {fileID: 1694453850}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 443419290}
+      objectReference: {fileID: 1342278708}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1875,19 +1909,19 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 4266059521729005460}
+      objectReference: {fileID: 1808593042}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1808593042}
+      objectReference: {fileID: 4266059521729005460}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 443419290}
+      objectReference: {fileID: 1808593042}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1808593042}
+      objectReference: {fileID: 1342278708}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1895,19 +1929,19 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1808593042}
+      objectReference: {fileID: 4266059521729005460}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 4266059521729005460}
+      objectReference: {fileID: 1808593042}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 1808593042}
+      objectReference: {fileID: 1342278708}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 443419290}
+      objectReference: {fileID: 1808593042}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
@@ -1931,7 +1965,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 443419290}
+      objectReference: {fileID: 1342278708}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
@@ -1955,7 +1989,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 443419290}
+      objectReference: {fileID: 1342278708}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
@@ -1979,7 +2013,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[5].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1866402054}
+      objectReference: {fileID: 1342278708}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1987,13 +2021,33 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 4266059521729005460}
+      objectReference: {fileID: 1808593042}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1313396335}
+      objectReference: {fileID: 4266059521729005460}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1808593042}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1866402054}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 472659129}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4266059521729005460}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1313396335}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 1694453850}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
@@ -2145,24 +2199,44 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: PlayerEnter
+      value: ActivateDialogScript
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: ActivatePlayer
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: ActivatePuzzle
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetActive
+      value: SetActiveCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -2170,19 +2244,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ActivatePlayer
+      value: PlayerEnter
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: ActivatePuzzle
+      value: ActivatePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: SetActive
+      value: ActivatePuzzle
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: PlayerEnter
+      value: SetActiveCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -2190,19 +2264,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: PlayerEnter
-      objectReference: {fileID: 0}
-    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: ActivatePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: ActivatePuzzle
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActiveCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetActive
+      value: PlayerEnter
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
@@ -2226,7 +2300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetActive
+      value: SetActiveCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
@@ -2250,7 +2324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetActive
+      value: SetActiveCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
@@ -2274,7 +2348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[5].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetActive
+      value: SetActiveCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -2282,35 +2356,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ActivatePlayer
+      value: PlayerEnter
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SetActive
+      value: ActivatePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: ActivatePuzzle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ActivatePlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: PlayerBeatReciever, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: TutorialPuzzle, Assembly-CSharp
+      value: DialogController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: TutorialPuzzle, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: TutorialDanceBrain, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2318,19 +2412,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
+      value: TutorialPuzzle, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: TutorialPuzzle, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: TutorialPuzzle, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: TutorialPuzzle, Assembly-CSharp
+      value: TutorialDanceBrain, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2338,19 +2432,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: TutorialPuzzle, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: TutorialPuzzle, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: TutorialDanceBrain, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: TutorialPuzzle, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
@@ -2374,7 +2468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: TutorialDanceBrain, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
@@ -2398,7 +2492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: TutorialDanceBrain, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
@@ -2422,7 +2516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[5].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: TutorialDanceBrain, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2430,23 +2524,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
+      value: TutorialPuzzle, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: TutorialPuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
@@ -2458,11 +2580,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
@@ -2474,11 +2596,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
@@ -2549,17 +2671,33 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
-      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 4266059521729005460}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
       value: 
@@ -2575,13 +2713,17 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4266059521729005460}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 4266059521729005460}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 4266059521729005460}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
@@ -2617,12 +2759,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4266059521729005460}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 4266059521729005460}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2642,7 +2788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2654,7 +2800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2662,7 +2808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2674,7 +2820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2754,7 +2900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2762,6 +2908,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
+      propertyPath: dialogScripts.Array.data[7].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8194010380262974281, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
@@ -3019,6 +3185,14 @@ PrefabInstance:
     - target: {fileID: 1213762233679141225, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4219638464808922843, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
+      propertyPath: useBeatTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4219638464808922843, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
+      propertyPath: beatMarginUpdate
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8288151208510818585, guid: 0c51fddf11b93384bb025623c68203a4, type: 3}
       propertyPath: m_Name
