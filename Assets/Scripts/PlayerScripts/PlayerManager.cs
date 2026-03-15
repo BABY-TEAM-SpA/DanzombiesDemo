@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Unity.Cinemachine;
 
 
 public enum SeguridadState
@@ -12,14 +13,14 @@ public enum SeguridadState
 [Serializable]
 public class PlayerManager : DanceBrain
 {
-    [SerializeField]private bool ActivateOnStart;
-    public int lifes =3;
-    [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
+    [SerializeField] private bool ActivateOnStart;
+    public int lifes = 3;
+    [SerializeField] [Range(0, 10)] private int nivelDeSeguridad = 5;
     public DanceBarController danceBar;
-    
+
     public RhythmPuzzle targetPuzzle;
     public DanceStep saveDanceStep { get; private set; }
-    
+
     
     public static PlayerManager Player;
 
@@ -88,7 +89,10 @@ public class PlayerManager : DanceBrain
         EnableDance(false);
         beatReciever.SetActive(false);
     }
-    
-    
+
+    public Animator ConfinePlayerCamera()
+    {
+        return playerAnimCtrl.animator;
+    }
 }
 

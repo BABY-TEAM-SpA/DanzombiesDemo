@@ -8,10 +8,18 @@ public class SceneChangeController : MonoBehaviour
 {
     [SerializeField] Canvas loadingCanvas;
     private bool loading = false;
+
+    public enum ChargeSceneMode
+    {
+        Sync,
+        Async
+    }
     
     [Serializable]
     public class LoadScenePack
     {
+        public ChargeSceneMode chargeMode = ChargeSceneMode.Sync;
+        public LoadSceneMode loadMode;
         public List<string> scenes = new List<string>();
         public bool shouldStopMusic=false;
     }
@@ -19,6 +27,7 @@ public class SceneChangeController : MonoBehaviour
     
     private LoadScenePack scenesToLoad;
     public bool isBusy = false;
+    private Coroutine loadingCoroutine;
 
     private void Awake() 
     { 
@@ -39,30 +48,45 @@ public class SceneChangeController : MonoBehaviour
         if(scenesPack.shouldStopMusic) AudioManager.Instance.StopSong();
         LoadInterScene();
     }
-
-    public Coroutine ExecuteLoadPlan()
+    
+    private void LoadInterScene()
+    {
+        bool sync = scenesToLoad.chargeMode == ChargeSceneMode.Sync;
+        if (!sync)
+        {
+            loadingCanvas.gameObject.SetActive(scenesToLoad.loadMode != LoadSceneMode.Additive);
+            loadingCoroutine = ExecuteLoadAsyncPlan();
+        }
+        else
+        {
+            ForceLoadScene(scenesToLoad.scenes[0]);
+        }
+        
+    }
+    
+    public Coroutine ExecuteLoadAsyncPlan()
     {
         if(isBusy) return null;
         isBusy = true;
-        return StartCoroutine(ChangeSceneCoroutine(scenesToLoad));
+        return StartCoroutine(LoadAsyncCoroutine(scenesToLoad));
         
     }
 
-    public IEnumerator ChangeSceneCoroutine(LoadScenePack scenesToLoad)
+    public IEnumerator LoadAsyncCoroutine(LoadScenePack scenesToLoad)
     {
         for (int i = 0; i < scenesToLoad.scenes.Count; i++)
         {
-            yield return LoadAdditive(scenesToLoad.scenes[i]);
+            yield return LoadAsync(scenesToLoad.scenes[i], scenesToLoad.loadMode);
         }
         scenesToLoad = null;
         isBusy = false;
         loadingCanvas.gameObject.SetActive(false);
     }
 
-    private IEnumerator LoadAdditive(string sceneName)
+    private IEnumerator LoadAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Single)
     {
         //AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, mode);
         if(loadOp == null) yield break;
         loadOp.allowSceneActivation = false;
         while (loadOp.progress < 0.9f)
@@ -77,11 +101,7 @@ public class SceneChangeController : MonoBehaviour
         
     }
 
-    private void LoadInterScene()
-    {
-        loadingCanvas.gameObject.SetActive(false);
-        ExecuteLoadPlan();
-    }
+    
 
     public void ForceLoadScene(string sceneName)
     {
