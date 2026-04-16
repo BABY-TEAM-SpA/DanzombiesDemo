@@ -1,4 +1,7 @@
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +13,13 @@ public enum DanceState{
 	South,
 	West,
 	East
+}
+
+[Serializable]
+public class AnimationFeedback
+{
+    public string name;
+    public UnityEvent feedbackEvent;
 }
 
 public class PlayerAnimatorController : MonoBehaviour
@@ -24,6 +34,8 @@ public class PlayerAnimatorController : MonoBehaviour
 	private bool isDirectionPulsed;
 	private DanceState isDancePulsed;
 
+    public List<AnimationFeedback> playerFeedbackEvents = new List<AnimationFeedback>();
+    
     private void Start()
     {
         SetAnimatorOverrideDirection();
@@ -233,6 +245,9 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         allowInput = false;
     }
-    
-    
+
+    public void AnimationFeedbackEvent(string eventName)
+    {
+        playerFeedbackEvents.FirstOrDefault(x=> x.name==eventName)?.feedbackEvent?.Invoke();
+    }
 }

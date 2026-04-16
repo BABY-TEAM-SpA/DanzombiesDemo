@@ -100,10 +100,6 @@ public class AudioManager : MonoBehaviour
 
     public SoundSettings SFXsettings = new SoundSettings();
     public AudioSource SFXplayer;
-
-    public AudioClip playerStepSFX;
-    public AudioClip playerClapSFX;
-
     
     private double pauseDSPTime;
     private double pauseOffset;

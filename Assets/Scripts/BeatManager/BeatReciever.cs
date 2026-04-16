@@ -9,7 +9,7 @@ using static BeatManager;
 
 public abstract class BeatReciever: MonoBehaviour
 {
-    public bool isActive =true;
+    public bool isActive { set; get; } = true;
     
     ///////////--- Events Management ---///////////
     protected double beatTime=1d;

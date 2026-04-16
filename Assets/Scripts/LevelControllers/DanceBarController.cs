@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DanceBarController : MonoBehaviour
@@ -15,6 +16,8 @@ public class DanceBarController : MonoBehaviour
     [SerializeField] private List<Image> beatBars = new List<Image>();
     [SerializeField] private Material beatBarMaterial;
     [SerializeField] private UiAnimator uiAnimator;
+    public UnityEvent onBarFilled;
+    private bool isBarFilled = false;
 
     public void Start()
     {
@@ -36,9 +39,21 @@ public class DanceBarController : MonoBehaviour
     
     public void UpdateFlowBars(int value, bool isInside =false)
     {
-        if (value <= 2) currentReaction = 2;
-        else if (value <= 5) currentReaction = 1;
-        else currentReaction = 0;
+        if (value == 10)
+        {
+            if (!isBarFilled)
+            {
+                isBarFilled = true;
+                onBarFilled?.Invoke();
+            }
+        }
+        else
+        {
+            isBarFilled = false;
+            if (value <= 2) currentReaction = 2;
+            else if (value <= 5) currentReaction = 1;
+            else if (value <= 10) currentReaction = 0;
+        }
         
         foreach (Image barra in FlowBars)
         {

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public abstract class DanceBrain : MonoBehaviour
 {
-    public bool isActive = true;
+    public bool isActive { get; set; } = true;
     [SerializeField] protected PlayerMovementController playerMovCtrl;
     [SerializeField] protected PlayerAnimatorController playerAnimCtrl;
     [SerializeField] protected BeatReciever beatReciever;
-    public bool isRightLooking;
+    public bool isRightLooking{ get; set; } 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     public void EnableMovement(bool isON=false)

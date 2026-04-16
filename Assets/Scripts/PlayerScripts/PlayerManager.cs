@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using Unity.Cinemachine;
+using UnityEngine.Events;
 
 
 public enum SeguridadState
@@ -16,11 +17,14 @@ public class PlayerManager : DanceBrain
     [SerializeField] private bool ActivateOnStart;
     public int lifes = 3;
     [SerializeField] [Range(0, 10)] private int nivelDeSeguridad = 5;
-    public DanceBarController danceBar;
+    public DanceBarController danceBar{ get; set; } 
 
-    public RhythmPuzzle targetPuzzle;
+    public RhythmPuzzle targetPuzzle{ get; set; }
     public DanceStep saveDanceStep { get; private set; }
 
+    public UnityEvent PlayerLifeHealed;
+    public UnityEvent PlayerLifeDamaged;
+    
     
     public static PlayerManager Player;
 
@@ -51,6 +55,14 @@ public class PlayerManager : DanceBrain
 
     public void GetLifeDamage(bool danho=true)
     {
+        if (danho)
+        {
+            PlayerLifeDamaged?.Invoke();
+        }
+        else
+        {
+            PlayerLifeHealed?.Invoke();
+        }
         lifes += (danho) ? -1 : -1;
         PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
     }

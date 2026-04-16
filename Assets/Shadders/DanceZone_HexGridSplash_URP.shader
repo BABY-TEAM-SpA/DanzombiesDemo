@@ -1,7 +1,9 @@
-Shader "Custom/CurvedWaveLines_URP_Tiled"
+Shader "Danzombies/ZombieZoneShader"
 {
     Properties
     {
+        _MainTex("Sprite Texture", 2D) = "white" {}
+
         _LineCount("Line Count", Float) = 18
         _LineThickness("Line Thickness", Float) = 0.006
 
@@ -22,6 +24,8 @@ Shader "Custom/CurvedWaveLines_URP_Tiled"
         _InactiveColor("Inactive Color", Color) = (0.4,0.4,0.4,1)
 
         _Tiling("Tiling XY", Vector) = (1,1,0,0)
+
+        _UseSpriteColor("Use Sprite Color", Range(0,1)) = 0
     }
 
     SubShader
@@ -42,6 +46,7 @@ Shader "Custom/CurvedWaveLines_URP_Tiled"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
             struct Attributes
@@ -55,6 +60,9 @@ Shader "Custom/CurvedWaveLines_URP_Tiled"
                 float4 positionHCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
             };
+
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
 
             float _LineCount;
             float _LineThickness;
@@ -75,6 +83,8 @@ Shader "Custom/CurvedWaveLines_URP_Tiled"
             float4 _InactiveColor;
             float4 _Tiling;
 
+            float _UseSpriteColor;
+
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
@@ -85,12 +95,18 @@ Shader "Custom/CurvedWaveLines_URP_Tiled"
 
             half4 frag(Varyings IN) : SV_Target
             {
+                // SAMPLE DEL SPRITE
+                float4 sprite = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
+
+                // RECORTE POR ALPHA (clave)
+                clip(sprite.a - 0.01);
+
                 float2 uv = IN.uv * _Tiling.xy;
                 uv = frac(uv);
 
                 float t = _Time.y;
 
-                // ===== COLOR FONDO (activo / inactivo) =====
+                // ===== COLOR BASE =====
                 float3 activeColor = _RainbowColor.rgb;
                 float3 inactiveColor = _InactiveColor.rgb;
                 float3 baseColor = lerp(inactiveColor, activeColor, _ActiveState);
@@ -122,13 +138,18 @@ Shader "Custom/CurvedWaveLines_URP_Tiled"
 
                 lineIntensity = saturate(lineIntensity);
 
-                // 👇 Línea SIEMPRE blanca
                 float3 lineColor = float3(1.0, 1.0, 1.0);
 
                 float3 finalColor = background * (1.0 - lineIntensity)
                                   + lineColor * lineIntensity;
 
-                float finalAlpha = saturate((_BackgroundStrength + lineIntensity) * _Alpha);
+                // OPCIONAL: mezclar con color del sprite
+                if (_UseSpriteColor > 0.5)
+                {
+                    finalColor *= sprite.rgb;
+                }
+
+                float finalAlpha = saturate((_BackgroundStrength + lineIntensity) * _Alpha) * sprite.a;
 
                 return half4(finalColor, finalAlpha);
             }
