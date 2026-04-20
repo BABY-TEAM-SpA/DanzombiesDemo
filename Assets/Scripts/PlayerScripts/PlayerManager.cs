@@ -17,7 +17,7 @@ public class PlayerManager : DanceBrain
     [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
     public DanceBarController danceBar;
     
-    public RhythmPuzzle targetPuzzle;
+    public RhythmPuzzle targetPuzzle; //should this be public?
     public DanceStep saveDanceStep { get; private set; }
     
     

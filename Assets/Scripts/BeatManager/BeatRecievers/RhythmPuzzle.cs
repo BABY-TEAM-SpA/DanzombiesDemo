@@ -130,7 +130,7 @@ public abstract class RhythmPuzzle : BeatReciever
         OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
     }
 
-    public void OnRhythmPuzzleBeatReaction()
+    public void OnRhythmPuzzleBeatReaction() //THE PART THAT NEEDS TO BE MOVED TO PLAYER LOGIC
     {
         if(playersInside.Count>0 && currentPuzzleStep != DanceStep.None){
             List<PlayerManager> players = new List<PlayerManager>(playersInside);

@@ -136,7 +136,7 @@ public class ZombieDanceZone : RhythmPuzzle
         // Mantengo tu override intacto
     }
 
-    public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
+    public override void ReactToPlayersDance(PlayerManager player, DanceStep step) //Also may need changing to move the logic to player-side
     {
         if (step == DanceStep.None)
             return;
