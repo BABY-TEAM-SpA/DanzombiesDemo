@@ -59,11 +59,15 @@ public abstract class RhythmPuzzle : BeatReciever
     public event OnMusicEvent2 OnReleaseStep;
     public UnityEvent OnPuzzleGetsActivateEvent = new UnityEvent();
     
-    [Header("Players")]
-    protected List<PlayerManager> playersInside = new List<PlayerManager>();
+    /*[Header("Players")]
+    protected List<PlayerManager> playersInside = new List<PlayerManager>(); //se vuelve innecesario por que ahora reaccionan a eventos de estos players.*/
     
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
+
+    public bool onBeatWindow {private set; get;} //cuando TRUE el beat es aceptado cuando FALSE es rechazado. Para checks por parte de PlayerManager.
+    //si queremos trackear grados de acierto (GREAT, GOOD, MISS) se necesitaria otra variable similar
+    //lo mismo para (EARLY, LATE) y cosas asi
     
     private void Start()
     {
@@ -111,6 +115,8 @@ public abstract class RhythmPuzzle : BeatReciever
         currentPuzzleStep = GetDanceStep();
 
         OnPrepareStep?.Invoke(currentPuzzleStep);
+
+        onBeatWindow = true;
     }
 
     public override void BeatAction(int counter)
@@ -125,21 +131,29 @@ public abstract class RhythmPuzzle : BeatReciever
     {
         if (!isActive) return;
         //Debug.Log("PostBeat");
-        OnRhythmPuzzleBeatReaction();
+        //OnRhythmPuzzleBeatReaction(); supersedido por onBeatWindow y chequeo por parte del PlayerManager
         futurePuzzleStep = GetNextDanceStep();
         OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
+        onBeatWindow = false;
     }
 
-    public void OnRhythmPuzzleBeatReaction() //THE PART THAT NEEDS TO BE MOVED TO PLAYER LOGIC
+    public void SubscribeToPlayerReactions(PlayerManager player) //llamado por PlayerManager cuando el puzzle se registra como activo
     {
-        if(playersInside.Count>0 && currentPuzzleStep != DanceStep.None){
-            List<PlayerManager> players = new List<PlayerManager>(playersInside);
-            bool anyPlayerIsCorrect = false;
-            foreach (PlayerManager player in players)
-            {
-                ReactToPlayersDance(player, currentPuzzleStep);
-            }
-            VisualFeedbackToPlayerDance(anyPlayerIsCorrect);
+        Debug.Log(player.OnDanceEvent);
+        player.OnDanceEvent.AddListener(PlayerDanceReaction);
+    }
+    
+    public void UnsubscribeToPlayerReactions(PlayerManager player) //llamado por PlayerManager cuando el puzzle se desregistra como activo
+    {
+        player.OnDanceEvent.RemoveListener(PlayerDanceReaction);
+    }
+
+    public void PlayerDanceReaction(PlayerManager player, DanceStep step) //cuando un player hace un paso esta es la reaccion
+    {
+        if(currentPuzzleStep != DanceStep.None){
+            //bool anyPlayerIsCorrect = false; //esta variable no me queda clara, pareciera que no esta haciendo nada
+            ReactToPlayersDance(player, currentPuzzleStep); //TODO: asegurar que solo se reaccione al baile correcto una vez
+            VisualFeedbackToPlayerDance(/*anyPlayerIsCorrect*/  false);
         }
     }
 
@@ -155,13 +169,13 @@ public abstract class RhythmPuzzle : BeatReciever
     {
         if(debug)Debug.Log("Player entered");
         player.AddTargetPuzzle(this);
-        playersInside.Add(player);
+        //playersInside.Add(player);
     }
 
     public virtual void PlayerLeave(PlayerManager player)
     {
         if(debug)Debug.Log("Player Leave");
-        playersInside.Remove(player);
+        //playersInside.Remove(player);
         player.RemoveTargetPuzzle(this);
     }
     

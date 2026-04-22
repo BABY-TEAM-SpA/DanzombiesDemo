@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 
 public enum SeguridadState
@@ -17,9 +18,11 @@ public class PlayerManager : DanceBrain
     [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
     public DanceBarController danceBar;
     
-    public RhythmPuzzle targetPuzzle; //should this be public?
-    public DanceStep saveDanceStep { get; private set; }
+    RhythmPuzzle targetPuzzle; //Ssoar: lo hice privado. no rompio nada asi que lo dejo
+    public DanceStep saveDanceStep { get; private set; } //TODO: remover una vez que sea redundante
     
+    public class PlayerStepEvent: UnityEvent<PlayerManager, DanceStep>{} //A pesar de que PlayerManager es un singleton lo programo con la posibilidad en mente de que exista mas de uno, por que asi estaba hecho en RhythmPuzzle
+    public PlayerStepEvent OnDanceEvent = new PlayerStepEvent();
     
     public static PlayerManager Player;
 
@@ -58,7 +61,9 @@ public class PlayerManager : DanceBrain
     {
         danceBar?.Activate(puzzle.activeDanceSequence.flowAffect);
         targetPuzzle = puzzle;
+        puzzle.SubscribeToPlayerReactions(this);
     }
+
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
     {
         if (puzzle == targetPuzzle)
@@ -66,10 +71,12 @@ public class PlayerManager : DanceBrain
             danceBar?.Activate(false);
             targetPuzzle = null;
         }
+        puzzle.UnsubscribeToPlayerReactions(this);
     }
 
     public override void OnDance(DanceStep step)
     {
+        OnDanceEvent?.Invoke(this, step);
         saveDanceStep = step;
     }
 

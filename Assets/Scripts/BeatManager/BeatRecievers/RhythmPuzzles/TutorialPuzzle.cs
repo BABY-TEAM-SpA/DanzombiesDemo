@@ -96,7 +96,7 @@ public class TutorialPuzzle : RhythmPuzzle
 
                 break;
             case SequenceStep.GoalType.FillFlow:
-                int flow = playersInside[0].GetFlowDamage(!isCorrect?1:-1);
+                int flow = PlayerManager.Player.GetFlowDamage(!isCorrect?1:-1); //TODO: dejar de usar el singleton?
                 if(flow == 10) CompleteRhythmSequence();
                 break;
         }

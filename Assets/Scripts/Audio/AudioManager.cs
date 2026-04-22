@@ -62,7 +62,7 @@ public class SongPlayingData
 
         if (nextCutIndex < cutFlags.Count)
         {
-            Debug.Log(" cut finded at"+ nextCutIndex);
+            //Debug.Log(" cut finded at"+ nextCutIndex);
             return cutFlags[nextCutIndex];
         }
             
