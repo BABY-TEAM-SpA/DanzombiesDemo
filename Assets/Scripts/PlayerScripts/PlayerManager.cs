@@ -76,7 +76,8 @@ public class PlayerManager : DanceBrain
 
     public override void OnDance(DanceStep step)
     {
-        OnDanceEvent?.Invoke(this, step);
+        if (step != DanceStep.None)
+            OnDanceEvent?.Invoke(this, step);
         saveDanceStep = step;
     }
 

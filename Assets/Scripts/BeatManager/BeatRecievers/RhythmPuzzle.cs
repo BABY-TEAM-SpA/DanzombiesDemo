@@ -17,6 +17,12 @@ public enum DanceStep
     R_East
 }
 
+public enum Timing
+{
+    Early,
+    Late,
+    Miss
+}
 
 [Serializable]
 public class SequenceStep
@@ -65,7 +71,7 @@ public abstract class RhythmPuzzle : BeatReciever
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
 
-    public bool onBeatWindow {private set; get;} //cuando TRUE el beat es aceptado cuando FALSE es rechazado. Para checks por parte de PlayerManager.
+    public Timing currentBeatTiming {private set; get;}
     //si queremos trackear grados de acierto (GREAT, GOOD, MISS) se necesitaria otra variable similar
     //lo mismo para (EARLY, LATE) y cosas asi
     
@@ -116,7 +122,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
         OnPrepareStep?.Invoke(currentPuzzleStep);
 
-        onBeatWindow = true;
+        currentBeatTiming = Timing.Early;
     }
 
     public override void BeatAction(int counter)
@@ -125,6 +131,7 @@ public abstract class RhythmPuzzle : BeatReciever
         if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
         OnDanceStep?.Invoke(currentPuzzleStep);
         GeneralVisualFeedback(innerCounter);
+        currentBeatTiming = Timing.Late;
         
     }
     public override void PostBeatAction(int counter)
@@ -134,12 +141,11 @@ public abstract class RhythmPuzzle : BeatReciever
         //OnRhythmPuzzleBeatReaction(); supersedido por onBeatWindow y chequeo por parte del PlayerManager
         futurePuzzleStep = GetNextDanceStep();
         OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
-        onBeatWindow = false;
+        currentBeatTiming = Timing.Miss;
     }
 
     public void SubscribeToPlayerReactions(PlayerManager player) //llamado por PlayerManager cuando el puzzle se registra como activo
     {
-        Debug.Log(player.OnDanceEvent);
         player.OnDanceEvent.AddListener(PlayerDanceReaction);
     }
     
@@ -152,7 +158,7 @@ public abstract class RhythmPuzzle : BeatReciever
     {
         if(currentPuzzleStep != DanceStep.None){
             //bool anyPlayerIsCorrect = false; //esta variable no me queda clara, pareciera que no esta haciendo nada
-            ReactToPlayersDance(player, currentPuzzleStep); //TODO: asegurar que solo se reaccione al baile correcto una vez
+            ReactToPlayersDance(player, step); //TODO: asegurar que solo se reaccione al baile correcto una vez
             VisualFeedbackToPlayerDance(/*anyPlayerIsCorrect*/  false);
         }
     }
@@ -190,5 +196,15 @@ public abstract class RhythmPuzzle : BeatReciever
         
         innerCounter = BeatManager.Instance.counter;
         
+    }
+
+    internal DanceStep GetStepToMatch(Timing currentBeatTiming) //dado el timing actual retorna el futureStep o el currentStep (NO ESPERA RECIBIR EL MISS TIMING)
+    {
+        if (currentBeatTiming == Timing.Early)
+            return futurePuzzleStep;
+        if (currentBeatTiming == Timing.Late)
+            return currentPuzzleStep;
+        Debug.LogError("[RhythmPuzzle] GetStepToMatch recibio un timing inesperado");
+        return DanceStep.None;
     }
 }
