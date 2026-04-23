@@ -55,4 +55,9 @@ public class ZombieDanceBrain : DanceBrain
         EnableMovement(true);
         Invoke("EnableMovement", time);
     }
+
+    public override void OnDance(DanceStep step)
+    {
+        //throw new NotImplementedException();
+    }
 }

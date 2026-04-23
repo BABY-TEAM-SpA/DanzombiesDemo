@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public abstract class DanceBrain : MonoBehaviour
 {
+    [SerializeField] protected bool debug;
     public bool isActive { get; set; } = true;
     [SerializeField] protected PlayerMovementController playerMovCtrl;
     [SerializeField] protected PlayerAnimatorController playerAnimCtrl;
@@ -20,10 +22,7 @@ public abstract class DanceBrain : MonoBehaviour
         else playerAnimCtrl?.Disactivate();
     }
 
-    public virtual void OnDance(DanceStep step)
-    {
-        
-    }
+    public abstract void OnDance(DanceStep step);
 
     public void OnMoving(Vector3 direction)
     {

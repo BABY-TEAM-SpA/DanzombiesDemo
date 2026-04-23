@@ -20,12 +20,10 @@ public class PlayerManager : DanceBrain
     public DanceBarController danceBar{ get; set; } 
 
     public RhythmPuzzle targetPuzzle{ get; set; }
-    public DanceStep saveDanceStep { get; private set; }
-
-    public UnityEvent PlayerLifeHealed;
-    public UnityEvent PlayerLifeDamaged;
     
-    
+    public UnityEvent LifeDamagedEvent;
+    public UnityEvent LifeHealedEvent;
+    public static event Action<BeatFeedback> DanceFeedbackEvent;
     public static PlayerManager Player;
 
     private void Awake()
@@ -43,30 +41,7 @@ public class PlayerManager : DanceBrain
     public void Start(){
         if (ActivateOnStart) ActivatePlayer();
     }
-
-    public int GetFlowDamage(int damage)
-    {
-        saveDanceStep = DanceStep.None;
-        int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
-        nivelDeSeguridad = value;
-        danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
-        return value;
-    }
-
-    public void GetLifeDamage(bool danho=true)
-    {
-        if (danho)
-        {
-            PlayerLifeDamaged?.Invoke();
-        }
-        else
-        {
-            PlayerLifeHealed?.Invoke();
-        }
-        lifes += (danho) ? -1 : -1;
-        PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
-    }
-
+    
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
         danceBar?.Activate(puzzle.activeDanceSequence.flowAffect);
@@ -83,7 +58,48 @@ public class PlayerManager : DanceBrain
 
     public override void OnDance(DanceStep step)
     {
-        saveDanceStep = step;
+        if(debug)Debug.Log(BeatManager.Instance.EvaluateInput());
+        if (targetPuzzle != null)
+        {
+            DanceStep puzzleStep = targetPuzzle.PlayerMakeDanceStep();
+            BeatFeedback bf = BeatManager.Instance.EvaluateInput();
+            if (step == puzzleStep)
+            {
+                DanceFeedbackEvent?.Invoke(bf);
+            }
+            else
+            {
+                ReportWrongDance();
+            }
+            
+        }
+    }
+
+    public void ReportWrongDance()
+    {
+        DanceFeedbackEvent?.Invoke(BeatFeedback.Bad);
+    }
+    
+    public int GetFlowDamage(int damage)
+    {
+        int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
+        nivelDeSeguridad = value;
+        danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
+        return value;
+    }
+
+    public void GetLifeDamage(bool danho=true)
+    {
+        if (danho)
+        {
+            LifeDamagedEvent?.Invoke();
+        }
+        else
+        {
+            LifeHealedEvent?.Invoke();
+        }
+        lifes += (danho) ? -1 : -1;
+        PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
     }
 
     public void ActivatePlayer()

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
 public enum DanceStep
 {
     None,
@@ -58,8 +57,9 @@ public abstract class RhythmPuzzle : BeatReciever
     public delegate void OnMusicEvent2(DanceStep danceStep, DanceStep futureStep);
     public event OnMusicEvent2 OnReleaseStep;
     public UnityEvent OnPuzzleGetsActivateEvent = new UnityEvent();
-    
-    [Header("Players")]
+
+    [Header("Players")] 
+    protected bool playerHasDanced=false;
     protected List<PlayerManager> playersInside = new List<PlayerManager>();
     
     [Header("FeedBack References")]
@@ -105,11 +105,9 @@ public abstract class RhythmPuzzle : BeatReciever
     public override void PreBeatAction(int counter)
     {
         if (!isActive) return;
-
+        playerHasDanced = false;
         UpdateInnerCounter();
-
         currentPuzzleStep = GetDanceStep();
-
         OnPrepareStep?.Invoke(currentPuzzleStep);
     }
 
@@ -124,28 +122,23 @@ public abstract class RhythmPuzzle : BeatReciever
     public override void PostBeatAction(int counter)
     {
         if (!isActive) return;
-        //Debug.Log("PostBeat");
-        OnRhythmPuzzleBeatReaction();
         futurePuzzleStep = GetNextDanceStep();
         OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
-    }
-
-    public void OnRhythmPuzzleBeatReaction()
-    {
-        if(playersInside.Count>0 && currentPuzzleStep != DanceStep.None){
-            List<PlayerManager> players = new List<PlayerManager>(playersInside);
-            bool anyPlayerIsCorrect = false;
-            foreach (PlayerManager player in players)
+        if (!playerHasDanced && playersInside.Count > 0)
+        {
+            foreach (PlayerManager player in playersInside)
             {
-                ReactToPlayersDance(player, currentPuzzleStep);
+                player.ReportWrongDance();
             }
-            VisualFeedbackToPlayerDance(anyPlayerIsCorrect);
         }
+        playerHasDanced = false;
     }
 
-    public abstract void ReactToPlayersDance(PlayerManager player,DanceStep step);
-    
-    public abstract void VisualFeedbackToPlayerDance(bool isPlayerDanceCorrect);
+    public DanceStep PlayerMakeDanceStep()
+    {
+        playerHasDanced = true;
+        return currentPuzzleStep;
+    }
 
     public abstract void GeneralVisualFeedback(int counter);
 
@@ -175,6 +168,6 @@ public abstract class RhythmPuzzle : BeatReciever
         }
         
         innerCounter = BeatManager.Instance.counter;
-        
     }
+    
 }

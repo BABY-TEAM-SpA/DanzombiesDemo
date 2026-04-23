@@ -9,35 +9,42 @@ public enum BeatType
     Redonda
 }
 
+public enum BeatFeedback
+{
+    Bad,
+    Early,
+	Great,
+    Perfect,
+	Late
+}
+
 public class BeatManager : MonoBehaviour
 {
     public bool ActiveOnStart = false;
 
     [Header("Sincronización")]
     [Range(0f,0.4f)]
-    public double margen = 0.25d;
-
-    public bool onMargen { get; private set; }
+    public double margenPercentOnBeat = 0.25d;
+    
+    [Range(0f,1f)]
+    public double greatPercentOnMargin = 0.5d;
+    
+    [Range(0f,0.5f)]
+    public double perfectPercentOnMargin = 0.1d;
 
     public double beatDuration { get; private set; }
+    public double beatmargen { get; private set; }
 
     public int counter { get; private set; }
 
     int lastBeat = -1;
-    int lastHalfBeat = -1;
 
     double dspStartTime;
 
     bool preTriggered;
     bool beatTriggered;
     bool postTriggered;
-
-    bool preHalfTriggered;
-    bool halfTriggered;
-    bool postHalfTriggered;
     
-
-
     public delegate void OnUpdate(double beatDuration);
     public static event OnUpdate OnUpdateEvent;
 
@@ -45,11 +52,7 @@ public class BeatManager : MonoBehaviour
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
-
-    public static event OnBeatEvent OnPreHalfBeat;
-    public static event OnBeatEvent OnHalfBeat;
-    public static event OnBeatEvent OnPostHalfBeat;
-
+    
     public static BeatManager Instance { get; private set; }
 
     void Awake()
@@ -91,95 +94,85 @@ public class BeatManager : MonoBehaviour
             AudioManager.Instance.currentSongPlaying.dspSongStartTime;
 
         UpdateBeat(songTime);
-        UpdateHalfBeat(songTime);
+        //UpdateHalfBeat(songTime);
     }
 
     void UpdateBeat(double songTime)
     {
-        int songCurrenBeat = (int)(songTime / beatDuration); /// 0,1,2,3,4,0,1,2,3,4,5,6,7
+	    // --- TIMELINE (eventos) ---
+	    int timelineBeat = (int)(songTime / beatDuration);
 
-        if (songCurrenBeat != lastBeat)
-        {
-            lastBeat = songCurrenBeat;
+	    if (timelineBeat != lastBeat)
+	    {
+		    lastBeat = timelineBeat;
+		    preTriggered = false;
+		    beatTriggered = false;
+		    postTriggered = false;
+		    counter++;
+	    }
 
-            preTriggered = false;
-            beatTriggered = false;
-            postTriggered = false;
+	    double beatStart = timelineBeat * beatDuration;
+	    double deltaTimeline = songTime - beatStart;
 
-            counter+=1;
-        }
+	    double maxWindow = beatDuration * margenPercentOnBeat;
 
-        double beatStart = songCurrenBeat * beatDuration;
+	    if (!preTriggered && deltaTimeline >= -maxWindow)
+	    {
+		    preTriggered = true;
+		    OnPreBeat?.Invoke(timelineBeat);
+	    }
 
-        if (!preTriggered &&
-            songTime >= beatStart - beatDuration * margen)
-        {
-            preTriggered = true;
-            onMargen = true;
+	    if (!beatTriggered && deltaTimeline >= 0)
+	    {
+		    beatTriggered = true;
+		    OnBeat?.Invoke(timelineBeat);
+	    }
 
-            OnPreBeat?.Invoke(songCurrenBeat);
-        }
-
-        if (!beatTriggered &&
-            songTime >= beatStart)
-        {
-            beatTriggered = true;
-
-            OnBeat?.Invoke(songCurrenBeat);
-        }
-
-        if (!postTriggered &&
-            songTime >= beatStart + beatDuration * margen)
-        {
-            postTriggered = true;
-            onMargen = false;
-
-            OnPostBeat?.Invoke(songCurrenBeat);
-        }
+	    if (!postTriggered && deltaTimeline >= maxWindow)
+	    {
+		    postTriggered = true;
+		    OnPostBeat?.Invoke(timelineBeat);
+	    
+	    }
     }
 
-    void UpdateHalfBeat(double songTime)
+    public BeatFeedback EvaluateInput()
     {
-        double halfDuration = beatDuration * 0.5;
+	    double checkTime = AudioSettings.dspTime - dspStartTime;
+	    double exactBeat = checkTime / beatDuration;
+	    int nearestBeat = (int)Math.Floor(exactBeat + 0.5);
 
-        int currentHalfBeat = (int)(songTime / halfDuration);
+	    double nearestBeatTime = nearestBeat * beatDuration;
+	    double delta = checkTime - nearestBeatTime;
 
-        if (currentHalfBeat != lastHalfBeat)
-        {
-            lastHalfBeat = currentHalfBeat;
+	    double maxWindow = beatDuration * margenPercentOnBeat;
+	    double perfectWindow = beatDuration * (margenPercentOnBeat * perfectPercentOnMargin);
+	    double greatWindow = beatDuration * (margenPercentOnBeat * greatPercentOnMargin);
 
-            preHalfTriggered = false;
-            halfTriggered = false;
-            postHalfTriggered = false;
-        }
+	    double absDelta = Math.Abs(delta);
 
-        double halfStart = currentHalfBeat * halfDuration;
+	    if (absDelta <= perfectWindow)
+	    {
+		    return BeatFeedback.Perfect;
+	    }
 
-        if (!preHalfTriggered &&
-            songTime >= halfStart - halfDuration * margen)
-        {
-            preHalfTriggered = true;
+	    else if (absDelta <= greatWindow)
+	    {
+		    return BeatFeedback.Great;
+	    }
 
-            OnPreHalfBeat?.Invoke(currentHalfBeat);
-        }
-
-        if (!halfTriggered &&
-            songTime >= halfStart)
-        {
-            halfTriggered = true;
-
-            OnHalfBeat?.Invoke(currentHalfBeat);
-        }
-
-        if (!postHalfTriggered &&
-            songTime >= halfStart + halfDuration * margen)
-        {
-            postHalfTriggered = true;
-
-            OnPostHalfBeat?.Invoke(currentHalfBeat);
-        }
+	    else if (absDelta <= maxWindow)
+	    {
+		    BeatFeedback result = delta < 0 ? BeatFeedback.Early : BeatFeedback.Late;
+		    return result;
+	    }
+	    else
+	    {
+		    return BeatFeedback.Bad;
+	    }
     }
 
+   
     public void ResetBeatManager(bool resetCounter)
     {
         beatDuration =
@@ -192,16 +185,12 @@ public class BeatManager : MonoBehaviour
         beatTriggered = false;
         postTriggered = false;
 
-        preHalfTriggered = false;
-        halfTriggered = false;
-        postHalfTriggered = false;
 
         if (resetCounter)
         {
             Debug.Log("Counter Reset");
             counter = 0;
             lastBeat = -1;
-            lastHalfBeat = -1;
         }
     }
 }

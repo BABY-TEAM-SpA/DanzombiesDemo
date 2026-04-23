@@ -12,7 +12,8 @@ public abstract class BeatReciever: MonoBehaviour
     public bool isActive { set; get; } = true;
     
     ///////////--- Events Management ---///////////
-    protected double beatTime=1d;
+    protected double barTime=1d;
+    public bool isOnBeat { set; get; } = false;
     
 
     private void OnEnable()
@@ -36,9 +37,9 @@ public abstract class BeatReciever: MonoBehaviour
         BeatManager.OnPostBeat -= OnPostBeatEvent;
     }
     
-    private void OnUpdateSongEvent(double beatDuration)
+    private void OnUpdateSongEvent(double barDuration)
     {
-        beatTime = beatDuration;
+        barTime = barDuration;
         OnUpdateSongAction();
     }
 
@@ -58,6 +59,7 @@ public abstract class BeatReciever: MonoBehaviour
             PreBeatAction();
         }*/
         if(isActive)PreBeatAction(counter);
+        isOnBeat = true;
     }
     
     private void OnBeatEvent(int counter ) //(BeatType type)
@@ -76,6 +78,7 @@ public abstract class BeatReciever: MonoBehaviour
             PostBeatAction();
         }*/
         if(isActive)PostBeatAction(counter);
+        isOnBeat=false;
     }
 
     private void OnStopEvent()//double beatDuration)
@@ -84,34 +87,17 @@ public abstract class BeatReciever: MonoBehaviour
     }
     
     ///////////--- virtual Actions Management ---///////////
-    public virtual void OnUpdateSongAction()//double beatDuration)
-    {
-        /// implement when Song Plays;
-    }
-    public virtual void OnPauseSongAction()
-    {
-        /// implement when Song Pause;
-    }
+    public abstract void OnUpdateSongAction();//double beatDuration)
 
-    public virtual void OnResumeAction()
-    {
-        /// implement when Song Resume;
-    }
-    public virtual void PreBeatAction(int counter)
-    {
-        /// implement On: the beat-margen
-    }
-    public virtual void BeatAction(int counter)
-    {
-        /// implement On: the beat;
-    }
-    public virtual void PostBeatAction(int counter)
-    {
-        /// implement On: the beat+margen;
-    }
-    public virtual void OnStopSongAction()
-    {
-        /// implement when song Stops
-    }
-    
+    public abstract void OnPauseSongAction();
+
+    public abstract void OnResumeAction();
+
+    public abstract void PreBeatAction(int counter);
+
+    public abstract void BeatAction(int counter);
+
+    public abstract void PostBeatAction(int counter);
+    public abstract void OnStopSongAction();
+
 }

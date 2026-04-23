@@ -218,7 +218,7 @@ public class PlayerAnimatorController : MonoBehaviour
     public void OnStandAction()
     {
         if(_danceBrain.isActive) _danceBrain.EnableMovement(true);
-        _danceBrain.OnDance(DanceStep.None);
+        //_danceBrain.OnDance(DanceStep.None);
         animator.ResetTrigger("Pulse");
         animator.ResetTrigger("Dance");
     }

@@ -18,12 +18,27 @@ public class PulseObjectAnimatorController : BeatReciever
         }
     }
 
+    public override void PreBeatAction(int counter)
+    {
+        //throw new System.NotImplementedException();
+    }
+
     public override void BeatAction(int counter)
     {
         animator.Play("Pulse");
         //Debug.Log(transform.name +": Pulsed at "+ AudioSettings.dspTime);
     }
-    
+
+    public override void PostBeatAction(int counter)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void OnStopSongAction()
+    {
+        //throw new System.NotImplementedException();
+    }
+
     public override void OnUpdateSongAction()
     {
         animator.enabled=true;
@@ -31,11 +46,16 @@ public class PulseObjectAnimatorController : BeatReciever
     }
     private void SetBeatDuration()
     {
-        animator.SetFloat("Beat",(float)(1f/this.beatTime));
+        animator.SetFloat("Beat",(float)(1f/this.barTime));
     }
     public override void OnPauseSongAction()
     {
         animator.enabled = false;
+    }
+
+    public override void OnResumeAction()
+    {
+        //
     }
 
     public void ResetIdle()

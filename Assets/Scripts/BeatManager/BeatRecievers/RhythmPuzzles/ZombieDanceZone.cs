@@ -131,12 +131,8 @@ public class ZombieDanceZone : RhythmPuzzle
         }
     }
 
-    public override void VisualFeedbackToPlayerDance(bool isCorrect)
-    {
-        // Mantengo tu override intacto
-    }
-
-    public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
+    
+    /*public void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
         if (step == DanceStep.None)
             return;
@@ -147,7 +143,7 @@ public class ZombieDanceZone : RhythmPuzzle
         {
             PlayerHasNoFlow(player);
         }
-    }
+    }*/
 
     public override void PlayerHasNoFlow(PlayerManager player)
     {
@@ -167,6 +163,21 @@ public class ZombieDanceZone : RhythmPuzzle
         LevelUIController.Instance?.UpdateZombieFeedbackUI(false);
     }
 
+    public override void OnUpdateSongAction()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void OnPauseSongAction()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void OnResumeAction()
+    {
+        //throw new NotImplementedException();
+    }
+
     public override void PreBeatAction(int counter)
     {
         base.PreBeatAction(counter);
@@ -182,5 +193,10 @@ public class ZombieDanceZone : RhythmPuzzle
     {
         base.PostBeatAction(counter);
         SetPulse(0f);
+    }
+
+    public override void OnStopSongAction()
+    {
+        throw new NotImplementedException();
     }
 }
