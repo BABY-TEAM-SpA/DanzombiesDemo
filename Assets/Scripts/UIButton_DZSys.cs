@@ -7,13 +7,13 @@ public class UIButton_DZSys : Button
 {
     public TMP_Text textRender;
     public float textFadeDuration = 0f;
-
+    /*
     protected override void OnValidate()
     {
         if(textRender == null) textRender = GetComponent<TMP_Text>();
         if(textRender == null) textRender = GetComponentInChildren<TMP_Text>();
         base.OnValidate();
-    }
+    }*/
 
     protected override void DoStateTransition(SelectionState state, bool instant)
     {
