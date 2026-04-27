@@ -96,11 +96,11 @@ public class BeatManager : MonoBehaviour
 
     void UpdateBeat(double songTime)
     {
-        int songCurrenBeat = (int)(songTime / beatDuration); /// 0,1,2,3,4,0,1,2,3,4,5,6,7
+        int closestBeat = GetClosestBeat(songTime);
 
-        if (songCurrenBeat != lastBeat)
+        if (closestBeat != lastBeat)
         {
-            lastBeat = songCurrenBeat;
+            lastBeat = closestBeat;
 
             preTriggered = false;
             beatTriggered = false;
@@ -109,15 +109,14 @@ public class BeatManager : MonoBehaviour
             counter+=1;
         }
 
-        double beatStart = songCurrenBeat * beatDuration;
+        double beatStart = closestBeat * beatDuration;
 
         if (!preTriggered &&
             songTime >= beatStart - beatDuration * margen)
         {
             preTriggered = true;
             onMargen = true;
-
-            OnPreBeat?.Invoke(songCurrenBeat);
+            OnPreBeat?.Invoke(closestBeat);
         }
 
         if (!beatTriggered &&
@@ -125,7 +124,7 @@ public class BeatManager : MonoBehaviour
         {
             beatTriggered = true;
 
-            OnBeat?.Invoke(songCurrenBeat);
+            OnBeat?.Invoke(closestBeat);
         }
 
         if (!postTriggered &&
@@ -134,7 +133,7 @@ public class BeatManager : MonoBehaviour
             postTriggered = true;
             onMargen = false;
 
-            OnPostBeat?.Invoke(songCurrenBeat);
+            OnPostBeat?.Invoke(closestBeat);
         }
     }
 
@@ -202,6 +201,26 @@ public class BeatManager : MonoBehaviour
             counter = 0;
             lastBeat = -1;
             lastHalfBeat = -1;
+        }
+    }
+
+    int GetClosestBeat(double songTime)
+    {
+        //given a current songTime, it spits out which beat is closest. This could be the next or the previous beat. (Ssoar)
+        //this *can* give negative beats which would mean the last beat in the song is the closest (Ssoar)
+        int nextBeat = (int)(songTime / beatDuration) + 1;
+        int prevBeat = (int)(songTime / beatDuration);
+        double nextBeatTime = nextBeat * beatDuration;
+        double prevBeatTime = prevBeat * beatDuration;
+        double nextBeatDistance = Mathf.Abs((float)(songTime - nextBeatTime));
+        double prevBeatDistance = Mathf.Abs((float)(songTime - prevBeatTime));
+        if (nextBeatDistance < prevBeatDistance)
+        {
+            return nextBeat;
+        }
+        else
+        {
+            return prevBeat;
         }
     }
 }
