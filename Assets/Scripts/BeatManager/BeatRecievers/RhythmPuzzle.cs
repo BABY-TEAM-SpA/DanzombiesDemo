@@ -57,6 +57,8 @@ public abstract class RhythmPuzzle : BeatReciever
     protected DanceStep futurePuzzleStep = DanceStep.None;
     protected int innerCounter;
     private int startBeat;
+    bool currentDanceTriggered; //variable representa si el baile actual ha sido reaccionado ya por el jugador.
+    //permite lanzar daño al jugador por no hacer ningun baile cuando debería.
     
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
@@ -64,6 +66,7 @@ public abstract class RhythmPuzzle : BeatReciever
     public delegate void OnMusicEvent2(DanceStep danceStep, DanceStep futureStep);
     public event OnMusicEvent2 OnReleaseStep;
     public UnityEvent OnPuzzleGetsActivateEvent = new UnityEvent();
+    public UnityEvent OnDanceUnreacted = new UnityEvent();
     
     /*[Header("Players")]
     protected List<PlayerManager> playersInside = new List<PlayerManager>(); //se vuelve innecesario por que ahora reaccionan a eventos de estos players.*/
@@ -71,9 +74,7 @@ public abstract class RhythmPuzzle : BeatReciever
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
 
-    public Timing currentBeatTiming {private set; get;}
-    //si queremos trackear grados de acierto (GREAT, GOOD, MISS) se necesitaria otra variable similar
-    //lo mismo para (EARLY, LATE) y cosas asi
+    public Timing currentBeatTiming {private set; get;} //si queremos trackear grados de acierto (GREAT, GOOD, MISS) se necesitaria otra variable similar
     
     private void Start()
     {
@@ -142,23 +143,31 @@ public abstract class RhythmPuzzle : BeatReciever
         futurePuzzleStep = GetNextDanceStep();
         OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
         currentBeatTiming = Timing.Miss;
+        if (!currentDanceTriggered && !(currentPuzzleStep == DanceStep.None)) //gatillar daño al player cuando no reacciona a un baile
+        {
+            OnDanceUnreacted?.Invoke();
+        }
+        currentDanceTriggered = false;
     }
 
     public void SubscribeToPlayerReactions(PlayerManager player) //llamado por PlayerManager cuando el puzzle se registra como activo
     {
         player.OnDanceEvent.AddListener(PlayerDanceReaction);
+        OnDanceUnreacted.AddListener(player.MissedStep);
     }
     
     public void UnsubscribeToPlayerReactions(PlayerManager player) //llamado por PlayerManager cuando el puzzle se desregistra como activo
     {
         player.OnDanceEvent.RemoveListener(PlayerDanceReaction);
+        OnDanceUnreacted.RemoveListener(player.MissedStep);
     }
 
     public void PlayerDanceReaction(PlayerManager player, DanceStep step) //cuando un player hace un paso esta es la reaccion
     {
+        currentDanceTriggered = true;
         if(currentPuzzleStep != DanceStep.None){
             //bool anyPlayerIsCorrect = false; //esta variable no me queda clara, pareciera que no esta haciendo nada
-            ReactToPlayersDance(player, step); //TODO: asegurar que solo se reaccione al baile correcto una vez
+            ReactToPlayersDance(player, step);
             VisualFeedbackToPlayerDance(/*anyPlayerIsCorrect*/  false);
         }
     }

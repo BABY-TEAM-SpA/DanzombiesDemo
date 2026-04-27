@@ -138,9 +138,6 @@ public class ZombieDanceZone : RhythmPuzzle
 
     public override void ReactToPlayersDance(PlayerManager player, DanceStep step) //Also may need changing to move the logic to player-side
     {
-        if (step == DanceStep.None)
-            return;
-
         float flow = player.GetFlowDamage(DidPlayerMiss(step)?1:-1);
 
         if (flow < GameManager.Alza)
@@ -161,7 +158,7 @@ public class ZombieDanceZone : RhythmPuzzle
         }
     }
 
-    public override void PlayerHasNoFlow(PlayerManager player)
+    public override void PlayerHasNoFlow(PlayerManager player) //Esto no debería estar en el player? TODO: Preguntar(Ssoar)
     {
         player.GetLifeDamage(true);
         PlayerLeave(player);

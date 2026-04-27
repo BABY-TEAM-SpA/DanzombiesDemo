@@ -97,6 +97,15 @@ public class PlayerManager : DanceBrain
         beatReciever.SetActive(false);
     }
     
-    
+    public void MissedStep() //this will likely need to be changed completely but have to ask Javier
+    {
+        float flow = GetFlowDamage(1);
+
+        if (flow < GameManager.Alza)
+        {
+            GetLifeDamage(true);
+            targetPuzzle.PlayerLeave(this);
+        }
+    }
 }
 
