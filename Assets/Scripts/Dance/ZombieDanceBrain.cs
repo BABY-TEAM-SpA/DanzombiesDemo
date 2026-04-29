@@ -20,6 +20,7 @@ public class ZombieDanceBrain : DanceBrain
     {
         if (step != DanceStep.None)
         {
+            step = step.DetermineStep(); //si es any, determinarlo
             string view = step.ToString()[0].ToString();
             if(view == "R") playerAnimCtrl?.animator.SetBool("RightDanceDir", true);
             else playerAnimCtrl?.animator.SetBool("LeftDanceDir", true);
@@ -29,6 +30,7 @@ public class ZombieDanceBrain : DanceBrain
     {
         if (step != DanceStep.None)
         {
+            step = step.DetermineStep(); //si es any, determinarlo
             string orientation = step.ToString().Remove(0,2);
             playerAnimCtrl?.animator.SetBool("DanceStep"+orientation[0],true);
             //Debug.Log("____________Zombie Danced "+step.ToString()+" at "+ AudioSettings.dspTime.ToString());
@@ -37,6 +39,8 @@ public class ZombieDanceBrain : DanceBrain
     }
     private void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
     {
+        step = step.DetermineStep(); //si es any, determinarlo
+        futureStep = futureStep.DetermineStep(); //si es any, determinarlo
         playerAnimCtrl?.animator.SetBool("RightDanceDir", false);
         playerAnimCtrl?.animator.SetBool("LeftDanceDir", false);
         if (step != DanceStep.None)

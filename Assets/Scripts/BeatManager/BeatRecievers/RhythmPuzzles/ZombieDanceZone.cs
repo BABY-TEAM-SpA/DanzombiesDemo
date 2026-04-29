@@ -148,14 +148,17 @@ public class ZombieDanceZone : RhythmPuzzle
 
     bool DidPlayerMiss(DanceStep playerStep)
     {
+        if ((playerStep == DanceStep.None) || (playerStep == DanceStep.Any)) //Esto NO DEBERIA SER POSIBLE
+        {
+            Debug.LogError("[ZombieDanceZone] playerStep 'None' o 'Any' recibido (no deberia ser posible)");
+        }
         if ((currentBeatTiming == Timing.Miss) || (currentDanceTriggered))
         {
             return true;
         }
-        else
-        {
-            return (playerStep != GetStepToMatch(currentBeatTiming));
-        }
+        DanceStep stepToMatch = GetStepToMatch(currentBeatTiming);
+        if (stepToMatch == DanceStep.Any) return false; //si "Any", entonces todos los pasos del player sirven
+        else return (playerStep != stepToMatch); //si cualquier otro, hay que chequear si es igual al que hizo el player
     }
 
     public override void PlayerHasNoFlow(PlayerManager player) //Esto no debería estar en el player? TODO: Preguntar(Ssoar)
