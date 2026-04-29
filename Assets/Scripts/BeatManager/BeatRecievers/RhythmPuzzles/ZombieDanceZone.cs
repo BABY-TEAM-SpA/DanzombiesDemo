@@ -148,7 +148,7 @@ public class ZombieDanceZone : RhythmPuzzle
 
     bool DidPlayerMiss(DanceStep playerStep)
     {
-        if (currentBeatTiming == Timing.Miss)
+        if ((currentBeatTiming == Timing.Miss) || (currentDanceTriggered))
         {
             return true;
         }

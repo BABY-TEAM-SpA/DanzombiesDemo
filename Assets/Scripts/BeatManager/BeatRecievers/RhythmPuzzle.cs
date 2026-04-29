@@ -57,8 +57,8 @@ public abstract class RhythmPuzzle : BeatReciever
     protected DanceStep futurePuzzleStep = DanceStep.None;
     protected int innerCounter;
     private int startBeat;
-    bool currentDanceTriggered; //variable representa si el baile actual ha sido reaccionado ya por el jugador.
-    //permite lanzar daño al jugador por no hacer ningun baile cuando debería.
+    internal bool currentDanceTriggered; //variable representa si el baile actual ha sido reaccionado ya por el jugador.
+    //permite lanzar daño al jugador por no hacer ningun baile cuando deberia.
     
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
@@ -164,12 +164,12 @@ public abstract class RhythmPuzzle : BeatReciever
 
     public void PlayerDanceReaction(PlayerManager player, DanceStep step) //cuando un player hace un paso esta es la reaccion
     {
-        currentDanceTriggered = true;
         if(currentPuzzleStep != DanceStep.None){
             //bool anyPlayerIsCorrect = false; //esta variable no me queda clara, pareciera que no esta haciendo nada
             ReactToPlayersDance(player, step);
             VisualFeedbackToPlayerDance(/*anyPlayerIsCorrect*/  false);
         }
+        currentDanceTriggered = true;
     }
 
     public abstract void ReactToPlayersDance(PlayerManager player,DanceStep step);
