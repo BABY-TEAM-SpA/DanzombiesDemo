@@ -13,15 +13,21 @@ public enum SeguridadState
 [Serializable]
 public class PlayerManager : DanceBrain
 {
+    //definitions
+    public class PlayerStepEvent: UnityEvent<PlayerManager, DanceStep>{} //A pesar de que PlayerManager es un singleton lo programo con la posibilidad en mente de que exista mas de uno, por que asi estaba hecho en RhythmPuzzle
+    
+    [SerializeField] bool debug;
+
     [SerializeField]private bool ActivateOnStart;
     public int lifes =3;
     [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
     public DanceBarController danceBar;
     
     RhythmPuzzle targetPuzzle; //Ssoar: lo hice privado. no rompio nada asi que lo dejo
-    
-    public class PlayerStepEvent: UnityEvent<PlayerManager, DanceStep>{} //A pesar de que PlayerManager es un singleton lo programo con la posibilidad en mente de que exista mas de uno, por que asi estaba hecho en RhythmPuzzle
+  
+    [Header("Events")]  
     public PlayerStepEvent OnDanceEvent = new PlayerStepEvent();
+    public UnityEvent OnTakeDamage;
     
     public static PlayerManager Player;
 
@@ -41,18 +47,30 @@ public class PlayerManager : DanceBrain
         if (ActivateOnStart) ActivatePlayer();
     }
 
-    public int GetFlowDamage(int damage)
+    public void TakeFlowDamage(int damage)
     {
-        int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
-        nivelDeSeguridad = value;
+        int totalFlow = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
+        nivelDeSeguridad = totalFlow;
         danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
-        return value;
+
+        if (totalFlow < GameManager.Alza)
+        {
+            if (debug)Debug.Log("[PlayerManager]: Player quedo sin flow.");
+            GetLifeDamage(true);
+            
+        }
+    }
+
+    public int GetFlow(){
+        return nivelDeSeguridad;
     }
 
     public void GetLifeDamage(bool danho=true)
     {
         lifes += (danho) ? -1 : -1;
         PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
+        RemoveTargetPuzzle(targetPuzzle);
+        OnTakeDamage?.Invoke();
     }
 
     public bool IsAlreadyTargetPuzzle(RhythmPuzzle puzzleToCheck)
@@ -103,13 +121,7 @@ public class PlayerManager : DanceBrain
     
     public void MissedStep() //this will likely need to be changed completely but have to ask Javier
     {
-        float flow = GetFlowDamage(1);
-
-        if (flow < GameManager.Alza)
-        {
-            GetLifeDamage(true);
-            targetPuzzle.PlayerLeave(this);
-        }
+        TakeFlowDamage(1);
     }
 }
 

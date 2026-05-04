@@ -138,11 +138,13 @@ public class ZombieDanceZone : RhythmPuzzle
 
     public override void ReactToPlayersDance(PlayerManager player, DanceStep step) //Also may need changing to move the logic to player-side
     {
-        float flow = player.GetFlowDamage(DidPlayerMiss(step)?1:-1);
-
-        if (flow < GameManager.Alza)
+        if (DidPlayerMiss(step))
         {
-            PlayerHasNoFlow(player);
+           player.TakeFlowDamage(1);
+        }
+        else
+        {
+            player.TakeFlowDamage(-1); //recover
         }
     }
 
@@ -159,12 +161,6 @@ public class ZombieDanceZone : RhythmPuzzle
         DanceStep stepToMatch = GetStepToMatch(currentBeatTiming);
         if (stepToMatch == DanceStep.Any) return false; //si "Any", entonces todos los pasos del player sirven
         else return (playerStep != stepToMatch); //si cualquier otro, hay que chequear si es igual al que hizo el player
-    }
-
-    public override void PlayerHasNoFlow(PlayerManager player) //Esto no debería estar en el player? TODO: Preguntar(Ssoar)
-    {
-        player.GetLifeDamage(true);
-        PlayerLeave(player);
     }
 
     public override void PlayerEnter(PlayerManager player)

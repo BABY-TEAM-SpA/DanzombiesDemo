@@ -197,8 +197,6 @@ public abstract class RhythmPuzzle : BeatReciever
     public abstract void VisualFeedbackToPlayerDance(bool isPlayerDanceCorrect);
 
     public abstract void GeneralVisualFeedback(int counter);
-
-    public abstract void PlayerHasNoFlow(PlayerManager player);
     
     public virtual void PlayerEnter(PlayerManager player)
     {

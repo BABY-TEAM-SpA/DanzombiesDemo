@@ -48,11 +48,6 @@ public class TutorialPuzzle : RhythmPuzzle
         //throw new NotImplementedException();
     }
     
-    public override void PlayerHasNoFlow(PlayerManager player)
-    {
-        //throw new NotImplementedException();
-    }
-    
     public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
         if (step == DanceStep.None)return;
@@ -96,7 +91,8 @@ public class TutorialPuzzle : RhythmPuzzle
 
                 break;
             case SequenceStep.GoalType.FillFlow:
-                int flow = PlayerManager.Player.GetFlowDamage(!isCorrect?1:-1); //TODO: dejar de usar el singleton?
+                PlayerManager.Player.TakeFlowDamage(!isCorrect?1:-1);
+                int flow = PlayerManager.Player.GetFlow(); //TODO: dejar de usar el singleton?
                 if(flow == 10) CompleteRhythmSequence();
                 break;
         }
