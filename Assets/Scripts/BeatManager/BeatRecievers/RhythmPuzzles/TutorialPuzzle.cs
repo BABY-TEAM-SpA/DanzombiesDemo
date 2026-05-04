@@ -56,8 +56,8 @@ public class TutorialPuzzle : RhythmPuzzle
     public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
         if (step == DanceStep.None)return;
-        bool IsPlayerDanceCorrect = player.saveDanceStep == step;
-        Debug.Log("Puzzle: "+step.ToString()+ "| Player: "+ player.saveDanceStep.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
+        bool IsPlayerDanceCorrect = currentPuzzleStep == step;
+        Debug.Log("Puzzle: "+ step.ToString()+ "| Player: "+ step.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
         VisualFeedbackToPlayerDance(IsPlayerDanceCorrect);
         MissionBuffer(IsPlayerDanceCorrect);
     }

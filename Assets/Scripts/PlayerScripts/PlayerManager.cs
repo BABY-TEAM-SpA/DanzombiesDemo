@@ -19,7 +19,6 @@ public class PlayerManager : DanceBrain
     public DanceBarController danceBar;
     
     RhythmPuzzle targetPuzzle; //Ssoar: lo hice privado. no rompio nada asi que lo dejo
-    public DanceStep saveDanceStep { get; private set; } //TODO: remover una vez que sea redundante
     
     public class PlayerStepEvent: UnityEvent<PlayerManager, DanceStep>{} //A pesar de que PlayerManager es un singleton lo programo con la posibilidad en mente de que exista mas de uno, por que asi estaba hecho en RhythmPuzzle
     public PlayerStepEvent OnDanceEvent = new PlayerStepEvent();
@@ -44,7 +43,6 @@ public class PlayerManager : DanceBrain
 
     public int GetFlowDamage(int damage)
     {
-        saveDanceStep = DanceStep.None;
         int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
         nivelDeSeguridad = value;
         danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
@@ -78,7 +76,6 @@ public class PlayerManager : DanceBrain
     {
         if (step != DanceStep.None)
             OnDanceEvent?.Invoke(this, step);
-        saveDanceStep = step;
     }
 
     public void ActivatePlayer()
