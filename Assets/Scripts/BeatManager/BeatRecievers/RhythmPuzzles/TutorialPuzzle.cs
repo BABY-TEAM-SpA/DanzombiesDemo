@@ -57,7 +57,7 @@ public class TutorialPuzzle : RhythmPuzzle
     {
         if (step == DanceStep.None)return;
         bool IsPlayerDanceCorrect = currentPuzzleStep == step;
-        Debug.Log("Puzzle: "+ step.ToString()+ "| Player: "+ step.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
+        Debug.Log("Puzzle: "+ currentPuzzleStep+ "| Player: "+ step.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
         VisualFeedbackToPlayerDance(IsPlayerDanceCorrect);
         MissionBuffer(IsPlayerDanceCorrect);
     }
@@ -111,4 +111,10 @@ public class TutorialPuzzle : RhythmPuzzle
         ActivatePuzzle(false);
         
     }
+
+    public override void PlayerLeave(PlayerManager player)
+    {
+        return; //player no deberia salir del tutorial.
+    }
+    
 }

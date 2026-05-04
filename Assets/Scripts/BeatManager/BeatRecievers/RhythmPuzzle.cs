@@ -203,6 +203,11 @@ public abstract class RhythmPuzzle : BeatReciever
     public virtual void PlayerEnter(PlayerManager player)
     {
         if(debug)Debug.Log("Player entered");
+        if (player.IsAlreadyTargetPuzzle(this))
+        {
+            if (debug)Debug.Log("[RHYTHM_PUZZLE] Player already has this puzzle as it's active.");
+            return;
+        }
         player.AddTargetPuzzle(this);
         //playersInside.Add(player);
     }

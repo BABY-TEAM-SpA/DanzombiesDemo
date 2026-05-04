@@ -55,8 +55,14 @@ public class PlayerManager : DanceBrain
         PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
     }
 
+    public bool IsAlreadyTargetPuzzle(RhythmPuzzle puzzleToCheck)
+    {
+        return puzzleToCheck == targetPuzzle;
+    }
+
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
+        Debug.Log("ADDED");
         danceBar?.Activate(puzzle.activeDanceSequence.flowAffect);
         targetPuzzle = puzzle;
         puzzle.SubscribeToPlayerReactions(this);
@@ -64,6 +70,7 @@ public class PlayerManager : DanceBrain
 
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
     {
+        Debug.Log("REMOVED");
         if (puzzle == targetPuzzle)
         {
             danceBar?.Activate(false);
