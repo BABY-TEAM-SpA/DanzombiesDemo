@@ -58,13 +58,14 @@ public class PlayerManager : DanceBrain
 
     public override void OnDance(DanceStep step)
     {
-        if(debug)Debug.Log(BeatManager.Instance.EvaluateInput());
+        
         if (targetPuzzle != null)
         {
             DanceStep puzzleStep = targetPuzzle.PlayerMakeDanceStep();
             BeatFeedback bf = BeatManager.Instance.EvaluateInput();
             if (step == puzzleStep)
             {
+                if (debug) Debug.Log(bf);
                 DanceFeedbackEvent?.Invoke(bf);
             }
             else

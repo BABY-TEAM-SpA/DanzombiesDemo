@@ -476,6 +476,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 786739880596489813}
+        m_TargetAssemblyTypeName: MaterialSwapper, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2708745912080884889
 GameObject:
   m_ObjectHideFlags: 0
@@ -5384,6 +5396,7 @@ GameObject:
   - component: {fileID: 6969242347076242797}
   - component: {fileID: 4086932025709530668}
   - component: {fileID: 1306205410530215226}
+  - component: {fileID: 786739880596489813}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -5618,6 +5631,21 @@ MonoBehaviour:
     - rid: 2086223794444959858
       type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!114 &786739880596489813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527966112122585668}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ee26f3c56b69346a09f01e240ce704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  spriteRenderer: {fileID: 922934949481849677}
+  material: {fileID: 2100000, guid: 471376b87f7c56d409408430e27a7f03, type: 2}
+  color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &3744609627315088578
 GameObject:
   m_ObjectHideFlags: 0
