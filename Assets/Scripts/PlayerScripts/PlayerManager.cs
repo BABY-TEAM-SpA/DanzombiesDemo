@@ -2,14 +2,6 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 
-
-public enum SeguridadState
-{
-    Normal,
-    Insecure,
-    Flow
-}
-
 [Serializable]
 public class PlayerManager : DanceBrain
 {

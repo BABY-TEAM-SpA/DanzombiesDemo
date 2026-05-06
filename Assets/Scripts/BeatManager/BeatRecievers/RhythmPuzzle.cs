@@ -2,47 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Linq; //para Array.Cast
-
-
-public enum DanceStep //TODO: como se usa en varios scripts, seria mejor tener esto junto con otros enums en un archivo aparte.
-{
-    None,
-    L_North,
-    R_North,
-    L_South,
-    R_South,
-    L_West,
-    R_West,
-    L_East,
-    R_East,
-    Any //permite tener un input que responde a cualquier paso por parte del player
-}
-
-public static class Extensions{
-    public static DanceStep DetermineStep(this DanceStep step) //si Any, retorna un paso aleatorio que no sea None ni Any. Si no, retorna el paso recibido
-    { 
-        if (step != DanceStep.Any)
-        {
-            return step;
-        } 
-        else
-        {
-            var validSteps = System.Enum.GetValues(typeof(DanceStep))
-                                .Cast<DanceStep>()
-                                .Where(s => s != DanceStep.None && s != DanceStep.Any)
-                                .ToArray(); //crea un array con todos los pasos que no sean None ni Any
-            return validSteps[UnityEngine.Random.Range(0, validSteps.Length)]; // y retorna uno aleatorio entre esos.
-        }
-    }
-}
-
-public enum Timing
-{
-    Early,
-    Late,
-    Miss
-}
 
 [Serializable]
 public class SequenceStep

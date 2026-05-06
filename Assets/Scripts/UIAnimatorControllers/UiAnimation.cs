@@ -4,13 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum UiTimeMode
-{
-    Scaled,
-    Unscaled,
-    DSP
-}
-
 [System.Serializable]
 public class UiAnimation
 {

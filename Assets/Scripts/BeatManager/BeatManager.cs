@@ -2,13 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum BeatType
-{
-    Negra,
-    Blanca,
-    Redonda
-}
-
 public class BeatManager : MonoBehaviour
 {
     public bool ActiveOnStart = false;

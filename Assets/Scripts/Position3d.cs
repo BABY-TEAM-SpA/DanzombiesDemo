@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SortingLayers{ 
-    OnStart,
-    OnUpdate,
-    None,
-}
-
 public class Position3d : MonoBehaviour
 {
     [SerializeField] private SortingLayers whenUse = SortingLayers.OnStart;

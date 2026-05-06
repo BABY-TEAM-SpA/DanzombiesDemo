@@ -2,11 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ActionToPlaySong
-{
-    Enqueue,
-    Interrupt
-}
 [Serializable]
 public class MusicToQueue
 {

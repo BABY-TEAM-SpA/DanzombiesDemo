@@ -1,21 +1,5 @@
 using UnityEngine;
 
-public enum UiEasingType
-{
-    Linear,
-    EaseInQuad,
-    EaseOutQuad,
-    EaseInOutQuad,
-    EaseInCubic,
-    EaseOutCubic,
-    EaseInOutCubic,
-    EaseInQuart,
-    EaseOutQuart,
-    EaseInOutQuart,
-    EaseOutBounce,
-    EaseOutElastic
-}
-
 public static class UiEasing
 {
     public static float Evaluate(UiEasingType type, float t)

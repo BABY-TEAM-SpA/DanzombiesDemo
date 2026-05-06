@@ -4,14 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public enum DanceState{
-	None,
-	North,
-	South,
-	West,
-	East
-}
-
 public class PlayerAnimatorController : MonoBehaviour
 {
   
