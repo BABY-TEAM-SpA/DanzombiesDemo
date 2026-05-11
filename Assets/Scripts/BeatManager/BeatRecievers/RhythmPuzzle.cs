@@ -108,7 +108,7 @@ public abstract class RhythmPuzzle : BeatReciever
     public override void BeatAction(int counter)
     {
         if (!isActive) return;
-        if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
+        if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+ " ("+innerCounter+") on "+AudioSettings.dspTime.ToString());
         OnDanceStep?.Invoke(currentPuzzleStep);
         GeneralVisualFeedback(innerCounter);
         currentBeatTiming = Timing.Late;
@@ -185,7 +185,9 @@ public abstract class RhythmPuzzle : BeatReciever
             return;
         }
         
-        innerCounter = BeatManager.Instance.counter;
+        innerCounter++;
+        if(debug)Debug.Log("innerCounter+1");
+        //innerCounter = BeatManager.Instance.counter; no me parece que haya razon alguna para que esto se coordine con el global, la verdad. (Ssoar)
         
     }
 
@@ -197,5 +199,13 @@ public abstract class RhythmPuzzle : BeatReciever
             return currentPuzzleStep;
         Debug.LogError("[RhythmPuzzle] GetStepToMatch recibio un timing inesperado");
         return DanceStep.None;
+    }
+    
+    internal bool IsTimingValid() // de acuerdo a currentBeatTiming, true si es Early o Late, false si es Miss
+    {
+        if (currentBeatTiming == Timing.Miss)
+            return false;
+        else
+            return true;
     }
 }

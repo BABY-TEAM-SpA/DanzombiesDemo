@@ -28,8 +28,6 @@ public class BeatManager : MonoBehaviour
     bool preHalfTriggered;
     bool halfTriggered;
     bool postHalfTriggered;
-    
-
 
     public delegate void OnUpdate(double beatDuration);
     public static event OnUpdate OnUpdateEvent;
@@ -90,15 +88,13 @@ public class BeatManager : MonoBehaviour
     void UpdateBeat(double songTime)
     {
         int closestBeat = GetClosestBeat(songTime);
-
-        if (closestBeat != lastBeat)
-        {
+        
+        if ((closestBeat != 0) && (closestBeat != lastBeat)){
             lastBeat = closestBeat;
-
             preTriggered = false;
             beatTriggered = false;
             postTriggered = false;
-
+        
             counter+=1;
         }
 

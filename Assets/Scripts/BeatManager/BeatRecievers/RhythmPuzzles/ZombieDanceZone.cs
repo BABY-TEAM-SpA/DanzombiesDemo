@@ -136,11 +136,11 @@ public class ZombieDanceZone : RhythmPuzzle
         // Mantengo tu override intacto
     }
 
-    public override void ReactToPlayersDance(PlayerManager player, DanceStep step) //Also may need changing to move the logic to player-side
+    public override void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
         if (DidPlayerMiss(step))
         {
-           player.TakeFlowDamage(1);
+            player.TakeFlowDamage(1);
         }
         else
         {
@@ -154,7 +154,7 @@ public class ZombieDanceZone : RhythmPuzzle
         {
             Debug.LogError("[ZombieDanceZone] playerStep 'None' o 'Any' recibido (no deberia ser posible)");
         }
-        if ((currentBeatTiming == Timing.Miss) || (currentDanceTriggered))
+        if (!IsTimingValid() || (currentDanceTriggered))
         {
             return true;
         }
