@@ -10,7 +10,8 @@ public class PlayerManager : DanceBrain
     
     [SerializeField] bool debug;
 
-    [SerializeField]private bool ActivateOnStart;
+    [SerializeField] PlayerDanceMemory danceMemory; //componente que recuerda los ultimos pasos de baile ejecutados correctamente
+    [SerializeField] private bool ActivateOnStart;
     public int lifes =3;
     [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
     public DanceBarController danceBar;
@@ -37,6 +38,7 @@ public class PlayerManager : DanceBrain
 
     public void Start(){
         if (ActivateOnStart) ActivatePlayer();
+        OnDanceEvent.AddListener(danceMemory.RememberStep);
     }
 
     public void TakeFlowDamage(int damage)
@@ -72,7 +74,6 @@ public class PlayerManager : DanceBrain
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
-        Debug.Log("ADDED");
         danceBar?.Activate(puzzle.activeDanceSequence.flowAffect);
         targetPuzzle = puzzle;
         puzzle.SubscribeToPlayerReactions(this);
@@ -80,7 +81,6 @@ public class PlayerManager : DanceBrain
 
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
     {
-        Debug.Log("REMOVED");
         if (puzzle == targetPuzzle)
         {
             danceBar?.Activate(false);
@@ -114,6 +114,12 @@ public class PlayerManager : DanceBrain
     public void MissedStep() //this will likely need to be changed completely but have to ask Javier
     {
         TakeFlowDamage(1);
+        danceMemory.InitializeMemory();
+    }
+
+    public PlayerDanceMemory GetDanceMemory()
+    {
+        return danceMemory;
     }
 }
 
