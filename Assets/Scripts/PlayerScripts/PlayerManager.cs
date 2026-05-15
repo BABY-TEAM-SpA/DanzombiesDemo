@@ -146,7 +146,7 @@ public class PlayerManager : DanceBrain
 
     public Animator ConfinePlayerCamera()
     {
-        return playerAnimCtrl.animator;
+        return danceAnimCtrl.animator;
     }
 }
 

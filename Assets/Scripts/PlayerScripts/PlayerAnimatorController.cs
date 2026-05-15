@@ -1,253 +1,76 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public enum DanceState{
-	None,
-	North,
-	South,
-	West,
-	East
-}
-
-[Serializable]
-public class AnimationFeedback
+public class PlayerAnimatorController : DanceAnimatorController
 {
-    public string name;
-    public UnityEvent feedbackEvent;
-}
-
-public class PlayerAnimatorController : MonoBehaviour
-{
-  
-    [SerializeField] private DanceBrain _danceBrain;
-    [SerializeField] private bool allowInput = false;
-    [SerializeField] public Animator animator;
-    //[SerializeField] private SpriteRenderer renderer;
-    [SerializeField] private AnimatorOverrideController[] animatorOverrideControllers;
-    private double currentBeatOnPlayer = 0d;
-	private bool isDirectionPulsed;
-	private DanceState isDancePulsed;
-
-    public List<AnimationFeedback> playerFeedbackEvents = new List<AnimationFeedback>();
+    [SerializeField, Range(0.5f,1f)] float margen = 0.5f;
+    DanceDirection currentDirection;
+    private bool directionInput;
+    DanceLean currentLean;
+    bool leanInput;
     
-    private void Start()
+    public void OnDirectionButtonPressed(InputAction.CallbackContext context)
     {
-        SetAnimatorOverrideDirection();
-    }
-    
-    public void OnNorthButtonPressed(InputAction.CallbackContext context)
-    {
-       
-        animator.ResetTrigger("Pulse");
         if (allowInput && _danceBrain.isActive)
         {
-            if (context.started)
-            {
-                animator.SetBool("DanceStepN",true);
-                animator.SetTrigger("Dance");
-            }
             if (context.performed)
             {
-                
-                //animator.ResetTrigger("Dance");
+                Vector2 value = context.ReadValue<Vector2>();
+                directionInput = value != Vector2.zero;
+                if (value.x > margen)
+                    currentDirection = DanceDirection.East;
+                else if (value.x < -margen)
+                    currentDirection = DanceDirection.West;
+                else if (value.y > margen)
+                    currentDirection = DanceDirection.North;
+                else if (value.y < -margen)
+                    currentDirection = DanceDirection.South;
+                TryMakeDanceStep();
             }
         }
         if (context.canceled)
         {
-            animator.SetBool("DanceStepN",false);
-            //animator.ResetTrigger("Dance");
+            currentDirection = DanceDirection.None;
+            directionInput = false;
+            danceTriggered = false;
         }
         
     }
 
-    public void OnSouthButtonPressed(InputAction.CallbackContext context)
+    public void OnLeanButtonPressed(InputAction.CallbackContext context)
     {
-       
-        animator.ResetTrigger("Pulse");
-        if (allowInput && _danceBrain.isActive)
-        {
-            if (context.started)
-            {
-                animator.SetBool("DanceStepS",true);
-                animator.SetTrigger("Dance");
-            }
-            if (context.performed)
-            {
-                
-                //animator.ResetTrigger("Dance");
-            }
-        }
-        if (context.canceled)
-        {
-            animator.SetBool("DanceStepS",false);
-            //animator.ResetTrigger("Dance");
-        }
-    }
-
-    public void OnWestButtonPressed(InputAction.CallbackContext context)
-    {
-        
-        animator.ResetTrigger("Pulse");
-        if (allowInput && _danceBrain.isActive)
-        {
-            if (context.started)
-            {
-                animator.SetBool("DanceStepW",true);
-                animator.SetTrigger("Dance");
-            }
-            if (context.performed)
-            {
-                
-                //animator.ResetTrigger("Dance");
-            }
-        }
-        if (context.canceled)
-        {
-            animator.SetBool("DanceStepW",false);
-            //animator.ResetTrigger("Dance");
-        }
-    }
-
-    public void OnEastButtonPressed(InputAction.CallbackContext context)
-    {
-        
-        animator.ResetTrigger("Pulse");
-        if (allowInput && _danceBrain.isActive)
-        {
-            if (context.started)
-            {
-                animator.SetBool("DanceStepE",true);
-                animator.SetTrigger("Dance");
-            }
-            if (context.performed)
-            {
-                
-                //animator.ResetTrigger("Dance");
-            }
-        }
-        if (context.canceled)
-        {
-            animator.SetBool("DanceStepE",false );
-            //animator.ResetTrigger("Dance");
-        }
-       
-    }
-
-    public void OnLeftUPButtonPressed(InputAction.CallbackContext context)
-    {
-        
-        animator.ResetTrigger("Pulse");
         if (allowInput && _danceBrain.isActive)
         {
             
             if (context.started)
             {
-                animator.SetBool("RightDanceDir",false);
-                animator.SetBool("LeftDanceDir",true);
-                animator.SetTrigger("Dance");
-            }
-            if (context.performed)
-            {
-                
-                //animator.ResetTrigger("Dance");
+                float valor = context.ReadValue<float>();
+                leanInput = valor != 0;
+                if(leanInput) currentLean = valor>0?DanceLean.R:DanceLean.L;
+                TryMakeDanceStep();
             }
                
         }
         if (context.canceled)
         {
-            animator.SetBool("LeftDanceDir",false );
+           currentLean = DanceLean.None;
+           leanInput = false;
+           danceTriggered = false;
         } 
     }
 
-    public void OnRightUPButtonPressed(InputAction.CallbackContext context)
+    bool danceTriggered;
+
+    private void TryMakeDanceStep()
     {
-        
-        animator.ResetTrigger("Pulse");
-        if (allowInput && _danceBrain.isActive)
+        if(leanInput && directionInput && !danceTriggered)
         {
-            
-            if (context.started)
-            {
-                animator.SetBool("LeftDanceDir",false);
-                animator.SetBool("RightDanceDir",true);
-                animator.SetTrigger("Dance");
-            }
-            if (context.performed)
-            {
-                
-                //animator.ResetTrigger("Dance");
-            }
+            Debug.Log("Here");
+            danceTriggered=true;
+            DanceStep step = Enum.Parse<DanceStep>( currentLean + "_" + currentDirection );
+            OnDanceBegin(step);
         }
-        if (context.canceled)
-        {
-            animator.SetBool("RightDanceDir",false);
-        }
-    }
-    /*
-    public void OnPulse()
-    {
-        animator.ResetTrigger("Pulse");
-        animator.SetTrigger("Pulse");
-        
-    }*/
-    public void OnMoving(Vector3 direction)
-    {
-        bool moving = direction != Vector3.zero;
-        animator.SetBool("RightLooking", _danceBrain.isRightLooking);
-        if (moving)
-        {
-            animator.ResetTrigger("Pulse");
-        }
-        animator.SetBool("Walking", moving);
-        animator.SetFloat("WalkingSpeed", direction.magnitude);
     }
     
-    public void OnDanceBegin(int danceIndex)
-    {
-        _danceBrain?.EnableMovement(false);
-        DanceStep step = (DanceStep)danceIndex;
-        _danceBrain.OnDance(step);
-        animator.ResetTrigger("Dance");
-    }
-    public void OnStandAction()
-    {
-        if(_danceBrain.isActive) _danceBrain.EnableMovement(true);
-        //_danceBrain.OnDance(DanceStep.None);
-        animator.ResetTrigger("Pulse");
-        animator.ResetTrigger("Dance");
-    }
-
-    public void SetAnimatorOverrideDirection()
-    {
-        bool isRight = _danceBrain.isRightLooking;
-        animator.SetBool("RightLooking", isRight);
-        animator.runtimeAnimatorController = animatorOverrideControllers[isRight?0:1];
-    }
-    private void SetBeatDuration()
-    {
-        currentBeatOnPlayer = AudioManager.Instance.currentSongPlaying.beatDuration;
-        animator.enabled = true;
-        animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
-    }
-    
-    public void Activate()
-    {
-        allowInput = true;   
-    }
-
-    public void Disactivate()
-    {
-        allowInput = false;
-    }
-
-    public void AnimationFeedbackEvent(string eventName)
-    {
-        playerFeedbackEvents.FirstOrDefault(x=> x.name==eventName)?.feedbackEvent?.Invoke();
-    }
 }

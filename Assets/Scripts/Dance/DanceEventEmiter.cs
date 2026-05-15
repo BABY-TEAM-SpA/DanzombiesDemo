@@ -10,11 +10,6 @@ public class DanceEventEmiter : MonoBehaviour
     {
         OnEnterAnimationEnd?.Invoke();
     }
-    
-    private void OnDanceBegin(int danceIndex)
-    {
-        playerAnimator.OnDanceBegin(danceIndex);
-    }
 
     public void OnStandAction()
     {

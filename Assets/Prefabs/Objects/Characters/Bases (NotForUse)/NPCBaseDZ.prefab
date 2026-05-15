@@ -116,9 +116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  playerMovCtrl: {fileID: 3630670231084340477}
-  playerAnimCtrl: {fileID: 3778446384912519008}
-  beatReciever: {fileID: 0}
+  movCtrl: {fileID: 3630670231084340477}
+  danceAnimCtrl: {fileID: 2836731157353523887}
+  beatReciever: {fileID: 4146240392959961186}
 --- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 6673237200574166684}
   - component: {fileID: 379218205658937483}
   - component: {fileID: 6072593270596461221}
-  - component: {fileID: 3778446384912519008}
+  - component: {fileID: 2836731157353523887}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -291,7 +291,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3778446384912519008
+--- !u!114 &2836731157353523887
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -300,60 +300,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4969418884321069956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b8a2b343e289c34ab9571465d556fce, type: 3}
+  m_Script: {fileID: 11500000, guid: e5520a973895afd43be283bf0bc38bb0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceAnimatorController
   _danceBrain: {fileID: 3279488030120961210}
   allowInput: 0
   animator: {fileID: 6072593270596461221}
   animatorOverrideControllers:
   - {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
   - {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
-  playerFeedbackEvents:
-  - name: Clap
-    feedbackEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6447537400045105506}
-          m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: c9f24f32a7c418f48b0c1f5156ee039c, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - name: Walk
-    feedbackEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6447537400045105506}
-          m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: 80cf73a19570db54caccdcc05284153b, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6447537400045105506}
-          m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: ab6e9f606b0ea8143a16c85524bb8b53, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  playerFeedbackEvents: []
 --- !u!1 &8150584127454511398
 GameObject:
   m_ObjectHideFlags: 0
