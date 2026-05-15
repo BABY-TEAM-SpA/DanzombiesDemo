@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum BeatStatus
 {
@@ -9,39 +8,46 @@ public enum BeatStatus
     None
 }
 
-
-
 public class BeatManager : MonoBehaviour
 {
-	public enum BeatType
-	{
-		FullBeat,
-		HalfBeat
-	}
+    public enum BeatType
+    {
+        FullBeat,   // Negras
+        HalfBeat    // Corcheas
+    }
+
     public bool ActiveOnStart = false;
 
     [Header("Sincronización")]
-    [Range(0f,0.4f)]
+    [Range(0f, 0.4f)]
     public double margenPercentOnBeat = 0.25d;
-    
-    [Range(0f,1f)]
+
+    [Range(0f, 1f)]
     public double greatPercentOnMargin = 0.5d;
-    
-    [Range(0f,0.5f)]
+
+    [Range(0f, 0.5f)]
     public double perfectPercentOnMargin = 0.1d;
 
-    public double beatDuration { get; private set; }
-    public double beatmargen { get; private set; }
+    public double quarterBeatDuration { get; private set; }
+    public double eighthBeatDuration { get; private set; }
 
-    public int counter { get; private set; }
-    public BeatStatus beatStatus { get; private set; }
-    
-    double dspStartTime;
+    public int quarterCounter { get; private set; }
+    public int eighthCounter { get; private set; }
+
+    private BeatStatus quarterStatus = BeatStatus.None;
+    private BeatStatus eighthStatus = BeatStatus.None;
+
+    private double dspStartTime;
+    private double songTime;
+
     private double preBeatTime;
     private double beatTime;
     private double postBeatTime;
-    private double songTime;
-    
+
+    private double preHalfBeatTime;
+    private double halfBeatTime;
+    private double postHalfBeatTime;
+    // Eventos
     public delegate void OnUpdate(double beatDuration);
     public static event OnUpdate OnUpdateEvent;
 
@@ -49,7 +55,7 @@ public class BeatManager : MonoBehaviour
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
-    
+
     public static BeatManager Instance { get; private set; }
 
     void Awake()
@@ -76,93 +82,150 @@ public class BeatManager : MonoBehaviour
     void OnPlayEvent(bool resetCounter)
     {
         ResetBeatManager(resetCounter);
-        OnUpdateEvent?.Invoke(beatDuration);
+        OnUpdateEvent?.Invoke(quarterBeatDuration);
     }
 
     void Update()
     {
         if (!AudioManager.Instance.IsPlaying()) return;
-        songTime = AudioSettings.dspTime - AudioManager.Instance.currentSongPlaying.dspSongStartTime;
-        UpdateBeat();
+
+        songTime = AudioSettings.dspTime -
+                   AudioManager.Instance.currentSongPlaying.dspSongStartTime;
+
+        UpdateNegrasBeat();
+        UpdateCorcheasBeat();
     }
 
-    void UpdateBeat()
+    // =========================
+    // FULL BEAT
+
+    void UpdateNegrasBeat()
     {
-	    counter = (int)Math.Round(songTime / beatDuration);
-	    if (beatStatus == BeatStatus.None && songTime >= preBeatTime)
-	    {
-		    OnPreBeat?.Invoke(counter, BeatType.FullBeat);
-		    beatStatus = BeatStatus.PreBeat;
-	    }
+        quarterCounter = (int)Math.Round(songTime / quarterBeatDuration);
 
-	    if (beatStatus == BeatStatus.PreBeat && songTime >= beatTime)
-	    {
-		    OnBeat?.Invoke(counter, BeatType.FullBeat);
-		    beatStatus = BeatStatus.PostBeat;
-	    }
+        if (quarterStatus == BeatStatus.None && songTime >= preBeatTime)
+        {
+            OnPreBeat?.Invoke(quarterCounter, BeatType.FullBeat);
+            quarterStatus = BeatStatus.PreBeat;
+        }
 
-	    if (beatStatus == BeatStatus.PostBeat && songTime >= postBeatTime)
-	    {
-		    OnPostBeat?.Invoke(counter, BeatType.FullBeat);
-		    beatStatus = BeatStatus.None;
-		    CalculateNextBeatTime( counter+1);
-	    
-	    }
+        if (quarterStatus == BeatStatus.PreBeat && songTime >= beatTime)
+        {
+            OnBeat?.Invoke(quarterCounter, BeatType.FullBeat);
+            Debug.Log("FullBeat");
+            quarterStatus = BeatStatus.PostBeat;
+        }
+
+        if (quarterStatus == BeatStatus.PostBeat && songTime >= postBeatTime)
+        {
+            OnPostBeat?.Invoke(quarterCounter, BeatType.FullBeat);
+            quarterStatus = BeatStatus.None;
+            CalculateNextBeatTime( quarterCounter+1);
+        }
     }
 
-    private void CalculateNextBeatTime(int compass)
+    // =========================
+    // HALF BEAT 
+
+    void UpdateCorcheasBeat()
     {
-	    double margin = beatDuration * margenPercentOnBeat;
-	    beatTime = compass * beatDuration;
-	    preBeatTime = beatTime - margin;
-	    postBeatTime = beatTime + margin;
+        eighthCounter = (int)Math.Round(songTime / eighthBeatDuration);
+        if (eighthStatus == BeatStatus.None && songTime >= preHalfBeatTime)
+        {
+            OnPreBeat?.Invoke(eighthCounter, BeatType.HalfBeat);
+            eighthStatus = BeatStatus.PreBeat;
+        }
+
+        if (eighthStatus == BeatStatus.PreBeat && songTime >= halfBeatTime)
+        {
+            OnBeat?.Invoke(eighthCounter, BeatType.HalfBeat);
+            Debug.Log("HalfBeat");
+            eighthStatus = BeatStatus.PostBeat;
+        }
+
+        if (eighthStatus == BeatStatus.PostBeat && songTime >= postHalfBeatTime)
+        {
+            OnPostBeat?.Invoke(eighthCounter, BeatType.HalfBeat);
+            eighthStatus = BeatStatus.None;
+            CalculateNextHalfBeatTime(eighthCounter+1);
+        }
     }
-    
-    public BeatReciever.BeatFeedback EvaluateInput()
+
+
+    public BeatReciever.BeatFeedback EvaluateInput(BeatType type)
     {
-	    int nearestBeat = (int)Math.Round(songTime / beatDuration);
-	    double nearestBeatTime = nearestBeat * beatDuration;
-	    Debug.Log(nearestBeatTime);
-	    double delta = songTime - nearestBeatTime;
-	    Debug.Log(delta);
-	    double maxWindow = beatDuration * margenPercentOnBeat;
-	    double greatWindow = beatDuration * (margenPercentOnBeat * greatPercentOnMargin);
-	    double perfectWindow = (beatDuration * (margenPercentOnBeat * greatPercentOnMargin))* perfectPercentOnMargin;
+        double duration = type == BeatType.FullBeat
+            ? quarterBeatDuration
+            : eighthBeatDuration;
 
-	    double absDelta = Math.Abs(delta);
+        int nearestBeat = (int)Math.Round(songTime / duration);
+        double nearestBeatTime = nearestBeat * duration;
 
-	    if (absDelta <= perfectWindow)
-	    {
-		    return BeatReciever.BeatFeedback.Perfect;
-	    }
+        double delta = songTime - nearestBeatTime;
+        double absDelta = Math.Abs(delta);
 
-	    else if (absDelta <= greatWindow)
-	    {
-		    return BeatReciever.BeatFeedback.Great;
-	    }
+        double maxWindow = duration * margenPercentOnBeat;
+        double greatWindow = maxWindow * greatPercentOnMargin;
+        double perfectWindow = greatWindow * perfectPercentOnMargin;
 
-	    else if (absDelta <= maxWindow)
-	    {
-		    BeatReciever.BeatFeedback result = delta < 0 ? BeatReciever.BeatFeedback.Early : BeatReciever.BeatFeedback.Late;
-		    return result;
-	    }
-	    else
-	    {
-		    return BeatReciever.BeatFeedback.Bad;
-	    }
+        if (absDelta <= perfectWindow)
+            return BeatReciever.BeatFeedback.Perfect;
+
+        if (absDelta <= greatWindow)
+            return BeatReciever.BeatFeedback.Great;
+
+        if (absDelta <= maxWindow)
+            return delta < 0
+                ? BeatReciever.BeatFeedback.Early
+                : BeatReciever.BeatFeedback.Late;
+
+        return BeatReciever.BeatFeedback.Bad;
     }
 
-   
+
     public void ResetBeatManager(bool resetCounter)
     {
-        beatDuration =
+        quarterBeatDuration =
             AudioManager.Instance.currentSongPlaying.beatDuration;
+
+        eighthBeatDuration = quarterBeatDuration * 0.5d;
 
         dspStartTime =
             AudioManager.Instance.currentSongPlaying.dspSongStartTime;
 
-        counter = 0;
-        beatStatus = BeatStatus.PreBeat;
-        CalculateNextBeatTime(counter);
+        quarterCounter = 0;
+        eighthCounter = 0;
+
+        quarterStatus = BeatStatus.None;
+        eighthStatus = BeatStatus.None;
+    }
+
+    public int GetCounter(BeatType beatType)
+    {
+        switch (beatType)
+        {
+            case BeatType.FullBeat:
+                return quarterCounter;
+            case BeatType.HalfBeat:
+                return eighthCounter;
+            default:
+                return 0;
+        }
+    }
+
+    private void CalculateNextBeatTime(int compass)
+    {
+        double margin = quarterBeatDuration * margenPercentOnBeat;
+        beatTime = compass * quarterBeatDuration;
+        preBeatTime = beatTime - margin;
+        postBeatTime = beatTime + margin;
+    }
+    private void CalculateNextHalfBeatTime(int compass)
+    {
+        double margin = eighthBeatDuration * margenPercentOnBeat;
+        halfBeatTime = compass * eighthBeatDuration;
+        preHalfBeatTime = halfBeatTime - margin;
+        postHalfBeatTime = halfBeatTime + margin;
+            
     }
 }

@@ -33,11 +33,7 @@ public class PulseObjectAnimatorController : BeatReciever
     {
         //throw new System.NotImplementedException();
     }
-
-    public override void OnStopSongAction()
-    {
-        //throw new System.NotImplementedException();
-    }
+    
 
     public override void OnUpdateSongAction()
     {
@@ -46,16 +42,8 @@ public class PulseObjectAnimatorController : BeatReciever
     }
     private void SetBeatDuration()
     {
-        animator.SetFloat("Beat",(float)(1f/this.barTime));
-    }
-    public override void OnPauseSongAction()
-    {
-        animator.enabled = false;
-    }
-
-    public override void OnResumeAction()
-    {
-        //
+        double duration = BeatManager.Instance? BeatManager.Instance.eighthBeatDuration:1d;
+        animator.SetFloat("Beat",(float)(1f/duration));
     }
 
     public void ResetIdle()

@@ -22,23 +22,23 @@ public class DanceFeedbackReciever : MonoBehaviour
         PlayerManager.DanceFeedbackEvent -= DanceCheckReciever;
     }
     
-    private void DanceCheckReciever(BeatFeedback feedback)
+    private void DanceCheckReciever(BeatReciever.BeatFeedback feedback)
     {
         switch (feedback)
         {
-            case BeatFeedback.Early:
+            case BeatReciever.BeatFeedback.Early:
                 EventSender(EarlyLateEvent, EarlyLateDanceEvent);
                 break;
-            case BeatFeedback.Late:
+            case BeatReciever.BeatFeedback.Late:
                 EventSender(EarlyLateEvent, EarlyLateDanceEvent);
                 break;
-            case BeatFeedback.Perfect:
+            case BeatReciever.BeatFeedback.Perfect:
                 EventSender(PerfectEvent, PerfectDanceEvent);
                 break;
-            case BeatFeedback.Great:
+            case BeatReciever.BeatFeedback.Great:
                 EventSender(GreatEvent, GreatDanceEvent);
                 break;
-            case BeatFeedback.Bad:
+            case BeatReciever.BeatFeedback.Bad:
                 EventSender(BadEvent, BadDanceEvent);
                 break;
         }

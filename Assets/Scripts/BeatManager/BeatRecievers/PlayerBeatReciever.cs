@@ -15,8 +15,8 @@ public class PlayerBeatReciever : BeatReciever
     {
         if (animator != null)
         {
-            //Debug.Log("Playing Dance Animator");
-            animator.SetFloat("Beat",(float)(1f/barTime));
+            double duration = BeatManager.Instance? BeatManager.Instance.quarterBeatDuration:1d;
+            animator.SetFloat("Beat",(float)(1f/duration));
         }
     }
 
@@ -35,22 +35,7 @@ public class PlayerBeatReciever : BeatReciever
     {
         //throw new NotImplementedException();
     }
-
-    public override void OnStopSongAction()
-    {
-        //throw new NotImplementedException();
-    }
-
-
-    public override void OnPauseSongAction()
-    {
-        animator.enabled = false;
-    }
-
-    public override void OnResumeAction()
-    {
-        //throw new NotImplementedException();
-    }
+    
 
     public void ResetIdle()
     {

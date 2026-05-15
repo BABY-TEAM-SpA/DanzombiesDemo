@@ -68,7 +68,7 @@ public class PlayerManager : DanceBrain
             {
                 if (step == resultado.Item2)
                 {
-                    BeatReciever.BeatFeedback bf = BeatManager.Instance.EvaluateInput();
+                    BeatReciever.BeatFeedback bf = BeatManager.Instance.EvaluateInput(resultado.Item3);
                     if (debug) Debug.Log(bf);
                     DanceImpact(bf);
                     DanceFeedbackEvent?.Invoke(bf);

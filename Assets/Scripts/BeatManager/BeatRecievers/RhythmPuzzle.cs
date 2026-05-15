@@ -29,6 +29,7 @@ public class SequenceStep
     }
     public GoalType goalType;
     public bool flowAffect;
+    
     [SerializeField] public List<DanceStep> DanceSteps = new List<DanceStep>();
     public UnityEvent OnSequenceCompletedEvent;
 }
@@ -107,7 +108,7 @@ public abstract class RhythmPuzzle : BeatReciever
             return;
 
         if (syncMode == RhythmSyncMode.Local)
-            startBeat = BeatManager.Instance.counter;
+            startBeat = BeatManager.Instance.GetCounter(beatType);
         else
             startBeat = 0;
 
@@ -144,10 +145,10 @@ public abstract class RhythmPuzzle : BeatReciever
         playerHasDanced = false;
     }
 
-    public (bool,DanceStep) PlayerMakeDance()
+    public (bool,DanceStep,BeatManager.BeatType) PlayerMakeDance()
     {
         playerHasDanced = true;
-        return (isOnBeat,currentPuzzleStep);
+        return (isOnBeat,currentPuzzleStep,beatType);
     }
     public abstract void GeneralVisualFeedback(int counter);
 
@@ -176,7 +177,7 @@ public abstract class RhythmPuzzle : BeatReciever
             return;
         }
 
-        int globalBeat = BeatManager.Instance.counter;
+        int globalBeat = BeatManager.Instance.GetCounter(beatType);
 
         if (syncMode == RhythmSyncMode.Local)
             innerCounter = globalBeat - startBeat;

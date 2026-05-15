@@ -33,21 +33,7 @@ public class TutorialPuzzle : RhythmPuzzle
     {
         //throw new NotImplementedException();
     }
-
-    public override void OnPauseSongAction()
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnResumeAction()
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnStopSongAction()
-    {
-        //throw new NotImplementedException();
-    }
+    
 
     public override void ActivatePuzzle(bool activate)
     {

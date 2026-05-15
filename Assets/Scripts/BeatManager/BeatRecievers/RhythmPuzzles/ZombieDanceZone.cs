@@ -149,16 +149,6 @@ public class ZombieDanceZone : RhythmPuzzle
         //throw new NotImplementedException();
     }
 
-    public override void OnPauseSongAction()
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnResumeAction()
-    {
-        //throw new NotImplementedException();
-    }
-
     public override void PreBeatAction(int counter)
     {
         base.PreBeatAction(counter);
@@ -175,9 +165,5 @@ public class ZombieDanceZone : RhythmPuzzle
         base.PostBeatAction(counter);
         SetPulse(0f);
     }
-
-    public override void OnStopSongAction()
-    {
-        throw new NotImplementedException();
-    }
+    
 }

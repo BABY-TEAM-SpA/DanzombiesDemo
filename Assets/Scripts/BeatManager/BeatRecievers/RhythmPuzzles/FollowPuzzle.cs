@@ -37,21 +37,7 @@ public class FollowPuzzle : RhythmPuzzle
     {
         throw new System.NotImplementedException();
     }
-
-    public override void OnPauseSongAction()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnResumeAction()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnStopSongAction()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 
     public override void PreparePuzzle()
     {

@@ -1,20 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static BeatManager;
 
-
-
-public abstract class BeatReciever: MonoBehaviour
+public abstract class BeatReciever : MonoBehaviour
 {
-    public bool isActive { set; get; } = true;
-    
-    protected BeatType beatType;
-    protected double barTime=1d;
-    public bool isOnBeat { set; get; } = false;
-    
+    [SerializeField] protected BeatType beatType = BeatType.FullBeat;
+    public bool isActive { get; set; } = true;
+    public bool isOnBeat { get; private set; } = false;
+
     public enum BeatFeedback
     {
         Bad,
@@ -32,11 +24,6 @@ public abstract class BeatReciever: MonoBehaviour
         BeatManager.OnPostBeat += OnPostBeatEvent;
     }
 
-    public void SetActive(bool active)
-    {
-        isActive = active;
-    }
-
     private void OnDisable()
     {
         BeatManager.OnUpdateEvent -= OnUpdateSongEvent;
@@ -44,67 +31,43 @@ public abstract class BeatReciever: MonoBehaviour
         BeatManager.OnBeat -= OnBeatEvent;
         BeatManager.OnPostBeat -= OnPostBeatEvent;
     }
-    
+    public void SetActive(bool active)
+    {
+        isActive = active;
+    }
+
     private void OnUpdateSongEvent(double barDuration)
     {
-        barTime = barDuration;
         OnUpdateSongAction();
     }
 
-    private void OnPauseEvent()//double beatDuration)
-    {
-        OnPauseSongAction();
-    }
-
-    private void OnResumeEvent()//double beatDuration)
-    {
-        OnResumeAction();
-    }
     private void OnPreBeatEvent(int counter, BeatType type)
     {
-        if (type == beatType)
-        {
-            if(isActive)PreBeatAction(counter);
-            isOnBeat = true;
-        }
-        
+        if (type != beatType) return;
+
+        if (isActive)
+            PreBeatAction(counter);
+
+        isOnBeat = true;
     }
-    
-    private void OnBeatEvent(int counter,BeatType type)
+
+    private void OnBeatEvent(int counter, BeatType type)
     {
-        if (type == beatType)
-        {
-            if(isActive)BeatAction(counter);
-        }
-        
+        if (type != beatType) return;
+        if (isActive) BeatAction(counter);
     }
 
-    private void OnPostBeatEvent(int counter,BeatType type)
+    private void OnPostBeatEvent(int counter, BeatType type)
     {
-        if (type == beatType)
-        {
-            if(isActive)PostBeatAction(counter);
-            isOnBeat=false;
-        }
+        if (type != beatType) return;
+
+        if (isActive) PostBeatAction(counter);
+
+        isOnBeat = false;
     }
 
-    private void OnStopEvent()//double beatDuration)
-    {
-        OnStopSongAction();
-    }
-    
-    ///////////--- virtual Actions Management ---///////////
-    public abstract void OnUpdateSongAction();//double beatDuration)
-
-    public abstract void OnPauseSongAction();
-
-    public abstract void OnResumeAction();
-
+    public abstract void OnUpdateSongAction();
     public abstract void PreBeatAction(int counter);
-
     public abstract void BeatAction(int counter);
-
     public abstract void PostBeatAction(int counter);
-    public abstract void OnStopSongAction();
-
 }

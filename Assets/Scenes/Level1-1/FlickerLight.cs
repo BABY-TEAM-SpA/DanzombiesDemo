@@ -10,6 +10,7 @@ public class FlickerLight : MonoBehaviour
     private float maxIntensity = 1.2f;
     [SerializeField, Min(0f)] private float timeBetweenIntensity = 0.1f;
     public bool useBeatTime;
+    public BeatManager.BeatType beatType;
     [Min(1)] public int beatMarginUpdate =1;
 
     private Light2D lightToFlicker;
@@ -34,8 +35,9 @@ public class FlickerLight : MonoBehaviour
         
         if (useBeatTime)
         {
-            if (BeatManager.Instance.counter <= innerCounter+beatMarginUpdate-1) return;
-            innerCounter=BeatManager.Instance.counter;
+            int counter = BeatManager.Instance.GetCounter(beatType);
+            if ( counter <= innerCounter+beatMarginUpdate-1) return;
+            innerCounter=counter;
         }
         else
         {
