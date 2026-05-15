@@ -58,32 +58,57 @@ public class PlayerManager : DanceBrain
 
     public override void OnDance(DanceStep step)
     {
-        
         if (targetPuzzle != null)
         {
-            DanceStep puzzleStep = targetPuzzle.PlayerMakeDanceStep();
-            BeatFeedback bf = BeatManager.Instance.EvaluateInput();
-            if (step == puzzleStep)
+            var resultado  = targetPuzzle.PlayerMakeDance();
+            if (resultado.Item1)
             {
-                if (debug) Debug.Log(bf);
-                DanceFeedbackEvent?.Invoke(bf);
+                if (step == resultado.Item2)
+                {
+                    BeatFeedback bf = BeatManager.Instance.EvaluateInput();
+                    if (debug) Debug.Log(bf);
+                    DanceImpact(bf);
+                    DanceFeedbackEvent?.Invoke(bf);
+                }
+                else
+                {
+                    ReportWrongDance();
+                }
             }
-            else
-            {
-                ReportWrongDance();
-            }
-            
+        }
+    }
+
+    private void DanceImpact(BeatFeedback bf)
+    {
+        switch (bf)
+        {
+            case BeatFeedback.Perfect:
+                SetFlow(2);
+                break;
+            case BeatFeedback.Great:
+                SetFlow(1);
+                break;
+            case BeatFeedback.Early:
+                SetFlow(0);
+                break;
+            case BeatFeedback.Late:
+                SetFlow(0);
+                break;
+            case BeatFeedback.Bad:
+                SetFlow(-1);
+                break;
         }
     }
 
     public void ReportWrongDance()
     {
+        DanceImpact(BeatFeedback.Bad);
         DanceFeedbackEvent?.Invoke(BeatFeedback.Bad);
     }
     
-    public int GetFlowDamage(int damage)
+    public int SetFlow(int increment)
     {
-        int value = Mathf.Clamp(nivelDeSeguridad-(GameManager.Alza*damage),0,10);
+        int value = Mathf.Clamp(nivelDeSeguridad+(GameManager.Alza*increment),0,10);
         nivelDeSeguridad = value;
         danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
         return value;

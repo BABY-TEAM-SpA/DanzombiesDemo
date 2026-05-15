@@ -32,7 +32,7 @@ public class DanceBarController : MonoBehaviour
 
     public void Activate(bool isActive)
     {
-        UpdateFlowBars(PlayerManager.Player.GetFlowDamage(0));
+        UpdateFlowBars(PlayerManager.Player.SetFlow(0));
         uiAnimator?.PlaySequence(isActive ? "Open" : "Close");
     }
     

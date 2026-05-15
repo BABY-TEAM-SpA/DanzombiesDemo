@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum BeatType
+public enum BeatStatus
 {
-    Negra,
-    Blanca,
-    Redonda
+    PreBeat,
+    PostBeat,
+    None
 }
 
 public enum BeatFeedback
@@ -36,14 +36,13 @@ public class BeatManager : MonoBehaviour
     public double beatmargen { get; private set; }
 
     public int counter { get; private set; }
-
-    int lastBeat = -1;
-
+    public BeatStatus beatStatus { get; private set; }
+    
     double dspStartTime;
-
-    bool preTriggered;
-    bool beatTriggered;
-    bool postTriggered;
+    private double preBeatTime;
+    private double beatTime;
+    private double postBeatTime;
+    private double songTime;
     
     public delegate void OnUpdate(double beatDuration);
     public static event OnUpdate OnUpdateEvent;
@@ -84,70 +83,53 @@ public class BeatManager : MonoBehaviour
 
     void Update()
     {
-        if (!AudioManager.Instance.IsPlaying())
-            return;
-
-        double dspTime = AudioSettings.dspTime;
-
-        double songTime =
-            dspTime -
-            AudioManager.Instance.currentSongPlaying.dspSongStartTime;
-
-        UpdateBeat(songTime);
-        //UpdateHalfBeat(songTime);
+        if (!AudioManager.Instance.IsPlaying()) return;
+        songTime = AudioSettings.dspTime - AudioManager.Instance.currentSongPlaying.dspSongStartTime;
+        UpdateBeat();
     }
 
-    void UpdateBeat(double songTime)
+    void UpdateBeat()
     {
-	    // --- TIMELINE (eventos) ---
-	    int timelineBeat = (int)(songTime / beatDuration);
-
-	    if (timelineBeat != lastBeat)
+	    counter = (int)Math.Round(songTime / beatDuration);
+	    if (beatStatus == BeatStatus.None && songTime >= preBeatTime)
 	    {
-		    lastBeat = timelineBeat;
-		    preTriggered = false;
-		    beatTriggered = false;
-		    postTriggered = false;
-		    counter++;
+		    OnPreBeat?.Invoke(counter);
+		    beatStatus = BeatStatus.PreBeat;
 	    }
 
-	    double beatStart = timelineBeat * beatDuration;
-	    double deltaTimeline = songTime - beatStart;
-
-	    double maxWindow = beatDuration * margenPercentOnBeat;
-
-	    if (!preTriggered && deltaTimeline >= -maxWindow)
+	    if (beatStatus == BeatStatus.PreBeat && songTime >= beatTime)
 	    {
-		    preTriggered = true;
-		    OnPreBeat?.Invoke(timelineBeat);
+		    OnBeat?.Invoke(counter);
+		    beatStatus = BeatStatus.PostBeat;
 	    }
 
-	    if (!beatTriggered && deltaTimeline >= 0)
+	    if (beatStatus == BeatStatus.PostBeat && songTime >= postBeatTime)
 	    {
-		    beatTriggered = true;
-		    OnBeat?.Invoke(timelineBeat);
-	    }
-
-	    if (!postTriggered && deltaTimeline >= maxWindow)
-	    {
-		    postTriggered = true;
-		    OnPostBeat?.Invoke(timelineBeat);
+		    OnPostBeat?.Invoke(counter);
+		    beatStatus = BeatStatus.None;
+		    CalculateNextBeatTime( counter+1);
 	    
 	    }
     }
 
+    private void CalculateNextBeatTime(int compass)
+    {
+	    double margin = beatDuration * margenPercentOnBeat;
+	    beatTime = compass * beatDuration;
+	    preBeatTime = beatTime - margin;
+	    postBeatTime = beatTime + margin;
+    }
+    
     public BeatFeedback EvaluateInput()
     {
-	    double checkTime = AudioSettings.dspTime - dspStartTime;
-	    double exactBeat = checkTime / beatDuration;
-	    int nearestBeat = (int)Math.Floor(exactBeat + 0.5);
-
+	    int nearestBeat = (int)Math.Round(songTime / beatDuration);
 	    double nearestBeatTime = nearestBeat * beatDuration;
-	    double delta = checkTime - nearestBeatTime;
-
+	    Debug.Log(nearestBeatTime);
+	    double delta = songTime - nearestBeatTime;
+	    Debug.Log(delta);
 	    double maxWindow = beatDuration * margenPercentOnBeat;
-	    double perfectWindow = beatDuration * (margenPercentOnBeat * perfectPercentOnMargin);
 	    double greatWindow = beatDuration * (margenPercentOnBeat * greatPercentOnMargin);
+	    double perfectWindow = (beatDuration * (margenPercentOnBeat * greatPercentOnMargin))* perfectPercentOnMargin;
 
 	    double absDelta = Math.Abs(delta);
 
@@ -180,17 +162,9 @@ public class BeatManager : MonoBehaviour
 
         dspStartTime =
             AudioManager.Instance.currentSongPlaying.dspSongStartTime;
-        
-        preTriggered = false;
-        beatTriggered = false;
-        postTriggered = false;
 
-
-        if (resetCounter)
-        {
-            Debug.Log("Counter Reset");
-            counter = 0;
-            lastBeat = -1;
-        }
+        counter = 0;
+        beatStatus = BeatStatus.PreBeat;
+        CalculateNextBeatTime(counter);
     }
 }

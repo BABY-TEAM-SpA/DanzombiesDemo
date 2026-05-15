@@ -111,7 +111,7 @@ public class TutorialPuzzle : RhythmPuzzle
 
                 break;
             case SequenceStep.GoalType.FillFlow:
-                int flow = playersInside[0].GetFlowDamage(!isCorrect?1:-1);
+                int flow = playersInside[0].SetFlow(0); //(!isCorrect?1:-1);
                 if(flow == 10) CompleteRhythmSequence();
                 break;
         }
