@@ -24,7 +24,7 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] private Image playerHead;
     [SerializeField] private Sprite[] playerReacctions;
 
-    [SerializeField] private List<Heart> hearts = new List<Heart>();
+    [SerializeField] public List<Heart> hearts = new List<Heart>();
 
 
     public static PlayerUIController Instance { get; private set; }
@@ -50,8 +50,19 @@ public class PlayerUIController : MonoBehaviour
 
     public void UpdateLifesPlayer(int lifes, int player = 0)
     {
-        Heart heart = hearts[lifes];
-        heart.HeartContainer.sprite = heart.DamageHeart;
+        for (int i=0;i<hearts.Count;i++)
+        {
+            Heart heart = hearts[i];
+            if (i < lifes)
+            {
+                heart.HeartContainer.sprite = heart.HealedHeart;
+            }
+            else
+            {
+                heart.HeartContainer.sprite = heart.DamageHeart;
+            }
+        }
+        
         
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DanceBarController : MonoBehaviour
 {
+    public bool isActive =false;
     [Header("Barras de Flow")] 
     [SerializeField] private Image IconImage;
     private int currentReaction = 0;
@@ -21,6 +22,7 @@ public class DanceBarController : MonoBehaviour
 
     public void Start()
     {
+
         Material newMat = new Material(beatBarMaterial);
         beatBarMaterial = newMat;
         foreach (Image bar in beatBars)
@@ -28,16 +30,20 @@ public class DanceBarController : MonoBehaviour
             bar.material = newMat;
         }
         PlayerManager.Player.danceBar = this;
+        UpdateFlowBars(0);
+        UpdateIconFeedback();
     }
 
-    public void Activate(bool isActive)
+    public void Activate(bool activation)
     {
-        UpdateFlowBars(PlayerManager.Player.SetFlow(0));
+        isActive = activation;
+        UpdateFlowBars(PlayerManager.Player.flow);
+        UpdateIconFeedback();
         uiAnimator?.PlaySequence(isActive ? "Open" : "Close");
     }
     
     
-    public void UpdateFlowBars(int value, bool isInside =false)
+    public void UpdateFlowBars(int value)
     {
         if (value == 10)
         {
@@ -58,14 +64,14 @@ public class DanceBarController : MonoBehaviour
         foreach (Image barra in FlowBars)
         {
             barra.fillAmount = value/10f;
-            barra.color = barReactions[currentReaction];
-            beatBarMaterial.SetFloat("_RainbowEnabled", value==10?1f:0f);
+            //barra.color = barReactions[currentReaction];
+            //beatBarMaterial.SetFloat("_RainbowEnabled", value==10?1f:0f);
         }
-        UpdateIconFeedback(isInside);
+        UpdateIconFeedback();
     }
-    public void UpdateIconFeedback(bool inDanger)
+    public void UpdateIconFeedback()
     {
-        if (inDanger)
+        if (isActive)
         {
             if(IconImage !=null) IconImage.sprite = IconStates[currentReaction];
         }
@@ -74,6 +80,6 @@ public class DanceBarController : MonoBehaviour
             if(IconImage !=null) IconImage.sprite =  IconDefaultState;
             beatBarMaterial.SetFloat("_RainbowEnabled", 0f);
         }
-        if(IconImage !=null) IconImage.sprite = inDanger ? IconStates[currentReaction] : IconDefaultState;
+        if(IconImage !=null) IconImage.sprite = isActive ? IconStates[currentReaction] : IconDefaultState;
     }
 }

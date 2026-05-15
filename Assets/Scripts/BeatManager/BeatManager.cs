@@ -9,17 +9,15 @@ public enum BeatStatus
     None
 }
 
-public enum BeatFeedback
-{
-    Bad,
-    Early,
-	Great,
-    Perfect,
-	Late
-}
+
 
 public class BeatManager : MonoBehaviour
 {
+	public enum BeatType
+	{
+		FullBeat,
+		HalfBeat
+	}
     public bool ActiveOnStart = false;
 
     [Header("Sincronización")]
@@ -47,7 +45,7 @@ public class BeatManager : MonoBehaviour
     public delegate void OnUpdate(double beatDuration);
     public static event OnUpdate OnUpdateEvent;
 
-    public delegate void OnBeatEvent(int counter);
+    public delegate void OnBeatEvent(int counter, BeatType beatType);
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
@@ -93,19 +91,19 @@ public class BeatManager : MonoBehaviour
 	    counter = (int)Math.Round(songTime / beatDuration);
 	    if (beatStatus == BeatStatus.None && songTime >= preBeatTime)
 	    {
-		    OnPreBeat?.Invoke(counter);
+		    OnPreBeat?.Invoke(counter, BeatType.FullBeat);
 		    beatStatus = BeatStatus.PreBeat;
 	    }
 
 	    if (beatStatus == BeatStatus.PreBeat && songTime >= beatTime)
 	    {
-		    OnBeat?.Invoke(counter);
+		    OnBeat?.Invoke(counter, BeatType.FullBeat);
 		    beatStatus = BeatStatus.PostBeat;
 	    }
 
 	    if (beatStatus == BeatStatus.PostBeat && songTime >= postBeatTime)
 	    {
-		    OnPostBeat?.Invoke(counter);
+		    OnPostBeat?.Invoke(counter, BeatType.FullBeat);
 		    beatStatus = BeatStatus.None;
 		    CalculateNextBeatTime( counter+1);
 	    
@@ -120,7 +118,7 @@ public class BeatManager : MonoBehaviour
 	    postBeatTime = beatTime + margin;
     }
     
-    public BeatFeedback EvaluateInput()
+    public BeatReciever.BeatFeedback EvaluateInput()
     {
 	    int nearestBeat = (int)Math.Round(songTime / beatDuration);
 	    double nearestBeatTime = nearestBeat * beatDuration;
@@ -135,22 +133,22 @@ public class BeatManager : MonoBehaviour
 
 	    if (absDelta <= perfectWindow)
 	    {
-		    return BeatFeedback.Perfect;
+		    return BeatReciever.BeatFeedback.Perfect;
 	    }
 
 	    else if (absDelta <= greatWindow)
 	    {
-		    return BeatFeedback.Great;
+		    return BeatReciever.BeatFeedback.Great;
 	    }
 
 	    else if (absDelta <= maxWindow)
 	    {
-		    BeatFeedback result = delta < 0 ? BeatFeedback.Early : BeatFeedback.Late;
+		    BeatReciever.BeatFeedback result = delta < 0 ? BeatReciever.BeatFeedback.Early : BeatReciever.BeatFeedback.Late;
 		    return result;
 	    }
 	    else
 	    {
-		    return BeatFeedback.Bad;
+		    return BeatReciever.BeatFeedback.Bad;
 	    }
     }
 

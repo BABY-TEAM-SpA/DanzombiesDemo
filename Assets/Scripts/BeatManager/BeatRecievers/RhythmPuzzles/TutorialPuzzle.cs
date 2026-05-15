@@ -64,10 +64,6 @@ public class TutorialPuzzle : RhythmPuzzle
         //throw new NotImplementedException();
     }
     
-    public override void PlayerHasNoFlow(PlayerManager player)
-    {
-        //throw new NotImplementedException();
-    }
     
     /*public void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
@@ -111,7 +107,7 @@ public class TutorialPuzzle : RhythmPuzzle
 
                 break;
             case SequenceStep.GoalType.FillFlow:
-                int flow = playersInside[0].SetFlow(0); //(!isCorrect?1:-1);
+                int flow = playersInside.IncreaseFlow(!isCorrect?1:-1);
                 if(flow == 10) CompleteRhythmSequence();
                 break;
         }

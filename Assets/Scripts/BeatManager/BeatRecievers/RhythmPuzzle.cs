@@ -60,7 +60,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
     [Header("Players")] 
     protected bool playerHasDanced=false;
-    protected List<PlayerManager> playersInside = new List<PlayerManager>();
+    protected PlayerManager playersInside;
     
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
@@ -136,12 +136,9 @@ public abstract class RhythmPuzzle : BeatReciever
         if (!isActive) return;
         CheckNextDanceStep();
         OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
-        if (!playerHasDanced && playersInside.Count > 0 && currentPuzzleStep != DanceStep.None)
+        if (!playerHasDanced && playersInside != null && currentPuzzleStep != DanceStep.None)
         {
-            foreach (PlayerManager player in playersInside)
-            {
-                player.ReportWrongDance();
-            }
+            playersInside.ReportWrongDance();
         }
         currentPuzzleStep = DanceStep.None;
         playerHasDanced = false;
@@ -154,19 +151,19 @@ public abstract class RhythmPuzzle : BeatReciever
     }
     public abstract void GeneralVisualFeedback(int counter);
 
-    public abstract void PlayerHasNoFlow(PlayerManager player);
+
     
     public virtual void PlayerEnter(PlayerManager player)
     {
         if(debug)Debug.Log("Player entered");
         player.AddTargetPuzzle(this);
-        playersInside.Add(player);
+        playersInside = player;
     }
 
     public virtual void PlayerLeave(PlayerManager player)
     {
         if(debug)Debug.Log("Player Leave");
-        playersInside.Remove(player);
+        playersInside = null;
         player.RemoveTargetPuzzle(this);
     }
     

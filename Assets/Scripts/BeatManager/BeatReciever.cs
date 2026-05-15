@@ -11,10 +11,18 @@ public abstract class BeatReciever: MonoBehaviour
 {
     public bool isActive { set; get; } = true;
     
-    ///////////--- Events Management ---///////////
+    protected BeatType beatType;
     protected double barTime=1d;
     public bool isOnBeat { set; get; } = false;
     
+    public enum BeatFeedback
+    {
+        Bad,
+        Early,
+        Great,
+        Perfect,
+        Late
+    }
 
     private void OnEnable()
     {
@@ -52,33 +60,32 @@ public abstract class BeatReciever: MonoBehaviour
     {
         OnResumeAction();
     }
-    private void OnPreBeatEvent(int counter)//(BeatType type)
+    private void OnPreBeatEvent(int counter, BeatType type)
     {
-        /*if (type == myBeatType)
+        if (type == beatType)
         {
-            PreBeatAction();
-        }*/
-        if(isActive)PreBeatAction(counter);
-        isOnBeat = true;
+            if(isActive)PreBeatAction(counter);
+            isOnBeat = true;
+        }
+        
     }
     
-    private void OnBeatEvent(int counter ) //(BeatType type)
+    private void OnBeatEvent(int counter,BeatType type)
     {
-        /*if (type == myBeatType)
+        if (type == beatType)
         {
-            BeatAction();
-        }*/
-        if(isActive)BeatAction(counter);
+            if(isActive)BeatAction(counter);
+        }
+        
     }
 
-    private void OnPostBeatEvent(int counter) //(BeatType type)
+    private void OnPostBeatEvent(int counter,BeatType type)
     {
-        /*if (type == myBeatType)
+        if (type == beatType)
         {
-            PostBeatAction();
-        }*/
-        if(isActive)PostBeatAction(counter);
-        isOnBeat=false;
+            if(isActive)PostBeatAction(counter);
+            isOnBeat=false;
+        }
     }
 
     private void OnStopEvent()//double beatDuration)

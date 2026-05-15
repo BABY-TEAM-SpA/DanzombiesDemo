@@ -66,8 +66,4 @@ public class FollowPuzzle : RhythmPuzzle
         throw new System.NotImplementedException();
     }
 
-    public override void PlayerHasNoFlow(PlayerManager player)
-    {
-        throw new System.NotImplementedException();
-    }
 }

@@ -66,7 +66,7 @@ public class DanceAnimatorController : MonoBehaviour
     
     public void OnDanceBegin(DanceStep step)
     {
-        Debug.Log("OnDanceBegin");
+        
         _danceBrain?.EnableMovement(false);
         _danceBrain.OnDance(step);
         animator.Play(step.ToString(), 0,0f);

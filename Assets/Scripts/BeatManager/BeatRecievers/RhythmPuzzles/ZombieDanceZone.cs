@@ -130,26 +130,7 @@ public class ZombieDanceZone : RhythmPuzzle
             zoneMaterial.SetInt("_NumColors", gradientColors.Count);
         }
     }
-
     
-    /*public void ReactToPlayersDance(PlayerManager player, DanceStep step)
-    {
-        if (step == DanceStep.None)
-            return;
-
-        float flow = player.GetFlowDamage((player.saveDanceStep != step)?1:-1);
-
-        if (flow < GameManager.Alza)
-        {
-            PlayerHasNoFlow(player);
-        }
-    }*/
-
-    public override void PlayerHasNoFlow(PlayerManager player)
-    {
-        player.GetLifeDamage(true);
-        PlayerLeave(player);
-    }
 
     public override void PlayerEnter(PlayerManager player)
     {

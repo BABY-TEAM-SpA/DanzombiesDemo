@@ -15,15 +15,17 @@ public enum SeguridadState
 public class PlayerManager : DanceBrain
 {
     [SerializeField] private bool ActivateOnStart;
-    public int lifes = 3;
+    private int vidas = 3;
+    public int lifes => vidas;
     [SerializeField] [Range(0, 10)] private int nivelDeSeguridad = 5;
+    public int flow =>nivelDeSeguridad;
     public DanceBarController danceBar{ get; set; } 
 
     public RhythmPuzzle targetPuzzle{ get; set; }
     
     public UnityEvent LifeDamagedEvent;
     public UnityEvent LifeHealedEvent;
-    public static event Action<BeatFeedback> DanceFeedbackEvent;
+    public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
     public static PlayerManager Player;
 
     private void Awake()
@@ -44,6 +46,7 @@ public class PlayerManager : DanceBrain
     
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
+        danceBar?.UpdateFlowBars(nivelDeSeguridad);
         danceBar?.Activate(puzzle.activeDanceSequence.flowAffect);
         targetPuzzle = puzzle;
     }
@@ -65,7 +68,7 @@ public class PlayerManager : DanceBrain
             {
                 if (step == resultado.Item2)
                 {
-                    BeatFeedback bf = BeatManager.Instance.EvaluateInput();
+                    BeatReciever.BeatFeedback bf = BeatManager.Instance.EvaluateInput();
                     if (debug) Debug.Log(bf);
                     DanceImpact(bf);
                     DanceFeedbackEvent?.Invoke(bf);
@@ -78,40 +81,51 @@ public class PlayerManager : DanceBrain
         }
     }
 
-    private void DanceImpact(BeatFeedback bf)
+    private void DanceImpact(BeatReciever.BeatFeedback bf)
     {
         switch (bf)
         {
-            case BeatFeedback.Perfect:
-                SetFlow(2);
+            case BeatReciever.BeatFeedback.Perfect:
+                IncreaseFlow(2);
                 break;
-            case BeatFeedback.Great:
-                SetFlow(1);
+            case BeatReciever.BeatFeedback.Great:
+                IncreaseFlow(1);
                 break;
-            case BeatFeedback.Early:
-                SetFlow(0);
+            case BeatReciever.BeatFeedback.Early:
+                IncreaseFlow(0);
                 break;
-            case BeatFeedback.Late:
-                SetFlow(0);
+            case BeatReciever.BeatFeedback.Late:
+                IncreaseFlow(0);
                 break;
-            case BeatFeedback.Bad:
-                SetFlow(-1);
+            case BeatReciever.BeatFeedback.Bad:
+                IncreaseFlow(-1);
                 break;
         }
     }
 
     public void ReportWrongDance()
     {
-        DanceImpact(BeatFeedback.Bad);
-        DanceFeedbackEvent?.Invoke(BeatFeedback.Bad);
+        DanceImpact(BeatReciever.BeatFeedback.Bad);
+        DanceFeedbackEvent?.Invoke(BeatReciever.BeatFeedback.Bad);
+    }
+
+    public int IncreaseFlow(int increment)
+    {
+        int value = Math.Clamp(nivelDeSeguridad+(GameManager.Alza*increment),0,10);
+        SetFlow(value);
+        danceBar?.UpdateFlowBars(nivelDeSeguridad);
+        if (value < GameManager.Alza)
+        {
+            GetLifeDamage(true);
+            targetPuzzle.PlayerLeave(this);
+            SetFlow(5);
+        }
+        return value;
     }
     
-    public int SetFlow(int increment)
+    private void SetFlow(int value)
     {
-        int value = Mathf.Clamp(nivelDeSeguridad+(GameManager.Alza*increment),0,10);
         nivelDeSeguridad = value;
-        danceBar?.UpdateFlowBars(nivelDeSeguridad, targetPuzzle!=null);
-        return value;
     }
 
     public void GetLifeDamage(bool danho=true)
@@ -124,7 +138,8 @@ public class PlayerManager : DanceBrain
         {
             LifeHealedEvent?.Invoke();
         }
-        lifes += (danho) ? -1 : -1;
+        vidas += (danho) ? -1 : 1;
+        vidas = Math.Clamp(lifes,0,3);
         PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
     }
 
