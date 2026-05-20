@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 
-public class PlayerBeatReciever : BeatReciever //WHY IS THIS ON ZOMBIES TOO?!?!?!?
+public class PlayerBeatReciever : BeatReciever //zombies ahora usan AnimBeatReceiver para lo que antes hacía este script.
 {
-    [SerializeField] Animator animator;
     [SerializeField] PlayerManager managerComp;
     [SerializeField] PlayerDanceMemory danceMemoryComp;
 
@@ -16,21 +15,6 @@ public class PlayerBeatReciever : BeatReciever //WHY IS THIS ON ZOMBIES TOO?!?!?
         managerComp.OnDanceEvent.AddListener(RaiseDanceThisBeatFlag);
     }
 
-    public override void OnUpdateSongAction()
-    {
-        animator.enabled = true;
-        SetBeatDuration();
-    }
-    
-    private void SetBeatDuration()
-    {
-        if (animator != null)
-        {
-            //Debug.Log("Playing Dance Animator");
-            animator.SetFloat("Beat",(float)(1f/beatTime));
-        }
-    }
-
     public override void PreBeatAction(int counter)
     {
         base.PreBeatAction(counter);
@@ -40,8 +24,6 @@ public class PlayerBeatReciever : BeatReciever //WHY IS THIS ON ZOMBIES TOO?!?!?
     public override void BeatAction(int counter)
     {
         base.BeatAction(counter);
-        animator.SetTrigger("Pulse");
-        //Invoke("ResetIdle",0.1f);
     }
     
     public override void PostBeatAction(int counter)
@@ -51,16 +33,6 @@ public class PlayerBeatReciever : BeatReciever //WHY IS THIS ON ZOMBIES TOO?!?!?
         {
             danceMemoryComp.RememberStep(managerComp, DanceStep.None);
         }
-    }
-
-    public override void OnPauseSongAction()
-    {
-        animator.enabled = false;
-    }
-
-    public void ResetIdle()
-    {
-        animator.ResetTrigger("Pulse");
     }
 
     void RaiseDanceThisBeatFlag(PlayerManager throwaway1, DanceStep throwaway2)
