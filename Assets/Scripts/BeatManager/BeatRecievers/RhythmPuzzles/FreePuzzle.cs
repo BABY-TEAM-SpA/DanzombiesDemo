@@ -44,14 +44,6 @@ public class FreePuzzle : RhythmPuzzle
     {
     }
 
-    public override void PostBeatAction(int counter)
-    {
-        base.PostBeatAction(counter);
-        if (!currentDanceTriggered)
-            storedDanceMemory?.RememberStep(storedPlayer, DanceStep.None);
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<PlayerManager>(out PlayerManager player))

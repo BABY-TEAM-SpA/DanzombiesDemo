@@ -143,11 +143,11 @@ public abstract class RhythmPuzzle : BeatReciever
 
     public void PlayerDanceReaction(PlayerManager player, DanceStep step) //cuando un player hace un paso esta es la reaccion
     {
-        if(currentPuzzleStep != DanceStep.None){
-            //bool anyPlayerIsCorrect = false; //esta variable no me queda clara, pareciera que no esta haciendo nada
-            ReactToPlayersDance(player, step);
-            VisualFeedbackToPlayerDance(/*anyPlayerIsCorrect*/  false);
-        }
+        //if(currentPuzzleStep != DanceStep.None){
+        //bool anyPlayerIsCorrect = false; //esta variable no me queda clara, pareciera que no esta haciendo nada
+        ReactToPlayersDance(player, step);
+        VisualFeedbackToPlayerDance(/*anyPlayerIsCorrect*/  false);
+        //}
         currentDanceTriggered = true;
     }
 

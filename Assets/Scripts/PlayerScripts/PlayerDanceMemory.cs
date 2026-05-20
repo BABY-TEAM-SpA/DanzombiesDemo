@@ -33,21 +33,23 @@ public class PlayerDanceMemory : MonoBehaviour
 
     public void SetMemorySize(int newSize)
     {
-        InitializeMemory();
         if (newSize < 0) newSize = 0;
         stepMemorySize = newSize;
+        InitializeMemory();
     }
 
-    public bool MatchesMemory(List<DanceStep> sequence)
+    public bool MatchesMemory(List<DanceStep> sequence) //checkea si la secuencia recibida es igual a la que se mantiene en memoria
+    //para la memoria solo importan los ultimos pasos; osea, si en memoria hay 10 pasos, y la secuencia recibida solo tiene 3
+    //se checkean los ultimos 3 pasos de la memoria, y el resto pueden ser cualquiera
     {
         if (sequence.Count > stepMemorySize)
         {
-            Debug.LogWarning("[PlayerDanceMemory]: Recibida una sequencia de pasos mas grande que la memoria disponible");
+            Debug.LogWarning("[PlayerDanceMemory]: Recibida una secuencia de pasos mas grande que la memoria disponible");
             return false;
         }
         int i = sequence.Count;
         int j = stepMemory.Count;
-        while(i < 0)
+        while(i > 0)
         {
             if(sequence[i-1] != stepMemory[j-1])
                 return false;
