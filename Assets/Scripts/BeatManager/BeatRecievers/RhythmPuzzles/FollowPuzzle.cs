@@ -2,54 +2,108 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Subs
-{
-    Player,
-    SubA,
-    SubB,
-    SubC,
-}
-
 
 [Serializable]
 public class FollowSequence
 {
-    public List<Subs> affected = new List<Subs>();
+    public bool playerAffected = false;
+    public List<int> zombiesAffected = new List<int>();
     public SequenceStep danceSequence;
 }
 
 public class FollowPuzzle : RhythmPuzzle
 {
-    
-    
+    [Header("Follow Puzzle Settings")]
     public ZombieDanceBrain leader;
-    public List<FollowSequence> danceSequence = new List<FollowSequence>();
-    
-    public ZombieDanceBrain SubA;
-    public ZombieDanceBrain SubB;
-    public ZombieDanceBrain SubC;
-    
-    private bool leaderTurn;
-    
-    
+    public bool leaderTurn;
+    public List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
+    public List<FollowSequence> followSequences = new List<FollowSequence>();
+    private FollowSequence currentFollowSequence;
+    private int currentFollowSequenceIndex = 0;
+
+    public override void ActivatePuzzle(bool activate)
+    {
+        base.ActivatePuzzle(activate);
+        ActivateFollowSequence(0);
+        leaderTurn = true;
+        leader.Connect(this);
+    }
     
     public override void OnUpdateSongAction()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
     
+    public override void PreparePuzzle() { }
 
-    public override void PreparePuzzle()
+    protected override void PuzzlePreBeat() { }
+
+    protected override void PuzzleBeat() { }
+
+    protected override void PuzzlePostBeat() { }
+
+    public override void OnSequenceEnd()
     {
-        leader.Connect(this);
-        SubA.Connect(this);
-        SubB.Connect(this);
-        SubC.Connect(this);
+        Debug.Log("CHeck if sequence end");
+        if (leaderTurn)
+        {
+            leaderTurn = false;
+            leader.Disconnect(this);
+            ZombieConnect(currentFollowSequence.zombiesAffected);
+            ActivateFollowSequence(currentFollowSequenceIndex);
+        }
+        else
+        {
+            DisconnectAll();
+            leaderTurn = true;
+            leader.Connect(this);
+            ActivateFollowSequence(currentFollowSequenceIndex+1);
+        }
     }
 
-    public override void GeneralVisualFeedback(int counter)
+    private void ZombieConnect(List<int> indexes)
     {
-        throw new System.NotImplementedException();
+        foreach (int index in indexes) zombies[index].Connect(this);
     }
+
+    private void DisconnectAll()
+    {
+        leader.Disconnect(this);
+        foreach (var zombie in zombies) zombie.Disconnect(this);
+    }
+    
+    private void OnDisable()
+    {
+        foreach (ZombieDanceBrain zombie in zombies) zombie.Disconnect(this);
+    }
+    
+    private void ActivateFollowSequence(int index)
+    {
+        if (index >= followSequences.Count)
+        {
+            DisconnectAll();
+            Debug.Log("Puzzle Has been completed");
+            ActivatePuzzle(false);
+            return;
+        }
+        currentFollowSequenceIndex = index;
+        currentFollowSequence = followSequences[currentFollowSequenceIndex];
+        SetSequence(currentFollowSequence.danceSequence);
+    }
+    
+    public override bool SetPlayerInput(DanceStep playerStep, out BeatFeedback bf)
+    { 
+        bf = playerStep == CurrentPuzzleStep? BeatManager.Instance.EvaluateInput(beatType): BeatFeedback.Bad;
+        if (!PlayerHasDanced && isOnBeat && !leaderTurn && currentFollowSequence.playerAffected)
+        {
+            PlayerHasDanced = true;
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
+
 
 }

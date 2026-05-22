@@ -3,53 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum DanceStep
-{
-    None,
-    L_North,
-    R_North,
-    L_South,
-    R_South,
-    L_West,
-    R_West,
-    L_East,
-    R_East
-}
-
-
-[Serializable]
-public class SequenceStep
-{
-    public enum GoalType
-    {
-        Default,
-        CorrectXTimes,
-        CompleteFullPattern,
-        FillFlow
-    }
-    public GoalType goalType;
-    public bool flowAffect;
-    
-    [SerializeField] public List<DanceStep> DanceSteps = new List<DanceStep>();
-    public UnityEvent OnSequenceCompletedEvent;
-}
 
 public abstract class RhythmPuzzle : BeatReciever
 {
-    public enum RhythmSyncMode
-    {
-        Global,
-        Local
-    }
-    [Header("Admin")]
-    [SerializeField] protected bool debug;
+    public enum RhythmSyncMode  { Global, Local}
+    
     [Header("Rhythm Puzzle Settings")]
-    [SerializeField] bool ActivateOnStart;
+    [SerializeField] protected bool debug;
+    [SerializeField] bool activateOnStart;
     [SerializeField] RhythmSyncMode syncMode = RhythmSyncMode.Global;
-    [HideInInspector]public SequenceStep activeDanceSequence;
-    protected DanceStep currentPuzzleStep = DanceStep.None;
-    protected DanceStep futurePuzzleStep = DanceStep.None;
-    protected int innerCounter;
+    
+    protected SequenceStep CurrentSequence;
+    protected DanceStep CurrentPuzzleStep = DanceStep.None;
+    protected DanceStep NextPuzzleStep = DanceStep.None;
+    protected int InnerCounter;
     private int startBeat;
     
     public delegate void OnMusicEvent(DanceStep danceStep);
@@ -57,11 +24,11 @@ public abstract class RhythmPuzzle : BeatReciever
     public event OnMusicEvent OnDanceStep;
     public delegate void OnMusicEvent2(DanceStep danceStep, DanceStep futureStep);
     public event OnMusicEvent2 OnReleaseStep;
-    public UnityEvent OnPuzzleGetsActivateEvent = new UnityEvent();
+    public UnityEvent onPuzzleGetsActivateEvent = new UnityEvent();
 
     [Header("Players")] 
-    protected bool playerHasDanced=false;
-    protected PlayerManager playersInside;
+    protected bool PlayerHasDanced=false;
+    protected PlayerManager PlayersInside;
     
     [Header("FeedBack References")]
     [SerializeField] protected SpriteRenderer feedBack;
@@ -69,36 +36,32 @@ public abstract class RhythmPuzzle : BeatReciever
     private void Start()
     {
         PreparePuzzle();
-        if (ActivateOnStart) ActivatePuzzle(true);
-    }
-    public abstract void PreparePuzzle();
-    DanceStep SetDanceStep()
-    {
-        if(activeDanceSequence.DanceSteps.Count==0 || innerCounter<0) return DanceStep.None;
-        int value = innerCounter % activeDanceSequence.DanceSteps.Count;
-        return activeDanceSequence.DanceSteps[value];
+        if (activateOnStart) ActivatePuzzle(true);
     }
 
-    private void CheckNextDanceStep() ///largo 4, estoy en el 49 (beat2), y el siguiente es en el 3 (beat4)
+    protected void SetSequence(SequenceStep sequence)
     {
-        if (activeDanceSequence.DanceSteps.Count == 0 || innerCounter < 0)
-        {
-            futurePuzzleStep =DanceStep.None;
-            return;
-        }
-            
-        for (int i = 0; i < activeDanceSequence.DanceSteps.Count; i++)
-        {
-            int aux = i+innerCounter+1;
-            aux = aux % activeDanceSequence.DanceSteps.Count;
-            if (activeDanceSequence.DanceSteps[aux] != DanceStep.None)
-            {
-                futurePuzzleStep=activeDanceSequence.DanceSteps[aux];
-                return;
-            }
-        }
-        futurePuzzleStep=DanceStep.None;
+        CurrentSequence = sequence;
+        CurrentSequence.startCounter = InnerCounter;
+        beatType = CurrentSequence.patternBeatType;
     }
+
+
+    // Tested - Working
+    public virtual bool SetPlayerInput(DanceStep playerStep, out BeatFeedback bf)
+    {
+        bool isCorrect = playerStep == CurrentPuzzleStep;
+        bf = isCorrect? BeatManager.Instance.EvaluateInput(beatType): BeatFeedback.Bad;
+        if (!PlayerHasDanced && isOnBeat)
+        {
+            PlayerHasDanced = true;
+            CurrentSequence.ApplyDance(isCorrect);
+            return true;
+        }
+        return false;
+    }
+    
+    public abstract void PreparePuzzle();
     
     public virtual void ActivatePuzzle(bool activate)
     {
@@ -107,85 +70,71 @@ public abstract class RhythmPuzzle : BeatReciever
         if (!activate)
             return;
 
-        if (syncMode == RhythmSyncMode.Local)
-            startBeat = BeatManager.Instance.GetCounter(beatType);
-        else
-            startBeat = 0;
+        if (syncMode == RhythmSyncMode.Local)  startBeat = BeatManager.Instance.GetCounter(beatType);
+        else startBeat = 0;
 
-        OnPuzzleGetsActivateEvent?.Invoke();
+        onPuzzleGetsActivateEvent?.Invoke();
     }
     
     public override void PreBeatAction(int counter)
     {
-        if (!isActive) return;
-        playerHasDanced = false;
+        PlayerHasDanced = false;
         UpdateInnerCounter();
-        currentPuzzleStep = SetDanceStep();
-        OnPrepareStep?.Invoke(currentPuzzleStep);
+        CurrentSequence.GetDanceStep(InnerCounter, out CurrentPuzzleStep);
+        PuzzlePreBeat();
+        OnPrepareStep?.Invoke(CurrentPuzzleStep);
     }
 
     public override void BeatAction(int counter)
     {
-        if (!isActive) return;
-        if(debug)Debug.Log("______Puzzle make "+currentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
-        OnDanceStep?.Invoke(currentPuzzleStep);
-        GeneralVisualFeedback(innerCounter);
+        if(debug)Debug.Log("______Puzzle make "+CurrentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
+        PuzzleBeat();
+        OnDanceStep?.Invoke(CurrentPuzzleStep);
         
     }
     public override void PostBeatAction(int counter)
     {
-        if (!isActive) return;
-        CheckNextDanceStep();
-        OnReleaseStep?.Invoke(currentPuzzleStep,futurePuzzleStep);
-        if (!playerHasDanced && playersInside != null && currentPuzzleStep != DanceStep.None)
+        PuzzlePostBeat();
+        Action<RhythmPuzzle> callback = CurrentSequence.GetNextDanceStep(InnerCounter, out NextPuzzleStep);
+        callback?.Invoke(this);
+        OnReleaseStep?.Invoke(CurrentPuzzleStep,NextPuzzleStep);
+        if (!PlayerHasDanced && PlayersInside != null && CurrentPuzzleStep != DanceStep.None)
         {
-            playersInside.ReportWrongDance();
+            CurrentSequence.ApplyDance(false);
+            PlayersInside.ReportEmptyDance();
         }
-        currentPuzzleStep = DanceStep.None;
-        playerHasDanced = false;
+        CurrentPuzzleStep = DanceStep.None;
+        PlayerHasDanced = false;
     }
-
-    public (bool,DanceStep,BeatManager.BeatType) PlayerMakeDance()
-    {
-        playerHasDanced = true;
-        return (isOnBeat,currentPuzzleStep,beatType);
-    }
-    public abstract void GeneralVisualFeedback(int counter);
-
-
     
     public virtual void PlayerEnter(PlayerManager player)
     {
         if(debug)Debug.Log("Player entered");
         player.AddTargetPuzzle(this);
-        playersInside = player;
+        PlayersInside = player;
     }
 
     public virtual void PlayerLeave(PlayerManager player)
     {
         if(debug)Debug.Log("Player Leave");
-        playersInside = null;
+        PlayersInside = null;
         player.RemoveTargetPuzzle(this);
     }
     
     void UpdateInnerCounter()
     {
-        if (activeDanceSequence == null ||
-            activeDanceSequence.DanceSteps.Count == 0)
-        {
-            innerCounter = 0;
-            return;
-        }
-
         int globalBeat = BeatManager.Instance.GetCounter(beatType);
 
-        if (syncMode == RhythmSyncMode.Local)
-            innerCounter = globalBeat - startBeat;
-        else
-            innerCounter = globalBeat;
+        if (syncMode == RhythmSyncMode.Local) InnerCounter = globalBeat - startBeat;
+        else InnerCounter = globalBeat;
 
-        if (innerCounter < 0)
-            innerCounter = 0;
+        if (InnerCounter < 0) InnerCounter = 0;
     }
-    
+
+    protected abstract void PuzzlePreBeat();
+    protected abstract void PuzzleBeat();
+    protected abstract void PuzzlePostBeat();
+
+    public abstract void OnSequenceEnd();
+
 }

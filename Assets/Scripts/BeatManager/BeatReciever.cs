@@ -4,7 +4,7 @@ using static BeatManager;
 public abstract class BeatReciever : MonoBehaviour
 {
     [SerializeField] protected BeatType beatType = BeatType.FullBeat;
-    public bool isActive { get; set; } = true;
+    public bool isActive { get; set; } = false;
     public bool isOnBeat { get; private set; } = false;
 
     public enum BeatFeedback
@@ -43,26 +43,24 @@ public abstract class BeatReciever : MonoBehaviour
 
     private void OnPreBeatEvent(int counter, BeatType type)
     {
+        if (!isActive) return;
         if (type != beatType) return;
-
-        if (isActive)
-            PreBeatAction(counter);
-
+        PreBeatAction(counter);
         isOnBeat = true;
     }
 
     private void OnBeatEvent(int counter, BeatType type)
     {
+        if (!isActive) return;
         if (type != beatType) return;
-        if (isActive) BeatAction(counter);
+        BeatAction(counter);
     }
 
     private void OnPostBeatEvent(int counter, BeatType type)
     {
-        if (type != beatType) return;
-
-        if (isActive) PostBeatAction(counter);
-
+        if (!isActive) return;
+        if (type != beatType) return; 
+        PostBeatAction(counter);
         isOnBeat = false;
     }
 

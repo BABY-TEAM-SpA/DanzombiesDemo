@@ -37,20 +37,33 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public override void ActivatePuzzle(bool activate)
     {
-        innerCounter = 0;
+        InnerCounter = 0;
         playerSucceses = 0;
         base.ActivatePuzzle(activate);
-        if (currentTutorialSequence < TutorialSequences.Count)
-            activeDanceSequence = TutorialSequences[currentTutorialSequence];
+        if (currentTutorialSequence < TutorialSequences.Count) CurrentSequence = TutorialSequences[currentTutorialSequence];
     }
-    
 
-    public override void GeneralVisualFeedback(int counter)
+    protected override void PuzzlePreBeat()
     {
         //throw new NotImplementedException();
     }
-    
-    
+
+    protected override void PuzzleBeat()
+    {
+        //throw new NotImplementedException();
+    }
+
+    protected override void PuzzlePostBeat()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void OnSequenceEnd()
+    {
+        //throw new NotImplementedException();
+    }
+
+
     /*public void ReactToPlayersDance(PlayerManager player, DanceStep step)
     {
         if (step == DanceStep.None)return;
@@ -58,53 +71,13 @@ public class TutorialPuzzle : RhythmPuzzle
         Debug.Log("Puzzle: "+step.ToString()+ "| Player: "+ player.saveDanceStep.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
         MissionBuffer(IsPlayerDanceCorrect);
     }*/
-
-    public void MissionBuffer(bool isCorrect)
-    {
-        switch (activeDanceSequence.goalType)
-        {
-            default:
-                if (isCorrect) CompleteRhythmSequence();
-                break;
-            case SequenceStep.GoalType.CorrectXTimes:
-                if (isCorrect)
-                {
-                    playerSucceses+=1;
-                    if (playerSucceses >= puzzleGoal)
-                    {
-                        playerSucceses = 0;
-                        CompleteRhythmSequence();
-                    }
-                }
-                else
-                {
-                    playerSucceses = 0;
-                }
-
-                break;
-            case SequenceStep.GoalType.CompleteFullPattern:
-                if(isCorrect) playerSucceses+=1;
-                int totaldances = activeDanceSequence.DanceSteps.FindAll(x=>x!=DanceStep.None).Count;
-                if (innerCounter%activeDanceSequence.DanceSteps.Count==activeDanceSequence.DanceSteps.Count-1)
-                {
-                    if(playerSucceses == totaldances) CompleteRhythmSequence();
-                    playerSucceses=0;
-                }
-
-                break;
-            case SequenceStep.GoalType.FillFlow:
-                int flow = playersInside.IncreaseFlow(!isCorrect?1:-1);
-                if(flow == 10) CompleteRhythmSequence();
-                break;
-        }
-    }
     
 
     public void CompleteRhythmSequence()
     {
-        activeDanceSequence.OnSequenceCompletedEvent?.Invoke();
+        CurrentSequence.OnSequenceCompletedEvent?.Invoke();
         currentTutorialSequence += 1;
-        innerCounter = 0;
+        InnerCounter = 0;
         ActivatePuzzle(false);
         
     }

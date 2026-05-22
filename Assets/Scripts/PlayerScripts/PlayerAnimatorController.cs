@@ -66,7 +66,6 @@ public class PlayerAnimatorController : DanceAnimatorController
     {
         if(leanInput && directionInput && !danceTriggered)
         {
-            Debug.Log("Here");
             danceTriggered=true;
             DanceStep step = Enum.Parse<DanceStep>( currentLean + "_" + currentDirection );
             OnDanceBegin(step);

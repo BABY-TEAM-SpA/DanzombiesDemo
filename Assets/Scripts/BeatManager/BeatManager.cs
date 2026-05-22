@@ -31,8 +31,8 @@ public class BeatManager : MonoBehaviour
     public double quarterBeatDuration { get; private set; }
     public double eighthBeatDuration { get; private set; }
 
-    public int quarterCounter { get; private set; }
-    public int eighthCounter { get; private set; }
+    public int globalCounterNegra { get; private set; }
+    public int globalCounterCorchea { get; private set; }
 
     private BeatStatus quarterStatus = BeatStatus.None;
     private BeatStatus eighthStatus = BeatStatus.None;
@@ -101,26 +101,26 @@ public class BeatManager : MonoBehaviour
 
     void UpdateNegrasBeat()
     {
-        quarterCounter = (int)Math.Round(songTime / quarterBeatDuration);
+        globalCounterNegra = (int)Math.Round(songTime / quarterBeatDuration);
 
         if (quarterStatus == BeatStatus.None && songTime >= preBeatTime)
         {
-            OnPreBeat?.Invoke(quarterCounter, BeatType.FullBeat);
+            OnPreBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
             quarterStatus = BeatStatus.PreBeat;
         }
 
         if (quarterStatus == BeatStatus.PreBeat && songTime >= beatTime)
         {
-            OnBeat?.Invoke(quarterCounter, BeatType.FullBeat);
+            OnBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
             Debug.Log("FullBeat");
             quarterStatus = BeatStatus.PostBeat;
         }
 
         if (quarterStatus == BeatStatus.PostBeat && songTime >= postBeatTime)
         {
-            OnPostBeat?.Invoke(quarterCounter, BeatType.FullBeat);
+            OnPostBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
             quarterStatus = BeatStatus.None;
-            CalculateNextBeatTime( quarterCounter+1);
+            CalculateNextBeatTime( globalCounterNegra+1);
         }
     }
 
@@ -129,25 +129,25 @@ public class BeatManager : MonoBehaviour
 
     void UpdateCorcheasBeat()
     {
-        eighthCounter = (int)Math.Round(songTime / eighthBeatDuration);
+        globalCounterCorchea = (int)Math.Round(songTime / eighthBeatDuration);
         if (eighthStatus == BeatStatus.None && songTime >= preHalfBeatTime)
         {
-            OnPreBeat?.Invoke(eighthCounter, BeatType.HalfBeat);
+            OnPreBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
             eighthStatus = BeatStatus.PreBeat;
         }
 
         if (eighthStatus == BeatStatus.PreBeat && songTime >= halfBeatTime)
         {
-            OnBeat?.Invoke(eighthCounter, BeatType.HalfBeat);
+            OnBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
             Debug.Log("HalfBeat");
             eighthStatus = BeatStatus.PostBeat;
         }
 
         if (eighthStatus == BeatStatus.PostBeat && songTime >= postHalfBeatTime)
         {
-            OnPostBeat?.Invoke(eighthCounter, BeatType.HalfBeat);
+            OnPostBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
             eighthStatus = BeatStatus.None;
-            CalculateNextHalfBeatTime(eighthCounter+1);
+            CalculateNextHalfBeatTime(globalCounterCorchea+1);
         }
     }
 
@@ -193,8 +193,8 @@ public class BeatManager : MonoBehaviour
         dspStartTime =
             AudioManager.Instance.currentSongPlaying.dspSongStartTime;
 
-        quarterCounter = 0;
-        eighthCounter = 0;
+        globalCounterCorchea = 0;
+        globalCounterCorchea = 0;
 
         quarterStatus = BeatStatus.None;
         eighthStatus = BeatStatus.None;
@@ -205,9 +205,9 @@ public class BeatManager : MonoBehaviour
         switch (beatType)
         {
             case BeatType.FullBeat:
-                return quarterCounter;
+                return globalCounterNegra;
             case BeatType.HalfBeat:
-                return eighthCounter;
+                return globalCounterCorchea;
             default:
                 return 0;
         }
