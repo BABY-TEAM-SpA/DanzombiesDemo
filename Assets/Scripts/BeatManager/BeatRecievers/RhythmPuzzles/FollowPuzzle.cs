@@ -11,12 +11,20 @@ public class FollowSequence
     public SequenceStep danceSequence;
 }
 
+[Serializable]
+public class ZombieDummie
+{
+    public ZombieDanceBrain brain;
+    public FeedbackElement feedbackElement;
+}
+
 public class FollowPuzzle : RhythmPuzzle
 {
     [Header("Follow Puzzle Settings")]
-    public ZombieDanceBrain leader;
+    public FeedbackElement playerFeedbackElement;
+    public ZombieDummie leader;
     public bool leaderTurn;
-    public List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
+    public List<ZombieDummie> zombies = new List<ZombieDummie>();
     public List<FollowSequence> followSequences = new List<FollowSequence>();
     private FollowSequence currentFollowSequence;
     private int currentFollowSequenceIndex = 0;
@@ -24,9 +32,11 @@ public class FollowPuzzle : RhythmPuzzle
     public override void ActivatePuzzle(bool activate)
     {
         base.ActivatePuzzle(activate);
+        playersInside.ActivateDanceHUD(true);
         ActivateFollowSequence(0);
         leaderTurn = true;
-        leader.Connect(this);
+        leader.brain.Connect(this);
+        leader.feedbackElement.Activate(true);
     }
     
     public override void OnUpdateSongAction()
@@ -36,45 +46,73 @@ public class FollowPuzzle : RhythmPuzzle
     
     public override void PreparePuzzle() { }
 
+    public override void PlayerGetDamaged()
+    {
+        
+    }
+
     protected override void PuzzlePreBeat() { }
 
     protected override void PuzzleBeat() { }
 
     protected override void PuzzlePostBeat() { }
 
+    protected override void CheckPlayerPost()
+    {
+        if (!PlayerHasDanced && playersInside != null && CurrentPuzzleStep != DanceStep.None && currentFollowSequence.playerAffected && !leaderTurn)
+        {
+            CurrentSequence.ApplyDance(false);
+            playersInside.ReportEmptyDance();
+        }
+    }
+
     public override void OnSequenceEnd()
     {
         Debug.Log("CHeck if sequence end");
         if (leaderTurn)
         {
+            if(currentFollowSequence.playerAffected) playerFeedbackElement.Activate(true);
             leaderTurn = false;
-            leader.Disconnect(this);
+            leader.brain.Disconnect(this);
+            leader.feedbackElement.Activate(false);
             ZombieConnect(currentFollowSequence.zombiesAffected);
             ActivateFollowSequence(currentFollowSequenceIndex);
         }
         else
         {
+            playerFeedbackElement.Activate(false);
             DisconnectAll();
             leaderTurn = true;
-            leader.Connect(this);
+            leader.brain.Connect(this);
+            leader.feedbackElement.Activate(true);
             ActivateFollowSequence(currentFollowSequenceIndex+1);
         }
     }
 
     private void ZombieConnect(List<int> indexes)
     {
-        foreach (int index in indexes) zombies[index].Connect(this);
+        foreach (int index in indexes)
+        {
+            var zombie = zombies[index]; 
+            zombie.brain.Connect(this);
+            zombie.feedbackElement.Activate(true);
+        }
     }
 
     private void DisconnectAll()
     {
-        leader.Disconnect(this);
-        foreach (var zombie in zombies) zombie.Disconnect(this);
+        leader.brain.Disconnect(this);
+        leader.feedbackElement.Activate(false);
+        foreach (var zombie in zombies)
+        {
+            zombie.brain.Disconnect(this);
+            zombie.feedbackElement.Activate(false);
+        }
     }
     
     private void OnDisable()
     {
-        foreach (ZombieDanceBrain zombie in zombies) zombie.Disconnect(this);
+        foreach (var zombie in zombies) zombie.brain.Disconnect(this);
     }
     
     private void ActivateFollowSequence(int index)

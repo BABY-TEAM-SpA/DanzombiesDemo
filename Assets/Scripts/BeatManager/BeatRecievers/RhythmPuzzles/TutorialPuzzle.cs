@@ -29,10 +29,7 @@ public class TutorialPuzzle : RhythmPuzzle
         HUD?.Disconnect(this);
     }
 
-    public override void OnUpdateSongAction()
-    {
-        //throw new NotImplementedException();
-    }
+    public override void OnUpdateSongAction() {}
     
 
     public override void ActivatePuzzle(bool activate)
@@ -43,25 +40,15 @@ public class TutorialPuzzle : RhythmPuzzle
         if (currentTutorialSequence < TutorialSequences.Count) CurrentSequence = TutorialSequences[currentTutorialSequence];
     }
 
-    protected override void PuzzlePreBeat()
-    {
-        //throw new NotImplementedException();
-    }
+    public override void PlayerGetDamaged() {}
 
-    protected override void PuzzleBeat()
-    {
-        //throw new NotImplementedException();
-    }
+    protected override void PuzzlePreBeat() {}
 
-    protected override void PuzzlePostBeat()
-    {
-        //throw new NotImplementedException();
-    }
+    protected override void PuzzleBeat() {}
 
-    public override void OnSequenceEnd()
-    {
-        //throw new NotImplementedException();
-    }
+    protected override void PuzzlePostBeat() {}
+
+    public override void OnSequenceEnd() {}
 
 
     /*public void ReactToPlayersDance(PlayerManager player, DanceStep step)

@@ -78,7 +78,7 @@ public class SequenceStep
                 case PlaybackMode.PlaySequenceXTimes:
                     if ((int)(nextStepCounter-startCounter) / pattern.Count >= playerSeqToStop)
                     {
-                        Debug.Log("Ended by Played X Times");
+                        Debug.Log("Ended by Played X Times "+ ((nextStepCounter-startCounter) / pattern.Count).ToString());
                         return callback;
                     }
                     else
@@ -112,7 +112,7 @@ public class SequenceStep
                     }
             }
         } 
-        return callback;
+        return null;
     }
 
     private DanceStep CalulateFutureStep(int counter)

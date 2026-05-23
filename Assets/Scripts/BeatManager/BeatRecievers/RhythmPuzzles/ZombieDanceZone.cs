@@ -68,16 +68,23 @@ public class ZombieDanceZone : RhythmPuzzle
             PlayerLeave(player);
         }
     }
-    public override void PlayerEnter(PlayerManager player)
+    protected override void PlayerEnter(PlayerManager player)
     {
         base.PlayerEnter(player);
         LevelUIController.Instance?.UpdateZombieFeedbackUI(true);
+        player.ActivateDanceHUD(true);
     }
 
-    public override void PlayerLeave(PlayerManager player)
+    protected override void PlayerLeave(PlayerManager player)
     {
         base.PlayerLeave(player);
+        player.ActivateDanceHUD(false);
         LevelUIController.Instance?.UpdateZombieFeedbackUI(false);
+    }
+
+    public override void PlayerGetDamaged()
+    {
+        PlayerLeave(playersInside);
     }
 
     protected override void PuzzlePreBeat()

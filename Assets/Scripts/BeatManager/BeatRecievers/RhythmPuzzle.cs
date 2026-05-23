@@ -28,10 +28,8 @@ public abstract class RhythmPuzzle : BeatReciever
 
     [Header("Players")] 
     protected bool PlayerHasDanced=false;
-    protected PlayerManager PlayersInside;
+    [SerializeField] protected PlayerManager playersInside;
     
-    [Header("FeedBack References")]
-    [SerializeField] protected SpriteRenderer feedBack;
     
     private void Start()
     {
@@ -98,28 +96,35 @@ public abstract class RhythmPuzzle : BeatReciever
         Action<RhythmPuzzle> callback = CurrentSequence.GetNextDanceStep(InnerCounter, out NextPuzzleStep);
         callback?.Invoke(this);
         OnReleaseStep?.Invoke(CurrentPuzzleStep,NextPuzzleStep);
-        if (!PlayerHasDanced && PlayersInside != null && CurrentPuzzleStep != DanceStep.None)
-        {
-            CurrentSequence.ApplyDance(false);
-            PlayersInside.ReportEmptyDance();
-        }
+        CheckPlayerPost();
         CurrentPuzzleStep = DanceStep.None;
         PlayerHasDanced = false;
     }
+
+    protected virtual void CheckPlayerPost()
+    {
+        if (!PlayerHasDanced && playersInside != null && CurrentPuzzleStep != DanceStep.None)
+        {
+            CurrentSequence.ApplyDance(false);
+            playersInside.ReportEmptyDance();
+        }
+    }
     
-    public virtual void PlayerEnter(PlayerManager player)
+    protected virtual void PlayerEnter(PlayerManager player)
     {
         if(debug)Debug.Log("Player entered");
         player.AddTargetPuzzle(this);
-        PlayersInside = player;
+        playersInside = player;
     }
-
-    public virtual void PlayerLeave(PlayerManager player)
+    
+    protected virtual void PlayerLeave(PlayerManager player)
     {
         if(debug)Debug.Log("Player Leave");
-        PlayersInside = null;
+        playersInside = null;
         player.RemoveTargetPuzzle(this);
     }
+
+    public abstract void PlayerGetDamaged();
     
     void UpdateInnerCounter()
     {

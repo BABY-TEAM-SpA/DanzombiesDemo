@@ -27,17 +27,13 @@ public class PlayerManager : DanceBrain
     public int flow => nivelDeSeguridad;
 
     public DanceBarController danceBar { get; set; }
-
-    public RhythmPuzzle targetPuzzle { get; set; }
-
+    
     public UnityEvent LifeDamagedEvent;
-
     public UnityEvent LifeHealedEvent;
-
-    public static event Action<BeatReciever.BeatFeedback>
-        DanceFeedbackEvent;
+    public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
 
     public static PlayerManager Player;
+    public RhythmPuzzle targetPuzzle;
 
 
     private void Awake()
@@ -137,9 +133,7 @@ public class PlayerManager : DanceBrain
         if (value < GameManager.Alza)
         {
             GetLifeDamage(true);
-
-            targetPuzzle?.PlayerLeave(this);
-
+            targetPuzzle?.PlayerGetDamaged();
             SetFlow(5);
         }
 
@@ -174,11 +168,8 @@ public class PlayerManager : DanceBrain
     public void ActivatePlayer()
     {
         isActive = true;
-
         EnableMovement(true);
-
         EnableDance(true);
-
         beatReciever.SetActive(true);
     }
 
