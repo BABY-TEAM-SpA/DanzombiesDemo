@@ -89,13 +89,17 @@ public class BeatManager : MonoBehaviour
     {
         int closestBeat = GetClosestBeat(songTime);
         
-        if ((closestBeat != 0) && (closestBeat != lastBeat)){
+        if (closestBeat != lastBeat)
+        {
+            if (!(closestBeat < lastBeat))
+            {
+                preTriggered = false;
+                beatTriggered = false;
+                postTriggered = false;
+            
+                counter+=1;
+            }
             lastBeat = closestBeat;
-            preTriggered = false;
-            beatTriggered = false;
-            postTriggered = false;
-        
-            counter+=1;
         }
 
         double beatStart = closestBeat * beatDuration;
@@ -129,26 +133,27 @@ public class BeatManager : MonoBehaviour
     void UpdateHalfBeat(double songTime)
     {
         double halfDuration = beatDuration * 0.5;
+        int closestHalfBeat = GetClosestHalfBeat(songTime);
 
-        int currentHalfBeat = (int)(songTime / halfDuration);
-
-        if (currentHalfBeat != lastHalfBeat)
+        if (closestHalfBeat != lastHalfBeat)
         {
-            lastHalfBeat = currentHalfBeat;
-
-            preHalfTriggered = false;
-            halfTriggered = false;
-            postHalfTriggered = false;
+            if (!(closestHalfBeat < lastHalfBeat))
+            {
+                preHalfTriggered = false;
+                halfTriggered = false;
+                postHalfTriggered = false;
+            }
+            lastHalfBeat = closestHalfBeat;
         }
 
-        double halfStart = currentHalfBeat * halfDuration;
+        double halfStart = closestHalfBeat * halfDuration;
 
         if (!preHalfTriggered &&
             songTime >= halfStart - halfDuration * margen)
         {
             preHalfTriggered = true;
 
-            OnPreHalfBeat?.Invoke(currentHalfBeat);
+            OnPreHalfBeat?.Invoke(closestHalfBeat);
         }
 
         if (!halfTriggered &&
@@ -156,7 +161,7 @@ public class BeatManager : MonoBehaviour
         {
             halfTriggered = true;
 
-            OnHalfBeat?.Invoke(currentHalfBeat);
+            OnHalfBeat?.Invoke(closestHalfBeat);
         }
 
         if (!postHalfTriggered &&
@@ -164,7 +169,7 @@ public class BeatManager : MonoBehaviour
         {
             postHalfTriggered = true;
 
-            OnPostHalfBeat?.Invoke(currentHalfBeat);
+            OnPostHalfBeat?.Invoke(closestHalfBeat);
         }
     }
 
@@ -176,13 +181,15 @@ public class BeatManager : MonoBehaviour
         dspStartTime =
             AudioManager.Instance.currentSongPlaying.dspSongStartTime;
         
+        /*These lines made beats trigger twice upon looping a song.
+        If erasing them breaks something else then need to find a different solution to *that* issue. (Ssoar)
         preTriggered = false;
         beatTriggered = false;
         postTriggered = false;
 
         preHalfTriggered = false;
         halfTriggered = false;
-        postHalfTriggered = false;
+        postHalfTriggered = false;*/
 
         if (resetCounter)
         {
@@ -199,6 +206,26 @@ public class BeatManager : MonoBehaviour
         //this *can* give negative beats which would mean the last beat in the song is the closest (Ssoar)
         int nextBeat = (int)(songTime / beatDuration) + 1;
         int prevBeat = (int)(songTime / beatDuration);
+        double nextBeatTime = nextBeat * beatDuration;
+        double prevBeatTime = prevBeat * beatDuration;
+        double nextBeatDistance = Mathf.Abs((float)(songTime - nextBeatTime));
+        double prevBeatDistance = Mathf.Abs((float)(songTime - prevBeatTime));
+        if (nextBeatDistance < prevBeatDistance)
+        {
+            return nextBeat;
+        }
+        else
+        {
+            return prevBeat;
+        }
+    }
+
+    int GetClosestHalfBeat(double songTime)
+    {
+        //given a current songTime, it spits out which beat is closest. This could be the next or the previous beat. (Ssoar)
+        //this *can* give negative beats which would mean the last beat in the song is the closest (Ssoar)
+        int nextBeat = (int)(songTime / beatDuration * 0.5) + 1;
+        int prevBeat = (int)(songTime / beatDuration * 0.5);
         double nextBeatTime = nextBeat * beatDuration;
         double prevBeatTime = prevBeat * beatDuration;
         double nextBeatDistance = Mathf.Abs((float)(songTime - nextBeatTime));
