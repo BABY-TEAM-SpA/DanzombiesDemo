@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 3465130852895728156}
   - component: {fileID: 3308144933667447571}
   - component: {fileID: 1450538241836724591}
+  - component: {fileID: 4965230999269282607}
+  - component: {fileID: 8633414844779816032}
   m_Layer: 0
   m_Name: PlayerBaseDZ
   m_TagString: Player
@@ -92,11 +94,15 @@ MonoBehaviour:
   playerAnimCtrl: {fileID: 4086932025709530668}
   beatReciever: {fileID: 3465130852895728156}
   isRightLooking: 1
+  debug: 0
+  danceMemory: {fileID: 4965230999269282607}
   ActivateOnStart: 1
   lifes: 3
-  NivelDeSeguridad: 10
+  nivelDeSeguridad: 5
   danceBar: {fileID: 0}
-  targetPuzzle: {fileID: 0}
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  animator: {fileID: 6969242347076242797}
+  managerComp: {fileID: 6530795612346585224}
+  danceMemoryComp: {fileID: 4965230999269282607}
 --- !u!114 &3308144933667447571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +367,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4965230999269282607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542709926716473569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7342d7b0f2781930a8af66031f00e3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDanceMemory
+--- !u!114 &8633414844779816032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542709926716473569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e6423d33e1ab6d5a8c2d5d7fd3b1e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimBeatReciever
+  isActive: 1
+  animator: {fileID: 6969242347076242797}
 --- !u!1 &3527966112122585668
 GameObject:
   m_ObjectHideFlags: 0
