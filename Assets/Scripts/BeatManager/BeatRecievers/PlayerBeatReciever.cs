@@ -5,6 +5,7 @@ public class PlayerBeatReciever : BeatReciever //zombies ahora usan AnimBeatRece
 {
     [SerializeField] PlayerManager managerComp;
     [SerializeField] PlayerDanceMemory danceMemoryComp;
+    [SerializeField] PlayerMovementController moveController;
 
     bool danceExecutedThisBeat; /*si se ha hecho un baile en este beat. Se reinicia en pre-beats. Se usa para saber cuando el jugador debe mandar 
     DanceStep.None al DanceMemory. Las zonas de zombies TIENEN SU PROPIA FORMA DE CHECKEAR ESTO y NO usan esta variable (TODO: hacer que ambas cosas
@@ -24,6 +25,7 @@ public class PlayerBeatReciever : BeatReciever //zombies ahora usan AnimBeatRece
     public override void BeatAction(int counter)
     {
         base.BeatAction(counter);
+        moveController.PassBeat();
     }
     
     public override void PostBeatAction(int counter)

@@ -11,6 +11,7 @@ public class PlayerManager : DanceBrain
     [SerializeField] bool debug;
 
     [SerializeField] PlayerDanceMemory danceMemory; //componente que recuerda los ultimos pasos de baile ejecutados correctamente
+
     [SerializeField] private bool ActivateOnStart;
     public int lifes =3;
     [SerializeField] [Range(0,10)] private int nivelDeSeguridad = 5;
