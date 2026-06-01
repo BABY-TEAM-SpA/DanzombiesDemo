@@ -3,11 +3,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private DanceBrain _danceBrain;
+    [Header("References")]
+    [SerializeField] private DanceBrain _danceBrain; //TODO: separate this from the zombiebrains WHY DO THE ZOMBIE BRAINS USE PLAYERMOVEMENTCONTROLLER HELP ME
 
+    [Header("Params")]
     [SerializeField] private bool AllowInput = false;
     [SerializeField] private float Speed = 15f;
     [Range(0,50)]public float acceleration;
+
+    [Header("Variables")]
     private Vector3 direction;
     public Vector3 velocity { private set; get; } = Vector3.zero;
     float currentSpeedFactor = 1.0f;
@@ -16,6 +20,11 @@ public class PlayerMovementController : MonoBehaviour
     void Start()
     {
         SetSpeed();
+    }
+
+    public void setDanceBrain(DanceBrain toSet) //function to be called by playerManager
+    {
+        _danceBrain = toSet;
     }
     
     void Update()

@@ -10,6 +10,7 @@ public class PlayerManager : DanceBrain
     
     [SerializeField] bool debug;
 
+    [Header("References")]
     [SerializeField] PlayerDanceMemory danceMemory; //componente que recuerda los ultimos pasos de baile ejecutados correctamente
 
     [SerializeField] private bool ActivateOnStart;
@@ -40,6 +41,8 @@ public class PlayerManager : DanceBrain
     public void Start(){
         if (ActivateOnStart) ActivatePlayer();
         OnDanceEvent.AddListener(danceMemory.RememberStep);
+        playerMovCtrl.setDanceBrain(this);
+        (beatReciever as PlayerBeatReciever).SetReferences(this, danceMemory, playerMovCtrl);
     }
 
     public void TakeFlowDamage(int damage)
