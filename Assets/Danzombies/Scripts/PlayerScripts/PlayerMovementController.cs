@@ -30,6 +30,15 @@ public class PlayerMovementController : MonoBehaviour
         SetDirectionToMove(new Vector3(input.x, input.y, 0));
     }
     
+    public void OnSprintEvent(InputAction.CallbackContext context)
+    {
+        Debug.Log("Sprint event: " + context.phase);
+        if (context.performed)
+            SetSpeed(Speed * 2);
+        else if (context.canceled)
+            SetSpeed();
+    }
+
     public void SetDirectionToMove(Vector3 dir)
     {
         direction = dir;
@@ -61,6 +70,7 @@ public class PlayerMovementController : MonoBehaviour
     
     public void SetSpeed(float speed=10f)
     {
+        Debug.Log($"SetSpeed: {speed}");
         Speed = speed;
     }
 }
