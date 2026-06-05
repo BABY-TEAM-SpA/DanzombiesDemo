@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class InteractableComponent : MonoBehaviour
 {
     #region [VARIABLES]
     [SerializeField] private InteractableFeedback feedback;
-    [SerializeField] private BoxCollider2D boxCollider;
 
     public bool isInteractable = true;
 

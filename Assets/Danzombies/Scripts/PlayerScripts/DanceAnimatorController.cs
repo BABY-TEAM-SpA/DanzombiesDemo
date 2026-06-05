@@ -53,16 +53,16 @@ public class DanceAnimatorController : MonoBehaviour
 
     }*/
     
-    public void OnMoving(Vector3 direction)
+    public void OnMoving(Vector3 velocity)
     {
-        bool moving = direction != Vector3.zero;
+        bool moving = velocity != Vector3.zero;
         animator.SetBool("LeftLooking", _danceBrain.isLeftLooking);
         if (moving)
         {
             animator.ResetTrigger("Pulse");
         }
         animator.SetBool("Walking", moving);
-        animator.SetFloat("WalkingSpeed", direction.magnitude);
+        animator.SetFloat("WalkingSpeed", velocity.magnitude);
     }
     
     public void OnDanceBegin(DanceStep step)
