@@ -79,7 +79,7 @@ public class PlayerMovementController : MonoBehaviour
         Velocity = Vector2.Lerp( Velocity, targetDirection.normalized * speed, acceleration * Time.deltaTime);
         if (Velocity.magnitude < 0.05f) Velocity = Vector2.zero;
         transform.localPosition += (Vector3)(Velocity * Time.deltaTime);
-        danceBrain.OnMoving(Velocity);
+        danceBrain.OnMoving(targetDirection);
         if (Mathf.Abs(Velocity.x) > 0.01f) danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
     }
     
