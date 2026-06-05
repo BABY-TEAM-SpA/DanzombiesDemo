@@ -8,7 +8,7 @@ public abstract class DanceBrain : MonoBehaviour
     [SerializeField] protected PlayerMovementController movCtrl;
     [SerializeField] protected DanceAnimatorController danceAnimCtrl;
     [SerializeField] protected BeatReciever beatReciever;
-    public bool isRightLooking{ get; set; } 
+    public bool isLeftLooking;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     public void EnableMovement(bool isON=false)
@@ -31,10 +31,10 @@ public abstract class DanceBrain : MonoBehaviour
 
     public void SetBodyDirection(float value)
     {
-        bool isRight = value > 0;
-        if(isRight != isRightLooking && value!=0)
+        bool isLeft = value < 0;
+        if(isLeft != isLeftLooking && value!=0)
         {
-            isRightLooking = isRight;
+            isLeftLooking = isLeft;
             danceAnimCtrl.SetAnimatorOverrideDirection();
         }
     }
