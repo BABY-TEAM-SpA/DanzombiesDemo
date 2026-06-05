@@ -21,14 +21,11 @@ public class ZombieDanceBrain : DanceBrain
         }
     }
     
-
     private void MoveToPoint(Vector3 point, float time)
     {
-        Vector3 dif = new Vector3(this.transform.localPosition.x-point.x,this.transform.localPosition.y-point.y,0f);
+        Vector2 dif = new Vector2(this.transform.localPosition.x-point.x,this.transform.localPosition.y-point.y);
         dif = dif.normalized;
-        movCtrl.SetDirectionToMove(dif);
-        EnableMovement(true);
-        Invoke("EnableMovement", time);
+        movCtrl.MoveForSeconds(dif, time);
     }
 
     public override void OnDance(DanceStep step)

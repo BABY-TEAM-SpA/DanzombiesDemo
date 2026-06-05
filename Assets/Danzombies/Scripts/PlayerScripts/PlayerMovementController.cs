@@ -1,66 +1,91 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private DanceBrain _danceBrain;
-    [SerializeField] private bool AllowInput = false;
-    [SerializeField] private float Speed = 15f;
-    [Range(0,50)]public float acceleration;
-    private Vector3 direction;
-    public Vector3 velocity { private set; get; } = Vector3.zero;
-    
+    [Header("References")]
+    [SerializeField] private DanceBrain danceBrain;
 
-    void Start()
-    {
-        SetSpeed();
-    }
-    void Update()
-    {
-        if(_danceBrain.isActive && AllowInput) HandleMovement();
-        else
-        {
-            velocity = Vector3.zero;
-        }
-    }
+    [Header("Movement")]
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float acceleration = 15f;
+
+    private Vector2 inputDirection;
+    private Vector2 scriptedDirection;
+
+    private bool allowInput = true;
+
+    public Vector2 Velocity { get; private set; }
+
     
+    public void EnableInput()
+    {
+        allowInput = true;
+    }
+
+    public void DisableInput()
+    {
+        allowInput = false;
+        inputDirection = Vector2.zero;
+    }
+
     public void OnMoveEvent(InputAction.CallbackContext context)
     {
-        Vector2 input = context.ReadValue<Vector2>();
-        SetDirectionToMove(new Vector3(input.x, input.y, 0));
+        if (!allowInput)
+            return;
+
+        inputDirection = context.ReadValue<Vector2>();
     }
     
-    public void SetDirectionToMove(Vector3 dir)
+    public void MoveInX(float direction)
     {
-        direction = dir;
+        scriptedDirection.x = Mathf.Clamp(direction, -1f, 1f);
+    }
+    public void MoveInY(float direction)
+    {
+        scriptedDirection.y = Mathf.Clamp(direction, -1f, 1f);
+    }
+    public void MoveInVector(Vector2 direction)
+    {
+        scriptedDirection = direction.normalized;
+    }
+
+    public void StopScriptedMovement()
+    {
+        scriptedDirection = Vector2.zero;
+    }
+
+    public void MoveForSeconds(Vector2 direction, float duration)
+    {
+        StartCoroutine(MoveForSecondsRoutine(direction, duration));
+    }
+
+    private IEnumerator MoveForSecondsRoutine(Vector2 direction, float duration)
+    {
+        scriptedDirection = direction.normalized;
+        yield return new WaitForSeconds(duration);
+        scriptedDirection = Vector2.zero;
+    }
+
+    private void Update()
+    {
+        HandleMovement();
     }
     
     private void HandleMovement()
     {
-        velocity = Vector3.Lerp(velocity, direction * Speed, acceleration * Time.deltaTime);
-        if(velocity.magnitude < 0.1f)
-        {
-            velocity = Vector3.zero;
-        }
-        transform.localPosition += velocity * Time.deltaTime;
-        _danceBrain.OnMoving(direction);
-        _danceBrain.SetBodyDirection(direction.x);
+        Vector2 targetDirection = scriptedDirection != Vector2.zero ? scriptedDirection: inputDirection;
+        Velocity = Vector2.Lerp( Velocity, targetDirection.normalized * speed, acceleration * Time.deltaTime);
+        if (Velocity.magnitude < 0.05f) Velocity = Vector2.zero;
+        transform.localPosition += (Vector3)(Velocity * Time.deltaTime);
+        danceBrain.OnMoving(Velocity);
+        if (Mathf.Abs(Velocity.x) > 0.01f) danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
     }
     
-    public void EnableMovement()
+    public void SetSpeed(float newSpeed)
     {
-        AllowInput = true;
+        speed = newSpeed;
     }
 
-    public void DisableMovement()
-    {
-        AllowInput = false;
-        direction = Vector3.zero;
-        velocity = Vector3.zero;
-    }
-    
-    public void SetSpeed(float speed=10f)
-    {
-        Speed = speed;
-    }
 }

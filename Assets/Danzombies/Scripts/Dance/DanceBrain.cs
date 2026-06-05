@@ -13,8 +13,9 @@ public abstract class DanceBrain : MonoBehaviour
     
     public void EnableMovement(bool isON=false)
     {
-        if (isON) movCtrl?.EnableMovement();
-        else movCtrl?.DisableMovement();
+        movCtrl?.StopScriptedMovement();
+        if (isON) movCtrl?.EnableInput();
+        else movCtrl?.DisableInput();
     }
     public void EnableDance(bool isON=false)
     {
