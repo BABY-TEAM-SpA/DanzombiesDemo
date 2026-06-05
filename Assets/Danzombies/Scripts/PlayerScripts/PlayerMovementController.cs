@@ -96,8 +96,7 @@ public class PlayerMovementController : MonoBehaviour
         danceBrain.OnMoving(targetDirection);
         if (Mathf.Abs(Velocity.x) > 0.01f) danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
     }
-    
-    public void SetSpeed(float newSpeed)
+
     public void SetSpeed(float newSpeed=10)
     {
         speed = newSpeed;
