@@ -70,7 +70,6 @@ public class PlayerMovementController : MonoBehaviour
     
     public void SetSpeed(float speed=10f)
     {
-        Debug.Log($"SetSpeed: {speed}");
         Speed = speed;
     }
 }
