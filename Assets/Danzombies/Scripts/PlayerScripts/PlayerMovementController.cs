@@ -13,10 +13,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private Vector2 inputDirection;
     private Vector2 scriptedDirection;
+    
+    
 
     private bool allowInput = true;
 
     public Vector2 Velocity { get; private set; }
+    [Tooltip("Multiplicador de velocidad al sprintear")]
+    [SerializeField] [Range(1f, 4f)] private float sprintFactor = 2f;
 
     
     public void EnableInput()
@@ -36,6 +40,14 @@ public class PlayerMovementController : MonoBehaviour
             return;
 
         inputDirection = context.ReadValue<Vector2>();
+    }
+    
+    public void OnSprintEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            SetSpeed(speed * sprintFactor);
+        else if (context.canceled)
+            SetSpeed();
     }
     
     public void MoveInX(float direction)
@@ -73,6 +85,8 @@ public class PlayerMovementController : MonoBehaviour
         HandleMovement();
     }
     
+    
+    
     private void HandleMovement()
     {
         Vector2 targetDirection = scriptedDirection != Vector2.zero ? scriptedDirection: inputDirection;
@@ -84,6 +98,7 @@ public class PlayerMovementController : MonoBehaviour
     }
     
     public void SetSpeed(float newSpeed)
+    public void SetSpeed(float newSpeed=10)
     {
         speed = newSpeed;
     }
