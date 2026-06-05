@@ -6,10 +6,14 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private DanceBrain _danceBrain;
     [SerializeField] private bool AllowInput = false;
     [SerializeField] private float Speed = 15f;
-    [Range(0,50)]public float acceleration;
+    [Range(0, 50)] public float acceleration;
+
+    [Tooltip("Multiplicador de velocidad al sprintear")]
+    [SerializeField] [Range(1f, 4f)] private float sprintFactor = 2f;
+
     private Vector3 direction;
     public Vector3 velocity { private set; get; } = Vector3.zero;
-    
+
 
     void Start()
     {
@@ -32,9 +36,8 @@ public class PlayerMovementController : MonoBehaviour
     
     public void OnSprintEvent(InputAction.CallbackContext context)
     {
-        Debug.Log("Sprint event: " + context.phase);
         if (context.performed)
-            SetSpeed(Speed * 2);
+            SetSpeed(Speed * sprintFactor);
         else if (context.canceled)
             SetSpeed();
     }

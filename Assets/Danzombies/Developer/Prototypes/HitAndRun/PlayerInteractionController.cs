@@ -4,17 +4,17 @@ using UnityEngine.InputSystem;
 public class PlayerInteractionController : MonoBehaviour
 {
     #region [VARIABLES]
-    private Interactive interactive;
+    private InteractableComponent interactable;
     #endregion
 
     #region [METHODS]
     public void OnInteractEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
-            interactive?.Interact(GetComponent<PlayerManager>());
+            interactable?.Interact();
     }
 
-    public void SetInteractive(Interactive interactive) => this.interactive = interactive;
-    public void ClearInteractive() => interactive = null;
+    public void SetInteractive(InteractableComponent interactive) => this.interactable = interactive;
+    public void ClearInteractive() => interactable = null;
     #endregion
 }
