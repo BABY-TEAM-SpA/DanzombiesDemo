@@ -32,12 +32,20 @@ public abstract class DanceBrain : MonoBehaviour
 
     public void SetBodyDirection(float value)
     {
-        bool isLeft = value < 0;
-        if(isLeft != isLeftLooking && value!=0)
+        if(Math.Abs(value)>0.5)
         {
-            isLeftLooking = isLeft;
-            danceAnimCtrl.SetAnimatorOverrideDirection();
+            bool isLeft = value < 0;
+            if(isLeft != isLeftLooking && value!=0)
+            {
+                isLeftLooking = isLeft;
+                if (TryGetComponent(out Animator animator))
+                {
+                    animator.SetBool("isLeftLooking", isLeft);
+                }
+                danceAnimCtrl.SetAnimatorOverrideDirection();
+            }
         }
+        
     }
     
 }

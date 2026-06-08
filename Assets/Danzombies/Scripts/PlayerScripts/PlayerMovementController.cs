@@ -24,7 +24,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Start()
     {
-        SetSpeed(currentSpeed);
+        SetSpeed(walkingSpeed);
     }
 
     public void EnableInput()
