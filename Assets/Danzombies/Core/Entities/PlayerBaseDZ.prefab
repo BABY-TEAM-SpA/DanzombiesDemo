@@ -4995,8 +4995,8 @@ MonoBehaviour:
   movCtrl: {fileID: 3968905282911785478}
   danceAnimCtrl: {fileID: 4086932025709530668}
   beatReciever: {fileID: 3465130852895728156}
+  isLeftLooking: 0
   ActivateOnStart: 1
-  lifes: 3
   nivelDeSeguridad: 5
   LifeDamagedEvent:
     m_PersistentCalls:
@@ -5004,6 +5004,7 @@ MonoBehaviour:
   LifeHealedEvent:
     m_PersistentCalls:
       m_Calls: []
+  targetPuzzle: {fileID: 0}
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5016,10 +5017,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _danceBrain: {fileID: 6530795612346585224}
-  AllowInput: 1
-  Speed: 15
+  danceBrain: {fileID: 6530795612346585224}
+  walkingSpeed: 10
   acceleration: 25
+  sprintFactor: 1.5
 --- !u!114 &3465130852895728156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5032,6 +5033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatType: 0
   animator: {fileID: 6969242347076242797}
 --- !u!114 &3308144933667447571
 MonoBehaviour:
@@ -5166,6 +5168,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1bbfface-3afe-4f4a-834f-5567b761907f
     m_ActionName: 'UI/PauseAction[/Keyboard/p,/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f3866801-bcc6-404e-b1eb-34838ed9f760
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -15290,9 +15296,8 @@ MonoBehaviour:
   _danceBrain: {fileID: 6530795612346585224}
   allowInput: 1
   animator: {fileID: 6969242347076242797}
-  animatorOverrideControllers:
-  - {fileID: 22100000, guid: 2d677eb01c4cbe44783e36db47b288e4, type: 2}
-  - {fileID: 22100000, guid: e4e1faaff2140ab42a17c2aeb06a34af, type: 2}
+  alphaOverrider: {fileID: 0}
+  betaOverrider: {fileID: 0}
   playerFeedbackEvents:
   - name: Walking
     feedbackEvent:
@@ -15338,6 +15343,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  margen: 0.5
 --- !u!114 &1306205410530215226
 MonoBehaviour:
   m_ObjectHideFlags: 0

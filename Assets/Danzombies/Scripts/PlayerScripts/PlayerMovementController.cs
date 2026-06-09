@@ -35,22 +35,19 @@ public class PlayerMovementController : MonoBehaviour
     public void DisableInput()
     {
         allowInput = false;
-        inputDirection = Vector2.zero;
     }
 
     public void OnMoveEvent(InputAction.CallbackContext context)
     {
-        if (!allowInput)
-            return;
-        inputDirection = context.ReadValue<Vector2>();
+        if (context.performed) inputDirection = context.ReadValue<Vector2>();
+        if (context.canceled) inputDirection = Vector2.zero;
+        //Debug.Log(inputDirection);
     }
     
     public void OnSprintEvent(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            SetSpeed(walkingSpeed * sprintFactor);
-        else if (context.canceled)
-            SetSpeed(walkingSpeed);
+        if (context.performed) SetSpeed(walkingSpeed * sprintFactor);
+        else if (context.canceled) SetSpeed(walkingSpeed);
     }
     
     public void MoveInX(float direction)
@@ -88,11 +85,10 @@ public class PlayerMovementController : MonoBehaviour
         HandleMovement();
     }
     
-    
-    
     private void HandleMovement()
     {
-        Vector2 targetDirection = scriptedDirection != Vector2.zero ? scriptedDirection: inputDirection;
+        
+        Vector2 targetDirection = scriptedDirection != Vector2.zero ? scriptedDirection: allowInput? inputDirection:Vector2.zero;
         Velocity = Vector2.Lerp( Velocity, targetDirection.normalized * currentSpeed, acceleration * Time.deltaTime);
         if (Velocity.magnitude < 0.05f) Velocity = Vector2.zero;
         transform.localPosition += (Vector3)(Velocity * Time.deltaTime);

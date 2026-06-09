@@ -67,7 +67,6 @@ public class DanceAnimatorController : MonoBehaviour
     
     public void OnDanceBegin(DanceStep step)
     {
-        
         _danceBrain?.EnableMovement(false);
         _danceBrain.OnDance(step);
         animator.Play(step.ToString(), 0,0f);
@@ -75,7 +74,7 @@ public class DanceAnimatorController : MonoBehaviour
     public void OnStandAction()
     {
         if(_danceBrain.isActive) _danceBrain.EnableMovement(true);
-        //_danceBrain.OnDance(DanceStep.None);
+        _danceBrain.EnableMovement(true);
         animator.ResetTrigger("Pulse");
     }
 

@@ -133,8 +133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceBrain: {fileID: 3279488030120961210}
-  speed: 10
+  walkingSpeed: 10
   acceleration: 0
+  sprintFactor: 1.5
 --- !u!114 &4146240392959961186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +245,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b105f2d6c1dea6c43a66d43dcc856141, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8, g: 0.89411765, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -268,7 +269,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whenUse: 1
   spriteRenderers:
-  - {fileID: 6673237200574166684}
   - {fileID: 6673237200574166684}
 --- !u!95 &6072593270596461221
 Animator:
@@ -307,8 +307,8 @@ MonoBehaviour:
   _danceBrain: {fileID: 3279488030120961210}
   allowInput: 0
   animator: {fileID: 6072593270596461221}
-  alphaOverrider: {fileID: 0}
-  betaOverrider: {fileID: 0}
+  alphaOverrider: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
+  betaOverrider: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
   playerFeedbackEvents: []
 --- !u!1 &8150584127454511398
 GameObject:
