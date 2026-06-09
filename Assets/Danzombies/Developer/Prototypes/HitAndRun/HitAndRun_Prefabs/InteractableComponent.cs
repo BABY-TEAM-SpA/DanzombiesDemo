@@ -25,20 +25,18 @@ public class InteractableComponent : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Player entered interactive area");
         if (collision.TryGetComponent(out PlayerInteractionController player))
         {
-            feedback.ShowFeedback(true);
+            ShowFeedback(true);
             player?.SetInteractive(this);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Player exited interactive area");
         if (collision.TryGetComponent(out PlayerInteractionController player))
         {
-            feedback.ShowFeedback(false);
+            ShowFeedback(false);
             player?.ClearInteractive();
         }
     }
@@ -47,5 +45,12 @@ public class InteractableComponent : MonoBehaviour
 
     #region [METHODS]
     public void Interact() => OnInteract?.Invoke();
+
+    public void ShowFeedback(bool show)
+    {
+        if (show)
+            feedback.Show();
+        else feedback.Hide();
+    }
     #endregion
 }

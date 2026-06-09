@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class DanceBrain : MonoBehaviour
 {
+    #region [VARIABLES]
     [SerializeField] protected bool debug;
     public bool isActive { get; set; } = true;
     [SerializeField] protected PlayerMovementController movCtrl;
@@ -10,7 +11,11 @@ public abstract class DanceBrain : MonoBehaviour
     [SerializeField] protected BeatReciever beatReciever;
     public bool isLeftLooking;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
+    public event Action<bool> OnDirectionChanged;
+    #endregion
+
+    #region [METHODS]
     public void EnableMovement(bool isON=false)
     {
         movCtrl?.StopScriptedMovement();
@@ -32,20 +37,19 @@ public abstract class DanceBrain : MonoBehaviour
 
     public void SetBodyDirection(float value)
     {
-        if(Math.Abs(value)>0.5)
+        if (Math.Abs(value) > 0.5)
         {
             bool isLeft = value < 0;
-            if(isLeft != isLeftLooking && value!=0)
+            if (isLeft != isLeftLooking && value != 0)
             {
                 isLeftLooking = isLeft;
                 if (TryGetComponent(out Animator animator))
-                {
                     animator.SetBool("isLeftLooking", isLeft);
-                }
                 danceAnimCtrl.SetAnimatorOverrideDirection();
+                OnDirectionChanged?.Invoke(isLeft);
             }
         }
         
     }
-    
+    #endregion
 }

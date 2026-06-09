@@ -4,7 +4,21 @@ using UnityEngine.InputSystem;
 public class PlayerInteractionController : MonoBehaviour
 {
     #region [VARIABLES]
+    [SerializeField] private CircleCollider2D leftSpot;
+    [SerializeField] private CircleCollider2D rightSpot;
+
     private InteractableComponent interactable;
+    #endregion
+
+    #region [UNITY]
+    private void Awake()
+    {
+        leftSpot.enabled = false;
+        rightSpot.enabled = true;
+    }
+
+    private void Start() => PlayerManager.Player.OnDirectionChanged += OnDirectionChanged;
+    private void OnDestroy() => PlayerManager.Player.OnDirectionChanged -= OnDirectionChanged;
     #endregion
 
     #region [METHODS]
@@ -14,7 +28,40 @@ public class PlayerInteractionController : MonoBehaviour
             interactable?.Interact();
     }
 
-    public void SetInteractive(InteractableComponent interactive) => this.interactable = interactive;
+    public void SetInteractive(InteractableComponent interactive) => interactable = interactive;
     public void ClearInteractive() => interactable = null;
+
+    private void CheckOverlapAfterTurn(CircleCollider2D spot)
+    {
+        Vector2 worldCenter = spot.transform.TransformPoint(spot.offset);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(worldCenter, spot.radius);
+
+        foreach (var hit in hits)
+        {
+            if (hit.TryGetComponent(out InteractableComponent found) && found.isInteractable)
+            {
+                found.ShowFeedback(true);
+                SetInteractive(found);
+                break;
+            }
+        }
+    }
+    #endregion
+
+    #region [EVENTS]
+    private void OnDirectionChanged(bool isLeft)
+    {
+        if (interactable != null)
+        {
+            interactable.ShowFeedback(false);
+            ClearInteractive();
+        }
+
+        leftSpot.enabled = isLeft;
+        rightSpot.enabled = !isLeft;
+
+        CircleCollider2D activeSpot = isLeft ? leftSpot : rightSpot;
+        CheckOverlapAfterTurn(activeSpot);
+    }
     #endregion
 }
