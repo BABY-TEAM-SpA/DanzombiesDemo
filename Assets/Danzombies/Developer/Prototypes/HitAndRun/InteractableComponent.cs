@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Componente que se acopla en un GameObject para que el Player pueda interactuar con él.
+/// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class InteractableComponent : MonoBehaviour
 {
@@ -13,6 +16,13 @@ public class InteractableComponent : MonoBehaviour
     #endregion
 
     #region [UNITY]
+    private void Awake()
+    {
+        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+    }
+
+    #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Player entered interactive area");
@@ -32,6 +42,7 @@ public class InteractableComponent : MonoBehaviour
             player?.ClearInteractive();
         }
     }
+    #endregion
     #endregion
 
     #region [METHODS]
