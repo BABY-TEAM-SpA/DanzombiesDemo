@@ -99,8 +99,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2053950295236220402}
-  - component: {fileID: 4579958893558044153}
   - component: {fileID: 880735535556392637}
+  - component: {fileID: 4579958893558044153}
   m_Layer: 7
   m_Name: InteractableDoor
   m_TagString: Untagged
@@ -125,35 +125,6 @@ Transform:
   - {fileID: 3567910513369150721}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4579958893558044153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7098540996787296712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80c2b98b69751354e8243b3a39a310d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableComponent
-  feedback: {fileID: 3339292237701963659}
-  isInteractable: 1
-  OnInteract:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6460855751453557282}
-        m_TargetAssemblyTypeName: DoorBehaviour, Assembly-CSharp
-        m_MethodName: OpenOrClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!61 &880735535556392637
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -200,6 +171,35 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6, y: 12}
   m_EdgeRadius: 0
+--- !u!114 &4579958893558044153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098540996787296712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c2b98b69751354e8243b3a39a310d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableComponent
+  feedback: {fileID: 3339292237701963659}
+  isInteractable: 1
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6460855751453557282}
+        m_TargetAssemblyTypeName: DoorBehaviour, Assembly-CSharp
+        m_MethodName: OpenOrClose
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7236914446489791217
 GameObject:
   m_ObjectHideFlags: 0
