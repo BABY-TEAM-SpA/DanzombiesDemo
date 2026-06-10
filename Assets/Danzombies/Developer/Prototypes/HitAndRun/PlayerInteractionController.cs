@@ -31,24 +31,31 @@ public class PlayerInteractionController : MonoBehaviour
     public void SetInteractive(InteractableComponent interactive) => interactable = interactive;
     public void ClearInteractive() => interactable = null;
 
+    /// <summary>
+    /// Cuando el Player está mirando en la dirección opuesta al InteractableComponent y gira,
+    /// el OnTrigger del componente no se disparará. Este método suple esa carencia.
+    /// </summary>
     private void CheckOverlapAfterTurn(CircleCollider2D spot)
     {
         Vector2 worldCenter = spot.transform.TransformPoint(spot.offset);
         Collider2D[] hits = Physics2D.OverlapCircleAll(worldCenter, spot.radius);
 
         foreach (var hit in hits)
-        {
-            if (hit.TryGetComponent(out InteractableComponent found) && found.isInteractable)
+            if (hit.TryGetComponent(out InteractableComponent found) && found.enabled)
             {
                 found.ShowFeedback(true);
                 SetInteractive(found);
                 break;
             }
-        }
     }
     #endregion
 
     #region [EVENTS]
+    /// <summary>
+    /// Cuando el Player cambia de dirección, se des/activa el CircleCollider (spot) que colisiona
+    /// con InteracableComponents. Además, si había un interactable activo, se clerea.
+    /// 
+    /// </summary>
     private void OnDirectionChanged(bool isLeft)
     {
         if (interactable != null)

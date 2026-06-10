@@ -10,8 +10,7 @@ public class InteractableComponent : MonoBehaviour
     #region [VARIABLES]
     [SerializeField] private InteractableFeedback feedback;
 
-    public bool isInteractable = true;
-
+    [Tooltip("Conectar con el método que se ejecutará cuando el Player interactúe con este GameObject.")]
     public UnityEvent OnInteract;
     #endregion
 
@@ -25,7 +24,8 @@ public class InteractableComponent : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out PlayerInteractionController player))
+        Debug.Log($"Player entered in the '{name}' ({enabled}) area");
+        if (enabled && collision.TryGetComponent(out PlayerInteractionController player))
         {
             ShowFeedback(true);
             player?.SetInteractive(this);
@@ -34,7 +34,8 @@ public class InteractableComponent : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out PlayerInteractionController player))
+        Debug.Log($"Player left the '{name}' ({enabled}) area");
+        if (enabled && collision.TryGetComponent(out PlayerInteractionController player))
         {
             ShowFeedback(false);
             player?.ClearInteractive();
@@ -44,13 +45,24 @@ public class InteractableComponent : MonoBehaviour
     #endregion
 
     #region [METHODS]
-    public void Interact() => OnInteract?.Invoke();
+    public void Interact()
+    {
+        if (enabled)
+            OnInteract?.Invoke();
+    }
 
     public void ShowFeedback(bool show)
     {
         if (show)
             feedback.Show();
         else feedback.Hide();
+    }
+
+    public void Enable() => enabled = true;
+    public void Disable()
+    {
+        enabled = false;
+        ShowFeedback(false);
     }
     #endregion
 }
