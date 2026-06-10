@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HordeBehaviour : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class HordeBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            Debug.Log($"Horde colliding w/player");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     #endregion
 
