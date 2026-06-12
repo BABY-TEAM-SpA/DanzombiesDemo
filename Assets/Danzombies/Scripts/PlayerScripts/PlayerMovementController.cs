@@ -22,6 +22,8 @@ public class PlayerMovementController : MonoBehaviour
     [Tooltip("Multiplicador de velocidad al sprintear")]
     [SerializeField] [Range(1f, 2f)] private float sprintFactor = 1.5f;
 
+    public float MaxSpeed => walkingSpeed * sprintFactor;
+
     private void Start()
     {
         SetSpeed(walkingSpeed);

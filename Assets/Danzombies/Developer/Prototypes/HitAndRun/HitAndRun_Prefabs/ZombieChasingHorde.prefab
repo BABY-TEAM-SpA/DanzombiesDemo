@@ -79,8 +79,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 6, y: 3}
-  m_Size: {x: 25, y: 12.5}
+  m_Offset: {x: 4, y: 3}
+  m_Size: {x: 18, y: 8}
   m_Direction: 1
 --- !u!1 &2967085197330972928
 GameObject:
@@ -132,9 +132,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HordeBehaviour
   collisionArea: {fileID: 6614391062218129185}
   detectionArea: {fileID: 1937515991243990930}
-  playerTransform: {fileID: 0}
+  player: {fileID: 0}
   checkpoints: []
-  walkingSpeed: 4.5
+  maxDistance: 9
+  chasingFactor: 0.75
   acceleration: 6
 --- !u!50 &2011987606634272582
 Rigidbody2D:
@@ -175,7 +176,7 @@ GameObject:
   - component: {fileID: 4791731628104187606}
   - component: {fileID: 794036776597379047}
   m_Layer: 0
-  m_Name: Visuals
+  m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

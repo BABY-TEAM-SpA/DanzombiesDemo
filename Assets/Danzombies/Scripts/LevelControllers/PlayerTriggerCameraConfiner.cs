@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerTriggerCameraConfiner : MonoBehaviour
 {
-    
+    #region [VARIABLES]
     [SerializeField] CinemachineStateDrivenCamera stateDrivenCamera;
-    
+    #endregion
+
+    #region [UNITY]
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
@@ -15,6 +17,7 @@ public class PlayerTriggerCameraConfiner : MonoBehaviour
             stateDrivenCamera.gameObject.SetActive(true);
         }
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player")
@@ -25,4 +28,5 @@ public class PlayerTriggerCameraConfiner : MonoBehaviour
             }
         }
     }
+    #endregion
 }

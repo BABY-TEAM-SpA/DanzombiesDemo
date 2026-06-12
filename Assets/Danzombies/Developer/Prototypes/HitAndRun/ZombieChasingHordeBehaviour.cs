@@ -13,12 +13,15 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
 
     [Header("References")]
     [Tooltip("Si la horda se queda sin checkpoints, perseguirá el Transform del Player.")]
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] private PlayerMovementController player;
     [SerializeField] private Transform[] checkpoints;
 
     [Header("Settings")]
-    [SerializeField] [Range(1f, 10f)] private float walkingSpeed = 8f;
-    [SerializeField] [Range(1f, 30f)] private float acceleration = 10f;
+    [SerializeField] [Range(1f, 20f)] private float maxDistance;
+
+    [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
+    [SerializeField] [Range(0f, 1f)] private float chasingFactor;
+    [SerializeField] [Range(1f, 30f)] private float acceleration;
 
     private bool playerInSight;
     private Queue<Transform> remainingCheckpoints = new();
@@ -29,8 +32,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #region [UNITY]
     private void Awake()
     {
-        if (playerTransform == null)
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        if (player == null)
+            Debug.LogWarning("Falta referencia del PlayerMovementController en el ZombieChasingHordeBehaviour.");
 
         if (collisionArea != null)
             collisionArea.OnPlayerCollided += Reach;
@@ -38,7 +41,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         if (detectionArea != null)
             detectionArea.OnPlayerDetected += SetPlayerInSight;
 
-        SetSpeed(walkingSpeed);
+        SetSpeed(player.MaxSpeed * chasingFactor);
         SetCheckpoints();
     }
 
@@ -48,15 +51,23 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #region [METHODS]
     private void Chase()
     {
+        Transform playerTransform = player.transform;
+
         // Definir target (Player o próximo checkpoint)
         Transform target = playerInSight ? playerTransform
             : remainingCheckpoints.Count > 0
-                ? remainingCheckpoints.First() : playerTransform;
+                ? remainingCheckpoints.First()
+                : playerTransform;
 
         if (target == null)
             return;
 
         // Mover la horda hacia el target
+        float distance = Vector2.Distance(target.position, transform.position);
+        if (distance > maxDistance)
+            SetSpeed(player.MaxSpeed);
+        else SetSpeed(player.MaxSpeed * chasingFactor);
+
         Vector2 direction = (target.position - transform.position).normalized;
         velocity = Vector2.Lerp(velocity, direction * currentSpeed, acceleration * Time.deltaTime);
         transform.localPosition += (Vector3)(velocity * Time.deltaTime);
@@ -65,7 +76,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         if (target == playerTransform)
             return;
 
-        float distance = Vector2.Distance(target.position, transform.position);
         if (distance < CHECKPOINT_THRESHOLD || transform.position.x > target.position.x)
             remainingCheckpoints.Dequeue();
     }

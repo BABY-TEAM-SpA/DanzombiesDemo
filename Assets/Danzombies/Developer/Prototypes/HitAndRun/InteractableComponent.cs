@@ -47,8 +47,11 @@ public class InteractableComponent : MonoBehaviour
     #region [METHODS]
     public void Interact()
     {
-        if (enabled)
-            OnInteract?.Invoke();
+        if (!enabled)
+            return;
+
+        feedback.Pulse();
+        OnInteract?.Invoke();
     }
 
     public void ShowFeedback(bool show)

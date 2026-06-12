@@ -208,8 +208,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6923700904081272040}
-  - component: {fileID: 7446078584757246524}
   - component: {fileID: 6460855751453557282}
+  - component: {fileID: 7446078584757246524}
   - component: {fileID: 7185840151840249210}
   m_Layer: 3
   m_Name: DoorBehaviour
@@ -234,6 +234,23 @@ Transform:
   - {fileID: 4933360347423033960}
   m_Father: {fileID: 2053950295236220402}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -42.396}
+--- !u!114 &6460855751453557282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236914446489791217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73375f5327d8aa34c91199d4f6c90554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorBehaviour
+  interactable: {fileID: 4579958893558044153}
+  interactionsToOpen: 1
+  timeToOpen: 0.75
+  interactionsToClose: 1
+  timeToClose: 0.75
 --- !u!61 &7446078584757246524
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -280,21 +297,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 6.89}
   m_EdgeRadius: 0
---- !u!114 &6460855751453557282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7236914446489791217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73375f5327d8aa34c91199d4f6c90554, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorBehaviour
-  interactable: {fileID: 4579958893558044153}
-  interactionsToOpen: 1
-  interactionsToClose: 1
 --- !u!114 &7185840151840249210
 MonoBehaviour:
   m_ObjectHideFlags: 0
