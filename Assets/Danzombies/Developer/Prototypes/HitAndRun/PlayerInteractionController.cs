@@ -13,8 +13,8 @@ public class PlayerInteractionController : MonoBehaviour
     #region [UNITY]
     private void Awake()
     {
-        leftSpot.enabled = false;
-        rightSpot.enabled = true;
+        if(leftSpot) leftSpot.enabled = true;
+        if(rightSpot) rightSpot.enabled = true;
     }
 
     private void Start() => PlayerManager.Player.OnDirectionChanged += OnDirectionChanged;

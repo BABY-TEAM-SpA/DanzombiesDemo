@@ -45,6 +45,15 @@ public class ZombieDanceZone : RhythmPuzzle
             zombie.Connect(this);
         }
     }
+
+    public override void ActivatePuzzle(bool activate)
+    {
+        base.ActivatePuzzle(activate);
+        foreach (ZombieDanceBrain zombie in zombies)
+        {
+            zombie.ActivateEntity(activate);
+        }
+    }
     
     private void OnDisable()
     {

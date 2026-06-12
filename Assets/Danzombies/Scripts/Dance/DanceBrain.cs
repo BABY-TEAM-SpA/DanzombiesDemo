@@ -5,6 +5,9 @@ public abstract class DanceBrain : MonoBehaviour
 {
     #region [VARIABLES]
     [SerializeField] protected bool debug;
+    [SerializeField]
+    private bool ActivateOnStart;
+    
     public bool isActive { get; set; } = true;
     [SerializeField] protected PlayerMovementController movCtrl;
     [SerializeField] protected DanceAnimatorController danceAnimCtrl;
@@ -27,7 +30,19 @@ public abstract class DanceBrain : MonoBehaviour
         if (isON) danceAnimCtrl?.Activate();
         else danceAnimCtrl?.Disactivate();
     }
+    public void Start()
+    {
+        if(ActivateOnStart)ActivateEntity(ActivateOnStart);
+    }
 
+    public virtual void ActivateEntity(bool  activate)
+    {
+        isActive = activate;
+        EnableMovement(activate);
+        EnableDance(activate);
+        beatReciever.SetActive(activate);
+    }
+    
     public abstract void OnDance(DanceStep step);
 
     public void OnMoving(Vector3 direction)

@@ -31,8 +31,8 @@ public class BeatManager : MonoBehaviour
     public double quarterBeatDuration { get; private set; }
     public double eighthBeatDuration { get; private set; }
 
-    public int globalCounterNegra { get; private set; }
-    public int globalCounterCorchea { get; private set; }
+    public int globalCounterNegra { get; private set; } = 1;
+    public int globalCounterCorchea { get; private set; } = 1;
 
     private BeatStatus quarterStatus = BeatStatus.None;
     private BeatStatus eighthStatus = BeatStatus.None;
