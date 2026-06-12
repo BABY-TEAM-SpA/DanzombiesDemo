@@ -36,7 +36,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
             Debug.LogWarning("Falta referencia del PlayerMovementController en el ZombieChasingHordeBehaviour.");
 
         if (collisionArea != null)
-            collisionArea.OnPlayerCollided += Reach;
+            collisionArea.OnPlayerCollided += CatchPlayer;
 
         if (detectionArea != null)
             detectionArea.OnPlayerDetected += SetPlayerInSight;
@@ -80,7 +80,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
             remainingCheckpoints.Dequeue();
     }
 
-    private void Reach() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    private void CatchPlayer() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
 
     #region Helpers
     private void SetPlayerInSight(bool inSight) => playerInSight = inSight;
