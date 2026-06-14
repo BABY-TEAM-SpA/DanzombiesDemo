@@ -30,7 +30,6 @@ public abstract class RhythmPuzzle : BeatReciever
     protected bool PlayerHasDanced=false;
     [SerializeField] protected PlayerManager playersInside;
     
-    
     private void Start()
     {
         PreparePuzzle();
@@ -79,19 +78,21 @@ public abstract class RhythmPuzzle : BeatReciever
         PlayerHasDanced = false;
         UpdateInnerCounter();
         CurrentSequence.GetDanceStep(InnerCounter, out CurrentPuzzleStep);
+        if(debug) Debug.Log("___Puzzle PreBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
         PuzzlePreBeat();
         OnPrepareStep?.Invoke(CurrentPuzzleStep);
     }
 
     public override void BeatAction(int counter)
     {
-        if(debug)Debug.Log("______Puzzle make "+CurrentPuzzleStep.ToString()+" at "+counter+" on "+AudioSettings.dspTime.ToString());
+        if(debug) Debug.Log("_____Puzzle Beat make "+CurrentPuzzleStep.ToString()+" at "+counter+" on "+AudioManager.Instance.SongPositionSeconds().ToString());
         PuzzleBeat();
         OnDanceStep?.Invoke(CurrentPuzzleStep);
         
     }
     public override void PostBeatAction(int counter)
     {
+        if(debug) Debug.Log("___Puzzle PostBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
         PuzzlePostBeat();
         Action<RhythmPuzzle> callback = CurrentSequence.GetNextDanceStep(InnerCounter, out NextPuzzleStep);
         callback?.Invoke(this);

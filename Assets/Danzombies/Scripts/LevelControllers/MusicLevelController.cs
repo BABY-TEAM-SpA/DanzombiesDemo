@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 public enum ActionToPlaySong
@@ -7,41 +8,41 @@ public enum ActionToPlaySong
     Enqueue,
     Interrupt
 }
+
 [Serializable]
 public class MusicToQueue
 {
-    public string songName;
-    public ActionToPlaySong actionToPlay = ActionToPlaySong.Enqueue;
+    [Tooltip("Ej: event:/Music/MainTheme")]
+    public EventReference  eventPath;
+
+    public ActionToPlaySong actionToPlay =
+        ActionToPlaySong.Enqueue;
 }
 
 public class MusicLevelController : MonoBehaviour
 {
-    [SerializeField] private bool shouldStartPlaying = false;
-    [SerializeField] private List<MusicToQueue> LevelSongs = new List<MusicToQueue>();
+    [SerializeField] private bool shouldStartPlaying;
 
-    public void Start()
+    [SerializeField]
+    private List<MusicToQueue> levelSongs =
+        new();
+
+    private void Start()
     {
         if (shouldStartPlaying)
-        {
             SetPlayMusic();
-        }  
     }
 
     public void SetPlayMusic()
     {
-        if (LevelSongs.Count > 0)
+        foreach (MusicToQueue music in levelSongs)
         {
-            for (int i = 0; i < LevelSongs.Count; i++)
-            {
-                MusicToQueue mtq = LevelSongs[i];
-                CallToPLay(mtq);
-            }
+            PlayMusic(music);
         }
-        
     }
 
-    private void CallToPLay(MusicToQueue mtq)
+    private void PlayMusic(MusicToQueue music)
     {
-        AudioManager.Instance?.PlaySong(mtq.songName,mtq.actionToPlay == ActionToPlaySong.Interrupt );
+        AudioManager.Instance?.PlayRhythmSong(music.eventPath, music.actionToPlay == ActionToPlaySong.Interrupt);
     }
 }

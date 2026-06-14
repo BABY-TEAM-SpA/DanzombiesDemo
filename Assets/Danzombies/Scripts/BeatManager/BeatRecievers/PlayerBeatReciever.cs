@@ -27,6 +27,7 @@ public class PlayerBeatReciever : BeatReciever
 
     public override void BeatAction(int counter)
     {
+        SetBeatDuration();
         animator.SetTrigger("Pulse");
         //Invoke("ResetIdle",0.1f);
     }

@@ -86,7 +86,7 @@ public class DanceAnimatorController : MonoBehaviour
     }
     private void SetBeatDuration()
     {
-        currentBeatOnPlayer = AudioManager.Instance.currentSongPlaying.beatDuration;
+        currentBeatOnPlayer = BeatManager.Instance.quarterBeatDuration;
         animator.enabled = true;
         animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
     }
