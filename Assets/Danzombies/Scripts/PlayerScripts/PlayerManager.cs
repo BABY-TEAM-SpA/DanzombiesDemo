@@ -13,8 +13,6 @@ public enum SeguridadState
 [Serializable]
 public class PlayerManager : DanceBrain
 {
-    [SerializeField]
-    private bool ActivateOnStart;
 
     private int vidas = 3;
 
@@ -48,11 +46,7 @@ public class PlayerManager : DanceBrain
         }
     }
 
-    public void Start()
-    {
-        if (ActivateOnStart)
-            ActivatePlayer();
-    }
+    
 
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
@@ -165,24 +159,7 @@ public class PlayerManager : DanceBrain
     }
 
 
-    public void ActivatePlayer()
-    {
-        isActive = true;
-        EnableMovement(true);
-        EnableDance(true);
-        beatReciever.SetActive(true);
-    }
-
-    public void DesactivatePlayer()
-    {
-        isActive = false;
-
-        EnableMovement(false);
-
-        EnableDance(false);
-
-        beatReciever.SetActive(false);
-    }
+    
     
 
     public Animator ConfinePlayerCamera()

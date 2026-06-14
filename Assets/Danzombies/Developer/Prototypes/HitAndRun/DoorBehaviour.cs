@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class DoorBehaviour : MonoBehaviour
+public class DoorBehaviour : MonoBehaviour, IResettable
 {
     #region [VARIABLES]
     [SerializeField] private InteractableComponent interactable;
@@ -17,9 +17,9 @@ public class DoorBehaviour : MonoBehaviour
     [Range(0, 99)] public int interactionsToClose = 1;
     [Range(0f, 3f)] public float timeToClose;
 
-    private Collider2D obstacle;
-    private bool isOpen;
     private int count;
+    private bool isOpen;
+    private Collider2D obstacle;    
 
     private Coroutine doorRoutine;
     #endregion
@@ -54,6 +54,22 @@ public class DoorBehaviour : MonoBehaviour
                 doorRoutine = StartCoroutine(OpenDoor());
         }
     }
+
+    #region IResettable
+    private bool _isOpen;
+
+    public void CaptureInitialState()
+    {
+        _isOpen = isOpen;
+    }
+
+    public void ResetState()
+    {
+        count = 0;
+        isOpen = _isOpen;
+        obstacle?.gameObject.SetActive(!isOpen);
+    }
+    #endregion
     #endregion
 
     #region [COROUTINES]
@@ -64,9 +80,9 @@ public class DoorBehaviour : MonoBehaviour
 
         yield return new WaitForSeconds(timeToOpen);
 
-        obstacle?.gameObject.SetActive(false);
-        isOpen = true;
         count = 0;
+        isOpen = true;
+        obstacle?.gameObject.SetActive(false);        
 
         doorRoutine = null;
     }
@@ -78,9 +94,9 @@ public class DoorBehaviour : MonoBehaviour
 
         yield return new WaitForSeconds(timeToClose);
 
-        obstacle?.gameObject.SetActive(true);
-        isOpen = false;
         count = 0;
+        isOpen = false;
+        obstacle?.gameObject.SetActive(true);
 
         doorRoutine = null;
     }

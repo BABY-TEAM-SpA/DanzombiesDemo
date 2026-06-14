@@ -1,20 +1,24 @@
-using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class PlayerTriggerCameraConfiner : MonoBehaviour
+public class PlayerTriggerCameraCOnfiner : MonoBehaviour
 {
     #region [VARIABLES]
-    [SerializeField] CinemachineStateDrivenCamera stateDrivenCamera;
+    [SerializeField] private CinemachineStateDrivenCamera stateDrivenCamera;
+    [SerializeField] private int activePriority = 20;
+    [SerializeField] private int inactivePriority;
     #endregion
 
     #region [UNITY]
+    private void Start() => stateDrivenCamera.Priority = inactivePriority;
+
+    #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
         {
-            //stateDrivenCamera.AnimatedTarget = playerManager.ConfinePlayerCamera();
-            stateDrivenCamera.gameObject.SetActive(true);
+            Debug.Log($"[°] Switching to '{name}' camera.");
+            stateDrivenCamera.Priority = activePriority;
         }
     }
 
@@ -24,9 +28,11 @@ public class PlayerTriggerCameraConfiner : MonoBehaviour
         {
             if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
             {
-                stateDrivenCamera.gameObject.SetActive(false);
+                Debug.Log($"[°] Switching to '{name}' camera.");
+                stateDrivenCamera.Priority = inactivePriority;
             }
         }
     }
+    #endregion
     #endregion
 }

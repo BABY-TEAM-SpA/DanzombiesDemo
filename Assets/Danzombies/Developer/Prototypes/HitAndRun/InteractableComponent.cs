@@ -61,11 +61,14 @@ public class InteractableComponent : MonoBehaviour
         else feedback.Hide();
     }
 
+    #region Dis/Enable
     public void Enable() => enabled = true;
+
     public void Disable()
     {
         enabled = false;
         ShowFeedback(false);
     }
+    #endregion
     #endregion
 }
