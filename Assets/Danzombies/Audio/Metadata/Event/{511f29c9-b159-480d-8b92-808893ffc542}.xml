@@ -8,7 +8,7 @@
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{217b8aca-33b6-4279-bee1-d1b0bcfb637b}</destination>
+			<destination>{ccdd86a2-0409-4f65-80bd-a31d5e92a166}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{b0474dbe-9df0-4de8-b236-06adc37f1cdd}</destination>
@@ -32,7 +32,7 @@
 			<destination>{9569675c-c93c-4ac3-83aa-f5ae0a70e4c2}</destination>
 		</relationship>
 		<relationship name="banks">
-			<destination>{4b6b3790-e20c-47a1-a537-b91895525db5}</destination>
+			<destination>{7a250db1-20ed-4cfb-b38d-f3e76af8bfd2}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixer" id="{b0474dbe-9df0-4de8-b236-06adc37f1cdd}">
@@ -253,6 +253,9 @@
 		<relationship name="markerTrack">
 			<destination>{aa524a4a-0ba3-4016-abec-b004e8c07f67}</destination>
 		</relationship>
+		<relationship name="triggerConditions">
+			<destination>{2f93cc0d-d00e-4cd7-ba8c-e51a7948009d}</destination>
+		</relationship>
 	</object>
 	<object class="TempoMarker" id="{2f40b5ad-3cdc-4c33-927f-592b42660037}">
 		<property name="position">
@@ -274,6 +277,9 @@
 		</property>
 		<property name="length">
 			<value>4.0677916666666629</value>
+		</property>
+		<property name="looping">
+			<value>2</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{9569675c-c93c-4ac3-83aa-f5ae0a70e4c2}</destination>
@@ -309,6 +315,7 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{4bc12938-7a53-43f7-a56e-336859ba34f7}" />
+	<object class="EventCondition" id="{2f93cc0d-d00e-4cd7-ba8c-e51a7948009d}" />
 	<object class="MixerBusFader" id="{b4dc3aeb-3f94-4e59-b910-ac8cae77343e}" />
 	<object class="MixerBusFader" id="{1a2bf8a8-fb09-4be6-88c8-c994fa763cb5}" />
 </objects>
