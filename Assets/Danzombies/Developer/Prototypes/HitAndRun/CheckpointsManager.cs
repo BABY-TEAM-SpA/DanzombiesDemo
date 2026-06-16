@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class CheckpointsManager : MonoBehaviour
 
     private PlayerManager player;
     private Checkpoint lastCheckpoint;
-    private IResettable[] resettables;
+    private HashSet<IResettable> resettables = new();
     #endregion
 
     #region [UNITY]
