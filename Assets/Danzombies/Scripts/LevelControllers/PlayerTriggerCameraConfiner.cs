@@ -17,7 +17,7 @@ public class PlayerTriggerCameraCOnfiner : MonoBehaviour
     {
         if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
         {
-            Debug.Log($"[°] Switching to '{name}' camera.");
+            Debug.Log($"[O] Switching to '{name}' camera.");
             stateDrivenCamera.Priority = activePriority;
         }
     }
@@ -28,7 +28,7 @@ public class PlayerTriggerCameraCOnfiner : MonoBehaviour
         {
             if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
             {
-                Debug.Log($"[°] Switching to '{name}' camera.");
+                Debug.Log($"[O] Switching to '{name}' camera.");
                 stateDrivenCamera.Priority = inactivePriority;
             }
         }
