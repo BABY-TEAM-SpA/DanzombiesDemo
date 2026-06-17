@@ -1,94 +1,142 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ZombieChasingHordeBehaviour : MonoBehaviour
 {
     #region [VARIABLES]
-    private const float CHECKPOINT_THRESHOLD = 1f;
+    private const float DIST_THRESHOLD = 0.1f;
 
-    [SerializeField] private ZombieChasingHordeCollisionArea collisionArea;
-    [SerializeField] private ZombieChasingHordeDetectionArea detectionArea;
+    [SerializeField] private PlayerCollisionDetector playerDetector;
 
     [Header("References")]
-    [Tooltip("Si la horda se queda sin checkpoints, perseguirá el Transform del Player.")]
     [SerializeField] private PlayerMovementController player;
     [SerializeField] private Transform[] checkpoints;
 
     [Header("Settings")]
-    [SerializeField] [Range(1f, 20f)] private float maxDistance;
-
+    [SerializeField] bool chaseAtStart;
+    [Tooltip("Activar si se quiere que la horda se desvíe en función de la posición del jugador perpendicularmente a la ruta fija hacia los checkpoints.")]
+    [SerializeField] bool followPlayer;
+    [SerializeField][Range(1f, 20f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
-    [SerializeField] [Range(0f, 1f)] private float chasingFactor;
-    [SerializeField] [Range(1f, 30f)] private float acceleration;
+    [SerializeField][Range(0f, 2f)] private float chasingFactor;
 
-    private bool playerInSight;
-    private Queue<Transform> remainingCheckpoints = new();
     private float currentSpeed;
-    private Vector2 velocity;
+    private Vector2 currentDirection;
+    private Transform currentCheckpoint;
+    private Queue<Transform> remainingCheckpoints = new();
     #endregion
 
     #region [UNITY]
-    private void Awake()
+    private void Start()
     {
-        if (player == null)
-            Debug.LogWarning("Falta referencia del PlayerMovementController en el ZombieChasingHordeBehaviour.");
-
-        if (collisionArea != null)
-            collisionArea.OnPlayerCollided += CatchPlayer;
-
-        if (detectionArea != null)
-            detectionArea.OnPlayerDetected += SetPlayerInSight;
-
-        SetSpeed(player.MaxSpeed * chasingFactor);
-        SetCheckpoints();
+        if (chaseAtStart)
+            StartChasing();
     }
 
-    private void Update() => Chase();
+    private void Update()
+    {
+        if (currentCheckpoint != null)
+            Chase();
+    }
+
+    #region Availability
+    private void OnEnable()
+    {
+        if (playerDetector != null)
+            playerDetector.OnPlayerCollided += CatchPlayer;
+    }
+
+    private void OnDisable()
+    {
+        if (playerDetector != null)
+            playerDetector.OnPlayerCollided -= CatchPlayer;
+    }
+    #endregion
     #endregion
 
     #region [METHODS]
+    #region API
+    public void StartChasing()
+    {
+        if (currentCheckpoint != null)
+            return;
+
+        SetCheckpoints();
+        UpdateCheckpoint();
+    }
+
+    public void StopChasing()
+    {
+        currentSpeed = 0f;
+        remainingCheckpoints.Clear();
+
+        currentCheckpoint = null;
+        currentDirection = Vector2.zero;
+    }
+    #endregion
+
+    #region Behaviour
     private void Chase()
     {
-        Transform playerTransform = player.transform;
+        // Velocidad en función de cercanía al player
+        SetSpeed();
 
-        // Definir target (Player o próximo checkpoint)
-        Transform target = playerInSight ? playerTransform
-            : remainingCheckpoints.Count > 0
-                ? remainingCheckpoints.First()
-                : playerTransform;
+        // Avance por la ruta
+        transform.position += (Vector3)(currentDirection * currentSpeed * Time.deltaTime);
 
-        if (target == null)
-            return;
+        // Reajuste perpendicular hacia el player
+        if (followPlayer)
+        {
+            Vector2 perpendicular = Vector2.Perpendicular(currentDirection);
+            float lateralOffset = Vector2.Dot(player.transform.position - transform.position, perpendicular);
 
-        // Mover la horda hacia el target
-        float distance = Vector2.Distance(target.position, transform.position);
-        if (distance > maxDistance)
-            SetSpeed(player.MaxSpeed);
-        else SetSpeed(player.MaxSpeed * chasingFactor);
+            transform.position += (Vector3)(perpendicular * lateralOffset * 2f * Time.deltaTime);
+        }
 
-        Vector2 direction = (target.position - transform.position).normalized;
-        velocity = Vector2.Lerp(velocity, direction * currentSpeed, acceleration * Time.deltaTime);
-        transform.localPosition += (Vector3)(velocity * Time.deltaTime);
+        // Llegada al checkpoint
+        Vector2 toCheckpoint = currentCheckpoint.position - transform.position;
+        float lateralDistance = Mathf.Abs(Vector2.Dot(toCheckpoint, currentDirection));
 
-        // Remover el checkpoint actual si es alcanzado con cierto margen
-        if (target == playerTransform)
-            return;
-
-        if (distance < CHECKPOINT_THRESHOLD || transform.position.x > target.position.x)
+        if (lateralDistance < DIST_THRESHOLD)
+        {
             remainingCheckpoints.Dequeue();
+
+            if (remainingCheckpoints.Count > 0)
+                UpdateCheckpoint();
+            else currentCheckpoint = null;
+        }
     }
 
     private void CatchPlayer() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
+    #endregion
 
     #region Helpers
-    private void SetPlayerInSight(bool inSight) => playerInSight = inSight;
-    private void SetSpeed(float speed) => currentSpeed = speed;
+    private void SetSpeed()
+    {
+        float playerDistance = Vector2.Distance(player.transform.position, transform.position);
+        float error = playerDistance - maxDistance;
 
-    public void Enable() => enabled = true;
-    public void Disable() => enabled = false;
+        float targetSpeed = player.MaxSpeed;
+
+        if (Mathf.Abs(error) > DIST_THRESHOLD)
+        {
+            float t = Mathf.Clamp01((Mathf.Abs(error) - DIST_THRESHOLD) / maxDistance);
+
+            targetSpeed = error > 0
+                ? Mathf.Lerp(player.MaxSpeed, player.MaxSpeed * 10f, t)
+                : player.MaxSpeed * chasingFactor;
+        }
+
+        currentSpeed = targetSpeed;
+    }
+    private void UpdateCheckpoint()
+    {
+        currentCheckpoint = remainingCheckpoints.Peek();
+        currentDirection = (currentCheckpoint.position - transform.position).normalized;
+    }
 
     private void SetCheckpoints()
     {

@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ZombieChasingHordeCollisionArea : MonoBehaviour
+public class ThrownZombie : MonoBehaviour
 {
     #region [VARIAIBLES]
     public Action OnPlayerCollided;
