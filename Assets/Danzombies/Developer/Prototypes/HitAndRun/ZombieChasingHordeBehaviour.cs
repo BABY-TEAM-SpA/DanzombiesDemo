@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ZombieChasingHordeBehaviour : MonoBehaviour
+public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 {
     #region [VARIABLES]
     private const float DIST_THRESHOLD = 0.1f;
@@ -36,6 +37,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #region [UNITY]
     private void Start()
     {
+        _position = transform.position;
+
         if (chaseAtStart)
             StartChasing();
     }
@@ -108,12 +111,33 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
 
             if (remainingCheckpoints.Count > 0)
                 UpdateCheckpoint();
-            else currentCheckpoint = null;
+            else StopChasing();
         }
     }
 
     private void CatchPlayer() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
+    #endregion
+
+    #region IResettable
+    bool _isActive;
+    private Vector3 _position;
+
+    public void CaptureState()
+    {
+        _isActive = gameObject.activeSelf;
+    }
+
+    public void ResetState()
+    {
+        StopChasing();
+
+        gameObject.SetActive(_isActive);
+        transform.position = _position;
+
+        if (chaseAtStart)
+            StartChasing();
+    }
     #endregion
 
     #region Helpers
@@ -138,6 +162,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
 
         currentSpeed = targetSpeed;
     }
+
     private void UpdateCheckpoint()
     {
         currentCheckpoint = remainingCheckpoints.Peek();

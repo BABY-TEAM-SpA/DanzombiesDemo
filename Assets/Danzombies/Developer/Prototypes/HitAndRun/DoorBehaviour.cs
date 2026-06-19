@@ -19,7 +19,7 @@ public class DoorBehaviour : MonoBehaviour, IResettable
 
     private int count;
     private bool isOpen;
-    private Collider2D obstacle;    
+    private Collider2D obstacle;
 
     private Coroutine doorRoutine;
     #endregion
@@ -45,40 +45,43 @@ public class DoorBehaviour : MonoBehaviour, IResettable
         {
             Debug.Log($"Trying to close '{name}': {count}");
             if (count == interactionsToClose)
-                doorRoutine = StartCoroutine(CloseDoor());
+                doorRoutine = StartCoroutine(CloseDoor(0f));
         }
         else
         {
             Debug.Log($"Trying to open '{name}': {count}");
             if (count == interactionsToOpen)
-                doorRoutine = StartCoroutine(OpenDoor());
+                doorRoutine = StartCoroutine(OpenDoor(0f));
         }
     }
 
     #region IResettable
     private bool _isOpen;
 
-    public void CaptureInitialState()
+    public void CaptureState()
     {
         _isOpen = isOpen;
     }
 
     public void ResetState()
     {
-        count = 0;
-        isOpen = _isOpen;
-        obstacle?.gameObject.SetActive(!isOpen);
+        if (doorRoutine != null)
+            StopCoroutine(doorRoutine);
+
+        doorRoutine = _isOpen
+            ? StartCoroutine(OpenDoor(timeToOpen))
+            : StartCoroutine(CloseDoor(timeToClose));
     }
     #endregion
     #endregion
 
     #region [COROUTINES]
-    private IEnumerator OpenDoor()
+    private IEnumerator OpenDoor(float duration)
     {
         if (interactionsToClose == 0)
             interactable?.Disable();
 
-        yield return new WaitForSeconds(timeToOpen);
+        yield return new WaitForSeconds(duration);
 
         count = 0;
         isOpen = true;
@@ -87,12 +90,12 @@ public class DoorBehaviour : MonoBehaviour, IResettable
         doorRoutine = null;
     }
 
-    private IEnumerator CloseDoor()
+    private IEnumerator CloseDoor(float duration)
     {
         if (interactionsToOpen == 0)
             interactable?.Disable();
 
-        yield return new WaitForSeconds(timeToClose);
+        yield return new WaitForSeconds(duration);
 
         count = 0;
         isOpen = false;
