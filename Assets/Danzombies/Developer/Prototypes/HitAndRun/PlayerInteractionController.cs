@@ -58,7 +58,7 @@ public class PlayerInteractionController : MonoBehaviour
     /// </summary>
     private void OnDirectionChanged(bool isLeft)
     {
-        if (interactable != null)
+        if (interactable != null && interactable.isActiveAndEnabled)
         {
             interactable.ShowFeedback(false);
             ClearInteractive();

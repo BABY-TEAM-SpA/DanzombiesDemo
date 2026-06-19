@@ -16,13 +16,18 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] bool chaseAtStart;
-    [Tooltip("Activar si se quiere que la horda se desvíe en función de la posición del jugador perpendicularmente a la ruta fija hacia los checkpoints.")]
-    [SerializeField] bool followPlayer;
-    [SerializeField][Range(1f, 20f)] private float maxDistance;
+    [SerializeField][Range(1f, 30f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
     [SerializeField][Range(0f, 2f)] private float chasingFactor;
 
+    [Header("Settings - Deviation")]
+    [Tooltip("Máxima distancia que la horda se desviará perpendicularmente de su riel por seguir al Player.")]
+    [SerializeField] private float maxLateralDeviation;
+    [SerializeField] private float lateralFollowSpeed;
+
+    private float currentOffset;
     private float currentSpeed;
+    private Vector2 railPosition;
     private Vector2 currentDirection;
     private Transform currentCheckpoint;
     private Queue<Transform> remainingCheckpoints = new();
@@ -80,26 +85,24 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #region Behaviour
     private void Chase()
     {
-        // Velocidad en función de cercanía al player
         SetSpeed();
+        Vector2 forward = currentDirection;
+        Vector2 perpendicular = Vector2.Perpendicular(forward);
 
         // Avance por la ruta
-        transform.position += (Vector3)(currentDirection * currentSpeed * Time.deltaTime);
+        railPosition += forward * currentSpeed * Time.deltaTime;
 
-        // Reajuste perpendicular hacia el player
-        if (followPlayer)
-        {
-            Vector2 perpendicular = Vector2.Perpendicular(currentDirection);
-            float lateralOffset = Vector2.Dot(player.transform.position - transform.position, perpendicular);
+        float playerOffset = Vector2.Dot((Vector2)player.transform.position - railPosition, perpendicular);
+        float targetOffset = Mathf.Clamp(playerOffset, -maxLateralDeviation, maxLateralDeviation);
+        currentOffset = Mathf.MoveTowards(currentOffset, targetOffset, lateralFollowSpeed * Time.deltaTime);
 
-            transform.position += (Vector3)(perpendicular * lateralOffset * 2f * Time.deltaTime);
-        }
+        transform.position = railPosition + perpendicular * currentOffset;
 
         // Llegada al checkpoint
         Vector2 toCheckpoint = currentCheckpoint.position - transform.position;
-        float lateralDistance = Mathf.Abs(Vector2.Dot(toCheckpoint, currentDirection));
+        float forwardDistance = Mathf.Abs(Vector2.Dot(toCheckpoint, currentDirection));
 
-        if (lateralDistance < DIST_THRESHOLD)
+        if (forwardDistance < DIST_THRESHOLD)
         {
             remainingCheckpoints.Dequeue();
 
@@ -114,6 +117,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #endregion
 
     #region Helpers
+    /// <summary>
+    /// 
+    /// </summary>
     private void SetSpeed()
     {
         float playerDistance = Vector2.Distance(player.transform.position, transform.position);
@@ -136,6 +142,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     {
         currentCheckpoint = remainingCheckpoints.Peek();
         currentDirection = (currentCheckpoint.position - transform.position).normalized;
+
+        if (railPosition == Vector2.zero)
+            railPosition = transform.position;
     }
 
     private void SetCheckpoints()
