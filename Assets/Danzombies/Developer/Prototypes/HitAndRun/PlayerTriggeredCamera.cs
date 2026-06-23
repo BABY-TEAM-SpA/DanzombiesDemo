@@ -16,19 +16,13 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
-            return;
-
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
+        if (other.CompareTag("Player"))
             stateDrivenCamera.Priority = ACTIVE_PRIORITY;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
-            return;
-
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
+        if (other.CompareTag("Player"))
             stateDrivenCamera.Priority = INACTIVE_PRIORITY;
     }
     #endregion
