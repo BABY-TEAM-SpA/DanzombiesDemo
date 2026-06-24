@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class PlayerTriggeredCamera : MonoBehaviour
     private const int INACTIVE_PRIORITY = 0;
 
     [SerializeField] private CinemachineStateDrivenCamera stateDrivenCamera;
+    [SerializeField] private CinemachineCamera[] cameras;
     #endregion
 
     #region [UNITY]
@@ -17,7 +19,7 @@ public class PlayerTriggeredCamera : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            stateDrivenCamera.Priority = ACTIVE_PRIORITY;
+            FollowPlayer(other.GetComponent<Animator>());
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -26,5 +28,41 @@ public class PlayerTriggeredCamera : MonoBehaviour
             stateDrivenCamera.Priority = INACTIVE_PRIORITY;
     }
     #endregion
+    #endregion
+
+    #region [METHODS]
+    private void FollowPlayer(Animator playerAnimator)
+    {
+        stateDrivenCamera.AnimatedTarget = playerAnimator;
+        SetInstructions();
+        foreach (CinemachineCamera camera in cameras)
+            camera.Follow = playerAnimator.transform;
+        stateDrivenCamera.Priority = ACTIVE_PRIORITY;
+    }
+
+    private void SetInstructions()
+    {
+        CinemachineStateDrivenCamera.Instruction[] instructions = stateDrivenCamera.Instructions;
+        if (instructions.Length < 2)
+            return;
+
+        instructions[0] = new CinemachineStateDrivenCamera.Instruction
+        {
+            FullHash = Animator.StringToHash("LeftLooking"),
+            Camera = instructions[0].Camera,
+            ActivateAfter = instructions[0].ActivateAfter,
+            MinDuration = instructions[0].MinDuration
+        };
+
+        instructions[1] = new CinemachineStateDrivenCamera.Instruction
+        {
+            FullHash = Animator.StringToHash("RightLooking"),
+            Camera = instructions[1].Camera,
+            ActivateAfter = instructions[1].ActivateAfter,
+            MinDuration = instructions[1].MinDuration
+        };
+
+        stateDrivenCamera.Instructions = instructions;
+    }
     #endregion
 }

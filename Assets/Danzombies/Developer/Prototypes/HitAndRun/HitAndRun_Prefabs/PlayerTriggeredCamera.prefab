@@ -208,11 +208,7 @@ MonoBehaviour:
     Camera: {fileID: 7602982556725867934}
     ActivateAfter: 0
     MinDuration: 0
-  HashOfParent:
-  - Hash: 947374556
-    HashOfParent: 756556552
-  - Hash: -629299600
-    HashOfParent: 756556552
+  HashOfParent: []
   m_LegacyLookAt: {fileID: 0}
   m_LegacyFollow: {fileID: 0}
 --- !u!1 &5111816160545525408
@@ -390,6 +386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTriggeredCamera
   stateDrivenCamera: {fileID: 3259703889130486117}
+  cameras:
+  - {fileID: 7684192186967810094}
+  - {fileID: 7602982556725867934}
 --- !u!61 &998044162579537410
 BoxCollider2D:
   m_ObjectHideFlags: 0
