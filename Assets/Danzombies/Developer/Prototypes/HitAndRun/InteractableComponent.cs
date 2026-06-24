@@ -4,7 +4,7 @@ using UnityEngine.Events;
 /// <summary>
 /// Componente que se acopla en un GameObject para que el Player pueda interactuar con él.
 /// </summary>
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class InteractableComponent : MonoBehaviour
 {
     #region [VARIABLES]
@@ -17,8 +17,8 @@ public class InteractableComponent : MonoBehaviour
     #region [UNITY]
     private void Awake()
     {
-        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.isTrigger = true;
     }
 
     #region Trigger
@@ -50,15 +50,15 @@ public class InteractableComponent : MonoBehaviour
         if (!enabled)
             return;
 
-        feedback.Pulse();
+        feedback?.Pulse();
         OnInteract?.Invoke();
     }
 
     public void ShowFeedback(bool show)
     {
         if (show)
-            feedback.Show();
-        else feedback.Hide();
+            feedback?.Show();
+        else feedback?.Hide();
     }
 
     #region Dis/Enable

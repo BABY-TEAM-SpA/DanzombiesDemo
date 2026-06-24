@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
 public class DoorBehaviour : MonoBehaviour, IResettable
 {
     #region [VARIABLES]
+    [SerializeField] private Collider2D obstacle;
     [SerializeField] private InteractableComponent interactable;
+    [SerializeField] private SpriteRenderer visuals;
 
     [Header("Settings - Open")]
     [Tooltip("Colocar 0 para impedir que se pueda abrir.")]
@@ -19,7 +20,6 @@ public class DoorBehaviour : MonoBehaviour, IResettable
 
     private int count;
     private bool isOpen;
-    private Collider2D obstacle;
 
     private Coroutine doorRoutine;
     #endregion
@@ -29,8 +29,6 @@ public class DoorBehaviour : MonoBehaviour, IResettable
     {
         if (interactable == null)
             interactable = GetComponentInParent<InteractableComponent>();
-
-        obstacle = GetComponent<Collider2D>();
     }
     #endregion
 
@@ -85,7 +83,8 @@ public class DoorBehaviour : MonoBehaviour, IResettable
 
         count = 0;
         isOpen = true;
-        obstacle?.gameObject.SetActive(false);        
+        obstacle?.gameObject.SetActive(false);   
+        visuals?.gameObject.SetActive(false);
 
         doorRoutine = null;
     }
@@ -100,6 +99,7 @@ public class DoorBehaviour : MonoBehaviour, IResettable
         count = 0;
         isOpen = false;
         obstacle?.gameObject.SetActive(true);
+        visuals?.gameObject.SetActive(true);
 
         doorRoutine = null;
     }
