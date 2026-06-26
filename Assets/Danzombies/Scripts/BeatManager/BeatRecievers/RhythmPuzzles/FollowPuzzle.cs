@@ -59,9 +59,9 @@ public class FollowPuzzle : RhythmPuzzle
 
     protected override void CheckPlayerPost()
     {
-        if (!PlayerHasDanced && playersInside != null && CurrentPuzzleStep != DanceStep.None && currentFollowSequence.playerAffected && !leaderTurn)
+        if (!PlayerHasDanced && playersInside != null && currentDanceData.DanceStep != DanceStep.None && currentFollowSequence.playerAffected && !leaderTurn)
         {
-            CurrentSequence.ApplyDance(false);
+            currentDanceData.Sequence.ApplyDance(false);
             playersInside.ReportEmptyDance();
         }
     }
@@ -131,7 +131,7 @@ public class FollowPuzzle : RhythmPuzzle
     
     public override bool SetPlayerInput(DanceStep playerStep, out BeatFeedback bf)
     { 
-        bf = playerStep == CurrentPuzzleStep? BeatManager.Instance.EvaluateInput(beatType): BeatFeedback.Bad;
+        bf = playerStep == currentDanceData.DanceStep? BeatManager.Instance.EvaluateInput(beatType): BeatFeedback.Bad;
         if (!PlayerHasDanced && isOnBeat && !leaderTurn && currentFollowSequence.playerAffected)
         {
             PlayerHasDanced = true;

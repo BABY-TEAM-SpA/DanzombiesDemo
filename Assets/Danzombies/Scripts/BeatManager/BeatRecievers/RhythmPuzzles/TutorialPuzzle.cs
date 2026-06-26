@@ -37,7 +37,7 @@ public class TutorialPuzzle : RhythmPuzzle
         InnerCounter = 0;
         playerSucceses = 0;
         base.ActivatePuzzle(activate);
-        if (currentTutorialSequence < TutorialSequences.Count) CurrentSequence = TutorialSequences[currentTutorialSequence];
+        if (currentTutorialSequence < TutorialSequences.Count) currentDanceData.Sequence = TutorialSequences[currentTutorialSequence];
     }
 
     public override void PlayerGetDamaged() {}
@@ -62,7 +62,7 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public void CompleteRhythmSequence()
     {
-        CurrentSequence.OnSequenceCompletedEvent?.Invoke();
+        currentDanceData.Sequence.OnSequenceCompletedEvent?.Invoke();
         currentTutorialSequence += 1;
         InnerCounter = 0;
         ActivatePuzzle(false);

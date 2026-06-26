@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
+public class DanceData
+{
+    public SequenceStep Sequence;
+    public DanceStep DanceStep = DanceStep.None;
+    public DanceStep NextDanceStep = DanceStep.None;
+}
 
 public abstract class RhythmPuzzle : BeatReciever
 {
@@ -13,10 +20,8 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] bool activateOnStart;
     [SerializeField] RhythmSyncMode syncMode = RhythmSyncMode.Global;
     
-    protected SequenceStep CurrentSequence;
-    protected DanceStep CurrentPuzzleStep = DanceStep.None;
-    protected DanceStep NextPuzzleStep = DanceStep.None;
-    protected int InnerCounter;
+    public DanceData currentDanceData;
+    protected int InnerCounter = 0;
     private int startBeat;
     
     public delegate void OnMusicEvent(DanceStep danceStep);
@@ -38,21 +43,21 @@ public abstract class RhythmPuzzle : BeatReciever
 
     protected void SetSequence(SequenceStep sequence)
     {
-        CurrentSequence = sequence;
-        CurrentSequence.startCounter = InnerCounter;
-        beatType = CurrentSequence.patternBeatType;
+        currentDanceData.Sequence = sequence;
+        currentDanceData.Sequence.startCounter = InnerCounter;
+        beatType = currentDanceData.Sequence.patternBeatType;
     }
 
 
     // Tested - Working
     public virtual bool SetPlayerInput(DanceStep playerStep, out BeatFeedback bf)
     {
-        bool isCorrect = playerStep == CurrentPuzzleStep;
+        bool isCorrect = playerStep == currentDanceData.DanceStep;
         bf = isCorrect? BeatManager.Instance.EvaluateInput(beatType): BeatFeedback.Bad;
         if (!PlayerHasDanced && isOnBeat)
         {
             PlayerHasDanced = true;
-            CurrentSequence.ApplyDance(isCorrect);
+            currentDanceData.Sequence.ApplyDance(isCorrect);
             return true;
         }
         return false;
@@ -77,36 +82,36 @@ public abstract class RhythmPuzzle : BeatReciever
     {
         PlayerHasDanced = false;
         UpdateInnerCounter();
-        CurrentSequence.GetDanceStep(InnerCounter, out CurrentPuzzleStep);
+        currentDanceData.Sequence.GetDanceStep(InnerCounter, out currentDanceData.DanceStep);
         if(debug) Debug.Log("___Puzzle PreBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
         PuzzlePreBeat();
-        OnPrepareStep?.Invoke(CurrentPuzzleStep);
+        OnPrepareStep?.Invoke(currentDanceData.DanceStep);
     }
 
     public override void BeatAction(int counter)
     {
-        if(debug) Debug.Log("_____Puzzle Beat make "+CurrentPuzzleStep.ToString()+" at "+counter+" on "+AudioManager.Instance.SongPositionSeconds().ToString());
+        if(debug) Debug.Log("_____Puzzle Beat make "+currentDanceData.DanceStep.ToString()+" at "+counter+" on "+AudioManager.Instance.SongPositionSeconds().ToString());
         PuzzleBeat();
-        OnDanceStep?.Invoke(CurrentPuzzleStep);
+        OnDanceStep?.Invoke(currentDanceData.DanceStep);
         
     }
     public override void PostBeatAction(int counter)
     {
         if(debug) Debug.Log("___Puzzle PostBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
         PuzzlePostBeat();
-        Action<RhythmPuzzle> callback = CurrentSequence.GetNextDanceStep(InnerCounter, out NextPuzzleStep);
+        Action<RhythmPuzzle> callback = currentDanceData.Sequence.GetNextDanceStep(InnerCounter, out currentDanceData.NextDanceStep);
         callback?.Invoke(this);
-        OnReleaseStep?.Invoke(CurrentPuzzleStep,NextPuzzleStep);
+        OnReleaseStep?.Invoke(currentDanceData.DanceStep,currentDanceData.NextDanceStep);
         CheckPlayerPost();
-        CurrentPuzzleStep = DanceStep.None;
+        currentDanceData.DanceStep = DanceStep.None;
         PlayerHasDanced = false;
     }
 
     protected virtual void CheckPlayerPost()
     {
-        if (!PlayerHasDanced && playersInside != null && CurrentPuzzleStep != DanceStep.None)
+        if (!PlayerHasDanced && playersInside != null && currentDanceData.DanceStep != DanceStep.None)
         {
-            CurrentSequence.ApplyDance(false);
+            currentDanceData.Sequence.ApplyDance(false);
             playersInside.ReportEmptyDance();
         }
     }
