@@ -3,13 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class SceneLoaderPlayerTrigger : SceneLoader
 {
-    [SerializeField] bool used=false;
+    #region [VARIABLES]
+    private bool used;
+    #endregion
+
+    #region [UNITY]
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.tag == "Player" && !used)
+        if (other.CompareTag("Player") && !used)
         {
             used = true;
             Load();
         }
     }
+    #endregion
 }
