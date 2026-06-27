@@ -29,7 +29,7 @@ public class DanceBarController : MonoBehaviour
         {
             bar.material = newMat;
         }
-        PlayerManager.Player.danceBar = this;
+        //PlayerManager.Player.danceBar = this; // [Frco] Lo cambié para que sea el propio PlayerManager quien busca y asigna la DanceBar
         UpdateFlowBars(0);
         UpdateIconFeedback();
     }

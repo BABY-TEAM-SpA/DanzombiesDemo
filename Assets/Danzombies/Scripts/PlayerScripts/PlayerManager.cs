@@ -37,17 +37,14 @@ public class PlayerManager : DanceBrain
     private void Awake()
     {
         if (Player == null)
-        {
             Player = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        else Destroy(gameObject);
     }
 
-    
-
+    private void OnEnable()
+    {
+        danceBar = GUIManager.Instance?.DanceBar;
+    }
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {

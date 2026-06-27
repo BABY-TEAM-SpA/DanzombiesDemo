@@ -59,6 +59,8 @@ public class BeatManager : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+            return;
         Instance = this;
         callbackTarget = this;
     }

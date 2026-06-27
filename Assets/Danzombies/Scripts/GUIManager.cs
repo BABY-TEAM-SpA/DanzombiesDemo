@@ -8,19 +8,18 @@ public class GUIManager : MonoBehaviour
     public GameObject PauseCanvas;
     public GameObject TransitionCanvas;
 
+    public DanceBarController DanceBar => danceBarController;
+    [SerializeField] private DanceBarController danceBarController;
+
     private void Awake()
     {
 
         if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
+            Destroy(gameObject);
         else
         {
-
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
 }
