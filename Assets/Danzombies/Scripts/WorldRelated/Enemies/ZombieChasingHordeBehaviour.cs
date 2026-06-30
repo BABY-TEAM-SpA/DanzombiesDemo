@@ -74,6 +74,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         UpdateCheckpoint();
     }
 
+    public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
+    public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
+
     public void StopChasing()
     {
         currentSpeed = 0f;
@@ -155,7 +158,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
             float t = Mathf.Clamp01((Mathf.Abs(error) - DIST_THRESHOLD) / maxDistance);
 
             targetSpeed = error > 0
-                ? Mathf.Lerp(player.MaxSpeed, player.MaxSpeed * 10f, t)
+                ? Mathf.Lerp(player.MaxSpeed, player.MaxSpeed * 4f, t)
                 : player.MaxSpeed * chasingFactor;
         }
 

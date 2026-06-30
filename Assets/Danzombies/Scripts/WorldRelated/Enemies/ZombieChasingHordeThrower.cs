@@ -57,6 +57,12 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
     #endregion
 
     #region [METHODS]
+    #region API
+    public void Activate() => active = true;
+    public void Deactivate() => active = false;
+    #endregion
+
+    #region Behaviour
     private void ThrowZombie()
     {
         if (throwRoutine != null)
@@ -71,6 +77,7 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
         RecoverZombie();
     }
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
+    #endregion
 
     #region Helpers
     private void RecoverZombie()
