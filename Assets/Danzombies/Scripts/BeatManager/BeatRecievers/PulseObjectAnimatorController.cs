@@ -5,7 +5,7 @@ using UnityEngine;
 public class PulseObjectAnimatorController : BeatReciever
 {
     
-    [SerializeField]  Animator animator ;
+    [SerializeField] Animator animator ;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
     
     public void Awake()
@@ -25,15 +25,14 @@ public class PulseObjectAnimatorController : BeatReciever
 
     public override void BeatAction(int counter)
     {
-        animator.Play("Pulse");
-        //Debug.Log(transform.name +": Pulsed at "+ AudioSettings.dspTime);
+        animator.SetTrigger("Pulse");
+        Debug.Log(counter);
     }
 
     public override void PostBeatAction(int counter)
     {
-        //throw new System.NotImplementedException();
+        animator.ResetTrigger("Pulse");
     }
-    
 
     public override void OnUpdateSongAction()
     {
@@ -44,11 +43,6 @@ public class PulseObjectAnimatorController : BeatReciever
     {
         double duration = BeatManager.Instance? BeatManager.Instance.eighthBeatDuration:1d;
         animator.SetFloat("Beat",(float)(1f/duration));
-    }
-
-    public void ResetIdle()
-    {
-        animator.ResetTrigger("Pulse");
     }
 
    

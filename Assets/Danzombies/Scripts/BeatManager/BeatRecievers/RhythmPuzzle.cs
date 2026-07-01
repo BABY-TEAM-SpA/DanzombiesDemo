@@ -20,7 +20,7 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] bool activateOnStart;
     [SerializeField] RhythmSyncMode syncMode = RhythmSyncMode.Global;
     
-    public DanceData currentDanceData;
+    [HideInInspector] public DanceData currentDanceData;
     protected int InnerCounter = 0;
     private int startBeat;
     

@@ -38,6 +38,7 @@ public class TutorialPuzzle : RhythmPuzzle
         playerSucceses = 0;
         base.ActivatePuzzle(activate);
         if (currentTutorialSequence < TutorialSequences.Count) currentDanceData.Sequence = TutorialSequences[currentTutorialSequence];
+        if (currentDanceData.Sequence.playbackMode == SequenceStep.PlaybackMode.LoopUntilFlowIsFull) playersInside?.ActivateDanceHUD(activate);;
     }
 
     public override void PlayerGetDamaged() {}
@@ -48,24 +49,12 @@ public class TutorialPuzzle : RhythmPuzzle
 
     protected override void PuzzlePostBeat() {}
 
-    public override void OnSequenceEnd() {}
-
-
-    /*public void ReactToPlayersDance(PlayerManager player, DanceStep step)
-    {
-        if (step == DanceStep.None)return;
-        bool IsPlayerDanceCorrect = player.saveDanceStep == step;
-        Debug.Log("Puzzle: "+step.ToString()+ "| Player: "+ player.saveDanceStep.ToString()+ " | IsPlayerDanceCorrect: " + IsPlayerDanceCorrect);
-        MissionBuffer(IsPlayerDanceCorrect);
-    }*/
-    
-
-    public void CompleteRhythmSequence()
+    public override void OnSequenceEnd()
     {
         currentDanceData.Sequence.OnSequenceCompletedEvent?.Invoke();
         currentTutorialSequence += 1;
         InnerCounter = 0;
         ActivatePuzzle(false);
-        
     }
+    
 }

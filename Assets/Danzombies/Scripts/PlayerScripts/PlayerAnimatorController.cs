@@ -47,16 +47,18 @@ public class PlayerAnimatorController : DanceAnimatorController
             {
                 float valor = context.ReadValue<float>();
                 leanInput = valor != 0;
+                animator.SetBool("PrepareDance",leanInput);
                 if(leanInput) currentLean = valor>0?DanceLean.R:DanceLean.L;
                 TryMakeDanceStep();
             }
                
         }
         if (context.canceled)
-        {
-           currentLean = DanceLean.None;
-           leanInput = false;
-           danceTriggered = false;
+        { 
+            animator.SetBool("PrepareDance",false);
+            currentLean = DanceLean.None;
+            leanInput = false;
+            danceTriggered = false;
         } 
     }
 
@@ -66,6 +68,7 @@ public class PlayerAnimatorController : DanceAnimatorController
     {
         if(leanInput && directionInput && !danceTriggered)
         {
+            animator.SetBool("PrepareDance",false);
             danceTriggered=true;
             DanceStep step = Enum.Parse<DanceStep>( currentLean + "_" + currentDirection );
             OnDanceBegin(step);
