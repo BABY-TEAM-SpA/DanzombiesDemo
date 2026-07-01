@@ -41,13 +41,11 @@ public class DoorBehaviour : MonoBehaviour, IResettable
         count++;
         if (isOpen)
         {
-            Debug.Log($"Trying to close '{name}': {count}");
             if (count == interactionsToClose)
                 doorRoutine = StartCoroutine(CloseDoor(0f));
         }
         else
         {
-            Debug.Log($"Trying to open '{name}': {count}");
             if (count == interactionsToOpen)
                 doorRoutine = StartCoroutine(OpenDoor(0f));
         }

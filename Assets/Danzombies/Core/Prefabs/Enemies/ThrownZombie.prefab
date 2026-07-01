@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1192372215734624373}
-  - component: {fileID: 6794815144312741227}
+  - component: {fileID: 3090518747229729203}
   - component: {fileID: 3812030789531558341}
   m_Layer: 0
   m_Name: ThrownZombie
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 2005361474328662844}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6794815144312741227
+--- !u!114 &3090518747229729203
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +43,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7592839606221443569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f96d0efe6d6a09a4eb589fae3052f658, type: 3}
+  m_Script: {fileID: 11500000, guid: 991e6061fec73e84fbeb6415d3d6301a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionDetector
+  m_EditorClassIdentifier: Assembly-CSharp::ThrownZombie
+  animator: {fileID: 3508576796587150771}
+  timeBeforeJumping: 0.25
 --- !u!70 &3812030789531558341
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -93,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2005361474328662844}
   - component: {fileID: 3307441138603208754}
+  - component: {fileID: 3508576796587150771}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -109,8 +112,8 @@ Transform:
   m_GameObject: {fileID: 8965502179036683478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 2, y: 5.0001, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1192372215734624373}
@@ -162,8 +165,8 @@ SpriteRenderer:
   m_SortingLayerID: 1366706313
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 782d23f829553c54fa57e17c81d8bf64, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2509804}
+  m_Sprite: {fileID: 21300000, guid: 51a1c2b3fc5abc840b1efa0c6be9cfd8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -173,3 +176,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3508576796587150771
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8965502179036683478}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4aec5e62a16fce84c8353502eb3609b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

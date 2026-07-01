@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
+public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
 {
     #region [VARIABLES]
     [SerializeField] private Transform zombieSpawn;
@@ -13,7 +13,6 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
     [SerializeField] private PlayerMovementController player;
 
     [Header("Settings")]
-    [SerializeField] bool active;
     [Tooltip("Factor al que el zombie saldrá disparado con respecto al Player (2f = x2 de la velocidad de Greg).")]
     [SerializeField][Range(0f, 3f)] private float throwFactor;
     [Tooltip("Tiempo que el zombie pasará 'volando' hasta volver a la pool.")]
@@ -23,8 +22,9 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
 
     private float elapsed;
     private float throwSpeed;
+
     private Coroutine throwRoutine;
-    private PlayerCollisionDetector thrownZombie;
+    private Coroutine blinkRoutine;
     #endregion
 
     #region [UNITY]
@@ -32,15 +32,12 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
     {
         if (player != null)
             throwSpeed = player.MaxSpeed * throwFactor;
-        cautionImg.gameObject.SetActive(false);
 
         Prewarm(zombieSpawn);
     }
 
     private void Update()
     {
-        if (!active)
-            return;
         if (throwRoutine != null) // <- Para que el ThrowDelay no entre en el contador del ThrowPeriod
             return;
 
@@ -48,7 +45,7 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
         if (elapsed >= throwPeriod)
         {
             ThrowZombie();
-            elapsed = 0f;
+            elapsed -= throwPeriod;
         }
     }
 
@@ -58,8 +55,8 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
 
     #region [METHODS]
     #region API
-    public void Activate() => active = true;
-    public void Deactivate() => active = false;
+    public void Enable() => enabled = true;
+    public void Disable() => enabled = false;
     #endregion
 
     #region Behaviour
@@ -70,25 +67,16 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
         throwRoutine = StartCoroutine(ThrowZombieRoutine());
     }
 
-    private void CatchPlayer()
+    public void CatchPlayer()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        RecoverZombie();
     }
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
-    #endregion
 
-    #region Helpers
-    private void RecoverZombie()
+    public void RecoverZombie(ThrownZombie thrownZombie)
     {
-        thrownZombie.OnPlayerCollided -= CatchPlayer;
         thrownZombie.transform.localPosition = Vector3.zero;
         Recover(thrownZombie, true, zombieSpawn);
-
-        if (throwRoutine != null)
-            StopCoroutine(throwRoutine);
-        throwRoutine = null;
     }
     #endregion
     #endregion
@@ -97,15 +85,18 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
     private IEnumerator ThrowZombieRoutine()
     {
         float t = 0f;
-        thrownZombie = Get();
+        ThrownZombie thrownZombie = Get();
         thrownZombie.transform.SetParent(null, true);
-        thrownZombie.OnPlayerCollided += CatchPlayer;
 
-        cautionImg.gameObject.SetActive(true);
+        if (blinkRoutine != null)
+            StopCoroutine(blinkRoutine);
+        blinkRoutine = StartCoroutine(BlinkCautionRoutine());
+
         yield return new WaitForSeconds(throwDelay); // <- Delay
-        cautionImg.gameObject.SetActive(false);
-
+        
+        thrownZombie.Enable(this);
         Vector3 direction = (player.transform.position - thrownZombie.transform.position).normalized;
+        
         while (t < throwDuration)
         {
             thrownZombie.transform.localPosition += direction * throwSpeed * Time.deltaTime;
@@ -113,12 +104,17 @@ public class ZombieChasingHordeThrower : ObjectPool<PlayerCollisionDetector>
             yield return null;
         }
 
-        RecoverZombie(); // <- Caso opuesto a CatchPlayer(): el zombie pasó de largo
+        thrownZombie.Disable();
+        throwRoutine = null;
     }
 
-    private IEnumerator BlinkCaution()
+    private IEnumerator BlinkCautionRoutine()
     {
-        yield return null;
+        cautionImg.gameObject.SetActive(true);
+        yield return new WaitForSeconds(throwDelay); // <- Delay
+        cautionImg.gameObject.SetActive(false);
+
+        blinkRoutine = null;
     }
     #endregion
 }

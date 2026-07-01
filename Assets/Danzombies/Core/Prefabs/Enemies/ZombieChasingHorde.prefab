@@ -150,7 +150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6694869870538128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 2011987606634272582}
   m_Layer: 0
   m_Name: ZombieChasingHorde
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -244,6 +244,7 @@ Transform:
   m_Children:
   - {fileID: 3368531232615296695}
   - {fileID: 5171360435239665639}
+  - {fileID: 2260649671472705698}
   - {fileID: 2857918233880686953}
   - {fileID: 8445097022293018380}
   m_Father: {fileID: 0}
@@ -275,20 +276,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2967085197330972928}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25037bbb65a9b634e9bd6935a3532dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieChasingHordeThrower
-  prefab: {fileID: 6794815144312741227, guid: 754738d5ef694fd408fdedab776c427c, type: 3}
+  prefab: {fileID: 3090518747229729203, guid: 754738d5ef694fd408fdedab776c427c, type: 3}
   poolSize: 1
   zombieSpawn: {fileID: 2857918233880686953}
   cautionImg: {fileID: 8425274748706257502}
   player: {fileID: 0}
-  active: 0
-  throwFactor: 2
-  throwDuration: 2
-  throwPeriod: 3
+  throwFactor: 2.25
+  throwDuration: 1.5
+  throwPeriod: 2
   throwDelay: 0.5
 --- !u!114 &5798130410109413558
 MonoBehaviour:
@@ -334,10 +334,10 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -514,6 +514,75 @@ MonoBehaviour:
   whenUse: 1
   spriteRenderers:
   - {fileID: 2735027029312123770}
+--- !u!1 &6481624867246709978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2260649671472705698}
+  - component: {fileID: 2721660694821836708}
+  m_Layer: 0
+  m_Name: ThrownZombieCollector
+  m_TagString: Zombie
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2260649671472705698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6481624867246709978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8044182109099556138}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2721660694821836708
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6481624867246709978}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 10.5, y: 6}
+  m_Direction: 1
 --- !u!1 &7859812009494546304
 GameObject:
   m_ObjectHideFlags: 0

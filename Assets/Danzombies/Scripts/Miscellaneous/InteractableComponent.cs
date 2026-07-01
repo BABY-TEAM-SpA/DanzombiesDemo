@@ -24,7 +24,6 @@ public class InteractableComponent : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Player entered in the '{name}' ({enabled}) area");
         if (enabled && collision.TryGetComponent(out PlayerInteractionController player))
         {
             ShowFeedback(true);
@@ -34,7 +33,6 @@ public class InteractableComponent : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log($"Player left the '{name}' ({enabled}) area");
         if (enabled && collision.TryGetComponent(out PlayerInteractionController player))
         {
             ShowFeedback(false);

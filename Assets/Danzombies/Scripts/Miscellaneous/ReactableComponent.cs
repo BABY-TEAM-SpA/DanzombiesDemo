@@ -8,6 +8,9 @@ using UnityEngine.Events;
 public class ReactableComponent : MonoBehaviour
 {
     #region [VARIABLES]
+    [Tooltip("Nombre de la Tag con la que reaccionará.")]
+    [SerializeField] private string triggeringTag = "Player";
+
     [Tooltip("Conectar con el método que se ejecutará cuando el Player pase cerca de este GameObject.")]
     public UnityEvent OnReact;
     [Tooltip("Conectar con el método que se ejecutará cuando el Player se aleje de este GameObject.")]
@@ -24,13 +27,13 @@ public class ReactableComponent : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (enabled && collision.CompareTag("Player"))
+        if (enabled && collision.CompareTag(triggeringTag))
             OnReact?.Invoke();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (enabled && collision.CompareTag("Player"))
+        if (enabled && collision.CompareTag(triggeringTag))
             OnDismiss?.Invoke();
     }
     #endregion
