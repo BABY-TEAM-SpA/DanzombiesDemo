@@ -45,14 +45,6 @@ public class DanceAnimatorController : MonoBehaviour
     }
     
     
-    /*
-    public void OnPulse()
-    {
-        animator.ResetTrigger("Pulse");
-        animator.SetTrigger("Pulse");
-
-    }*/
-    
     public void OnMoving(Vector3 velocity)
     {
         bool moving = velocity != Vector3.zero;

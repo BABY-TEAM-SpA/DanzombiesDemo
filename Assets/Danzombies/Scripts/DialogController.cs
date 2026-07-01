@@ -74,6 +74,7 @@ public class DialogController : MonoBehaviour
         int value =dialogScripts[currentScriptSequence].currentDialogText+1;
         if (value >= dialogScripts[currentScriptSequence].dialogData.dialogs.Count)
         {
+            Container.SetActive(false);
             dialogScripts[currentScriptSequence].OnDialogEndEvent?.Invoke();
         }
         else
