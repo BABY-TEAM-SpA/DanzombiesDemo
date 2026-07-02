@@ -84,7 +84,6 @@ public class AudioManager : MonoBehaviour
     public bool TryGetCurrentRhythmTrack(out EventInstance track)
     {
         track = currentRhythmTrack;
-
         return currentRhythmTrack.isValid();
     }
 
@@ -96,6 +95,14 @@ public class AudioManager : MonoBehaviour
         currentRhythmTrack.getTimelinePosition(out int ms);
 
         return ms / 1000f;
+    }
+
+    public float SongPositionSecondsRelativeToCurrentRhythm()
+    {
+        if (!currentRhythmTrack.isValid())
+            return 0f;
+        currentRhythmTrack.getTimelinePosition(out int ms);
+        return Mathf.RoundToInt(ms / 1000f);
     }
 
     public bool IsPlaying()

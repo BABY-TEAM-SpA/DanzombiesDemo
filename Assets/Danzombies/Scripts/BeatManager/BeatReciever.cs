@@ -3,7 +3,7 @@ using static BeatManager;
 
 public abstract class BeatReciever : MonoBehaviour
 {
-    [SerializeField] protected BeatType beatType = BeatType.FullBeat;
+    protected BeatType beatType = BeatType.FullBeat;
     public bool isActive { get; set; } = false;
     public bool isOnBeat { get; private set; } = false;
 

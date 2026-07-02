@@ -31,8 +31,8 @@ public class DanceAnimatorController : MonoBehaviour
     [SerializeField] protected bool allowInput = false;
     [SerializeField] public Animator animator;
     //[SerializeField] private SpriteRenderer renderer;
-    [SerializeField] private AnimatorOverrideController alphaOverrider;
-    [SerializeField] private AnimatorOverrideController betaOverrider;
+    private AnimatorOverrideController alphaOverrider;
+    private AnimatorOverrideController betaOverrider;
     private double currentBeatOnPlayer = 0d;
     private bool isDirectionPulsed;
     private DanceDirection isDancePulsed;
@@ -70,6 +70,13 @@ public class DanceAnimatorController : MonoBehaviour
         animator.ResetTrigger("Pulse");
     }
 
+    public void SetExpression(AnimatorOverrideController alpha, AnimatorOverrideController beta)
+    {
+        alphaOverrider = alpha;
+        betaOverrider = beta;
+        SetAnimatorOverrideDirection();
+    }
+    
     public void SetAnimatorOverrideDirection()
     {
         bool isLeft = _danceBrain.isLeftLooking;

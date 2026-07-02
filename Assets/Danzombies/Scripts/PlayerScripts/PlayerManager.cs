@@ -85,6 +85,7 @@ public class PlayerManager : DanceBrain
 
             case BeatReciever.BeatFeedback.Great:
                 IncreaseFlow(1);
+                
                 break;
 
             case BeatReciever.BeatFeedback.Early:
@@ -115,6 +116,7 @@ public class PlayerManager : DanceBrain
         {
             int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
             SetFlow(value);
+            targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
             danceBar?.UpdateFlowBars(nivelDeSeguridad);
             if (value < GameManager.Alza && seqtype == SequenceStep.SequenceFlowType.FlowAffect_Hurt)
             {

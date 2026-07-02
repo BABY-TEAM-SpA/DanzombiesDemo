@@ -55,14 +55,12 @@ public class BeatManager : MonoBehaviour
     public static BeatManager Instance { get; private set; }
 
     EventInstance trackedMusic;
-    static BeatManager callbackTarget;
 
     void Awake()
     {
         if (Instance != null && Instance != this)
             return;
         Instance = this;
-        callbackTarget = this;
     }
 
     void OnEnable()
@@ -97,7 +95,7 @@ public class BeatManager : MonoBehaviour
     {
         if (type != EVENT_CALLBACK_TYPE.TIMELINE_BEAT) return FMOD.RESULT.OK;
         TIMELINE_BEAT_PROPERTIES beat = Marshal.PtrToStructure<TIMELINE_BEAT_PROPERTIES>(parameterPtr);
-        callbackTarget?.HandleBeat( beat.bar, beat.beat, beat.tempo);
+        Instance?.HandleBeat( beat.bar, beat.beat, beat.tempo);
         return FMOD.RESULT.OK;
     }
     
@@ -105,20 +103,20 @@ public class BeatManager : MonoBehaviour
     {
         lastBeatTime = AudioManager.Instance.SongPositionSeconds();
         quarterBeatDuration = 60d / tempo;
+        eighthBeatDuration = 30d / tempo;
         nextBeatTime = lastBeatTime + quarterBeatDuration;
         preTrigger = true;
         beatTrigger = true;
         postTrigger = false;
         globalCounterNegra++;
         OnBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
-        eighthBeatDuration = quarterBeatDuration * 0.5d;
-        HalfBeat(lastBeatTime);
     }
     
-    void HalfBeat(double beatTime)
+    void HalfBeat()
     {
-        lastHalfBeatTime = beatTime;
-        nextHalfBeatTime = lastHalfBeatTime + eighthBeatDuration;
+        AudioManager.Instance.SongPositionSeconds();
+        lastHalfBeatTime = eighthBeatDuration * globalCounterCorchea;
+        nextHalfBeatTime = lastHalfBeatTime + (globalCounterCorchea+1);
         halfPreTrigger = true;
         halfBeatTrigger = true;
         halfPostTrigger = false;
@@ -166,7 +164,7 @@ public class BeatManager : MonoBehaviour
 
         if (halfPreTrigger && !halfBeatTrigger && songTime > nextHalfBeatTime)
         {
-            HalfBeat(AudioManager.Instance.SongPositionSeconds());
+            HalfBeat();
         }
         
         //postBeat

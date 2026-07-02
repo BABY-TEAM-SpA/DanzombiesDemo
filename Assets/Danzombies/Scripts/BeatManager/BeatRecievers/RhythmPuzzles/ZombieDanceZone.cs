@@ -19,6 +19,8 @@ public class ZombieDanceZone : RhythmPuzzle
     [Header("Zombies Dance Settings")]
     [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
     public SequenceStep danceSequence;
+    
+    
 
     public override void PreparePuzzle()
     {
@@ -84,6 +86,16 @@ public class ZombieDanceZone : RhythmPuzzle
         player.ActivateDanceHUD(true);
     }
 
+    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
+    {
+        if (exp == currentReaction) return;
+        currentReaction = exp;
+        foreach (ZombieDanceBrain zombie in zombies)
+        {
+            zombie.React(currentReaction);
+        }
+    }
+
     protected override void PlayerLeave(PlayerManager player)
     {
         base.PlayerLeave(player);
@@ -95,25 +107,14 @@ public class ZombieDanceZone : RhythmPuzzle
     {
         PlayerLeave(playersInside);
     }
-
-    protected override void PuzzlePreBeat()
-    {
-        ////SetPulse(preBeatPulse);
-    }
-
-    protected override void PuzzleBeat(){ }
-
-    protected override void PuzzlePostBeat()
-    {
-        ////SetPulse(0f);
-    }
-
     public override void OnSequenceEnd()
     {
         Debug.Log("Puzzle End");
         ActivatePuzzle(false);
     }
-
+    protected override void PuzzlePreBeat(){}
+    protected override void PuzzleBeat(){}
+    protected override void PuzzlePostBeat(){}
     public override void OnUpdateSongAction(){ }
     
     // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.

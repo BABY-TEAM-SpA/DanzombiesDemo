@@ -42,6 +42,8 @@ public class TutorialPuzzle : RhythmPuzzle
         if (currentDanceData.Sequence.playbackMode == SequenceStep.PlaybackMode.LoopUntilFlowIsFull) playersInside?.ActivateDanceHUD(activate);;
     }
 
+    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) {}
+
     public override void PlayerGetDamaged() {}
 
     protected override void PuzzlePreBeat() {}

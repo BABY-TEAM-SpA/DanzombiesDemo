@@ -1,5 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+[Serializable]
+public class DancerExpression
+{
+    public enum ExpressionType {Normal,Angry}
+    public ExpressionType expressionType;
+    public AnimatorOverrideController alpha;
+    public AnimatorOverrideController beta;
+}
 
 public abstract class DanceBrain : MonoBehaviour
 {
@@ -12,7 +23,8 @@ public abstract class DanceBrain : MonoBehaviour
     [SerializeField] protected DanceAnimatorController danceAnimCtrl;
     [SerializeField] protected BeatReciever beatReciever;
     public bool isLeftLooking;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+    [SerializeField] List<DancerExpression> dancerExpressions = new List<DancerExpression>();
 
     public event Action<bool> OnDirectionChanged;
     #endregion
@@ -31,6 +43,8 @@ public abstract class DanceBrain : MonoBehaviour
     }
     public void Start()
     {
+        DancerExpression expression = dancerExpressions.First();
+        danceAnimCtrl.SetExpression(expression.alpha, expression.beta);
         if(ActivateOnStart)ActivateEntity(ActivateOnStart);
     }
 
@@ -64,6 +78,12 @@ public abstract class DanceBrain : MonoBehaviour
             }
         }
         
+    }
+    
+    public void React(DancerExpression.ExpressionType exp)
+    {
+        DancerExpression expression = dancerExpressions.FirstOrDefault((expression) => expression.expressionType == exp);
+        if(expression != null) danceAnimCtrl.SetExpression(expression.alpha, expression.beta);
     }
     #endregion
 }
