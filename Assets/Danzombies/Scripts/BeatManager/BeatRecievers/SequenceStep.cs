@@ -18,13 +18,7 @@ public enum DanceStep
 [Serializable]
 public class SequenceStep
 {
-    public enum PlaybackMode
-    {
-        Loop,
-        PlaySequenceXTimes,
-        LoopUntilXCorrectSteps,
-        LoopUntilFlowIsFull,
-    }
+    
 
     [Header("Pattern")]
     public BeatManager.BeatType patternBeatType = BeatManager.BeatType.FullBeat;
@@ -33,8 +27,12 @@ public class SequenceStep
 
     public int startCounter { get; set; } = 0;
 
+    
+    public enum PlaybackMode{Loop,PlaySequenceXTimes,LoopUntilXCorrectSteps,LoopUntilFlowIsFull}
+    public enum SequenceFlowType{FlowAffect_Hurt, FlowAffect_NoHurt,NoFlowAffect_NoHurt}
     [Header("Playback")]
     public PlaybackMode playbackMode = PlaybackMode.Loop;
+    public SequenceFlowType sequenceFlowType = SequenceFlowType.FlowAffect_Hurt;
     [Min(1)] public int playerSeqToStop=1;
     [Min(0)] private int SequenceCounter = 0;
     [Min(1)] public int correctDancesToStop = 1;

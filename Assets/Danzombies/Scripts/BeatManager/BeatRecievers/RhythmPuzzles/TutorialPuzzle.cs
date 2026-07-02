@@ -34,6 +34,7 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public override void ActivatePuzzle(bool activate)
     {
+        HUD.SetActiveCanvas(activate);
         InnerCounter = 0;
         playerSucceses = 0;
         base.ActivatePuzzle(activate);

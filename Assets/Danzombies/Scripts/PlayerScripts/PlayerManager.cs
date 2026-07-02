@@ -40,11 +40,7 @@ public class PlayerManager : DanceBrain
             Player = this;
         else Destroy(gameObject);
     }
-
-    private void OnEnable()
-    {
-        danceBar = GUIManager.Instance?.DanceBar;
-    }
+    
 
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
@@ -53,8 +49,8 @@ public class PlayerManager : DanceBrain
 
     public void ActivateDanceHUD(bool activate)
     {
+        danceBar = GUIManager.Instance?.DanceBar;
         danceBar?.UpdateFlowBars(nivelDeSeguridad);
-
         danceBar?.Activate(activate);
     }
 
@@ -63,7 +59,6 @@ public class PlayerManager : DanceBrain
         if (puzzle == targetPuzzle)
         {
             danceBar?.Activate(false);
-
             targetPuzzle = null;
         }
     }
@@ -104,7 +99,6 @@ public class PlayerManager : DanceBrain
                 IncreaseFlow(-1);
                 break;
         }
-
         DanceFeedbackEvent?.Invoke(bf);
     }
 
@@ -115,20 +109,21 @@ public class PlayerManager : DanceBrain
 
     public int IncreaseFlow(int increment)
     {
-        int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
-
-        SetFlow(value);
-
-        danceBar?.UpdateFlowBars(nivelDeSeguridad);
-
-        if (value < GameManager.Alza)
+        SequenceStep.SequenceFlowType seqtype =targetPuzzle.currentDanceData.Sequence.sequenceFlowType;
+        if (seqtype == SequenceStep.SequenceFlowType.NoFlowAffect_NoHurt) return 0;
+        else
         {
-            GetLifeDamage(true);
-            targetPuzzle?.PlayerGetDamaged();
-            SetFlow(5);
+            int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
+            SetFlow(value);
+            danceBar?.UpdateFlowBars(nivelDeSeguridad);
+            if (value < GameManager.Alza && seqtype == SequenceStep.SequenceFlowType.FlowAffect_Hurt)
+            {
+                GetLifeDamage(true);
+                targetPuzzle?.PlayerGetDamaged();
+                SetFlow(5);
+            }
+            return value;
         }
-
-        return value;
     }
 
     private void SetFlow(int value)
@@ -154,11 +149,6 @@ public class PlayerManager : DanceBrain
 
         PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
     }
-
-
-    
-    
-
     public Animator ConfinePlayerCamera()
     {
         return danceAnimCtrl.animator;
