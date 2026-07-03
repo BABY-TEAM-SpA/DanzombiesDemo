@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 public class ZombieDanceBrain : DanceBrain
 {
@@ -11,8 +14,6 @@ public class ZombieDanceBrain : DanceBrain
     {
         puzzle.OnDanceStep -= OnDanceStepAction;
     }
-
-    
     private void OnDanceStepAction(DanceStep step)
     {
         if (step != DanceStep.None)
@@ -20,7 +21,6 @@ public class ZombieDanceBrain : DanceBrain
             danceAnimCtrl?.OnDanceBegin(step);
         }
     }
-    
     private void MoveToPoint(Vector3 point, float time)
     {
         Vector2 dif = new Vector2(this.transform.localPosition.x-point.x,this.transform.localPosition.y-point.y);

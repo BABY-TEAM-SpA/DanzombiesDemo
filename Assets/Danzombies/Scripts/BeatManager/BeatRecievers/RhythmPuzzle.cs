@@ -20,7 +20,9 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] bool activateOnStart;
     [SerializeField] RhythmSyncMode syncMode = RhythmSyncMode.Global;
     
+    
     [HideInInspector] public DanceData currentDanceData;
+    protected DancerExpression.ExpressionType currentReaction= DancerExpression.ExpressionType.Normal;
     protected int InnerCounter = 0;
     private int startBeat;
     
@@ -122,7 +124,9 @@ public abstract class RhythmPuzzle : BeatReciever
         player.AddTargetPuzzle(this);
         playersInside = player;
     }
-    
+
+    public abstract void ReactToPlayerStatus(DancerExpression.ExpressionType exp);
+
     protected virtual void PlayerLeave(PlayerManager player)
     {
         if(debug)Debug.Log("Player Leave");

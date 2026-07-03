@@ -9,6 +9,7 @@ public class PlayerAnimatorController : DanceAnimatorController
     private bool directionInput;
     DanceLean currentLean;
     bool leanInput;
+    [SerializeField] private bool isTutorial;
     
     public void OnDirectionButtonPressed(InputAction.CallbackContext context)
     {
@@ -47,7 +48,7 @@ public class PlayerAnimatorController : DanceAnimatorController
             {
                 float valor = context.ReadValue<float>();
                 leanInput = valor != 0;
-                animator.SetBool("PrepareDance",leanInput);
+                if(isTutorial)animator.SetBool("PrepareDance",leanInput);
                 if(leanInput) currentLean = valor>0?DanceLean.R:DanceLean.L;
                 TryMakeDanceStep();
             }
@@ -55,7 +56,7 @@ public class PlayerAnimatorController : DanceAnimatorController
         }
         if (context.canceled)
         { 
-            animator.SetBool("PrepareDance",false);
+            if(isTutorial)animator.SetBool("PrepareDance",false);
             currentLean = DanceLean.None;
             leanInput = false;
             danceTriggered = false;
@@ -68,7 +69,7 @@ public class PlayerAnimatorController : DanceAnimatorController
     {
         if(leanInput && directionInput && !danceTriggered)
         {
-            animator.SetBool("PrepareDance",false);
+            if(isTutorial)animator.SetBool("PrepareDance",false);
             danceTriggered=true;
             DanceStep step = Enum.Parse<DanceStep>( currentLean + "_" + currentDirection );
             OnDanceBegin(step);

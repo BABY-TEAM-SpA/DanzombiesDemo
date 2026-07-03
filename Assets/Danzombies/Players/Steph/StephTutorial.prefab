@@ -980,10 +980,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   ActivateOnStart: 0
-  movCtrl: {fileID: 0}
-  danceAnimCtrl: {fileID: 0}
-  beatReciever: {fileID: 0}
+  movCtrl: {fileID: 1707382129364674341}
+  danceAnimCtrl: {fileID: 3112066480399210385}
+  beatReciever: {fileID: 5584085731872573711}
   isLeftLooking: 0
+  dancerExpressions:
+  - expressionType: 0
+    alpha: {fileID: 22100000, guid: 3a7a5e091aeb9af4ba43bb5560544a0c, type: 2}
+    beta: {fileID: 22100000, guid: d698ae0e9e5be42469f0975a51cac59a, type: 2}
 --- !u!114 &1707382129364674341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,7 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  danceBrain: {fileID: 0}
+  danceBrain: {fileID: 2536597401598945149}
   walkingSpeed: 10
   acceleration: 0
   sprintFactor: 1.5
@@ -1012,7 +1016,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatType: 0
   animator: {fileID: 8332991270205824799}
 --- !u!114 &56076002610781623
 MonoBehaviour:
@@ -1324,10 +1327,9 @@ MonoBehaviour:
   _danceBrain: {fileID: 2536597401598945149}
   allowInput: 0
   animator: {fileID: 8332991270205824799}
-  alphaOverrider: {fileID: 0}
-  betaOverrider: {fileID: 0}
   playerFeedbackEvents: []
   margen: 0.5
+  isTutorial: 0
 --- !u!1 &9081679204517068323
 GameObject:
   m_ObjectHideFlags: 0

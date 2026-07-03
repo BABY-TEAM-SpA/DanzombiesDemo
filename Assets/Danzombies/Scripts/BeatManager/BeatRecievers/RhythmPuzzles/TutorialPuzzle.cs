@@ -34,12 +34,15 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public override void ActivatePuzzle(bool activate)
     {
+        HUD.SetActiveCanvas(activate);
         InnerCounter = 0;
         playerSucceses = 0;
         base.ActivatePuzzle(activate);
         if (currentTutorialSequence < TutorialSequences.Count) currentDanceData.Sequence = TutorialSequences[currentTutorialSequence];
         if (currentDanceData.Sequence.playbackMode == SequenceStep.PlaybackMode.LoopUntilFlowIsFull) playersInside?.ActivateDanceHUD(activate);;
     }
+
+    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) {}
 
     public override void PlayerGetDamaged() {}
 

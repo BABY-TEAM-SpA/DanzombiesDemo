@@ -46,6 +46,16 @@ public class FollowPuzzle : RhythmPuzzle
     
     public override void PreparePuzzle() { }
 
+    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
+    {
+        if (exp == currentReaction) return;
+        currentReaction = exp;
+        foreach (ZombieDummie zombie in zombies)
+        {
+            zombie.brain.React(currentReaction);
+        }
+    }
+
     public override void PlayerGetDamaged()
     {
         
