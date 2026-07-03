@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class CheckpointsManager : MonoBehaviour
         Transform searchRoot = levelRoot != null
             ? levelRoot : transform.root;
 
+        Array.Clear(resettableObjects, 0, resettableObjects.Length);
         resettableObjects = searchRoot.GetComponentsInChildren<MonoBehaviour>(true)
             .Where(mb => mb is IResettable).ToArray();
 

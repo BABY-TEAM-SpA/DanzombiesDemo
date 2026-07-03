@@ -20,10 +20,9 @@ public class Checkpoint : MonoBehaviour
     private void Awake()
     {
         collider2d = GetComponent<Collider2D>();
-        playerSpawn = GetComponentInChildren<Transform>();
+        playerSpawn = transform.GetChild(0).GetComponent<Transform>();
     }
 
-    #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player"))
@@ -36,14 +35,6 @@ public class Checkpoint : MonoBehaviour
             OnTriggerBehaviour?.Invoke();
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        //if (!collision.CompareTag("Player"))
-        //    return;
-        //collider2d.enabled = true;
-    }
-    #endregion
     #endregion
 
     #region [METHODS]

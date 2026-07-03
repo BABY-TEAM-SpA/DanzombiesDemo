@@ -18,11 +18,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     [SerializeField][Range(1f, 30f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
     [SerializeField][Range(0f, 2f)] private float chasingFactor;
-
-    [Header("Settings - Deviation")]
     [Tooltip("Máxima distancia que la horda se desviará perpendicularmente de su riel por seguir al Player.")]
-    [SerializeField] private float maxLateralDeviation;
-    [SerializeField] private float lateralFollowSpeed;
+    [SerializeField][Range(0f, 10f)] private float maxLateralDeviation;
+    [SerializeField][Range(0f, 2f)] private float lateralFollowSpeed;
 
     private PlayerManager player;
     private float currentSpeed;
@@ -77,6 +75,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
     public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
+    public void UpdateMaxLateralDeviation(float maxLateralDeviation) => this.maxLateralDeviation = Mathf.Max(maxLateralDeviation, 0f);
+    public void UpdateLateralFollowSpeed(float lateralFollowSpeed) => this.lateralFollowSpeed = Mathf.Max(lateralFollowSpeed, 0f);
 
     public void StopChasing()
     {

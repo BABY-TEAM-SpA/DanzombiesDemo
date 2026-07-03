@@ -4,12 +4,9 @@ using UnityEngine;
 public class ThrownZombie : MonoBehaviour
 {
     #region [VARIAIBLES]
-    [SerializeField] private Animator animator;
+    [SerializeField] Animator animator;
 
-    [Header("Settings")]
-    [SerializeField][Range(0f, 1f)] private float timeBeforeJumping;
-
-    private float elapsed;
+    private AnimatorStateInfo animState;
     private ZombieChasingHordeThrower horde;
 
     public Action OnPlayerCollided;
@@ -20,17 +17,17 @@ public class ThrownZombie : MonoBehaviour
 
     private void Update()
     {
-        elapsed += Time.deltaTime;
-        if (elapsed >= timeBeforeJumping)
+        animState = animator.GetCurrentAnimatorStateInfo(0);
+        if (animState.IsName("ThrowItself") && animState.normalizedTime >= 1f)
         {
-            animator.SetTrigger("Jump");
-            elapsed = 0f;
+            transform.SetParent(null, true);
+            enabled = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && enabled)
             horde?.CatchPlayer();
 
         if (collision.CompareTag("Zombie") && !enabled)
@@ -41,12 +38,10 @@ public class ThrownZombie : MonoBehaviour
     #endregion
 
     #region [METHODS]
-    public void Enable(ZombieChasingHordeThrower horde)
+    public void Throw(ZombieChasingHordeThrower horde)
     {
         this.horde = horde;
         enabled = true;
     }
-
-    public void Disable() => enabled = false;
     #endregion
 }
