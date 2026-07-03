@@ -10,7 +10,7 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
     [SerializeField] private Image cautionImg;
 
     [Header("References")]
-    [SerializeField] private PlayerMovementController player;
+    [SerializeField] private PlayerMovementController playerMovement;
 
     [Header("Settings")]
     [Tooltip("Factor al que el zombie saldrá disparado con respecto al Player (2f = x2 de la velocidad de Greg).")]
@@ -20,6 +20,7 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
     [SerializeField][Range(1f, 10f)] float throwPeriod;
     [SerializeField][Range(0f, 2f)] float throwDelay;
 
+    private PlayerManager player;
     private float elapsed;
     private float throwSpeed;
 
@@ -30,8 +31,11 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
     #region [UNITY]
     private void Start()
     {
-        if (player != null)
-            throwSpeed = player.MaxSpeed * throwFactor;
+        if (playerMovement != null)
+        {
+            player = playerMovement.GetComponent<PlayerManager>();
+            throwSpeed = playerMovement.MaxSpeed * throwFactor;
+        }
 
         Prewarm(zombieSpawn);
     }
@@ -67,10 +71,8 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
         throwRoutine = StartCoroutine(ThrowZombieRoutine());
     }
 
-    public void CatchPlayer()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    public void CatchPlayer() => player.GameOver();
+    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
 
     public void RecoverZombie(ThrownZombie thrownZombie)
@@ -95,7 +97,7 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
         yield return new WaitForSeconds(throwDelay); // <- Delay
         
         thrownZombie.Enable(this);
-        Vector3 direction = (player.transform.position - thrownZombie.transform.position).normalized;
+        Vector3 direction = (playerMovement.transform.position - thrownZombie.transform.position).normalized;
         
         while (t < throwDuration)
         {

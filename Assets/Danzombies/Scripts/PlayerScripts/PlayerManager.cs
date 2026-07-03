@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using Unity.Cinemachine;
 using UnityEngine.Events;
 
 public enum SeguridadState
@@ -13,10 +12,9 @@ public enum SeguridadState
 [Serializable]
 public class PlayerManager : DanceBrain
 {
-
-    private int vidas = 3;
-
-    public int lifes => vidas;
+    #region [VARIABLES]
+    public int HP => hp;
+    private int hp = 3;
 
     [SerializeField]
     [Range(0, 10)]
@@ -33,7 +31,10 @@ public class PlayerManager : DanceBrain
     public static PlayerManager Player;
     public RhythmPuzzle targetPuzzle;
 
+    public Action OnPlayerDeath;
+    #endregion
 
+    #region [UNITY]
     private void Awake()
     {
         if (Player == null)
@@ -45,7 +46,9 @@ public class PlayerManager : DanceBrain
     {
         danceBar = GUIManager.Instance?.DanceBar;
     }
+    #endregion
 
+    #region [METHODS]
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
         targetPuzzle = puzzle;
@@ -148,19 +151,23 @@ public class PlayerManager : DanceBrain
             LifeHealedEvent?.Invoke();
         }
 
-        vidas += (danho) ? -1 : 1;
+        hp += (danho) ? -1 : 1;
 
-        vidas = Math.Clamp(lifes, 0, 3);
+        hp = Math.Clamp(hp, 0, 3);
 
-        PlayerUIController.Instance?.UpdateLifesPlayer(lifes);
+        PlayerUIController.Instance?.UpdateLifesPlayer(hp);
     }
 
 
-    
+    public void GameOver()
+    {
+        OnPlayerDeath?.Invoke();
+    }
     
 
     public Animator ConfinePlayerCamera()
     {
         return danceAnimCtrl.animator;
     }
+    #endregion
 }
