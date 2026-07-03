@@ -39,9 +39,9 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player"))
-            return;
-        collider2d.enabled = true;
+        //if (!collision.CompareTag("Player"))
+        //    return;
+        //collider2d.enabled = true;
     }
     #endregion
     #endregion
