@@ -121,6 +121,10 @@ MonoBehaviour:
   danceAnimCtrl: {fileID: 2836731157353523887}
   beatReciever: {fileID: 4146240392959961186}
   isLeftLooking: 0
+  dancerExpressions:
+  - expressionType: 0
+    alpha: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
+    beta: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
 --- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatType: 0
   animator: {fileID: 6072593270596461221}
 --- !u!114 &6447537400045105506
 MonoBehaviour:
@@ -246,7 +249,7 @@ SpriteRenderer:
   m_SortingLayerID: 1366706313
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b105f2d6c1dea6c43a66d43dcc856141, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cebc4df79c7006488b8fc72c41eccde, type: 3}
   m_Color: {r: 0.8, g: 0.89411765, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -269,10 +272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95138ec9328597468b5d9a00c0cffec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footprint: {fileID: 2142067527970415792}
-  renderers:
+  whenUse: 0
+  spriteRenderers:
   - {fileID: 6673237200574166684}
-  depthAxis: {x: 1, y: -1}
+  - {fileID: 6673237200574166684}
 --- !u!95 &6072593270596461221
 Animator:
   serializedVersion: 7
@@ -310,8 +313,6 @@ MonoBehaviour:
   _danceBrain: {fileID: 3279488030120961210}
   allowInput: 0
   animator: {fileID: 6072593270596461221}
-  alphaOverrider: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
-  betaOverrider: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
   playerFeedbackEvents: []
 --- !u!60 &2142067527970415792
 PolygonCollider2D:
@@ -351,7 +352,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 12, y: 12}
+    oldSize: {x: 8, y: 7.4}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
