@@ -3,35 +3,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
+public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
 {
     #region [VARIABLES]
-    [SerializeField] private Transform zombieSpawn;
     [SerializeField] private Image cautionImg;
 
     [Header("References")]
-    [SerializeField] private PlayerMovementController player;
+    [SerializeField] private PlayerMovementController playerMovement;
 
     [Header("Settings")]
-    [Tooltip("Factor al que el zombie saldrá disparado con respecto al Player (2f = x2 de la velocidad de Greg).")]
-    [SerializeField][Range(0f, 3f)] private float throwFactor;
-    [Tooltip("Tiempo que el zombie pasará 'volando' hasta volver a la pool.")]
-    [SerializeField][Range(0f, 5f)] private float throwDuration;
     [SerializeField][Range(1f, 10f)] float throwPeriod;
     [SerializeField][Range(0f, 2f)] float throwDelay;
 
+    private PlayerManager player;
+    private Transform zombieSpawn;
     private float elapsed;
-    private float throwSpeed;
 
     private Coroutine throwRoutine;
     private Coroutine blinkRoutine;
     #endregion
 
     #region [UNITY]
+    private void Awake() => zombieSpawn = transform.Find("ZombieSpawn").GetComponent<Transform>();
+
     private void Start()
     {
-        if (player != null)
-            throwSpeed = player.MaxSpeed * throwFactor;
+        if (playerMovement != null)
+        {
+            player = playerMovement.GetComponent<PlayerManager>();
+            //throwSpeed = playerMovement.MaxSpeed * throwFactor;
+        }
 
         Prewarm(zombieSpawn);
     }
@@ -67,10 +68,8 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
         throwRoutine = StartCoroutine(ThrowZombieRoutine());
     }
 
-    public void CatchPlayer()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    public void CatchPlayer() => player.GameOver();
+    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
 
     public void RecoverZombie(ThrownZombie thrownZombie)
@@ -79,32 +78,39 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
         Recover(thrownZombie, true, zombieSpawn);
     }
     #endregion
+
+    #region IResettable
+    public void CaptureState() { }
+
+    public void ResetState()
+    {
+        if (throwRoutine != null)
+            StopCoroutine(throwRoutine);
+        throwRoutine = null;
+
+        if (blinkRoutine != null)
+            StopCoroutine(blinkRoutine);
+        blinkRoutine = null;
+    }
+    #endregion
     #endregion
 
     #region [COROUTINES]
     private IEnumerator ThrowZombieRoutine()
     {
-        float t = 0f;
         ThrownZombie thrownZombie = Get();
-        thrownZombie.transform.SetParent(null, true);
 
         if (blinkRoutine != null)
             StopCoroutine(blinkRoutine);
         blinkRoutine = StartCoroutine(BlinkCautionRoutine());
 
         yield return new WaitForSeconds(throwDelay); // <- Delay
-        
-        thrownZombie.Enable(this);
-        Vector3 direction = (player.transform.position - thrownZombie.transform.position).normalized;
-        
-        while (t < throwDuration)
-        {
-            thrownZombie.transform.localPosition += direction * throwSpeed * Time.deltaTime;
-            t += Time.deltaTime;
-            yield return null;
-        }
 
-        thrownZombie.Disable();
+        thrownZombie.Throw(this);
+        //Vector3 direction = (playerMovement.transform.position - thrownZombie.transform.position).normalized;
+        //Vector3 vDirection = Vector3.Dot(direction, Vector3.up) * Vector3.up;
+
+        yield return new WaitWhile(() => thrownZombie.enabled); // <- Animación del ThrownZombie
         throwRoutine = null;
     }
 

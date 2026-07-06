@@ -1,4 +1,3 @@
-using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +10,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     [SerializeField] private PlayerCollisionDetector playerDetector;
 
     [Header("References")]
-    [SerializeField] private PlayerMovementController player;
+    [SerializeField] private PlayerMovementController playerMovement;
     [SerializeField] private Transform[] checkpoints;
 
     [Header("Settings")]
@@ -19,14 +18,13 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     [SerializeField][Range(1f, 30f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
     [SerializeField][Range(0f, 2f)] private float chasingFactor;
-
-    [Header("Settings - Deviation")]
     [Tooltip("Máxima distancia que la horda se desviará perpendicularmente de su riel por seguir al Player.")]
-    [SerializeField] private float maxLateralDeviation;
-    [SerializeField] private float lateralFollowSpeed;
+    [SerializeField][Range(0f, 10f)] private float maxLateralDeviation;
+    [SerializeField][Range(0f, 2f)] private float lateralFollowSpeed;
 
-    private float currentOffset;
+    private PlayerManager player;
     private float currentSpeed;
+    private float currentOffset;
     private Vector2 railPosition;
     private Vector2 currentDirection;
     private Transform currentCheckpoint;
@@ -37,6 +35,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     private void Start()
     {
         _position = transform.position;
+        player = playerMovement.GetComponent<PlayerManager>();
 
         if (chaseAtStart)
             StartChasing();
@@ -76,14 +75,16 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
     public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
+    public void UpdateMaxLateralDeviation(float maxLateralDeviation) => this.maxLateralDeviation = Mathf.Max(maxLateralDeviation, 0f);
+    public void UpdateLateralFollowSpeed(float lateralFollowSpeed) => this.lateralFollowSpeed = Mathf.Max(lateralFollowSpeed, 0f);
 
     public void StopChasing()
     {
         currentSpeed = 0f;
-        remainingCheckpoints.Clear();
-
-        currentCheckpoint = null;
+        currentOffset = 0f;
         currentDirection = Vector2.zero;
+        currentCheckpoint = null;
+        remainingCheckpoints.Clear();
     }
     #endregion
 
@@ -97,7 +98,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         // Avance por la ruta
         railPosition += forward * currentSpeed * Time.deltaTime;
 
-        float playerOffset = Vector2.Dot((Vector2)player.transform.position - railPosition, perpendicular);
+        float playerOffset = Vector2.Dot((Vector2)playerMovement.transform.position - railPosition, perpendicular);
         float targetOffset = Mathf.Clamp(playerOffset, -maxLateralDeviation, maxLateralDeviation);
         currentOffset = Mathf.MoveTowards(currentOffset, targetOffset, lateralFollowSpeed * Time.deltaTime);
 
@@ -117,7 +118,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         }
     }
 
-    private void CatchPlayer() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    private void CatchPlayer() => player.GameOver();
+    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
     #endregion
 
@@ -136,6 +138,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
         gameObject.SetActive(_isActive);
         transform.position = _position;
+        railPosition = Vector2.zero;
 
         if (chaseAtStart)
             StartChasing();
@@ -148,18 +151,18 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     /// </summary>
     private void SetSpeed()
     {
-        float playerDistance = Vector2.Distance(player.transform.position, transform.position);
+        float playerDistance = Vector2.Distance(playerMovement.transform.position, transform.position);
         float error = playerDistance - maxDistance;
 
-        float targetSpeed = player.MaxSpeed;
+        float targetSpeed = playerMovement.MaxSpeed;
 
         if (Mathf.Abs(error) > DIST_THRESHOLD)
         {
             float t = Mathf.Clamp01((Mathf.Abs(error) - DIST_THRESHOLD) / maxDistance);
 
             targetSpeed = error > 0
-                ? Mathf.Lerp(player.MaxSpeed, player.MaxSpeed * 4f, t)
-                : player.MaxSpeed * chasingFactor;
+                ? Mathf.Lerp(playerMovement.MaxSpeed, playerMovement.MaxSpeed * 4f, t)
+                : playerMovement.MaxSpeed * chasingFactor;
         }
 
         currentSpeed = targetSpeed;

@@ -76,6 +76,7 @@ public class DoorBehaviour : MonoBehaviour, IResettable
     {
         if (interactionsToClose == 0)
             interactable?.Disable();
+        else interactable?.Enable();
 
         yield return new WaitForSeconds(duration);
 
@@ -91,6 +92,7 @@ public class DoorBehaviour : MonoBehaviour, IResettable
     {
         if (interactionsToOpen == 0)
             interactable?.Disable();
+        else interactable?.Enable();
 
         yield return new WaitForSeconds(duration);
 
