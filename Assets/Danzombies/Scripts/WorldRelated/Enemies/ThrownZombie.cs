@@ -6,42 +6,112 @@ public class ThrownZombie : MonoBehaviour
     #region [VARIAIBLES]
     [SerializeField] Animator animator;
 
-    private AnimatorStateInfo animState;
-    private ZombieChasingHordeThrower horde;
+    private State state;
+    private enum State
+    {
+        Idle,
+        Preparing,
+        Throwing,
+        Landed
+    }
 
-    public Action OnPlayerCollided;
+    private ZombieChasingHordeThrower horde;
+    private PlayerMovementController player;
+
+    private float speed;
+    private Vector3 direction;
+    private float delay;
+    private float elapsed;
+
+    public Action<ThrownZombie> OnLand;
     #endregion
 
     #region [UNITY]
-    private void Start() => enabled = false;
-
     private void Update()
     {
-        animState = animator.GetCurrentAnimatorStateInfo(0);
-        if (animState.IsName("ThrowItself") && animState.normalizedTime >= 1f)
+        switch (state)
         {
-            transform.SetParent(null, true);
-            enabled = false;
+            case State.Idle:
+                return;
+
+            case State.Preparing:
+                elapsed += Time.deltaTime;
+                if (elapsed >= delay)
+                {
+                    Throw();
+                    elapsed = 0f;
+                }
+                break;
+
+            case State.Throwing:
+                transform.position += speed * direction * Time.deltaTime;
+                if (HasLanded())
+                    Land();
+                break;
+
+            case State.Landed:
+                return;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && enabled)
+        if (collision.CompareTag("Player") && !HasLanded())
+        {
+            Recover();
             horde?.CatchPlayer();
-
-        if (collision.CompareTag("Zombie") && !enabled)
-            horde?.RecoverZombie(this);
+        }
     }
 
-    private void OnBecameInvisible() => horde?.RecoverZombie(this);
+    private void OnBecameInvisible() => Land();
     #endregion
 
     #region [METHODS]
-    public void Throw(ZombieChasingHordeThrower horde)
+    public void Prepare(ZombieChasingHordeThrower horde, float speed, PlayerMovementController player, float delay)
     {
         this.horde = horde;
-        enabled = true;
+        this.player = player;
+
+        this.speed = speed;
+        this.delay = delay;
+
+        state = State.Preparing;
     }
+
+    private void Throw()
+    {
+        direction = (player.transform.position - transform.position).normalized;
+
+        animator.Play("Throw", 0, 0f);
+        state = State.Throwing;
+    }
+
+    private void Land()
+    {
+        speed = 0f;
+        direction = Vector3.zero;
+        delay = 0f;
+
+        transform.SetParent(null, true);
+        state = State.Landed;
+
+        OnLand?.Invoke(this);
+    }
+
+    #region Helpers
+    private bool HasLanded()
+    {
+        AnimatorStateInfo animState = animator.GetCurrentAnimatorStateInfo(0);
+        return animState.IsName("Throw") && animState.normalizedTime >= 1f;
+    }
+
+    public void Recover()
+    {
+        state = State.Idle;
+        elapsed = 0f;
+
+        horde?.RecoverThrownZombie(this);
+    }
+    #endregion
     #endregion
 }

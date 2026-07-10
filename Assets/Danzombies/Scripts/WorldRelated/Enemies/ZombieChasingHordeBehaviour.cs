@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 {
     #region [VARIABLES]
     private const float DIST_THRESHOLD = 0.1f;
-
-    [SerializeField] private PlayerCollisionDetector playerDetector;
 
     [Header("References")]
     [SerializeField] private PlayerMovementController playerMovement;
@@ -15,7 +12,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     [Header("Settings")]
     [SerializeField] bool chaseAtStart;
-    [SerializeField][Range(1f, 30f)] private float maxDistance;
+    [SerializeField][Range(1f, 40f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
     [SerializeField][Range(0f, 2f)] private float chasingFactor;
     [Tooltip("Máxima distancia que la horda se desviará perpendicularmente de su riel por seguir al Player.")]
@@ -32,14 +29,15 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     #endregion
 
     #region [UNITY]
+    private void Awake() => player = playerMovement.GetComponent<PlayerManager>();
+
     private void Start()
     {
-        _position = transform.position;
-        player = playerMovement.GetComponent<PlayerManager>();
-
         if (chaseAtStart)
             StartChasing();
     }
+
+    private void OnEnable() => _position = transform.position;
 
     private void Update()
     {
@@ -47,19 +45,12 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
             Chase();
     }
 
-    #region Availability
-    private void OnEnable()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerDetector != null)
-            playerDetector.OnPlayerCollided += CatchPlayer;
+        if (!collision.CompareTag("Player"))
+            return;
+        CatchPlayer();
     }
-
-    private void OnDisable()
-    {
-        if (playerDetector != null)
-            playerDetector.OnPlayerCollided -= CatchPlayer;
-    }
-    #endregion
     #endregion
 
     #region [METHODS]
@@ -119,8 +110,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     }
 
     private void CatchPlayer() => player.GameOver();
-    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
     #endregion
 
     #region IResettable
@@ -137,7 +126,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         StopChasing();
 
         gameObject.SetActive(_isActive);
-        transform.position = _position;
+        if (_position != Vector3.zero)
+            transform.position = _position;
         railPosition = Vector2.zero;
 
         if (chaseAtStart)

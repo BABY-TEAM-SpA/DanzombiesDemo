@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
@@ -12,71 +11,70 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     [SerializeField] private PlayerMovementController playerMovement;
 
     [Header("Settings")]
+    [SerializeField][Range(10f, 30f)] float throwSpeed;
     [SerializeField][Range(1f, 10f)] float throwPeriod;
+    [Tooltip("Variación en el periodo.")]
+    [SerializeField][Range(0f, 2f)] float throwDelta;
+    [Tooltip("Retardo en el lanzamiento (cuanto tiempo está avisando que viene un zombie).")]
     [SerializeField][Range(0f, 2f)] float throwDelay;
 
     private PlayerManager player;
     private Transform zombieSpawn;
+    private ThrownZombie throwingZombie;
     private float elapsed;
+    private float period;
 
-    private Coroutine throwRoutine;
     private Coroutine blinkRoutine;
     #endregion
 
     #region [UNITY]
-    private void Awake() => zombieSpawn = transform.Find("ZombieSpawn").GetComponent<Transform>();
-
-    private void Start()
+    private void Awake()
     {
         if (playerMovement != null)
-        {
             player = playerMovement.GetComponent<PlayerManager>();
-            //throwSpeed = playerMovement.MaxSpeed * throwFactor;
-        }
+        zombieSpawn = transform.Find("ZombieSpawn").GetComponent<Transform>();
 
         Prewarm(zombieSpawn);
+        SetPeriod();
     }
 
     private void Update()
     {
-        if (throwRoutine != null) // <- Para que el ThrowDelay no entre en el contador del ThrowPeriod
+        if (throwingZombie != null)
             return;
 
         elapsed += Time.deltaTime;
-        if (elapsed >= throwPeriod)
+        if (elapsed >= period)
         {
             ThrowZombie();
-            elapsed -= throwPeriod;
+            SetPeriod();
+            elapsed -= period;
         }
     }
-
-    private void OnBecameVisible() => enabled = true;
-    private void OnBecameInvisible() => enabled = false;
     #endregion
 
     #region [METHODS]
-    #region API
-    public void Enable() => enabled = true;
-    public void Disable() => enabled = false;
-    #endregion
-
     #region Behaviour
     private void ThrowZombie()
     {
-        if (throwRoutine != null)
-            StopCoroutine(throwRoutine);
-        throwRoutine = StartCoroutine(ThrowZombieRoutine());
+        throwingZombie = Get(zombieSpawn);
+        throwingZombie.OnLand += OnThrowingZombieLanded;
+
+        if (blinkRoutine != null)
+            StopCoroutine(blinkRoutine);
+        blinkRoutine = StartCoroutine(BlinkCautionRoutine());
+
+        throwingZombie.Prepare(this, throwSpeed, playerMovement, throwDelay);
     }
 
-    public void CatchPlayer() => player.GameOver();
-    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    //FindFirstObjectByType<CheckpointsManager>().RecoverToLastCeckpoint();
-
-    public void RecoverZombie(ThrownZombie thrownZombie)
+    public void CatchPlayer()
     {
-        thrownZombie.transform.localPosition = Vector3.zero;
-        Recover(thrownZombie, true, zombieSpawn);
+        throwingZombie?.Recover();
+        throwingZombie = null;
+        player?.GameOver();
     }
+
+    public void RecoverThrownZombie(ThrownZombie thrownZombie) => Recover(thrownZombie, true, zombieSpawn);
     #endregion
 
     #region IResettable
@@ -84,36 +82,25 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
 
     public void ResetState()
     {
-        if (throwRoutine != null)
-            StopCoroutine(throwRoutine);
-        throwRoutine = null;
-
         if (blinkRoutine != null)
             StopCoroutine(blinkRoutine);
+
+        cautionImg.gameObject.SetActive(false);
         blinkRoutine = null;
+    }
+    #endregion
+
+    #region Helpers
+    private void SetPeriod()
+    {
+        float delta = throwDelta * 0.5f;
+        float rng = Random.Range(-delta, delta);
+        period = throwPeriod + rng;
     }
     #endregion
     #endregion
 
     #region [COROUTINES]
-    private IEnumerator ThrowZombieRoutine()
-    {
-        ThrownZombie thrownZombie = Get();
-
-        if (blinkRoutine != null)
-            StopCoroutine(blinkRoutine);
-        blinkRoutine = StartCoroutine(BlinkCautionRoutine());
-
-        yield return new WaitForSeconds(throwDelay); // <- Delay
-
-        thrownZombie.Throw(this);
-        //Vector3 direction = (playerMovement.transform.position - thrownZombie.transform.position).normalized;
-        //Vector3 vDirection = Vector3.Dot(direction, Vector3.up) * Vector3.up;
-
-        yield return new WaitWhile(() => thrownZombie.enabled); // <- Animación del ThrownZombie
-        throwRoutine = null;
-    }
-
     private IEnumerator BlinkCautionRoutine()
     {
         cautionImg.gameObject.SetActive(true);
@@ -121,6 +108,17 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
         cautionImg.gameObject.SetActive(false);
 
         blinkRoutine = null;
+    }
+    #endregion
+
+    #region [EVENTS]
+    private void OnThrowingZombieLanded(ThrownZombie throwZombie)
+    {
+        if (throwZombie == throwingZombie)
+        {
+            throwingZombie.OnLand -= OnThrowingZombieLanded;
+            throwingZombie = null;
+        }
     }
     #endregion
 }

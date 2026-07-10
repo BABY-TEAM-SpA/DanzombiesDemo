@@ -6,6 +6,7 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
     #region [VARIABLES]
     [SerializeField] protected T prefab;
     [SerializeField][Range(1, 100)] protected int poolSize = 3;
+    [SerializeField] private List<T> inspectorQueueVisualizer;
 
     private Queue<T> pool = new();
     #endregion
@@ -23,6 +24,7 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
         for (int i = 0; i < poolSize; i++)
         {
             T instance = Create(parent);
+            instance.name = $"{prefab.name}_{i}";
             pool.Enqueue(instance);
             instances.Add(instance);
         }
@@ -46,6 +48,7 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
         T instance = pool.Count > 0
             ? pool.Dequeue()
             : Create();
+        UpdateInspectorVisualizer();
 
         Transform prewarmedParent = instance.transform.parent?.transform;
         instance.transform.SetParent(parent ?? prewarmedParent ?? transform, false);
@@ -63,10 +66,12 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
     {
         Transform prewarmedParent = instance.transform.parent?.transform;
         instance.transform.SetParent(parent ?? prewarmedParent ?? transform, false);
+        instance.transform.localPosition = Vector3.zero;
         instance.gameObject.SetActive(!deactivate);
         OnReturn(instance);
 
         pool.Enqueue(instance);
+        UpdateInspectorVisualizer();
     }
 
     /// <summary>
@@ -81,6 +86,10 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
                 Destroy(instance.gameObject);
         }
     }
+
+    #region Debug
+    private void UpdateInspectorVisualizer() => inspectorQueueVisualizer = new List<T>(pool);
+    #endregion
     #endregion
 
     #region [HOOKS]
