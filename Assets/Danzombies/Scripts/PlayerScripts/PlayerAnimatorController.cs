@@ -10,7 +10,16 @@ public class PlayerAnimatorController : DanceAnimatorController
     DanceLean currentLean;
     bool leanInput;
     [SerializeField] private bool isTutorial;
-    
+    [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] SpriteRenderer outlineRenderer;
+
+    private void Update()
+    {
+        if (outlineRenderer == null) return;
+        if (outlineRenderer.sprite == renderer.sprite) return;
+        outlineRenderer.sprite = renderer.sprite;
+    }
+
     public void OnDirectionButtonPressed(InputAction.CallbackContext context)
     {
         if (allowInput && _danceBrain.isActive)

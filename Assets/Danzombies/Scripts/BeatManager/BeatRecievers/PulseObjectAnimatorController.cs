@@ -15,6 +15,7 @@ public class PulseObjectAnimatorController : BeatReciever
         { 
             animator.runtimeAnimatorController = animatorOverrideController;
             animator.enabled = true;
+            isActive=true;
         }
     }
 
