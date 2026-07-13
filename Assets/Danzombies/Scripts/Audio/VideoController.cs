@@ -7,7 +7,7 @@ public class VideoController : MonoBehaviour
     [SerializeField] private SceneChangeController.LoadScenePack levelToLoad;
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private VideoClip videoClip;
-    [SerializeField] private bool shouldStopMusic;
+    [SerializeField] private bool hasAudio;
     [SerializeField] private bool shouldPlayOnStart;
 
     void Start()
@@ -27,9 +27,9 @@ public class VideoController : MonoBehaviour
 
     void PlayVideo()
     {
+        videoPlayer.audioOutputMode = hasAudio?VideoAudioOutputMode.Direct:VideoAudioOutputMode.None;
         videoPlayer.clip = videoClip;
         videoPlayer.Play();
-        if (shouldStopMusic) AudioManager.Instance.StopSong();
     }
     void OnVideoEnd(VideoPlayer vp)
     {

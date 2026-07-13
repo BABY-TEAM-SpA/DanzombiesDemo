@@ -544,7 +544,7 @@ VideoPlayer:
   m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
+  m_AudioOutputMode: 0
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
@@ -554,9 +554,9 @@ VideoPlayer:
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
-  m_SkipOnDrop: 1
+  m_SkipOnDrop: 0
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
 --- !u!4 &1021649041
@@ -611,7 +611,7 @@ MonoBehaviour:
     shouldStopMusic: 1
   videoPlayer: {fileID: 1021649040}
   videoClip: {fileID: 32900000, guid: 29e9c21fa0844bb4cb5f2a3f92789c67, type: 3}
-  shouldStopMusic: 0
+  hasAudio: 0
   shouldPlayOnStart: 1
 --- !u!4 &1344677929
 Transform:
@@ -781,6 +781,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

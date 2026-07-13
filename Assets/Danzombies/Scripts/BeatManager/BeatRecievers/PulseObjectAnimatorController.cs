@@ -27,7 +27,7 @@ public class PulseObjectAnimatorController : BeatReciever
     public override void BeatAction(int counter)
     {
         animator.SetTrigger("Pulse");
-        Debug.Log(counter);
+        //Debug.Log(counter);
     }
 
     public override void PostBeatAction(int counter)
