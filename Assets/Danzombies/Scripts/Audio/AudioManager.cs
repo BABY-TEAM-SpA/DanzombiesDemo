@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class AudioManager : MonoBehaviour
 {
@@ -31,13 +32,9 @@ public class AudioManager : MonoBehaviour
     {
         if (interrupt)
             StopSong();
-
         currentRhythmTrack = RuntimeManager.CreateInstance(eventRef);
-
         currentRhythmTrack.start();
-
         isPaused = false;
-
         OnPlay?.Invoke(true);
     }
 
@@ -50,11 +47,8 @@ public class AudioManager : MonoBehaviour
     {
         if (!currentRhythmTrack.isValid())
             return;
-
-        currentRhythmTrack.setPaused(true);
-
         isPaused = true;
-
+        currentRhythmTrack.setPaused(isPaused);
         OnPause?.Invoke(false);
     }
 
@@ -62,11 +56,8 @@ public class AudioManager : MonoBehaviour
     {
         if (!currentRhythmTrack.isValid())
             return;
-
-        currentRhythmTrack.setPaused(false);
-
         isPaused = false;
-
+        currentRhythmTrack.setPaused(isPaused);
         OnResume?.Invoke(false);
     }
 
@@ -74,10 +65,9 @@ public class AudioManager : MonoBehaviour
     {
         if (!currentRhythmTrack.isValid())
             return;
-
-        currentRhythmTrack.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
+        currentRhythmTrack.stop(STOP_MODE.IMMEDIATE);
         currentRhythmTrack.release();
-
         OnStop?.Invoke(true);
     }
 

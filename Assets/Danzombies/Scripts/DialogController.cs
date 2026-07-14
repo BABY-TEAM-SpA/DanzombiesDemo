@@ -68,7 +68,7 @@ public class DialogController : MonoBehaviour
         pin.gameObject.SetActive(true);
     }
 
-    private void ContinueWritting()
+    public void ContinueWritting()
     {
         Debug.Log("Continue writting");
         int value =dialogScripts[currentScriptSequence].currentDialogText+1;
