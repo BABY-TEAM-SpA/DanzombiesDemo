@@ -27,7 +27,7 @@ public class InteractableComponent : MonoBehaviour
         if (enabled && collision.TryGetComponent(out PlayerInteractionController player))
         {
             ShowFeedback(true);
-            player?.SetInteractive(this);
+            //player?.SetInteractive(this);
         }
     }
 

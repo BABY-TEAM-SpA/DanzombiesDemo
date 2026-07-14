@@ -7,7 +7,7 @@ public class PlayerInteractionController : MonoBehaviour
     [SerializeField] private CircleCollider2D leftSpot;
     [SerializeField] private CircleCollider2D rightSpot;
 
-    private InteractableComponent interactable;
+    private InteReactableComponent interactable;
     #endregion
 
     #region [UNITY]
@@ -28,11 +28,11 @@ public class PlayerInteractionController : MonoBehaviour
             interactable?.Interact();
     }
 
-    public void SetInteractive(InteractableComponent interactive) => interactable = interactive;
+    public void SetInteractive(InteReactableComponent interactive) => interactable = interactive;
     public void ClearInteractive() => interactable = null;
 
     /// <summary>
-    /// Cuando el Player está mirando en la dirección opuesta al InteractableComponent y gira,
+    /// Cuando el Player está mirando en la dirección opuesta al InteReactableComponent y gira,
     /// el OnTrigger del componente no se disparará. Este método suple esa carencia.
     /// </summary>
     private void CheckOverlapAfterTurn(CircleCollider2D spot)
@@ -41,9 +41,9 @@ public class PlayerInteractionController : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(worldCenter, spot.radius);
 
         foreach (var hit in hits)
-            if (hit.TryGetComponent(out InteractableComponent found) && found.enabled)
+            if (hit.TryGetComponent(out InteReactableComponent found) && found.enabled)
             {
-                found.ShowFeedback(true);
+                //found.ShowFeedback(true);
                 SetInteractive(found);
                 break;
             }
@@ -60,7 +60,7 @@ public class PlayerInteractionController : MonoBehaviour
     {
         if (interactable != null && interactable.isActiveAndEnabled)
         {
-            interactable.ShowFeedback(false);
+            //interactable.ShowFeedback(false);
             ClearInteractive();
         }
 
