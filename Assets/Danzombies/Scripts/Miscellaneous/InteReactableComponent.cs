@@ -1,49 +1,46 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Events;
+using static InteReactableComponent;
 
 public class InteReactableComponent : MonoBehaviour
 {
     #region [VARIABLES]
     [SerializeField] private InteReaction[] inteReactions;
 
-    private Dictionary<string, InteReaction> inteReactionsMap = new();
+    private Dictionary<string, Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent>> inteReactionsMap = new();
     private InteReactableFeedback feedback;
-    private int timesInteracted;
 
     [Serializable]
     public class InteReaction
     {
         [Tooltip("Tag del GameObject que aceptará los colliders y eventos configurados en el inspector.")]
         [TagField] public string tag;
+        public InteReactionEvent[] events;
 
-        [Tooltip("Flag para marcar que ya se interactuó con el GameObject. Cuando sea true, OnInteract deja de considerarse y OnReinteract será quien escuche si el Player interactúa.")]
-        public bool interacted;
-
-        public InteReactionArea[] areas;
         [Serializable]
-        public class InteReactionArea
+        public class InteReactionEvent
         {
             public InteReactableArea.Type type;
-            public Collider2D[] colliders;
+            public bool didPrimaryTrigger; // <- Si ya se disparó OnPrimary
+            public int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
+
+            [Tooltip("Asignar GameObject que contiene los colliders que activarán el InteReaction.")]
+            public Collider2D area;
+
+            [Tooltip("Veces necesarias para que se ejecute OnPrimary.")]
+            [Range(1, 10)] public int timesToPrimary = 1;
+            [Tooltip("- Interactable: Al interactuar.\n- Rectable: Al entrar en el área de reacción.")]
+            public UnityEvent OnPrimary;
+
+            [Tooltip("Veces necesarias para que se ejecute OnSecondary. Dejar en 0 para ignorar.")]
+            [Range(0, 10)] public int timesToSecondary;
+            [Tooltip("- Interactable: Al reinteractuar post-interacción exitosa (e.g. cerrar puerta).\n- Reactable: Al abandonar área de reacción.")]
+            public UnityEvent OnSecondary;
         }
-
-        [Tooltip("Conectar con el método que se ejecutará cuando el Player pase cerca de este GameObject.")]
-        public UnityEvent OnReact;
-
-        [Range(1, 10)] public int timesToInteract;
-        [Tooltip("Conectar con el método que se ejecutará cuando el Player interactúe con este GameObject.")]
-        public UnityEvent OnInteract;
-
-        [Range(0, 10)] public int timesToReinteract;
-        [Tooltip("Conectar con el método que se ejecutará cuando el Player reinteractúe con este GameObject después de haber interactuado exitosamente con él. Colocar 0 para ignorar esta opción.")]
-        public UnityEvent OnReinteract;
-
-        [Tooltip("Conectar con el método que se ejecutará cuando el Player se aleje de este GameObject.")]
-        public UnityEvent OnLeave;
     }
     #endregion
 
@@ -52,15 +49,50 @@ public class InteReactableComponent : MonoBehaviour
     {
         foreach (InteReaction inteReaction in inteReactions)
         {
-            foreach (InteReaction.InteReactionArea area in inteReaction.areas)
-                SetupAreas(area.colliders, area.type);
-            inteReactionsMap[inteReaction.tag.ToString()] = inteReaction;
+            Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map = new();
+            foreach (InteReaction.InteReactionEvent e in inteReaction.events)
+            {
+                SetupArea(e.area, e.type);
+                map[e.type] = e;
+            }
+            inteReactionsMap[inteReaction.tag.ToString()] = map;
         }
 
         feedback = GetComponentInChildren<InteReactableFeedback>();
         if (feedback == null)
-            Debug.LogWarning($"El InteReactableComponent '{name}' no encontró un InteReactableFeedback en la jerarquía," +
+            Debug.LogWarning($"[{name}] No se encontró un InteReactableFeedback en la jerarquía, " +
                 $"el Player podrá interactuar con él, pero no habrá feedback visual.", this);
+    }
+
+    private void OnValidate()
+    {
+        if (inteReactions == null)
+            return;
+
+        int maxEvents = Enum.GetValues(typeof(InteReactableArea.Type)).Length;
+
+        foreach (InteReaction inteReaction in inteReactions)
+        {
+            if (inteReaction?.events == null)
+                continue;
+
+            // No más de un InteReactionEvent por InteReactableArea.Type posible
+            if (inteReaction.events.Length > maxEvents)
+            {
+                Debug.LogWarning($"[{name}] InteReaction '{inteReaction.tag}' no puede tener más de {maxEvents} " +
+                    $"InteReactionEvent. Se recortó el array.", this);
+                Array.Resize(ref inteReaction.events, maxEvents);
+            }
+
+            // Chequeo de InteReactableArea.Type repetidos
+            HashSet<InteReactableArea.Type> seenTypes = new();
+            foreach (InteReaction.InteReactionEvent e in inteReaction.events)
+            {
+                if (!seenTypes.Add(e.type))
+                    Debug.LogWarning($"[{name}] InteReaction '{inteReaction.tag}' tiene más de un " +
+                        $"InteReactionEvent con Type '{e.type}'. En el Dictionary solo va a sobrevivir el último.", this);
+            }
+        }
     }
     #endregion
 
@@ -68,48 +100,59 @@ public class InteReactableComponent : MonoBehaviour
     #region API
     public void Interact()
     {
-        if (!inteReactionsMap.TryGetValue("Player", out InteReaction inteReaction))
+        if (!inteReactionsMap.TryGetValue("Player", out Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map))
+            return;
+        if (!map.TryGetValue(InteReactableArea.Type.Interactable, out InteReaction.InteReactionEvent e))
             return;
 
         feedback?.Pulse();
-        timesInteracted++;
-
-        switch (inteReaction.interacted)
-        {
-            case true: // OnReinteract
-                if (timesInteracted == inteReaction.timesToReinteract)
-                    inteReaction.OnReinteract?.Invoke();
-                break;
-
-            case false: // OnInteract
-                if (timesInteracted == inteReaction.timesToInteract)
-                {
-                    inteReaction.OnInteract?.Invoke();
-                    inteReaction.interacted = true;
-                    timesInteracted = 0;
-                }
-                break;
-        }
+        HandleEventTrigger(e);
     }
     #endregion
 
     #region Helpers
-    private void SetupAreas(Collider2D[] colliders, InteReactableArea.Type type)
+    private void SetupArea(Collider2D collider, InteReactableArea.Type type)
     {
-        foreach (Collider2D collider in colliders)
+        if (collider.gameObject == gameObject)
+            Debug.LogWarning($"[{name}] El Collider2D '{collider.name}' está en el mismo GameObject. " +
+                $"Siempre es preferible que áreas distintas (e.g. Reactable " +
+                $"e Interactable) estén en GameObjects independientes.", this);
+
+        if (!collider.TryGetComponent<InteReactableArea>(out InteReactableArea area))
+            area = collider.AddComponent<InteReactableArea>();
+
+        area.OnEntered += HandleAreaEntered;
+        area.OnExited += HandleAreaExited;
+        area.Setup(type);
+    }
+
+    private void HandleEventTrigger(InteReaction.InteReactionEvent e)
+    {
+        e.timesIntended++;
+        switch (e.didPrimaryTrigger)
         {
-            if (collider.gameObject == gameObject)
-                Debug.LogWarning($"El Collider2D '{collider.name}' está en el mismo GameObject que" +
-                    $"InteReactableComponent. Siempre es preferible que áreas distintas (e.g. Reactable" +
-                    $"e Interactable) estén en GameObjects independientes.", this);
+            case true: // OnSecondary
+                if (e.timesIntended == e.timesToSecondary)
+                {
+                    e.OnSecondary?.Invoke();
+                    ToggleTimesIntended(e);
+                }
+                break;
 
-            if (!collider.TryGetComponent<InteReactableArea>(out InteReactableArea area))
-                area = collider.AddComponent<InteReactableArea>();
-
-            area.OnEntered += HandleAreaEntered;
-            area.OnExited += HandleAreaExited;
-            area.Setup(type);
+            case false: // OnPrimary
+                if (e.timesIntended == e.timesToPrimary)
+                {
+                    e.OnPrimary?.Invoke();
+                    ToggleTimesIntended(e);
+                }
+                break;
         }
+    }
+
+    private void ToggleTimesIntended(InteReaction.InteReactionEvent e)
+    {
+        e.didPrimaryTrigger = !e.didPrimaryTrigger;
+        e.timesIntended = 0;
     }
     #endregion
     #endregion
@@ -117,15 +160,13 @@ public class InteReactableComponent : MonoBehaviour
     #region [EVENTS]
     private void HandleAreaEntered(Collider2D collision, InteReactableArea.Type type)
     {
-        if (!inteReactionsMap.TryGetValue(collision.tag, out InteReaction inteReaction))
+        if (!inteReactionsMap.TryGetValue(collision.tag, out Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map))
+            return;
+        if (!map.TryGetValue(type, out InteReaction.InteReactionEvent e))
             return;
 
         switch (type)
         {
-            case InteReactableArea.Type.Reactable:
-                inteReaction.OnReact?.Invoke();
-                break;
-
             case InteReactableArea.Type.Interactable:
                 if (!collision.TryGetComponent(out PlayerInteractionController player))
                     break;
@@ -133,26 +174,34 @@ public class InteReactableComponent : MonoBehaviour
                 feedback?.Show();
                 player?.SetInteractive(this);
                 break;
+
+            case InteReactableArea.Type.Reactable:
+                if (!e.didPrimaryTrigger)
+                    HandleEventTrigger(e);
+                break;
         }
     }
 
     private void HandleAreaExited(Collider2D collision, InteReactableArea.Type type)
     {
-        if (!inteReactionsMap.TryGetValue(collision.tag, out InteReaction inteReaction))
+        if (!inteReactionsMap.TryGetValue(collision.tag, out Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map))
+            return;
+        if (!map.TryGetValue(type, out InteReaction.InteReactionEvent e))
             return;
 
         switch (type)
         {
-            case InteReactableArea.Type.Reactable:
-                inteReaction.OnLeave?.Invoke();
-                break;
-
             case InteReactableArea.Type.Interactable:
                 if (!collision.TryGetComponent(out PlayerInteractionController player))
                     break;
 
                 feedback?.Hide();
                 player?.ClearInteractive();
+                break;
+
+            case InteReactableArea.Type.Reactable:
+                if (e.didPrimaryTrigger)
+                    HandleEventTrigger(e);
                 break;
         }
     }

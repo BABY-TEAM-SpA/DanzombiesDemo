@@ -8,8 +8,8 @@ public class InteReactableArea : MonoBehaviour
     private Type type;
     public enum Type
     {
-        Reactable,
         Interactable,
+        Reactable
     }
 
     public Action<Collider2D, Type> OnEntered;
@@ -28,12 +28,12 @@ public class InteReactableArea : MonoBehaviour
     #region [METHODS]
     public void Setup(Type type)
     {
+        if (type == Type.Interactable)
+            gameObject.layer = 7; // <- Interactable
+
         Collider2D[] colliders = GetComponents<Collider2D>();
         foreach (Collider2D collider in colliders)
             collider.isTrigger = true;
-
-        if (type == Type.Interactable)
-            gameObject.layer = 7; // <- Interactable
 
         this.type = type;
         gameObject.SetActive(true);
