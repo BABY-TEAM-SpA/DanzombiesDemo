@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class InteractableComponent : MonoBehaviour
 {
     #region [VARIABLES]
-    [SerializeField] private InteractableFeedback feedback;
+    //[SerializeField] private InteractableFeedback feedback;
 
     [Tooltip("Conectar con el método que se ejecutará cuando el Player interactúe con este GameObject.")]
     public UnityEvent OnInteract;
@@ -48,15 +48,15 @@ public class InteractableComponent : MonoBehaviour
         if (!enabled)
             return;
 
-        feedback?.Pulse();
+        //feedback?.Pulse();
         OnInteract?.Invoke();
     }
 
     public void ShowFeedback(bool show)
     {
-        if (show)
-            feedback?.Show();
-        else feedback?.Hide();
+        //if (show)
+        //    feedback?.Show();
+        //else feedback?.Hide();
     }
 
     #region Dis/Enable

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class InteractableFeedback : MonoBehaviour
+public class InteReactableFeedback : MonoBehaviour
 {
     #region [VARIABLES]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -36,30 +36,30 @@ public class InteractableFeedback : MonoBehaviour
     #endregion
 
     #region [COROUTINES]
-    private IEnumerator PulseRoutine(Transform target, float factor = 0.75f, float duration = 0.2f)
+    private IEnumerator PulseRoutine(Transform target)
     {
-        
+        const float PULSE_FACTOR = 0.75f;
+        const float PULSE_DURATION = 0.1f;
+
         Vector3 prevScale = transform.localScale;
-        Vector3 nextScale = prevScale * factor;
+        Vector3 nextScale = prevScale * PULSE_FACTOR;
 
-        // Primera mitad
+        // 1/2 <¬
         float elapsed = 0f;
-
-        while (elapsed < duration / 2f)
+        while (elapsed < PULSE_DURATION / 2f)
         {
             elapsed += Time.deltaTime;
-            target.localScale = Vector3.Lerp(prevScale, nextScale, elapsed / (duration / 2f));
+            target.localScale = Vector3.Lerp(prevScale, nextScale, elapsed / (PULSE_DURATION / 2f));
             yield return null;
         }
         transform.localScale = nextScale;
 
-        // Segunda mitad
+        // 2/2 <¬
         elapsed = 0f;
-
-        while (elapsed < duration / 2f)
+        while (elapsed < PULSE_DURATION / 2f)
         {
             elapsed += Time.deltaTime;
-            target.localScale = Vector3.Lerp(nextScale, prevScale, elapsed / (duration / 2f));
+            target.localScale = Vector3.Lerp(nextScale, prevScale, elapsed / (PULSE_DURATION / 2f));
             yield return null;
         }
         transform.localScale = prevScale;
@@ -67,9 +67,6 @@ public class InteractableFeedback : MonoBehaviour
         pulseRoutine = null;
     }
 
-    /// <summary>
-    /// Para esperar a que 
-    /// </summary>
     private IEnumerator HideRoutine()
     {
         yield return new WaitWhile(() => pulseRoutine != null);
