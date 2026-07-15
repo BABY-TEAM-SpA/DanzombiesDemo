@@ -7,7 +7,7 @@ public class PlayerInteractionController : MonoBehaviour
     [SerializeField] private CircleCollider2D leftSpot;
     [SerializeField] private CircleCollider2D rightSpot;
 
-    private InteReactableComponent interactable;
+    private InteReactableComponent inteReactable;
     #endregion
 
     #region [UNITY]
@@ -25,11 +25,11 @@ public class PlayerInteractionController : MonoBehaviour
     public void OnInteractEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
-            interactable?.Interact();
+            inteReactable?.Interact();
     }
 
-    public void SetInteractive(InteReactableComponent interactive) => interactable = interactive;
-    public void ClearInteractive() => interactable = null;
+    public void SetInteractive(InteReactableComponent interactive) => inteReactable = interactive;
+    public void ClearInteractive() => inteReactable = null;
 
     /// <summary>
     /// Cuando el Player está mirando en la dirección opuesta al InteReactableComponent y gira,
@@ -39,14 +39,17 @@ public class PlayerInteractionController : MonoBehaviour
     {
         Vector2 worldCenter = spot.transform.TransformPoint(spot.offset);
         Collider2D[] hits = Physics2D.OverlapCircleAll(worldCenter, spot.radius);
-
-        foreach (var hit in hits)
-            if (hit.TryGetComponent(out InteReactableComponent found) && found.enabled)
+        
+        foreach (Collider2D hit in hits)
+        {
+            InteReactableComponent found = hit.GetComponentInParent<InteReactableComponent>();
+            if (found != null && found.isActiveAndEnabled)
             {
-                //found.ShowFeedback(true);
+                found.feedback?.Show();
                 SetInteractive(found);
                 break;
             }
+        }
     }
     #endregion
 
@@ -54,13 +57,12 @@ public class PlayerInteractionController : MonoBehaviour
     /// <summary>
     /// Cuando el Player cambia de dirección, se des/activa el CircleCollider (spot) que colisiona
     /// con InteracableComponents. Además, si había un interactable activo, se clerea.
-    /// 
     /// </summary>
     private void OnDirectionChanged(bool isLeft)
     {
-        if (interactable != null && interactable.isActiveAndEnabled)
+        if (inteReactable != null && inteReactable.isActiveAndEnabled)
         {
-            //interactable.ShowFeedback(false);
+            inteReactable.feedback?.Hide();
             ClearInteractive();
         }
 

@@ -1,18 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using static InteReactableComponent;
 
-public class InteReactableComponent : MonoBehaviour
+public class InteReactableComponent : MonoBehaviour, IResettable
 {
     #region [VARIABLES]
+    public InteReactableFeedback feedback;
+
     [SerializeField] private InteReaction[] inteReactions;
 
     private Dictionary<string, Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent>> inteReactionsMap = new();
-    private InteReactableFeedback feedback;
 
     [Serializable]
     public class InteReaction
@@ -25,19 +26,22 @@ public class InteReactableComponent : MonoBehaviour
         public class InteReactionEvent
         {
             public InteReactableArea.Type type;
-            public bool didPrimaryTrigger; // <- Si ya se disparó OnPrimary
-            public int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
+            [HideInInspector] public bool didPrimaryTrigger; // <- Si ya se disparó OnPrimary
+            [HideInInspector] public int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
+            [HideInInspector] public Coroutine delayRoutine;
 
             [Tooltip("Asignar GameObject que contiene los colliders que activarán el InteReaction.")]
             public Collider2D area;
 
             [Tooltip("Veces necesarias para que se ejecute OnPrimary.")]
             [Range(1, 10)] public int timesToPrimary = 1;
+            [Range(0f, 60f)] public float delayPrimary;
             [Tooltip("- Interactable: Al interactuar.\n- Rectable: Al entrar en el área de reacción.")]
             public UnityEvent OnPrimary;
 
             [Tooltip("Veces necesarias para que se ejecute OnSecondary. Dejar en 0 para ignorar.")]
             [Range(0, 10)] public int timesToSecondary;
+            [Range(0f, 60f)] public float delaySecondary;
             [Tooltip("- Interactable: Al reinteractuar post-interacción exitosa (e.g. cerrar puerta).\n- Reactable: Al abandonar área de reacción.")]
             public UnityEvent OnSecondary;
         }
@@ -54,15 +58,25 @@ public class InteReactableComponent : MonoBehaviour
             {
                 SetupArea(e.area, e.type);
                 map[e.type] = e;
+
+                // IResettable <¬
+                _snapshots[e] = new _InteReactionEvent
+                {
+                    _didPrimaryTrigger = e.didPrimaryTrigger,
+                    _timesIntended = e.timesIntended
+                };
             }
             inteReactionsMap[inteReaction.tag.ToString()] = map;
         }
 
-        feedback = GetComponentInChildren<InteReactableFeedback>();
+        if (feedback == null)
+            feedback = GetComponentInChildren<InteReactableFeedback>();
         if (feedback == null)
             Debug.LogWarning($"[{name}] No se encontró un InteReactableFeedback en la jerarquía, " +
                 $"el Player podrá interactuar con él, pero no habrá feedback visual.", this);
     }
+
+    private void OnDisable() => StopPendingRoutines();
 
     private void OnValidate()
     {
@@ -110,6 +124,40 @@ public class InteReactableComponent : MonoBehaviour
     }
     #endregion
 
+    #region IResettable
+    private Dictionary<InteReaction.InteReactionEvent, _InteReactionEvent> _snapshots = new();
+
+    private class _InteReactionEvent
+    {
+        public bool _didPrimaryTrigger;
+        public int _timesIntended;
+    }
+
+    public void CaptureState()
+    {
+        foreach (Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map in inteReactionsMap.Values)
+            foreach (InteReaction.InteReactionEvent e in map.Values)
+            {
+                _InteReactionEvent _state = _snapshots[e];
+                _state._didPrimaryTrigger = e.didPrimaryTrigger;
+                _state._timesIntended = e.timesIntended;
+            }
+    }
+
+    public void ResetState()
+    {
+        StopPendingRoutines();
+
+        foreach (Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map in inteReactionsMap.Values)
+            foreach (InteReaction.InteReactionEvent e in map.Values)
+            {
+                _InteReactionEvent _state = _snapshots[e];
+                e.didPrimaryTrigger = _state._didPrimaryTrigger;
+                e.timesIntended = _state._timesIntended;
+            }
+    }
+    #endregion
+
     #region Helpers
     private void SetupArea(Collider2D collider, InteReactableArea.Type type)
     {
@@ -128,22 +176,27 @@ public class InteReactableComponent : MonoBehaviour
 
     private void HandleEventTrigger(InteReaction.InteReactionEvent e)
     {
+        if (!gameObject.activeSelf)
+            return;
+
         e.timesIntended++;
         switch (e.didPrimaryTrigger)
         {
             case true: // OnSecondary
                 if (e.timesIntended == e.timesToSecondary)
                 {
-                    e.OnSecondary?.Invoke();
-                    ToggleTimesIntended(e);
+                    if (e.delayRoutine == null)
+                        e.delayRoutine = StartCoroutine(DelayRoutine(
+                            e, e.OnSecondary, e.delaySecondary));
                 }
                 break;
 
             case false: // OnPrimary
                 if (e.timesIntended == e.timesToPrimary)
                 {
-                    e.OnPrimary?.Invoke();
-                    ToggleTimesIntended(e);
+                    if (e.delayRoutine == null)
+                        e.delayRoutine = StartCoroutine(DelayRoutine(
+                            e, e.OnPrimary, e.delayPrimary));
                 }
                 break;
         }
@@ -153,6 +206,19 @@ public class InteReactableComponent : MonoBehaviour
     {
         e.didPrimaryTrigger = !e.didPrimaryTrigger;
         e.timesIntended = 0;
+    }
+
+    private void StopPendingRoutines()
+    {
+        foreach (Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map in inteReactionsMap.Values)
+            foreach (InteReaction.InteReactionEvent e in map.Values)
+            {
+                if (e.delayRoutine == null)
+                    continue;
+
+                StopCoroutine(e.delayRoutine);
+                e.delayRoutine = null;
+            }
     }
     #endregion
     #endregion
@@ -204,6 +270,18 @@ public class InteReactableComponent : MonoBehaviour
                     HandleEventTrigger(e);
                 break;
         }
+    }
+    #endregion
+
+    #region [COROUTINES]
+    private IEnumerator DelayRoutine(InteReaction.InteReactionEvent e, UnityEvent On, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        On?.Invoke();
+        ToggleTimesIntended(e);
+
+        e.delayRoutine = null;
     }
     #endregion
 }
