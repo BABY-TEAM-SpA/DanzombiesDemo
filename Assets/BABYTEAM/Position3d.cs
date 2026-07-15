@@ -1,72 +1,48 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SortingLayers{ 
-    OnStart,
-    OnUpdate,
-    None,
-}
-
-public class Position3d : MonoBehaviour
+public class Position3D : MonoBehaviour
 {
+    #region [VARIABLES]
     [SerializeField] private SortingLayers whenUse = SortingLayers.OnStart;
-    [SerializeField] private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
-
-    private void OnValidate()
+    public enum SortingLayers
     {
-        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-        {
-            if (spriteRenderer == null)
-            {
-                spriteRenderers.Clear();
-                break;
-            }
-        }
-        
-        if (spriteRenderers.Count == 0)
-        {
-            SpriteRenderer thisSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            if(thisSpriteRenderer != null) spriteRenderers.Add(thisSpriteRenderer);
-            var renderes = GetComponentsInChildren<SpriteRenderer>();
-            foreach(var render in renderes) if(render != null) spriteRenderers.Add(render);
-            
-        }
+        OnStart,
+        OnUpdate,
+        None,
     }
+
+    [SerializeField] private SpriteRenderer[] spriteRenderers;
+    #endregion
+
+    #region [UNITY]
+    private void OnValidate() => RefreshRenderers();
 
     private void Start()
     {
-        if (spriteRenderers.Count == 0)
-        {
-            SpriteRenderer thisSpriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-            GetComponentsInChildren<SpriteRenderer>();
-            spriteRenderers.Add(thisSpriteRenderer);
-        }
+        if (spriteRenderers == null || spriteRenderers.Length == 0)
+            RefreshRenderers();
+
         if (whenUse == SortingLayers.OnStart)
-        {
             SetLayerOnSprites();
-        }
     }
+
     void LateUpdate()
     {
         if (whenUse == SortingLayers.OnUpdate)
-        {
             SetLayerOnSprites();
-        }
     }
+    #endregion
+
+    #region [METHODS]
+    public void RefreshRenderers()
+        => spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+
     public void SetLayerOnSprites()
     {
-        int layer = 0;
-        if (spriteRenderers.Count > 0)
-        {
-            foreach (SpriteRenderer renderer in spriteRenderers)
-            {
-                renderer.sortingOrder = Mathf.RoundToInt(-transform.position.y * 100+layer);
-                layer++;
-            }
-        }
+        for (int i = 0; i < spriteRenderers.Length; i++)
+            spriteRenderers[i].sortingOrder =
+                Mathf.RoundToInt(-transform.position.y * 100) + i;
     }
-    
-    
+    #endregion
 }

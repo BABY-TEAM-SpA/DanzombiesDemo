@@ -49,35 +49,6 @@ public class InteReactableComponent : MonoBehaviour, IResettable
     #endregion
 
     #region [UNITY]
-    private void Awake()
-    {
-        foreach (InteReaction inteReaction in inteReactions)
-        {
-            Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map = new();
-            foreach (InteReaction.InteReactionEvent e in inteReaction.events)
-            {
-                SetupArea(e.area, e.type);
-                map[e.type] = e;
-
-                // IResettable <¬
-                _snapshots[e] = new _InteReactionEvent
-                {
-                    _didPrimaryTrigger = e.didPrimaryTrigger,
-                    _timesIntended = e.timesIntended
-                };
-            }
-            inteReactionsMap[inteReaction.tag.ToString()] = map;
-        }
-
-        if (feedback == null)
-            feedback = GetComponentInChildren<InteReactableFeedback>();
-        if (feedback == null)
-            Debug.LogWarning($"[{name}] No se encontró un InteReactableFeedback en la jerarquía, " +
-                $"el Player podrá interactuar con él, pero no habrá feedback visual.", this);
-    }
-
-    private void OnDisable() => StopPendingRoutines();
-
     private void OnValidate()
     {
         if (inteReactions == null)
@@ -108,6 +79,35 @@ public class InteReactableComponent : MonoBehaviour, IResettable
             }
         }
     }
+
+    private void Awake()
+    {
+        foreach (InteReaction inteReaction in inteReactions)
+        {
+            Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map = new();
+            foreach (InteReaction.InteReactionEvent e in inteReaction.events)
+            {
+                SetupArea(e.area, e.type);
+                map[e.type] = e;
+
+                // IResettable <¬
+                _snapshots[e] = new _InteReactionEvent
+                {
+                    _didPrimaryTrigger = e.didPrimaryTrigger,
+                    _timesIntended = e.timesIntended
+                };
+            }
+            inteReactionsMap[inteReaction.tag.ToString()] = map;
+        }
+
+        if (feedback == null)
+            feedback = GetComponentInChildren<InteReactableFeedback>();
+        if (feedback == null)
+            Debug.LogWarning($"[{name}] No se encontró un InteReactableFeedback en la jerarquía, " +
+                $"el Player podrá interactuar con él, pero no habrá feedback visual.", this);
+    }
+
+    private void OnDisable() => StopPendingRoutines();
     #endregion
 
     #region [METHODS]
