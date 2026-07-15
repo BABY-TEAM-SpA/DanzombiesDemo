@@ -44,11 +44,12 @@ public class PlayerInteractionController : MonoBehaviour
         {
             InteReactableComponent found = hit.GetComponentInParent<InteReactableComponent>();
             if (found != null && found.isActiveAndEnabled)
-            {
-                found.feedback?.Show();
-                SetInteractive(found);
-                break;
-            }
+                if (found.HasSecondaryInteraction())
+                {
+                    found.feedback?.Show();
+                    SetInteractive(found);
+                    break;
+                }
         }
     }
     #endregion

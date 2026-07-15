@@ -44,6 +44,9 @@ public class InteReactableComponent : MonoBehaviour, IResettable
             [Range(0f, 60f)] public float delaySecondary;
             [Tooltip("- Interactable: Al reinteractuar post-interacción exitosa (e.g. cerrar puerta).\n- Reactable: Al abandonar área de reacción.")]
             public UnityEvent OnSecondary;
+
+            public bool IsInteReactionComplete() => didPrimaryTrigger && timesToSecondary == 0;
+            public bool HasPendingSecondary() => didPrimaryTrigger && timesToSecondary > 0;
         }
     }
     #endregion
@@ -121,6 +124,23 @@ public class InteReactableComponent : MonoBehaviour, IResettable
 
         feedback?.Pulse();
         HandleEventTrigger(e);
+
+        if (!e.IsInteReactionComplete())
+            feedback?.Hide();
+    }
+
+    public bool HasSecondaryInteraction()
+    {
+        // Tiene que ser un InteReaction con Tag=Player
+        if (!inteReactionsMap.TryGetValue("Player", out Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map))
+            return false;
+
+        // Tiene que ser un InteReactionEvent con Type=Interactable
+        foreach (InteReaction.InteReactionEvent e in map.Values)
+            if (e.type == InteReactableArea.Type.Interactable)
+                return e.HasPendingSecondary();
+
+        return false;
     }
     #endregion
 
@@ -152,6 +172,18 @@ public class InteReactableComponent : MonoBehaviour, IResettable
             foreach (InteReaction.InteReactionEvent e in map.Values)
             {
                 _InteReactionEvent _state = _snapshots[e];
+
+                // Resinconcrinzar el WorldState si no coincide con el de
+                // la snapshot relanzando los UnityEvent según el caso
+                if (e.didPrimaryTrigger != _state._didPrimaryTrigger)
+                {
+                    if (_state._didPrimaryTrigger) // <- Si se había activado
+                        e.OnPrimary?.Invoke(); 
+                    else if (e.timesToSecondary > 0) // <- Si 
+                        e.OnSecondary?.Invoke();
+                    else continue;
+                }
+
                 e.didPrimaryTrigger = _state._didPrimaryTrigger;
                 e.timesIntended = _state._timesIntended;
             }
@@ -176,7 +208,7 @@ public class InteReactableComponent : MonoBehaviour, IResettable
 
     private void HandleEventTrigger(InteReaction.InteReactionEvent e)
     {
-        if (!gameObject.activeSelf)
+        if (!gameObject.activeInHierarchy)
             return;
 
         e.timesIntended++;
@@ -229,6 +261,8 @@ public class InteReactableComponent : MonoBehaviour, IResettable
         if (!inteReactionsMap.TryGetValue(collision.tag, out Dictionary<InteReactableArea.Type, InteReaction.InteReactionEvent> map))
             return;
         if (!map.TryGetValue(type, out InteReaction.InteReactionEvent e))
+            return;
+        if (e.IsInteReactionComplete())
             return;
 
         switch (type)

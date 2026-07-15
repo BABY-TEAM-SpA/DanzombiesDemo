@@ -171,8 +171,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1366706313
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: f39aa3bc904cc0f4b94237514eaa4d11, type: 3}
@@ -196,6 +196,10 @@ PrefabInstance:
     - target: {fileID: 1285006427088833972, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: m_Name
       value: InteReactableDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134700133109472223, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 6496852749541688592, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: m_LocalPosition.x
@@ -238,16 +242,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: inteReactions.Array.data[0].events.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: inteReactions.Array.data[0].events.Array.data[0].delayPrimary
-      value: 2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: inteReactions.Array.data[0].events.Array.data[0].timesToPrimary
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: inteReactions.Array.data[0].events.Array.data[0].timesToSecondary
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: inteReactions.Array.data[0].events.Array.data[0].OnPrimary.m_PersistentCalls.m_Calls.Array.size
