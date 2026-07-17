@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,36 +12,41 @@ public class DanceData
 
 public abstract class RhythmPuzzle : BeatReciever
 {
-    public enum RhythmSyncMode  { Global, Local}
-    
+    #region [VARIABLES]
     [Header("Rhythm Puzzle Settings")]
     [SerializeField] protected bool debug;
     [SerializeField] bool activateOnStart;
     [SerializeField] RhythmSyncMode syncMode = RhythmSyncMode.Global;
-    
-    
+    public enum RhythmSyncMode { Global, Local }
+
     [HideInInspector] public DanceData currentDanceData;
-    protected DancerExpression.ExpressionType currentReaction= DancerExpression.ExpressionType.Normal;
+    protected DancerExpression.ExpressionType currentReaction = DancerExpression.ExpressionType.Normal;
     protected int InnerCounter = 0;
     private int startBeat;
-    
+
     public delegate void OnMusicEvent(DanceStep danceStep);
     public event OnMusicEvent OnPrepareStep;
     public event OnMusicEvent OnDanceStep;
+
     public delegate void OnMusicEvent2(DanceStep danceStep, DanceStep futureStep);
     public event OnMusicEvent2 OnReleaseStep;
     public UnityEvent onPuzzleGetsActivateEvent = new UnityEvent();
 
-    [Header("Players")] 
-    protected bool PlayerHasDanced=false;
+    [Header("Players")]
+    protected bool PlayerHasDanced = false;
     [SerializeField] protected PlayerManager playersInside;
-    
+    #endregion
+
+    #region [UNITY]
     private void Start()
     {
         PreparePuzzle();
-        if (activateOnStart) ActivatePuzzle(true);
+        if (activateOnStart)
+            ActivatePuzzle(true);
     }
+    #endregion
 
+    #region [METHODS]
     protected void SetSequence(SequenceStep sequence)
     {
         currentDanceData.Sequence = sequence;
@@ -50,12 +54,11 @@ public abstract class RhythmPuzzle : BeatReciever
         beatType = currentDanceData.Sequence.patternBeatType;
     }
 
-
     // Tested - Working
     public virtual bool SetPlayerInput(DanceStep playerStep, out BeatFeedback bf)
     {
         bool isCorrect = playerStep == currentDanceData.DanceStep;
-        bf = isCorrect? BeatManager.Instance.EvaluateInput(beatType): BeatFeedback.Bad;
+        bf = isCorrect ? BeatManager.Instance.EvaluateInput(beatType) : BeatFeedback.Bad;
         if (!PlayerHasDanced && isOnBeat)
         {
             PlayerHasDanced = true;
@@ -70,11 +73,11 @@ public abstract class RhythmPuzzle : BeatReciever
     public virtual void ActivatePuzzle(bool activate)
     {
         isActive = activate;
-
         if (!activate)
             return;
 
-        if (syncMode == RhythmSyncMode.Local)  startBeat = BeatManager.Instance.GetCounter(beatType);
+        if (syncMode == RhythmSyncMode.Local)
+            startBeat = BeatManager.Instance.GetCounter(beatType);
         else startBeat = 0;
 
         onPuzzleGetsActivateEvent?.Invoke();
@@ -85,21 +88,28 @@ public abstract class RhythmPuzzle : BeatReciever
         PlayerHasDanced = false;
         UpdateInnerCounter();
         currentDanceData.Sequence.GetDanceStep(InnerCounter, out currentDanceData.DanceStep);
-        if(debug) Debug.Log("___Puzzle PreBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
+
+        if (debug)
+            Debug.Log("___Puzzle PreBeat on " + AudioManager.Instance.SongPositionSeconds().ToString());
+
         PuzzlePreBeat();
         OnPrepareStep?.Invoke(currentDanceData.DanceStep);
     }
 
     public override void BeatAction(int counter)
     {
-        if(debug) Debug.Log("_____Puzzle Beat make "+currentDanceData.DanceStep.ToString()+" at "+counter+" on "+AudioManager.Instance.SongPositionSeconds().ToString());
+        if (debug)
+            Debug.Log("_____Puzzle Beat make " + currentDanceData.DanceStep.ToString() + " at " + counter + " on " + AudioManager.Instance.SongPositionSeconds().ToString());
+        
         PuzzleBeat();
         OnDanceStep?.Invoke(currentDanceData.DanceStep);
         
     }
     public override void PostBeatAction(int counter)
     {
-        if(debug) Debug.Log("___Puzzle PostBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
+        if (debug)
+            Debug.Log("___Puzzle PostBeat on " + AudioManager.Instance.SongPositionSeconds().ToString());
+
         PuzzlePostBeat();
         Action<RhythmPuzzle> callback = currentDanceData.Sequence.GetNextDanceStep(InnerCounter, out currentDanceData.NextDanceStep);
         callback?.Invoke(this);
@@ -120,7 +130,9 @@ public abstract class RhythmPuzzle : BeatReciever
     
     protected virtual void PlayerEnter(PlayerManager player)
     {
-        if(debug)Debug.Log("Player entered");
+        if (debug)
+            Debug.Log("Player entered");
+
         player.AddTargetPuzzle(this);
         playersInside = player;
     }
@@ -129,7 +141,9 @@ public abstract class RhythmPuzzle : BeatReciever
 
     protected virtual void PlayerLeave(PlayerManager player)
     {
-        if(debug)Debug.Log("Player Leave");
+        if (debug)
+            Debug.Log("Player Leave");
+
         playersInside = null;
         player.RemoveTargetPuzzle(this);
     }
@@ -140,10 +154,12 @@ public abstract class RhythmPuzzle : BeatReciever
     {
         int globalBeat = BeatManager.Instance.GetCounter(beatType);
 
-        if (syncMode == RhythmSyncMode.Local) InnerCounter = globalBeat - startBeat;
+        if (syncMode == RhythmSyncMode.Local)
+            InnerCounter = globalBeat - startBeat;
         else InnerCounter = globalBeat;
 
-        if (InnerCounter < 0) InnerCounter = 0;
+        if (InnerCounter < 0)
+            InnerCounter = 0;
     }
 
     protected abstract void PuzzlePreBeat();
@@ -151,5 +167,5 @@ public abstract class RhythmPuzzle : BeatReciever
     protected abstract void PuzzlePostBeat();
 
     public abstract void OnSequenceEnd();
-
+    #endregion
 }

@@ -16,11 +16,10 @@ public class PlayerManager : DanceBrain
     public int HP => hp;
     private int hp = 3;
 
-    [SerializeField]
-    [Range(0, 10)]
-    private int nivelDeSeguridad = 5;
-
     public int flow => nivelDeSeguridad;
+    [SerializeField][Range(0, 10)] private int nivelDeSeguridad = 5;
+
+    private bool isInSafeZone;
 
     public DanceBarController danceBar { get; set; }
     
@@ -70,7 +69,6 @@ public class PlayerManager : DanceBrain
         }
     }
 
-
     public override void OnDance(DanceStep step)
     {
         if (targetPuzzle == null)
@@ -80,7 +78,6 @@ public class PlayerManager : DanceBrain
             ApplyDanceFeedback(bf);
         }
     }
-
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
@@ -117,7 +114,13 @@ public class PlayerManager : DanceBrain
 
     public int IncreaseFlow(int increment)
     {
-        SequenceStep.SequenceFlowType seqtype =targetPuzzle.currentDanceData.Sequence.sequenceFlowType;
+        if (isInSafeZone && increment < 0)
+        {
+            increment = 0;
+            Debug.Log($"[PlayerManager] ¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
+        }
+
+        SequenceStep.SequenceFlowType seqtype = targetPuzzle.currentDanceData.Sequence.sequenceFlowType;
         if (seqtype == SequenceStep.SequenceFlowType.NoFlowAffect_NoHurt) return 0;
         else
         {
@@ -135,11 +138,8 @@ public class PlayerManager : DanceBrain
         }
     }
 
-    private void SetFlow(int value)
-    {
-        nivelDeSeguridad = value;
-    }
-
+    private void SetFlow(int value) => nivelDeSeguridad = value;
+    public void SetInSafeZone(bool value) => isInSafeZone = value;
 
     public void GetLifeDamage(bool danho = true)
     {
@@ -165,7 +165,6 @@ public class PlayerManager : DanceBrain
         OnPlayerDeath?.Invoke();
     }
     
-
     public Animator ConfinePlayerCamera()
     {
         return danceAnimCtrl.animator;
