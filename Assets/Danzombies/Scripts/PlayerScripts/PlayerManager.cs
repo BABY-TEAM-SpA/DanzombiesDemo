@@ -16,11 +16,10 @@ public class PlayerManager : DanceBrain
     public int HP => hp;
     private int hp = 3;
 
-    [SerializeField]
-    [Range(0, 10)]
-    private int nivelDeSeguridad = 5;
-
     public int flow => nivelDeSeguridad;
+    [SerializeField][Range(0, 10)] private int nivelDeSeguridad = 5;
+
+    private bool isInSafeZone;
 
     public DanceBarController danceBar { get; set; }
     
@@ -73,7 +72,6 @@ public class PlayerManager : DanceBrain
         }
     }
 
-
     public override void OnDance(DanceStep step)
     {
         if (targetPuzzle == null)
@@ -83,7 +81,6 @@ public class PlayerManager : DanceBrain
             ApplyDanceFeedback(bf);
         }
     }
-
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
@@ -120,25 +117,34 @@ public class PlayerManager : DanceBrain
 
     public int IncreaseFlow(int increment)
     {
-        int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
-        SetFlow(value);
-        targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
-        danceBar?.UpdateFlowBars(nivelDeSeguridad);
-        if (value < GameManager.Alza)
+        if (isInSafeZone && increment < 0)
         {
-            GetLifeDamage(true);
-            targetPuzzle?.PlayerGetDamaged();
-            SetFlow(5);
+            increment = 0;
+            Debug.Log($"[PlayerManager] ¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
         }
-        return value;
+
+        SequenceStep.DamageMode seqtype = targetPuzzle.GetDamageMode();
+        if (seqtype == SequenceStep.DamageMode.None) return 0;
+        else
+        {
+
+            int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
+            SetFlow(value);
+            targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
+            danceBar?.UpdateFlowBars(nivelDeSeguridad);
+            if (value < GameManager.Alza && seqtype == SequenceStep.DamageMode.ModificaFlowYDaña)
+            {
+                GetLifeDamage(true);
+                targetPuzzle?.PlayerGetDamaged();
+                SetFlow(5);
+            }
+            return value;
+        }
         
     }
 
-    private void SetFlow(int value)
-    {
-        nivelDeSeguridad = value;
-    }
-
+    private void SetFlow(int value) => nivelDeSeguridad = value;
+    public void SetInSafeZone(bool value) => isInSafeZone = value;
 
     public void GetLifeDamage(bool danho = true)
     {
@@ -153,7 +159,6 @@ public class PlayerManager : DanceBrain
         OnPlayerDeath?.Invoke();
     }
     
-
     public Animator ConfinePlayerCamera()
     {
         return danceAnimCtrl.animator;

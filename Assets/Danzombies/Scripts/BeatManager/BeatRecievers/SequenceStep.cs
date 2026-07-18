@@ -17,6 +17,7 @@ public enum DanceStep
     L_East,
     R_East
 }
+
 [Serializable]
 public class SequenceStep
 {
@@ -97,10 +98,9 @@ public class SequenceStep
             int aux = i+counter;
             aux = aux % pattern.Count;
             if (pattern[aux] != DanceStep.None)
-            {
                 return pattern[aux];
-            }
         }
+
         return DanceStep.None;
     }
 
