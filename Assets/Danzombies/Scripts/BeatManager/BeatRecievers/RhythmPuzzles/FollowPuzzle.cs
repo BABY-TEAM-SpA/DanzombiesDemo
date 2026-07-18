@@ -7,24 +7,18 @@ using UnityEngine;
 public class FollowSequence
 {
     public bool playerAffected = false;
-    public List<int> zombiesAffected = new List<int>();
+    public List<ZombieDanceBrain> zombiesAffected = new List<ZombieDanceBrain>();
     public SequenceStep danceSequence;
 }
 
-[Serializable]
-public class ZombieDummie
-{
-    public ZombieDanceBrain brain;
-    public FeedbackElement feedbackElement;
-}
 
 public class FollowPuzzle : RhythmPuzzle
 {
     [Header("Follow Puzzle Settings")]
     public FeedbackElement playerFeedbackElement;
-    public ZombieDummie leader;
+    public ZombieDanceBrain leader;
+    private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
     public bool leaderTurn;
-    public List<ZombieDummie> zombies = new List<ZombieDummie>();
     public List<FollowSequence> followSequences = new List<FollowSequence>();
     private FollowSequence currentFollowSequence;
     private int currentFollowSequenceIndex = 0;
@@ -32,11 +26,10 @@ public class FollowPuzzle : RhythmPuzzle
     public override void ActivatePuzzle(bool activate)
     {
         base.ActivatePuzzle(activate);
-        playersInside.ActivateDanceHUD(true);
+        
         ActivateFollowSequence(0);
         leaderTurn = true;
-        leader.brain.Connect(this);
-        leader.feedbackElement.Activate(true);
+        leader.Connect(this);
     }
     
     public override void OnUpdateSongAction()
@@ -50,22 +43,14 @@ public class FollowPuzzle : RhythmPuzzle
     {
         if (exp == currentReaction) return;
         currentReaction = exp;
-        foreach (ZombieDummie zombie in zombies)
-        {
-            zombie.brain.React(currentReaction);
-        }
     }
 
     public override void PlayerGetDamaged()
     {
         
     }
-
-    protected override void PuzzlePreBeat() { }
-
-    protected override void PuzzleBeat() { }
-
-    protected override void PuzzlePostBeat() { }
+    
+    
 
     protected override void CheckPlayerPost()
     {
@@ -76,15 +61,14 @@ public class FollowPuzzle : RhythmPuzzle
         }
     }
 
-    public override void OnSequenceEnd()
+    public override void OnDanceSequenceCleared()
     {
         Debug.Log("CHeck if sequence end");
         if (leaderTurn)
         {
             if(currentFollowSequence.playerAffected) playerFeedbackElement.Activate(true);
             leaderTurn = false;
-            leader.brain.Disconnect(this);
-            leader.feedbackElement.Activate(false);
+            leader.Disconnect(this);
             ZombieConnect(currentFollowSequence.zombiesAffected);
             ActivateFollowSequence(currentFollowSequenceIndex);
         }
@@ -93,36 +77,33 @@ public class FollowPuzzle : RhythmPuzzle
             playerFeedbackElement.Activate(false);
             DisconnectAll();
             leaderTurn = true;
-            leader.brain.Connect(this);
-            leader.feedbackElement.Activate(true);
+            leader.Connect(this);
             ActivateFollowSequence(currentFollowSequenceIndex+1);
         }
     }
 
-    private void ZombieConnect(List<int> indexes)
+    private void ZombieConnect(List<ZombieDanceBrain> brains)
     {
-        foreach (int index in indexes)
+        zombies = brains;
+        foreach (ZombieDanceBrain zombie in zombies)
         {
-            var zombie = zombies[index]; 
-            zombie.brain.Connect(this);
-            zombie.feedbackElement.Activate(true);
+            zombie.Connect(this);
         }
     }
 
     private void DisconnectAll()
     {
-        leader.brain.Disconnect(this);
-        leader.feedbackElement.Activate(false);
+        leader.Disconnect(this);
         foreach (var zombie in zombies)
         {
-            zombie.brain.Disconnect(this);
-            zombie.feedbackElement.Activate(false);
+            zombie.Disconnect(this);
         }
+        zombies.Clear();
     }
     
     private void OnDisable()
     {
-        foreach (var zombie in zombies) zombie.brain.Disconnect(this);
+        foreach (var zombie in zombies) zombie.Disconnect(this);
     }
     
     private void ActivateFollowSequence(int index)

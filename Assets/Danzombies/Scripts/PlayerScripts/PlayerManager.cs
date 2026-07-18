@@ -52,6 +52,7 @@ public class PlayerManager : DanceBrain
     public void AddTargetPuzzle(RhythmPuzzle puzzle)
     {
         targetPuzzle = puzzle;
+        ActivateDanceHUD(true);
     }
 
     public void ActivateDanceHUD(bool activate)
@@ -59,14 +60,16 @@ public class PlayerManager : DanceBrain
         danceBar = GUIManager.Instance?.DanceBar;
         danceBar?.UpdateFlowBars(nivelDeSeguridad);
         danceBar?.Activate(activate);
+        LevelUIController.Instance?.UpdateZombieFeedbackUI(activate);
     }
 
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
     {
+        
         if (puzzle == targetPuzzle)
         {
-            danceBar?.Activate(false);
             targetPuzzle = null;
+            ActivateDanceHUD(false);
         }
     }
 
@@ -117,22 +120,18 @@ public class PlayerManager : DanceBrain
 
     public int IncreaseFlow(int increment)
     {
-        SequenceStep.SequenceFlowType seqtype =targetPuzzle.currentDanceData.Sequence.sequenceFlowType;
-        if (seqtype == SequenceStep.SequenceFlowType.NoFlowAffect_NoHurt) return 0;
-        else
+        int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
+        SetFlow(value);
+        targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
+        danceBar?.UpdateFlowBars(nivelDeSeguridad);
+        if (value < GameManager.Alza)
         {
-            int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
-            SetFlow(value);
-            targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
-            danceBar?.UpdateFlowBars(nivelDeSeguridad);
-            if (value < GameManager.Alza && seqtype == SequenceStep.SequenceFlowType.FlowAffect_Hurt)
-            {
-                GetLifeDamage(true);
-                targetPuzzle?.PlayerGetDamaged();
-                SetFlow(5);
-            }
-            return value;
+            GetLifeDamage(true);
+            targetPuzzle?.PlayerGetDamaged();
+            SetFlow(5);
         }
+        return value;
+        
     }
 
     private void SetFlow(int value)
@@ -143,23 +142,12 @@ public class PlayerManager : DanceBrain
 
     public void GetLifeDamage(bool danho = true)
     {
-        if (danho)
-        {
-            LifeDamagedEvent?.Invoke();
-        }
-        else
-        {
-            LifeHealedEvent?.Invoke();
-        }
-
+        if (danho)LifeDamagedEvent?.Invoke();
+        else LifeHealedEvent?.Invoke();
         hp += (danho) ? -1 : 1;
-
         hp = Math.Clamp(hp, 0, 3);
-
         PlayerUIController.Instance?.UpdateLifesPlayer(hp);
     }
-
-
     public void GameOver()
     {
         OnPlayerDeath?.Invoke();

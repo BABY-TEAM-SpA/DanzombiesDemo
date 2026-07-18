@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,98 +21,73 @@ public enum DanceStep
 public class SequenceStep
 {
     
-
     [Header("Pattern")]
     public BeatManager.BeatType patternBeatType = BeatManager.BeatType.FullBeat;
+    public enum DamageMode
+    {
+        None,
+        ModificaFlow,
+        ModificaFlowYDaña
+    }
+    public DamageMode damageMode = DamageMode.None;
     [SerializeField]
     public List<DanceStep> pattern = new();
 
     public int startCounter { get; set; } = 0;
-
     
-    public enum PlaybackMode{Loop,PlaySequenceXTimes,LoopUntilXCorrectSteps,LoopUntilFlowIsFull}
-    public enum SequenceFlowType{FlowAffect_Hurt, FlowAffect_NoHurt,NoFlowAffect_NoHurt}
+    public enum EndingMode
+    {
+        OneShot,
+        StopOnXCorrectSteps,
+        StopOnFullFlow,
+        Loop,
+        LoopShuffled,
+    }
     [Header("Playback")]
-    public PlaybackMode playbackMode = PlaybackMode.Loop;
-    public SequenceFlowType sequenceFlowType = SequenceFlowType.FlowAffect_Hurt;
-    [Min(1)] public int playerSeqToStop=1;
-    [Min(0)] private int SequenceCounter = 0;
-    [Min(1)] public int correctDancesToStop = 1;
+    public EndingMode endingSeq = EndingMode.OneShot;
+    [Min(1)] public int xCorrectSteps = 1;
+    public enum StepsResetMode
+    {
+        None,
+        DanceFail,
+        SequenceReset
+    }
+    [SerializeField] private StepsResetMode ResetStepsCountOn  = StepsResetMode.None;
     private int playerCorrectDancesOnSequence = 0;
+    
+    public delegate void OnSeqEvent();
+    public event OnSeqEvent OnDanceSequenceFinished;
 
-    [Header("Events")]
-    public UnityEvent OnSequenceCompletedEvent;
 
     public void ApplyDance(bool isCorrect)
     {
-        playerCorrectDancesOnSequence= isCorrect ? playerCorrectDancesOnSequence+1 : 0;
-    }
-    
-    
-    public void GetDanceStep(int puzzleCounter , out DanceStep currentStep)
-    {
-        currentStep = DanceStep.None;
-        if (pattern.Count != 0 && puzzleCounter > 0)
+        if (isCorrect)
         {
-            currentStep = pattern[puzzleCounter % pattern.Count];
-        };
+            playerCorrectDancesOnSequence += 1;
+            switch (endingSeq)
+            {
+                case EndingMode.StopOnXCorrectSteps:
+                    if (playerCorrectDancesOnSequence >= xCorrectSteps) StopSequence();
+                    break;
+                case EndingMode.StopOnFullFlow:
+                    if(PlayerManager.Player.flow == 10) StopSequence();
+                    break;
+            }
+        }
+        if (ResetStepsCountOn == StepsResetMode.DanceFail) playerCorrectDancesOnSequence = 0;
     }
     
-    public Action<RhythmPuzzle> GetNextDanceStep(int puzzleCounter, out DanceStep nextStep) ///largo 4, estoy en el 49 (beat2), y el siguiente es en el 3 (beat4)
+    public DanceStep GetDanceStep(int puzzleCounter)
+    {
+        DanceStep step = DanceStep.None;
+        if (pattern.Count != 0 && puzzleCounter > 0) step = pattern[puzzleCounter % pattern.Count];
+        return step;
+    }
+    
+    public DanceStep GetFutureStep(int puzzleCounter)
     {
         int nextStepCounter = puzzleCounter+1;
-        nextStep = DanceStep.None;
-        Action<RhythmPuzzle> callback = (RhythmPuzzle puzzle) =>
-        {
-            puzzle.OnSequenceEnd();
-            this.OnSequenceCompletedEvent?.Invoke();
-        };
-        
-        if (pattern.Count != 0 && puzzleCounter > 0)
-        {
-            switch (playbackMode)
-            {
-                default:
-                    nextStep = CalulateFutureStep(nextStepCounter);
-                    return null;
-                case PlaybackMode.PlaySequenceXTimes:
-                    if ((int)(nextStepCounter-startCounter) / pattern.Count >= playerSeqToStop)
-                    {
-                        Debug.Log("Ended by Played X Times "+ ((nextStepCounter-startCounter) / pattern.Count).ToString());
-                        return callback;
-                    }
-                    else
-                    {
-                        nextStep = CalulateFutureStep(nextStepCounter);
-                        return null;
-                    }
-                    break;
-                case PlaybackMode.LoopUntilFlowIsFull:
-                    if (PlayerManager.Player.flow == 10)
-                    {
-                        Debug.Log("Ended by Max Flow");
-                        return callback;
-                    }
-                    else
-                    {
-                        nextStep = CalulateFutureStep(nextStepCounter);
-                        return null;
-                    }
-                case PlaybackMode.LoopUntilXCorrectSteps:
-                    if (playerCorrectDancesOnSequence == correctDancesToStop)
-                    {
-                        Debug.Log("Ended by Dance Correct X Times");
-                        return callback;
-                    }
-                    else
-                    {
-                        nextStep = CalulateFutureStep(nextStepCounter);
-                        if(nextStepCounter%pattern.Count ==0) playerCorrectDancesOnSequence = 0;
-                        return null;
-                    }
-            }
-        } 
-        return null;
+        return CalulateFutureStep(nextStepCounter);
     }
 
     private DanceStep CalulateFutureStep(int counter)
@@ -125,5 +102,24 @@ public class SequenceStep
             }
         }
         return DanceStep.None;
+    }
+
+    public void ShuffleSteps()
+    {
+        pattern = pattern.OrderBy(x => UnityEngine.Random.value).ToList();
+    }
+
+    public void ResetSequence()
+    {
+        if(ResetStepsCountOn == StepsResetMode.SequenceReset) playerCorrectDancesOnSequence = 0;
+        if(endingSeq == EndingMode.LoopShuffled) ShuffleSteps();
+        if(endingSeq == EndingMode.OneShot) StopSequence();
+    }
+
+    public void StopSequence()
+    {
+        Debug.Log("Stop Sequence");
+        OnDanceSequenceFinished?.Invoke();
+        OnDanceSequenceFinished=null;
     }
 }

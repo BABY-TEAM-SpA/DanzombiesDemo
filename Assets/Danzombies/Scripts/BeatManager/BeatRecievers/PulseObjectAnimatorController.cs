@@ -7,6 +7,7 @@ public class PulseObjectAnimatorController : BeatReciever
     
     [SerializeField] Animator animator ;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
+    [SerializeField]  BeatManager.BeatType beatMode = BeatManager.BeatType.FullBeat;
     
     public void Awake()
     {
@@ -16,6 +17,7 @@ public class PulseObjectAnimatorController : BeatReciever
             animator.runtimeAnimatorController = animatorOverrideController;
             animator.enabled = true;
             isActive=true;
+            beatType = beatMode;
         }
     }
 

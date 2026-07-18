@@ -9,7 +9,6 @@ public class TutorialPuzzle : RhythmPuzzle
 {
     [SerializeField] private ZombieDanceBrain Steph;
     [SerializeField] private TutorialDanceBrain HUD;
-    [SerializeField] private int playerSucceses = 0;
     public int puzzleGoal;
     [HideInInspector] public int currentTutorialSequence = 0;
     
@@ -36,25 +35,18 @@ public class TutorialPuzzle : RhythmPuzzle
     {
         HUD.SetActiveCanvas(activate);
         InnerCounter = 0;
-        playerSucceses = 0;
         base.ActivatePuzzle(activate);
-        if (currentTutorialSequence < TutorialSequences.Count) currentDanceData.Sequence = TutorialSequences[currentTutorialSequence];
-        if (currentDanceData.Sequence.playbackMode == SequenceStep.PlaybackMode.LoopUntilFlowIsFull) playersInside?.ActivateDanceHUD(activate);;
+        if (currentTutorialSequence < TutorialSequences.Count) SetSequence(TutorialSequences[currentTutorialSequence]);
     }
 
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) {}
 
     public override void PlayerGetDamaged() {}
+    
 
-    protected override void PuzzlePreBeat() {}
-
-    protected override void PuzzleBeat() {}
-
-    protected override void PuzzlePostBeat() {}
-
-    public override void OnSequenceEnd()
+    public override void OnDanceSequenceCleared()
     {
-        currentDanceData.Sequence.OnSequenceCompletedEvent?.Invoke();
+        Debug.Log("OnDanceSequenceCleared");
         currentTutorialSequence += 1;
         InnerCounter = 0;
         ActivatePuzzle(false);

@@ -24,6 +24,7 @@ public class BeatManager : MonoBehaviour
 
     public double quarterBeatDuration { get; private set; } = 1f;
     public double eighthBeatDuration { get; private set; } = 0.5f;
+    private bool mustHalfBeat = false;
 
     public int localCounterNegra { get; private set; } = 1;
     public int globalCounterNegra { get; private set; } = 1;
@@ -101,6 +102,9 @@ public class BeatManager : MonoBehaviour
     
     void HandleBeat(int bar, int beat, float tempo)
     {
+        //Debug.Log("bar"+bar);
+        //Debug.Log("beat:"+beat);
+        //Debug.Log("---------------");
         lastBeatTime = AudioManager.Instance.SongPositionSeconds();
         quarterBeatDuration = 60d / tempo;
         eighthBeatDuration = 30d / tempo;
@@ -110,20 +114,10 @@ public class BeatManager : MonoBehaviour
         postTrigger = false;
         globalCounterNegra++;
         OnBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
+        HalfBeat(lastBeatTime);
+        mustHalfBeat = true;
+
     }
-    
-    void HalfBeat()
-    {
-        AudioManager.Instance.SongPositionSeconds();
-        lastHalfBeatTime = eighthBeatDuration * globalCounterCorchea;
-        nextHalfBeatTime = lastHalfBeatTime + (globalCounterCorchea+1);
-        halfPreTrigger = true;
-        halfBeatTrigger = true;
-        halfPostTrigger = false;
-        globalCounterCorchea++;
-        OnBeat?.Invoke(globalCounterNegra, BeatType.HalfBeat);
-    }
-    
     void HandlePrePostBeat()
     {
         double margin = quarterBeatDuration * margenPercentOnBeat;
@@ -136,10 +130,6 @@ public class BeatManager : MonoBehaviour
             postTrigger = true;
             OnPreBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
         }
-        
-        //beat
-            //HandleBeat()
-        
         //postBeat
         if (!postTrigger && beatTrigger && songTime >= lastBeatTime + margin)
         {
@@ -149,6 +139,19 @@ public class BeatManager : MonoBehaviour
             OnPostBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
         }
     }
+    
+    void HalfBeat(double time)
+    {
+        lastHalfBeatTime = time;
+        nextHalfBeatTime = lastBeatTime + eighthBeatDuration;
+        halfPreTrigger = true;
+        halfBeatTrigger = true;
+        halfPostTrigger = false;
+        globalCounterCorchea++;
+        OnBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
+    }
+    
+    
     void HandleHalfPrePostBeat()
     {
         double margin = eighthBeatDuration * margenPercentOnBeat;
@@ -158,17 +161,18 @@ public class BeatManager : MonoBehaviour
         {
             halfPreTrigger = true;
             halfBeatTrigger = false;
-            halfPostTrigger = true;
+            halfPostTrigger = false;
             OnPreBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
         }
 
-        if (halfPreTrigger && !halfBeatTrigger && songTime > nextHalfBeatTime)
+        if (halfPreTrigger && !halfBeatTrigger && !halfPostTrigger && songTime > nextHalfBeatTime&& mustHalfBeat)
         {
-            HalfBeat();
+            HalfBeat(songTime);
+            mustHalfBeat = false;
         }
         
         //postBeat
-        if (!halfPostTrigger && halfBeatTrigger && songTime >= lastHalfBeatTime + margin)
+        if (halfBeatTrigger && !halfPostTrigger && songTime >= lastHalfBeatTime + margin)
         {
             halfPreTrigger = false;
             halfBeatTrigger = true;

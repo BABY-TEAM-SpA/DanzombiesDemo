@@ -79,13 +79,7 @@ public class ZombieDanceZone : RhythmPuzzle
             PlayerLeave(player);
         }
     }
-    protected override void PlayerEnter(PlayerManager player)
-    {
-        base.PlayerEnter(player);
-        LevelUIController.Instance?.UpdateZombieFeedbackUI(true);
-        player.ActivateDanceHUD(true);
-    }
-
+   
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
     {
         if (exp == currentReaction) return;
@@ -96,25 +90,16 @@ public class ZombieDanceZone : RhythmPuzzle
         }
     }
 
-    protected override void PlayerLeave(PlayerManager player)
-    {
-        base.PlayerLeave(player);
-        player.ActivateDanceHUD(false);
-        LevelUIController.Instance?.UpdateZombieFeedbackUI(false);
-    }
-
     public override void PlayerGetDamaged()
     {
         PlayerLeave(playersInside);
     }
-    public override void OnSequenceEnd()
+    public override void OnDanceSequenceCleared()
     {
         Debug.Log("Puzzle End");
         ActivatePuzzle(false);
     }
-    protected override void PuzzlePreBeat(){}
-    protected override void PuzzleBeat(){}
-    protected override void PuzzlePostBeat(){}
+
     public override void OnUpdateSongAction(){ }
     
     // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
