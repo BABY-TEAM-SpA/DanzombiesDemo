@@ -88,11 +88,13 @@ public class SequenceStep
     public DanceStep GetFutureStep(int puzzleCounter)
     {
         int nextStepCounter = puzzleCounter+1;
+        if(nextStepCounter >= pattern.Count) ResetSequence();
         return CalulateFutureStep(nextStepCounter);
     }
 
     private DanceStep CalulateFutureStep(int counter)
     {
+        
         for (int i = 0; i < pattern.Count; i++)
         {
             int aux = i+counter;
@@ -111,6 +113,7 @@ public class SequenceStep
 
     public void ResetSequence()
     {
+        Debug.Log("Reset Sequence");
         if(ResetStepsCountOn == StepsResetMode.SequenceReset) playerCorrectDancesOnSequence = 0;
         if(endingSeq == EndingMode.LoopShuffled) ShuffleSteps();
         if(endingSeq == EndingMode.OneShot) StopSequence();
