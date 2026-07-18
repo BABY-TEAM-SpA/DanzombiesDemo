@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -198,12 +197,12 @@ public class InteReactableComponent : MonoBehaviour, IResettable
                 $"Siempre es preferible que áreas distintas (e.g. Reactable " +
                 $"e Interactable) estén en GameObjects independientes.", this);
 
-        if (!collider.TryGetComponent<InteReactableArea>(out InteReactableArea area))
-            area = collider.AddComponent<InteReactableArea>();
-
-        area.OnEntered += HandleAreaEntered;
-        area.OnExited += HandleAreaExited;
-        area.Setup(type);
+        if (collider.TryGetComponent<InteReactableArea>(out InteReactableArea area))
+        {
+            area.OnEntered += HandleAreaEntered;
+            area.OnExited += HandleAreaExited;
+            area.Setup(type);
+        }
     }
 
     private void HandleEventTrigger(InteReaction.InteReactionEvent e)
