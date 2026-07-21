@@ -48,8 +48,6 @@ public class PlayerMovementController : MonoBehaviour
         if (Velocity.magnitude < 0.05f)
             Velocity = Vector2.zero;
 
-        //if (name == "StephTutorial")
-        //    Debug.Log($"[{name}] {Velocity} = {targetDirection.normalized} * {currentSpeed}");
         transform.localPosition += (Vector3)(Velocity * Time.deltaTime);
         danceBrain.OnMoving(Velocity / walkingSpeed);
 
@@ -58,10 +56,10 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     #region Scripted Movement
-    public void MoveForSeconds(Vector2 direction, float duration)
-        => StartCoroutine(MoveForSecondsRoutine(direction, duration));
-    public void MoveForSeconds(float duration)
-        => StartCoroutine(MoveForSecondsRoutine(scriptedDirection, duration));
+    public void MoveForSeconds(Vector2 direction, float duration, Action onFinished = null)
+        => StartCoroutine(MoveForSecondsRoutine(direction, duration, onFinished));
+    public void MoveForSeconds(float duration, Action onFinished = null)
+        => StartCoroutine(MoveForSecondsRoutine(scriptedDirection, duration, onFinished));
 
     public void MoveInX(float direction) => scriptedDirection.x = Mathf.Clamp(direction, -1f, 1f);
     public void MoveInY(float direction) => scriptedDirection.y = Mathf.Clamp(direction, -1f, 1f);
@@ -79,11 +77,12 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
 
     #region [COROUTINES]
-    private IEnumerator MoveForSecondsRoutine(Vector2 direction, float duration)
+    private IEnumerator MoveForSecondsRoutine(Vector2 direction, float duration, Action onFinished = null)
     {
         scriptedDirection = direction.normalized;
         yield return new WaitForSeconds(duration);
         scriptedDirection = Vector2.zero;
+        onFinished?.Invoke();
     }
     #endregion
 

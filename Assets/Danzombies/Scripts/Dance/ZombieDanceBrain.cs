@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ZombieDanceBrain : DanceBrain
@@ -11,6 +12,7 @@ public class ZombieDanceBrain : DanceBrain
         //throw new NotImplementedException();
     }
 
+    public void Move(Vector2 direction, float time, Action onFinished = null) => movCtrl.MoveForSeconds(direction, time, onFinished);
     private void MoveToPoint(Vector3 point, float time)
     {
         Vector2 dif = new Vector2(
