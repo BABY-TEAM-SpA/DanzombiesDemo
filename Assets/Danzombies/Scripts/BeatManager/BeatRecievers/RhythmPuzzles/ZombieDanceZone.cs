@@ -1,9 +1,10 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZombieDanceZone : RhythmPuzzle
 {
+    #region [VARIABLES]
     // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
     /* 
     [Header("Shader Feedback Settings")]
@@ -15,18 +16,45 @@ public class ZombieDanceZone : RhythmPuzzle
     private float currentPulse = 0f;
     private float targetPulse = 0f;
     */
-    
+
     [Header("Zombies Dance Settings")]
     [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
     public SequenceStep danceSequence;
-    
-    
+    #endregion
 
+    #region [UNITY]
+    private void OnDisable()
+    {
+        foreach (ZombieDanceBrain zombie in zombies)
+            zombie.Disconnect(this);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
+        {
+            //if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 1f);
+            PlayerEnter(player);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
+        {
+            // if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 0f);  
+            PlayerLeave(player);
+        }
+    }
+    #endregion
+
+    #region [METHODS]
+    #region RythmPuzzle - Setup
     public override void PreparePuzzle()
     {
         SetSequence(danceSequence);
         //CurrentSequence.playbackMode = SequenceStep.PlaybackMode.Loop; /// ForceLoop on zombies
-        
+
         // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
         /*if (feedBack != null && feedBack.material != null)
         {
@@ -56,30 +84,19 @@ public class ZombieDanceZone : RhythmPuzzle
             zombie.ActivateEntity(activate);
         }
     }
-    
-    private void OnDisable()
-    {
-        foreach (ZombieDanceBrain zombie in zombies)zombie.Disconnect(this);
-    }
+    #endregion
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
-        {
-            //if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 1f);
-            PlayerEnter(player);
-        }
-    }
+    #region RythmPuzzle - Update
+    public override void OnUpdateSongAction() { }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public override void OnDanceSequenceCleared()
     {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
-        {
-            // if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 0f);  
-            PlayerLeave(player);
-        }
+        Debug.Log("Puzzle End");
+        ActivatePuzzle(false);
     }
-   
+    #endregion
+
+    #region RythmPuzzle - Player
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
     {
         if (exp == currentReaction) return;
@@ -94,14 +111,15 @@ public class ZombieDanceZone : RhythmPuzzle
     {
         PlayerLeave(playersInside);
     }
-    public override void OnDanceSequenceCleared()
-    {
-        Debug.Log("Puzzle End");
-        ActivatePuzzle(false);
-    }
+    #endregion
 
-    public override void OnUpdateSongAction(){ }
-    
+    #region Helpers
+    public void RefreshZombies() =>
+        zombies = GetComponentsInChildren<ZombieDanceBrain>().ToList();
+
+    #endregion
+    #endregion
+
     // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
     /*
     private void Update()
@@ -163,5 +181,4 @@ public class ZombieDanceZone : RhythmPuzzle
         targetPulse = Mathf.Clamp(value, 0f, 2f);
     }
     */
-    
 }

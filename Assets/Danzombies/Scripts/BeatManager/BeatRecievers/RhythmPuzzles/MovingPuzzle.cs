@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPuzzle : RhythmPuzzle
@@ -16,11 +17,6 @@ public class MovingPuzzle : RhythmPuzzle
 
     #region [UNITY]
     private void OnDisable() => Disconnect();
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region [METHODS]
@@ -45,7 +41,7 @@ public class MovingPuzzle : RhythmPuzzle
     public override void ActivatePuzzle(bool activate)
     {
         base.ActivatePuzzle(activate);
-        HUD?.SetActiveCanvas(activate);
+        ShowHUD(activate);
 
         if (!activate)
             return;
@@ -76,7 +72,6 @@ public class MovingPuzzle : RhythmPuzzle
     }
 
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) { }
-
     public override void PlayerGetDamaged() { }
     #endregion
 
@@ -96,7 +91,7 @@ public class MovingPuzzle : RhythmPuzzle
         Steph?.Connect(this);
 
         HUD?.Connect(this);
-        HUD?.SetActiveCanvas(true);
+        ShowHUD(true);
     }
 
     private void Disconnect()
@@ -104,8 +99,10 @@ public class MovingPuzzle : RhythmPuzzle
         Steph?.Disconnect(this);
 
         HUD?.Disconnect(this);
-        HUD?.SetActiveCanvas(false);
+        ShowHUD(false);
     }
+
+    public void ShowHUD(bool visible) => HUD?.SetActiveCanvas(visible);
     #endregion
     #endregion
 }

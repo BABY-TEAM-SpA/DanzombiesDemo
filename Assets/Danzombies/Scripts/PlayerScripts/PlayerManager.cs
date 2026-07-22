@@ -19,6 +19,7 @@ public class PlayerManager : DanceBrain
     public int flow => nivelDeSeguridad;
     [SerializeField][Range(0, 10)] private int nivelDeSeguridad = 5;
 
+    public bool IsSafe => isInSafeZone;
     private bool isInSafeZone;
 
     public DanceBarController danceBar { get; set; }
