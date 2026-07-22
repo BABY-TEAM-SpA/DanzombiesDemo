@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Position3D : MonoBehaviour
@@ -16,8 +17,6 @@ public class Position3D : MonoBehaviour
     #endregion
 
     #region [UNITY]
-    private void OnValidate() => RefreshRenderers();
-
     private void Start()
     {
         if (spriteRenderers == null || spriteRenderers.Length == 0)
@@ -36,7 +35,17 @@ public class Position3D : MonoBehaviour
 
     #region [METHODS]
     public void RefreshRenderers()
-        => spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+    {
+        SpriteRenderer[] current = GetComponentsInChildren<SpriteRenderer>(true);
+        List<SpriteRenderer> list = spriteRenderers
+            .Where(r => r != null && current.Contains(r)).Distinct().ToList();
+
+        foreach (SpriteRenderer renderer in current)
+            if (!list.Contains(renderer))
+                list.Add(renderer);
+
+        spriteRenderers = list.ToArray();
+    }
 
     public void SetLayerOnSprites()
     {

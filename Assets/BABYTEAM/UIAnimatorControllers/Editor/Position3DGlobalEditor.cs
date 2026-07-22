@@ -1,21 +1,21 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Position3D))]
-public class Position3DEditor : Editor
+[CustomEditor(typeof(Position3DGlobal))]
+public class Position3DGlobalEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        Position3D position3D = (Position3D)target;
+        Position3DGlobal position3D = (Position3DGlobal)target;
         EditorGUILayout.Space();
 
         if (GUILayout.Button("Refresh"))
         {
-            Undo.RecordObject(position3D, "Refresh Position3D Renderers");
+            Undo.RecordObject(position3D, "Refresh Position3DGlobal Renderers");
+            position3D.FindChildrenPosition3D();
             position3D.RefreshRenderers();
-            position3D.SetLayerOnSprites();
             EditorUtility.SetDirty(position3D);
         }
     }
