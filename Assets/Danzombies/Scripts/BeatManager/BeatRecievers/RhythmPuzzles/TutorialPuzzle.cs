@@ -29,7 +29,11 @@ public class TutorialPuzzle : RhythmPuzzle
     }
 
     public override void OnUpdateSongAction() { }
-
+    public void ActivatePuzzleByIndex(int index)
+    {
+        currentTutorialSequence = index < TutorialSequences.Count ? index : TutorialSequences.Count - 1;
+        ActivatePuzzle(true);
+    }
     public override void ActivatePuzzle(bool activate)
     {
         HUD.SetActiveCanvas(activate);
@@ -46,10 +50,7 @@ public class TutorialPuzzle : RhythmPuzzle
     public override void OnDanceSequenceCleared()
     {
         Debug.Log("OnDanceSequenceCleared");
-        currentTutorialSequence += 1;
-        InnerCounter = 0;
         ActivatePuzzle(false);
-
     }
     #endregion
 }
