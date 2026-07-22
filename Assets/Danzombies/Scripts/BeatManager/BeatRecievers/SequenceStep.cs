@@ -56,8 +56,7 @@ public class SequenceStep
     [SerializeField] private StepsResetMode ResetStepsCountOn  = StepsResetMode.None;
     private int playerCorrectDancesOnSequence = 0;
     
-    public delegate void OnSeqEvent();
-    public event OnSeqEvent OnDanceSequenceFinished;
+    public UnityEvent OnDanceSequenceFinished = new UnityEvent();
 
 
     public void ApplyDance(bool isCorrect)
