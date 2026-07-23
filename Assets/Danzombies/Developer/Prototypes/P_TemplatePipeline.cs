@@ -1,8 +1,9 @@
-using UnityEditor.SceneTemplate;
+//using UnityEditor.SceneTemplate;
 using UnityEngine.SceneManagement;
 
-public class P_TemplatePipeline : ISceneTemplatePipeline
+public class P_TemplatePipeline /*: ISceneTemplatePipeline*/
 {
+    /*
     public virtual bool IsValidTemplateForInstantiation(SceneTemplateAsset sceneTemplateAsset)
     {
         return true;
@@ -16,5 +17,5 @@ public class P_TemplatePipeline : ISceneTemplatePipeline
     public virtual void AfterTemplateInstantiation(SceneTemplateAsset sceneTemplateAsset, Scene scene, bool isAdditive, string sceneName)
     {
         
-    }
+    }*/
 }
