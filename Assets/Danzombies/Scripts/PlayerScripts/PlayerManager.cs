@@ -21,8 +21,6 @@ public class PlayerManager : DanceBrain
 
     public bool IsSafe => isInSafeZone;
     private bool isInSafeZone;
-
-    public DanceBarController danceBar { get; set; }
     
     public UnityEvent LifeDamagedEvent;
     public UnityEvent LifeHealedEvent;
@@ -42,10 +40,7 @@ public class PlayerManager : DanceBrain
         else Destroy(gameObject);
     }
 
-    private void OnEnable()
-    {
-        danceBar = GUIManager.Instance?.DanceBar;
-    }
+    
     #endregion
 
     #region [METHODS]
@@ -57,10 +52,8 @@ public class PlayerManager : DanceBrain
 
     public void ActivateDanceHUD(bool activate)
     {
-        danceBar = GUIManager.Instance?.DanceBar;
-        danceBar?.UpdateFlowBars(nivelDeSeguridad);
-        danceBar?.Activate(activate);
-        LevelUIController.Instance?.UpdateZombieFeedbackUI(activate);
+        DanceBarController.DanceBar?.UpdateFlowBars(nivelDeSeguridad);
+        DanceBarController.DanceBar?.Activate(activate);
     }
 
     public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
@@ -132,7 +125,7 @@ public class PlayerManager : DanceBrain
             int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
             SetFlow(value);
             targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
-            danceBar?.UpdateFlowBars(nivelDeSeguridad);
+            DanceBarController.DanceBar?.UpdateFlowBars(nivelDeSeguridad);
             if (value < GameManager.Alza && seqtype == SequenceStep.DamageMode.ModificaFlowYDaña)
             {
                 GetLifeDamage(true);

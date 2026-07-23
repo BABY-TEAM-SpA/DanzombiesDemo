@@ -112,7 +112,7 @@ public class SequenceStep
 
     public void ResetSequence()
     {
-        Debug.Log("Reset Sequence");
+        //Debug.Log("Reset Sequence");
         if(ResetStepsCountOn == StepsResetMode.SequenceReset) playerCorrectDancesOnSequence = 0;
         if(endingSeq == EndingMode.LoopShuffled) ShuffleSteps();
         if(endingSeq == EndingMode.OneShot) StopSequence();
@@ -120,7 +120,7 @@ public class SequenceStep
 
     public void StopSequence()
     {
-        Debug.Log("Stop Sequence");
+        //Debug.Log("Stop Sequence");
         OnDanceSequenceFinished?.Invoke();
         OnDanceSequenceFinished=null;
     }

@@ -43,10 +43,5 @@ public class WandererPuzzle : RhythmPuzzle
             PlayerLeave(player);
         }
     }
-    protected override void PlayerEnter(PlayerManager player)
-    {
-        base.PlayerEnter(player);
-        LevelUIController.Instance?.UpdateZombieFeedbackUI(true);
-        
-    }
+    
 }

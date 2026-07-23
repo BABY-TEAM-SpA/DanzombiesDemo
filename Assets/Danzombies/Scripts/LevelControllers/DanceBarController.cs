@@ -20,6 +20,14 @@ public class DanceBarController : MonoBehaviour
     public UnityEvent onBarFilled;
     private bool isBarFilled = false;
 
+    public static DanceBarController DanceBar;
+
+    private void Awake()
+    {
+        if (DanceBar == null)
+            DanceBar = this;
+        else Destroy(gameObject);
+    }
     public void Start()
     {
 

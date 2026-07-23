@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2457a104d8e1a4195d65d99252d805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceBarController
+  isActive: 0
   IconImage: {fileID: 6344760114191100369}
   IconDefaultState: {fileID: 21300000, guid: d0d9dd09c6bf76d4aa9eaf694c2626a8, type: 3}
   IconStates:
@@ -282,6 +283,9 @@ MonoBehaviour:
   - {fileID: 6353186759954279768}
   beatBarMaterial: {fileID: 2100000, guid: 78f68a961843c304f9ed2e0494d26229, type: 2}
   uiAnimator: {fileID: 8277422874104646979}
+  onBarFilled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!222 &1938398673631077670
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -302,6 +306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
   sequences:
   - sequenceName: Open
     loop: 0
@@ -786,9 +792,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf99b5fa5490249b42ec46c8aaf2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
-  isActive: 1
   animator: {fileID: 707331756170020771}
   animatorOverrideController: {fileID: 22100000, guid: 9f4272436b53b2c41901d808917356ac, type: 2}
+  beatMode: 0
 --- !u!225 &6752824523297733930
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1063,9 +1069,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf99b5fa5490249b42ec46c8aaf2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
-  isActive: 1
   animator: {fileID: 5135764045349828052}
   animatorOverrideController: {fileID: 22100000, guid: 9f4272436b53b2c41901d808917356ac, type: 2}
+  beatMode: 0
 --- !u!225 &1192644317640911456
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1190,9 +1196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf99b5fa5490249b42ec46c8aaf2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
-  isActive: 1
   animator: {fileID: 2737277380515233224}
-  animatorOverrideController: {fileID: 0}
+  animatorOverrideController: {fileID: 22100000, guid: 9f4272436b53b2c41901d808917356ac, type: 2}
+  beatMode: 0
 --- !u!1 &8519115111000718222
 GameObject:
   m_ObjectHideFlags: 0
