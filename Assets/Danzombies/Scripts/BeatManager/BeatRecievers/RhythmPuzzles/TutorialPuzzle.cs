@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialPuzzle : RhythmPuzzle
+public class TutorialPuzzle : ZombieDanceZone
 {
     #region [VARIABLES]
     [SerializeField] private ZombieDanceBrain Steph;
@@ -11,43 +11,40 @@ public class TutorialPuzzle : RhythmPuzzle
     
     [Header("Tutorial Dance Settings")]
     public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
+    
     #endregion
 
     #region [UNITY]
     private void OnDisable()
     {
-        Steph?.Disconnect(this);
-        HUD?.Disconnect(this);
+        currentDanceData.listeners.RemoveAllListeners();
     }
     #endregion
 
     #region [METHODS]
     public override void PreparePuzzle()
     {
-        Steph?.Connect(this);
-        HUD?.Connect(this);
+        currentDanceData.listeners.AddListener(Steph);
+        currentDanceData.listeners.AddListener(HUD);
     }
-
-    public override void OnUpdateSongAction() { }
 
     public override void ActivatePuzzle(bool activate)
     {
         HUD.SetActiveCanvas(activate);
-        InnerCounter = 0;
         base.ActivatePuzzle(activate);
         if (currentTutorialSequence < TutorialSequences.Count) SetSequence(TutorialSequences[currentTutorialSequence]);
     }
 
-    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) { }
 
-    public override void PlayerGetDamaged() {}
-    
+    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
+    {
+        //Nothing to do
+    }
 
     public override void OnDanceSequenceCleared()
     {
         Debug.Log("OnDanceSequenceCleared");
         currentTutorialSequence += 1;
-        InnerCounter = 0;
         ActivatePuzzle(false);
 
     }

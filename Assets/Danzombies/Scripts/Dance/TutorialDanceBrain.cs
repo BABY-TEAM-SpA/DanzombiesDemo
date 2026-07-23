@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class TutorialDanceBrain : MonoBehaviour
+public class TutorialDanceBrain : ZombieDanceBrain
 {
     
     [SerializeField] PlayerInput _playerInput;
@@ -29,21 +29,9 @@ public class TutorialDanceBrain : MonoBehaviour
     {
         PrepareUI();
     }
+    
 
-    public void Connect(RhythmPuzzle puzzle)
-    {
-        puzzle.OnPrepareStep += OnPrepareStepAction;
-        puzzle.OnDanceStep += OnDanceStepAction;
-        puzzle.OnReleaseStep += OnReleaseStepAction;
-    }
-    public void Disconnect(RhythmPuzzle puzzle)
-    {
-        puzzle.OnPrepareStep -= OnPrepareStepAction;
-        puzzle.OnDanceStep -= OnDanceStepAction;
-        puzzle.OnReleaseStep -= OnReleaseStepAction;
-    }
-
-    private void OnPrepareStepAction(DanceStep step)
+    public override void OnPrepareStepAction(DanceStep step,DanceStep nextStep)
     {
         if (step != DanceStep.None && danceCanvas.isActiveAndEnabled)
         {
@@ -53,7 +41,7 @@ public class TutorialDanceBrain : MonoBehaviour
             
         }
     }
-    private void OnDanceStepAction(DanceStep step)
+    public override void OnDanceStepAction(DanceStep step, DanceStep futureStep)
     {
         if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
         {
@@ -77,7 +65,8 @@ public class TutorialDanceBrain : MonoBehaviour
             };
         }
     }
-    private void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
+    
+    public override void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
     {
         
         if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)

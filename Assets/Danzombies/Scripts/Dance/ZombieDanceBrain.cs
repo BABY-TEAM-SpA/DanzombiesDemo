@@ -1,10 +1,14 @@
+using System;
 using UnityEngine;
 
 public class ZombieDanceBrain : DanceBrain
 {
-    #region [METHODS
-    public void Connect(RhythmPuzzle puzzle) => puzzle.OnDanceStep += OnDanceStepAction;
-    public void Disconnect(RhythmPuzzle puzzle) => puzzle.OnDanceStep -= OnDanceStepAction;
+    #region [METHODS]
+    
+    private void OnDisable()
+    {
+        //throw new NotImplementedException();
+    }
 
     public override void OnDance(DanceStep step)
     {
@@ -23,10 +27,13 @@ public class ZombieDanceBrain : DanceBrain
     #endregion
 
     #region [EVENTS]
-    private void OnDanceStepAction(DanceStep step)
+    
+    public virtual void OnPrepareStepAction(DanceStep step,DanceStep nextStep){ }
+    public virtual void OnDanceStepAction(DanceStep step,DanceStep nextStep)
     {
         if (step != DanceStep.None)
             danceAnimCtrl?.OnDanceBegin(step);
     }
+    public virtual void OnReleaseStepAction(DanceStep step, DanceStep futureStep){ }
     #endregion
 }

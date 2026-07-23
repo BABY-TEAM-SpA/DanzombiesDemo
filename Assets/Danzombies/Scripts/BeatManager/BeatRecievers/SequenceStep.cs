@@ -56,8 +56,7 @@ public class SequenceStep
     [SerializeField] private StepsResetMode ResetStepsCountOn  = StepsResetMode.None;
     private int playerCorrectDancesOnSequence = 0;
     
-    public delegate void OnSeqEvent();
-    public event OnSeqEvent OnDanceSequenceFinished;
+    public UnityEvent OnDanceSequenceFinished = new UnityEvent();
 
 
     public void ApplyDance(bool isCorrect)
@@ -81,7 +80,8 @@ public class SequenceStep
     public DanceStep GetDanceStep(int puzzleCounter)
     {
         DanceStep step = DanceStep.None;
-        if (pattern.Count != 0 && puzzleCounter > 0) step = pattern[puzzleCounter % pattern.Count];
+        if (pattern.Count != 0 && puzzleCounter >= 0) step = pattern[puzzleCounter % pattern.Count];
+        Debug.Log(step.ToString());
         return step;
     }
     

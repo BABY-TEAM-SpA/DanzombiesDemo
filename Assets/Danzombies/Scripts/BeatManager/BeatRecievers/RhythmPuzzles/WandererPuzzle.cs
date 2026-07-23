@@ -11,18 +11,14 @@ public class WandererPuzzle : RhythmPuzzle
     public override void PreparePuzzle()
     {
         SetSequence(danceSequence);
-        zombie.Connect(this);
+        //zombie.Connect(this);
     }
 
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
     {
         throw new System.NotImplementedException();
     }
-
-    public override void PlayerGetDamaged()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 
     public override void OnDanceSequenceCleared()
     {
@@ -33,6 +29,21 @@ public class WandererPuzzle : RhythmPuzzle
     public override void OnUpdateSongAction()
     {
         //throw new System.NotImplementedException();
+    }
+
+    public override void PreBeatAction(int counter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void BeatAction(int counter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void PostBeatAction(int counter)
+    {
+        throw new NotImplementedException();
     }
 
     private void OnTriggerExit2D(Collider2D other)
