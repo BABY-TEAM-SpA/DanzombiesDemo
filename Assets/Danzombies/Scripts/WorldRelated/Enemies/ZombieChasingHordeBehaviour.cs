@@ -49,6 +49,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     {
         if (!collision.CompareTag("Player"))
             return;
+        
         CatchPlayer();
     }
     #endregion
