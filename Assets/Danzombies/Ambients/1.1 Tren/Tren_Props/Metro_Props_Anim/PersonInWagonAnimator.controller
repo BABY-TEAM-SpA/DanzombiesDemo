@@ -80,7 +80,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1107 &-3909932424515888942
 AnimatorStateMachine:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,6 +96,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -5281811003521240076}
     m_Position: {x: -100, y: 290, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4640082385222479588}
+    m_Position: {x: 460, y: 290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -138,7 +141,7 @@ AnimatorController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PersonInWagonAnimator
-  serializedVersion: 5
+  serializedVersion: 6
   m_AnimatorParameters:
   - m_Name: Player
     m_Type: 9
@@ -171,6 +174,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+  m_EvaluateTransitionsOnStart: 0
 --- !u!1101 &532862753641274070
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -269,6 +273,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: fa13b00e9e9dd3f4c8d901e0c228662b, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4640082385222479588
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New State
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: b83444957f98cf04a9e58876928ad9cf, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
