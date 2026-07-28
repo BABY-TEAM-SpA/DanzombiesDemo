@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPuzzle : RhythmPuzzle
+public class MovingPuzzle : ZombieDanceZone
 {
     #region [METHODS]
     [Header("Moving Settings")]
@@ -52,7 +52,7 @@ public class MovingPuzzle : RhythmPuzzle
     #endregion
 
     #region RhythmPuzzle - Update
-    public override void OnUpdateSongAction() { }
+
     public override void OnDanceSequenceCleared()
     {
         index++;
@@ -88,17 +88,15 @@ public class MovingPuzzle : RhythmPuzzle
 
     private void Connect()
     {
-        Steph?.Connect(this);
-
-        HUD?.Connect(this);
+        currentDanceData.listeners.AddListener(Steph);
+        currentDanceData.listeners.AddListener(HUD);
         ShowHUD(true);
     }
 
     private void Disconnect()
     {
-        Steph?.Disconnect(this);
-
-        HUD?.Disconnect(this);
+        currentDanceData.listeners.RemoveListener(Steph);
+        currentDanceData.listeners.RemoveListener(HUD);
         ShowHUD(false);
     }
 
@@ -110,10 +108,10 @@ public class MovingPuzzle : RhythmPuzzle
 [Serializable]
 public class MovingSequence
 {
-    [Tooltip("Dirección a la que se moverá el líder (Steph) al terminar la secuencia.")]
+    [Tooltip("Direcciï¿½n a la que se moverï¿½ el lï¿½der (Steph) al terminar la secuencia.")]
     public Vector2 movingDirection;
 
-    [Tooltip("Tiempo que se moverá el líder (Steph) al terminar la secuencia.")]
+    [Tooltip("Tiempo que se moverï¿½ el lï¿½der (Steph) al terminar la secuencia.")]
     [Min(0f)] public float movingDuration = 0f;
 
     public SequenceStep danceSequence;

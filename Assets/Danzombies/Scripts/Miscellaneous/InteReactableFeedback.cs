@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class InteReactableFeedback : MonoBehaviour
+public class InteReactableFeedback : FeedbackElement
 {
     #region [VARIABLES]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -24,7 +24,7 @@ public class InteReactableFeedback : MonoBehaviour
         hideRoutine = StartCoroutine(HideRoutine());
     }
 
-    public void Pulse()
+    public void Animate()
     {
         if (pulseRoutine != null)
         {
@@ -74,4 +74,9 @@ public class InteReactableFeedback : MonoBehaviour
         hideRoutine = null;
     }
     #endregion
+
+    public override void Activate(bool isActive)
+    {
+        
+    }
 }

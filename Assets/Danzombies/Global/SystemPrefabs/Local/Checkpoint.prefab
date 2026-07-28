@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5065376628275205935}
   - component: {fileID: 2520023682304426166}
-  - component: {fileID: 8732185889094759084}
+  - component: {fileID: 2004138394246800961}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -46,9 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c42eda4de046640bc3995c8f02f301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
-  playerSpawn: {fileID: 2529281107462208055}
---- !u!58 &8732185889094759084
-CircleCollider2D:
+  isRespawn: 0
+  OnTriggerBehaviour:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!60 &2004138394246800961
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -82,7 +85,22 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 10
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 4.7200003, y: 2.1799998}
+      - {x: -0.36105657, y: 2.079017}
+      - {x: -5.307785, y: -2.5790172}
+      - {x: 0.58778536, y: -2.579017}
+  m_UseDelaunayMesh: 1
 --- !u!1 &8309119186902982889
 GameObject:
   m_ObjectHideFlags: 0

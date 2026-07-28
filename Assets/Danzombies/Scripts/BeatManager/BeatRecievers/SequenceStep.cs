@@ -80,7 +80,8 @@ public class SequenceStep
     public DanceStep GetDanceStep(int puzzleCounter)
     {
         DanceStep step = DanceStep.None;
-        if (pattern.Count != 0 && puzzleCounter > 0) step = pattern[puzzleCounter % pattern.Count];
+        if (pattern.Count != 0 && puzzleCounter >= 0) step = pattern[puzzleCounter % pattern.Count];
+        Debug.Log(step.ToString());
         return step;
     }
     

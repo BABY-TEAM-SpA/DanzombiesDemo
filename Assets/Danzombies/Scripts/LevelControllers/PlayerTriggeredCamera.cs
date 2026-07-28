@@ -7,6 +7,7 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #region [VARIABLES]
     private const int ACTIVE_PRIORITY = 1;
     private const int INACTIVE_PRIORITY = 0;
+    private Animator targetAnimator;
 
     [SerializeField] private CinemachineStateDrivenCamera stateDrivenCamera;
     [SerializeField] private CinemachineCamera[] cameras;
@@ -18,13 +19,15 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            FollowPlayer(other.GetComponent<Animator>());
+        if (other.CompareTag("Player") && other.TryGetComponent(out  targetAnimator))
+        {
+            FollowPlayer(targetAnimator);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")  && other.TryGetComponent(out  targetAnimator))
             stateDrivenCamera.Priority = INACTIVE_PRIORITY;
     }
     #endregion
@@ -35,8 +38,7 @@ public class PlayerTriggeredCamera : MonoBehaviour
     {
         stateDrivenCamera.AnimatedTarget = playerAnimator;
         SetInstructions();
-        foreach (CinemachineCamera camera in cameras)
-            camera.Follow = playerAnimator.transform;
+        foreach (CinemachineCamera camera in cameras) camera.Follow = playerAnimator.transform;
         stateDrivenCamera.Priority = ACTIVE_PRIORITY;
     }
 

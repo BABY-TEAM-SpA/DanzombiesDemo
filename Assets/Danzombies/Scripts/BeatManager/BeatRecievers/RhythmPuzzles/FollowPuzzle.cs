@@ -22,32 +22,34 @@ public class FollowPuzzle : RhythmPuzzle
     public List<FollowSequence> followSequences = new List<FollowSequence>();
     private FollowSequence currentFollowSequence;
     private int currentFollowSequenceIndex = 0;
-
-    public override void ActivatePuzzle(bool activate)
-    {
-        base.ActivatePuzzle(activate);
-        
-        ActivateFollowSequence(0);
-        leaderTurn = true;
-        leader.Connect(this);
-    }
+    
     
     public override void OnUpdateSongAction()
     {
         //throw new System.NotImplementedException();
     }
-    
+
+    public override void PreBeatAction(int counter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void BeatAction(int counter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void PostBeatAction(int counter)
+    {
+        throw new NotImplementedException();
+    }
+
     public override void PreparePuzzle() { }
 
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
     {
         if (exp == currentReaction) return;
         currentReaction = exp;
-    }
-
-    public override void PlayerGetDamaged()
-    {
-        
     }
     
     
@@ -68,7 +70,7 @@ public class FollowPuzzle : RhythmPuzzle
         {
             if(currentFollowSequence.playerAffected) playerFeedbackElement.Activate(true);
             leaderTurn = false;
-            leader.Disconnect(this);
+            currentDanceData.listeners.RemoveListener(leader);
             ZombieConnect(currentFollowSequence.zombiesAffected);
             ActivateFollowSequence(currentFollowSequenceIndex);
         }
@@ -77,7 +79,7 @@ public class FollowPuzzle : RhythmPuzzle
             playerFeedbackElement.Activate(false);
             DisconnectAll();
             leaderTurn = true;
-            leader.Connect(this);
+            currentDanceData.listeners.AddListener(leader);
             ActivateFollowSequence(currentFollowSequenceIndex+1);
         }
     }
@@ -87,23 +89,23 @@ public class FollowPuzzle : RhythmPuzzle
         zombies = brains;
         foreach (ZombieDanceBrain zombie in zombies)
         {
-            zombie.Connect(this);
+            currentDanceData.listeners.AddListener(zombie);
         }
     }
 
     private void DisconnectAll()
     {
-        leader.Disconnect(this);
+        currentDanceData.listeners.RemoveListener(leader);
         foreach (var zombie in zombies)
         {
-            zombie.Disconnect(this);
+            currentDanceData.listeners.RemoveListener(zombie);
         }
         zombies.Clear();
     }
     
     private void OnDisable()
     {
-        foreach (var zombie in zombies) zombie.Disconnect(this);
+        foreach (var zombie in zombies) currentDanceData.listeners.RemoveListener(zombie);
     }
     
     private void ActivateFollowSequence(int index)
