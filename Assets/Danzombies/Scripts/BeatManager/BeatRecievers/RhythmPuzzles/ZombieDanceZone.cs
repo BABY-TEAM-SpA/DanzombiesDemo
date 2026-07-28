@@ -4,78 +4,18 @@ using UnityEngine;
 
 public class ZombieDanceZone : RhythmPuzzle
 {
-    #region [VARIABLES]
-    // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
-    /* 
-    [Header("Shader Feedback Settings")]
-    [SerializeField] private List<Color> gradientColors = new List<Color>(); // Lista de colores para el gradiente
-    [SerializeField] private float pulseRiseSpeed = 8f;
-    [SerializeField] private float preBeatPulse = 0.3f;
-    [SerializeField] private float beatPulse = 1.2f;
-    private Material zoneMaterial;
-    private float currentPulse = 0f;
-    private float targetPulse = 0f;
-    */
-
     [Header("Zombies Dance Settings")]
     [SerializeField] private List<ZombieDanceBrain> zombies = new List<ZombieDanceBrain>();
-    public SequenceStep danceSequence;
-    #endregion
-
-    #region [UNITY]
-    private void OnDisable()
-    {
-        foreach (ZombieDanceBrain zombie in zombies)
-            zombie.Disconnect(this);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
-        {
-            //if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 1f);
-            PlayerEnter(player);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
-        {
-            // if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 0f);  
-            PlayerLeave(player);
-        }
-    }
-    #endregion
-
-    #region [METHODS]
-    #region RythmPuzzle - Setup
+    public SequenceStep danceSequence =new SequenceStep();
     public override void PreparePuzzle()
     {
         SetSequence(danceSequence);
-        //CurrentSequence.playbackMode = SequenceStep.PlaybackMode.Loop; /// ForceLoop on zombies
-
-        // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
-        /*if (feedBack != null && feedBack.material != null)
-        {
-            zoneMaterial = new Material(feedBack.material);
-            feedBack.material = zoneMaterial;
-
-            zoneMaterial.SetFloat("_ActiveState", 0f);  // Estado inicial en blanco
-
-            float aspect = transform.localScale.x / transform.localScale.y;
-            zoneMaterial.SetFloat("_Aspect", aspect);
-
-            // Asegurarse de configurar los colores desde el inicio
-            SetGradientColorsToMaterial();
-        }*/
-
         foreach (ZombieDanceBrain zombie in zombies)
         {
-            zombie.Connect(this);
+            currentDanceData.listeners.AddListener(zombie);
         }
     }
-
+    
     public override void ActivatePuzzle(bool activate)
     {
         base.ActivatePuzzle(activate);
@@ -84,19 +24,53 @@ public class ZombieDanceZone : RhythmPuzzle
             zombie.ActivateEntity(activate);
         }
     }
-    #endregion
 
-    #region RythmPuzzle - Update
-    public override void OnUpdateSongAction() { }
-
-    public override void OnDanceSequenceCleared()
+    public override void PreBeatAction(int counter)
     {
-        Debug.Log("Puzzle End");
-        ActivatePuzzle(false);
+        if(debug) Debug.Log("___Puzzle PreBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
+        PlayerHasDanced = false;
+        currentDanceData.SetDanceStep(counter);
+        currentDanceData.listeners.InvokePrepare(currentDanceData.DanceStep, currentDanceData.NextDanceStep);
     }
-    #endregion
 
-    #region RythmPuzzle - Player
+    public override void BeatAction(int counter)
+    {
+        if(debug) Debug.Log("_____Puzzle Beat make "+currentDanceData.DanceStep.ToString()+" at "+counter+" on "+AudioManager.Instance.SongPositionSeconds().ToString());
+        currentDanceData.listeners.InvokeDance(currentDanceData.DanceStep, currentDanceData.NextDanceStep);
+    }
+
+    public override void PostBeatAction(int counter)
+    {
+        
+        if(debug) Debug.Log("___Puzzle PostBeat on "+AudioManager.Instance.SongPositionSeconds().ToString());
+        CheckPlayerPost();
+        currentDanceData?.listeners.InvokeRealease(currentDanceData.DanceStep, currentDanceData.NextDanceStep);
+        currentDanceData?.SetFutureDanceStep(counter);
+        currentDanceData.DanceStep = DanceStep.None;
+        PlayerHasDanced = false;
+    }
+
+    private void OnDisable()
+    {
+        foreach (ZombieDanceBrain zombie in zombies)currentDanceData.listeners.RemoveListener(zombie);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
+        {
+            PlayerEnter(player);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
+        {
+            PlayerLeave(player);
+        }
+    }
+    
+    
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
     {
         if (exp == currentReaction) return;
@@ -111,74 +85,8 @@ public class ZombieDanceZone : RhythmPuzzle
     {
         PlayerLeave(playersInside);
     }
-    #endregion
 
-    #region Helpers
-    public void RefreshZombies() =>
-        zombies = GetComponentsInChildren<ZombieDanceBrain>().ToList();
-
-    #endregion
-    #endregion
-
-    // Dehabilitamos el Feedback porque esto despues sera un script independiente enchufado a los puzzles.
-    /*
-    private void Update()
+    public override void OnDanceSequenceCleared()
     {
-        
-        if (zoneMaterial == null) return;
-
-        // Generar color Rainbow dinámicamente (de acuerdo al tiempo)
-        Color rainbowColor = GenerateRainbowColor(Time.time);
-
-        // Si el jugador está en el área, aplicar el color rainbow
-        if (zoneMaterial != null)
-        {
-            if (zoneMaterial.GetFloat("_ActiveState") == 1f)
-            {
-                zoneMaterial.SetColor("_RainbowColor", rainbowColor);
-            }
-            else
-            {
-                zoneMaterial.SetColor("_RainbowColor", Color.white);  // Si no está activo, fondo blanco
-            }
-        }
-
-        // Actualización del pulso
-        float speed = (currentPulse < targetPulse) ? pulseRiseSpeed : pulseRiseSpeed;
-        currentPulse = Mathf.MoveTowards(currentPulse, targetPulse, speed * Time.deltaTime);
-
-        zoneMaterial.SetFloat("_BeatPulse", currentPulse);
-        
     }
-    
-    public override void GeneralVisualFeedback(int counter)
-    {
-        //SetPulse(beatPulse);
-    }
-
-    // Función para generar el color rainbow basado en el tiempo
-    private Color GenerateRainbowColor(float time)
-    {
-        float hue = Mathf.Repeat(time * 0.1f, 1.0f); 
-        float saturation = 1.0f;
-        float value = 1.0f;
-
-        // Convertir el valor HSV a RGB
-        return Color.HSVToRGB(hue, saturation, value);
-    }
-
-    private void SetGradientColorsToMaterial()
-    {
-        if (gradientColors != null && gradientColors.Count > 0)
-        {
-            for (int i = 0; i < gradientColors.Count && i < 10; i++) zoneMaterial.SetColor($"_ColorArray_{i}", gradientColors[i]);
-            zoneMaterial.SetInt("_NumColors", gradientColors.Count);
-        }
-    }
-    
-    private void SetPulse(float value)
-    {
-        targetPulse = Mathf.Clamp(value, 0f, 2f);
-    }
-    */
 }

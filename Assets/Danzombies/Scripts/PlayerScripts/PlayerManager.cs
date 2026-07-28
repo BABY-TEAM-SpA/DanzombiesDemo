@@ -117,7 +117,7 @@ public class PlayerManager : DanceBrain
             Debug.Log($"[PlayerManager] ¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
         }
 
-        SequenceStep.DamageMode seqtype = targetPuzzle.GetDamageMode();
+        SequenceStep.DamageMode seqtype = targetPuzzle !=null?targetPuzzle.GetDamageMode(): SequenceStep.DamageMode.None;
         if (seqtype == SequenceStep.DamageMode.None) return 0;
         else
         {
