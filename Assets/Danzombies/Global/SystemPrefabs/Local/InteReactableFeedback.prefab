@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2931189086061763065}
   - component: {fileID: 5141452002113932834}
-  - component: {fileID: 3997476686000599923}
+  - component: {fileID: 8477817773855373432}
   m_Layer: 0
   m_Name: InteReactableFeedback
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingOrder: 99
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: b38d085471b2022449658db52c7e0c8a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &3997476686000599923
+--- !u!114 &8477817773855373432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,9 +101,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 7885001082681582827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94263d5dc06d78b4ab8a6220778391b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractiveFeedback
-  spriteRenderer: {fileID: 5141452002113932834}
-  inactiveColor: {r: 1, g: 1, b: 1, a: 0}
-  activeColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Pulse
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 2931189086061763065}
+      timeMode: 0
+      animationSteps:
+      - stepType: 4
+        duration: 0.2
+        easing: 8
+        position: {x: 0, y: 0}
+        scale: {x: 1.2, y: 1.2, z: 1}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 4
+        duration: 0.2
+        easing: 8
+        position: {x: 0, y: 0}
+        scale: {x: 1, y: 1, z: 1}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(UiAnimation.AnimationStep))]
+[CustomPropertyDrawer(typeof(AnimationStep))]
 public class AnimationStepDrawer : PropertyDrawer
 {
     const float SPACING = 2f;
@@ -14,31 +14,31 @@ public class AnimationStepDrawer : PropertyDrawer
 
         var type = property.FindPropertyRelative("stepType");
         var stepType =
-            (UiAnimation.AnimationStep.UiStepType)type.enumValueIndex;
+            (AnimationStep.UiStepType)type.enumValueIndex;
 
-        if (stepType != UiAnimation.AnimationStep.UiStepType.Wait)
+        if (stepType != AnimationStep.UiStepType.Wait)
             height += EditorGUIUtility.singleLineHeight + SPACING;  // easing
 
         switch (stepType)
         {
-            case UiAnimation.AnimationStep.UiStepType.Move:
-            case UiAnimation.AnimationStep.UiStepType.MoveTo:
+            case AnimationStep.UiStepType.Move:
+            case AnimationStep.UiStepType.MoveTo:
                 height += EditorGUIUtility.singleLineHeight + SPACING;
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Scale:
+            case AnimationStep.UiStepType.Scale:
                 height += EditorGUIUtility.singleLineHeight + SPACING;
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Rotate:
+            case AnimationStep.UiStepType.Rotate:
                 height += EditorGUIUtility.singleLineHeight + SPACING;
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Fade:
+            case AnimationStep.UiStepType.Fade:
                 height += EditorGUIUtility.singleLineHeight + SPACING;
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Color:
+            case AnimationStep.UiStepType.Color:
                 height += EditorGUIUtility.singleLineHeight + SPACING;
                 break;
         }
@@ -72,9 +72,9 @@ public class AnimationStepDrawer : PropertyDrawer
         y += lineHeight + SPACING;
 
         var stepType =
-            (UiAnimation.AnimationStep.UiStepType)type.enumValueIndex;
+            (AnimationStep.UiStepType)type.enumValueIndex;
 
-        if (stepType != UiAnimation.AnimationStep.UiStepType.Wait)
+        if (stepType != AnimationStep.UiStepType.Wait)
         {
             rect.y = y;
             EditorGUI.PropertyField(rect, easing);
@@ -85,24 +85,24 @@ public class AnimationStepDrawer : PropertyDrawer
 
         switch (stepType)
         {
-            case UiAnimation.AnimationStep.UiStepType.Move:
-            case UiAnimation.AnimationStep.UiStepType.MoveTo:
+            case AnimationStep.UiStepType.Move:
+            case AnimationStep.UiStepType.MoveTo:
                 EditorGUI.PropertyField(rect, positionProp);
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Scale:
+            case AnimationStep.UiStepType.Scale:
                 EditorGUI.PropertyField(rect, scaleProp);
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Rotate:
+            case AnimationStep.UiStepType.Rotate:
                 EditorGUI.PropertyField(rect, rotationProp);
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Fade:
+            case AnimationStep.UiStepType.Fade:
                 EditorGUI.PropertyField(rect, alphaProp);
                 break;
 
-            case UiAnimation.AnimationStep.UiStepType.Color:
+            case AnimationStep.UiStepType.Color:
                 EditorGUI.PropertyField(rect, colorProp);
                 break;
         }

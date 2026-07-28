@@ -4,114 +4,85 @@ using UnityEngine;
 public class ThrownZombie : MonoBehaviour
 {
     #region [VARIAIBLES]
+    [SerializeField,Range(20f,0f)] private float minimunDistance;
     [SerializeField] Animator animator;
+    [SerializeField]private Transform target;
 
-    private State state;
+    [SerializeField] private State state;
     private enum State
     {
         Idle,
-        Preparing,
-        Throwing,
-        Landed
+        Running,
+        Jumping,
+        Landing
     }
-
-    private ZombieChasingHordeThrower horde;
-    private PlayerMovementController player;
-
-    private float speed;
-    private Vector3 direction;
-    private float delay;
-    private float elapsed;
-
-    public Action<ThrownZombie> OnLand;
+    
+    [SerializeField] private float speed=5f;
     #endregion
 
     #region [UNITY]
     private void Update()
     {
+        Vector3 distance = target.position - transform.position;
         switch (state)
         {
             case State.Idle:
                 return;
-
-            case State.Preparing:
-                elapsed += Time.deltaTime;
-                if (elapsed >= delay)
-                {
-                    Throw();
-                    elapsed = 0f;
-                }
+            case State.Running:
+                transform.position += distance.normalized * (speed * Time.deltaTime);
+                if (distance.magnitude<=minimunDistance)
+                    Jump();
                 break;
-
-            case State.Throwing:
-                transform.position += speed * direction * Time.deltaTime;
-                if (HasLanded())
-                    Land();
+            case State.Jumping:
+                transform.position += Vector3.right *(speed*0.8f * Time.deltaTime);
                 break;
-
-            case State.Landed:
+            case State.Landing:
                 return;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag("Player") && !HasLanded())
+        if (state != State.Landing)
         {
-            Recover();
-            horde?.CatchPlayer();
+            if (other.TryGetComponent(out PlayerManager player))
+            {
+                //Recover();
+                player.GameOver();
+            }
         }
+        else
+        {
+            if(other.TryGetComponent(out ZombieChasingHordeThrower thrower))
+            {
+                thrower.ResetState();
+                Destroy(this.gameObject);
+            }
+        }
+        
     }
-
-    private void OnBecameInvisible() => Land();
     #endregion
 
     #region [METHODS]
-    public void Prepare(ZombieChasingHordeThrower horde, float speed, PlayerMovementController player, float delay)
+    public void Throw(ZombieChasingHordeThrower horde, float speedValue, Transform player)
     {
-        this.horde = horde;
-        this.player = player;
-
-        this.speed = speed;
-        this.delay = delay;
-
-        state = State.Preparing;
+        target = player;
+        speed = speedValue;
+        state = State.Running;
     }
 
-    private void Throw()
+    private void Jump()
     {
-        direction = (player.transform.position - transform.position).normalized;
-
-        animator.Play("Throw", 0, 0f);
-        state = State.Throwing;
+        animator.Play("Jump");
+        state = State.Jumping;
     }
 
     private void Land()
     {
         speed = 0f;
-        direction = Vector3.zero;
-        delay = 0f;
-
         transform.SetParent(null, true);
-        state = State.Landed;
-
-        OnLand?.Invoke(this);
+        state = State.Landing;
     }
-
-    #region Helpers
-    private bool HasLanded()
-    {
-        AnimatorStateInfo animState = animator.GetCurrentAnimatorStateInfo(0);
-        return animState.IsName("Throw") && animState.normalizedTime >= 1f;
-    }
-
-    public void Recover()
-    {
-        state = State.Idle;
-        elapsed = 0f;
-
-        horde?.RecoverThrownZombie(this);
-    }
-    #endregion
+    
     #endregion
 }

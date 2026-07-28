@@ -1,21 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInteractionController : MonoBehaviour
+public abstract class Interactuable:MonoBehaviour
+{
+    protected InteReactableComponent interactable;
+    public void SetInteractive(InteReactableComponent target) => interactable = target;
+    public void ClearInteractive(InteReactableComponent target)
+    {
+        if(interactable== target) interactable = null;
+    }
+
+    public virtual void Interact()
+    {
+        interactable?.HandleInteraction(transform.tag);
+    }
+}
+
+public class PlayerInteractionController : Interactuable
 {
     #region [VARIABLES]
-    [SerializeField] private CircleCollider2D leftSpot;
-    [SerializeField] private CircleCollider2D rightSpot;
 
-    private InteReactableComponent inteReactable;
+    [SerializeField] private Collider2D handler;
+    [SerializeField] private Transform leftSpot;
+    [SerializeField] private Transform rightSpot;
+    
     #endregion
 
     #region [UNITY]
-    private void Awake()
-    {
-        if(leftSpot) leftSpot.enabled = true;
-        if(rightSpot) rightSpot.enabled = true;
-    }
 
     private void Start() => PlayerManager.Player.OnDirectionChanged += OnDirectionChanged;
     private void OnDestroy() => PlayerManager.Player.OnDirectionChanged -= OnDirectionChanged;
@@ -25,33 +36,10 @@ public class PlayerInteractionController : MonoBehaviour
     public void OnInteractEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
-            inteReactable?.Interact();
+            Interact();
     }
-
-    public void SetInteractive(InteReactableComponent interactive) => inteReactable = interactive;
-    public void ClearInteractive() => inteReactable = null;
-
-    /// <summary>
-    /// Cuando el Player está mirando en la dirección opuesta al InteReactableComponent y gira,
-    /// el OnTrigger del componente no se disparará. Este método suple esa carencia.
-    /// </summary>
-    private void CheckOverlapAfterTurn(CircleCollider2D spot)
-    {
-        Vector2 worldCenter = spot.transform.TransformPoint(spot.offset);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(worldCenter, spot.radius);
-        
-        foreach (Collider2D hit in hits)
-        {
-            InteReactableComponent found = hit.GetComponentInParent<InteReactableComponent>();
-            if (found != null && found.isActiveAndEnabled)
-                if (found.HasSecondaryInteraction())
-                {
-                    found.feedback?.Show();
-                    SetInteractive(found);
-                    break;
-                }
-        }
-    }
+    
+    
     #endregion
 
     #region [EVENTS]
@@ -61,17 +49,7 @@ public class PlayerInteractionController : MonoBehaviour
     /// </summary>
     private void OnDirectionChanged(bool isLeft)
     {
-        if (inteReactable != null && inteReactable.isActiveAndEnabled)
-        {
-            inteReactable.feedback?.Hide();
-            ClearInteractive();
-        }
-
-        leftSpot.enabled = isLeft;
-        rightSpot.enabled = !isLeft;
-
-        CircleCollider2D activeSpot = isLeft ? leftSpot : rightSpot;
-        CheckOverlapAfterTurn(activeSpot);
+         handler.transform.localPosition= isLeft ? leftSpot.localPosition : rightSpot.localPosition;
     }
     #endregion
 }
