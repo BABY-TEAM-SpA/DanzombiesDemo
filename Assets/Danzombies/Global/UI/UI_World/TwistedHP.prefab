@@ -199,6 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8725723541594246151}
   - component: {fileID: 6468989721542793694}
+  - component: {fileID: 3296634346756096864}
   m_Layer: 0
   m_Name: TwistedHP
   m_TagString: Untagged
@@ -239,10 +240,72 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TwistedHP
   root: {fileID: 2202019122735165648}
+  uiAnimator: {fileID: 3296634346756096864}
   hearths:
   - {fileID: 9101246583100917239}
   - {fileID: 6553393375489388009}
   - {fileID: 505740146584330199}
+--- !u!114 &3296634346756096864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032982421622410346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Show
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2202019122735165648}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2202019122735165648}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 3573040246971997899}
+      timeMode: 0
+      animationSteps:
+      - stepType: 0
+        duration: 2.5
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &3557021570027844312
 GameObject:
   m_ObjectHideFlags: 0

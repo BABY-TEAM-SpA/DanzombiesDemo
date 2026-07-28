@@ -27,6 +27,8 @@ public class PlayerManager : DanceBrain
     public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
 
     public static PlayerManager Player;
+
+    [Header("Puzzle")]
     public RhythmPuzzle targetPuzzle;
 
     public Action OnPlayerDeath;
@@ -39,8 +41,6 @@ public class PlayerManager : DanceBrain
             Player = this;
         else Destroy(gameObject);
     }
-
-    
     #endregion
 
     #region [METHODS]
@@ -140,14 +140,20 @@ public class PlayerManager : DanceBrain
     private void SetFlow(int value) => nivelDeSeguridad = value;
     public void SetInSafeZone(bool value) => isInSafeZone = value;
 
-    public void GetLifeDamage(bool danho = true)
+    public void GetLifeDamage(bool receiveDamage = true)
     {
-        if (danho)LifeDamagedEvent?.Invoke();
-        else LifeHealedEvent?.Invoke();
-        hp += (danho) ? -1 : 1;
+        hp += (receiveDamage) ? -1 : 1;
         hp = Math.Clamp(hp, 0, 3);
-        PlayerUIController.Instance?.UpdateLifesPlayer(hp);
+        //PlayerUIController.Instance?.UpdateLifesPlayer(hp);
+
+        if (receiveDamage)
+            LifeDamagedEvent?.Invoke();
+        else LifeHealedEvent?.Invoke();
+
+        if (hp <= 0)
+            GameOver();
     }
+
     public void GameOver()
     {
         OnPlayerDeath?.Invoke();

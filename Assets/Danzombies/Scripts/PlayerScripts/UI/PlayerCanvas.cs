@@ -8,25 +8,13 @@ using UnityEngine;
 public class PlayerCanvas : MonoBehaviour
 {
     #region [VARIABLES]
+    [SerializeField] private PlayerManager player;
+
+    [Header("Elements")]
     public TwistedHP TwistedHP;
     #endregion
 
-    #region [UNITY]
-    #endregion
-
     #region [METHODS]
-    public void SetHP(int hp) => TwistedHP?.SetHP(hp);
-
-    public void TurnOn(Type type)
-    {
-        if (type == typeof(TwistedHP))
-            TwistedHP?.TurnOn();
-    }
-
-    public void TurnOff(Type type)
-    {
-        if (type == typeof(TwistedHP))
-            TwistedHP?.TurnOff();
-    }
+    public void SetHP() => TwistedHP?.SetHP(player.HP);
     #endregion
 }

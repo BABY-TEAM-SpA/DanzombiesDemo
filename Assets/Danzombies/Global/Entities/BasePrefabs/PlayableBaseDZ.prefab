@@ -5007,12 +5007,59 @@ MonoBehaviour:
   nivelDeSeguridad: 5
   LifeDamagedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7314604580967289580}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: BlinkDamage
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6413670990328517254}
+        m_TargetAssemblyTypeName: PlayerCanvas, Assembly-CSharp
+        m_MethodName: SetHP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   LifeHealedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7314604580967289580}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: BlinkHeal
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6413670990328517254}
+        m_TargetAssemblyTypeName: PlayerCanvas, Assembly-CSharp
+        m_MethodName: SetHP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   targetPuzzle: {fileID: 0}
-  canvas: {fileID: 6413670990328517254}
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15329,6 +15376,7 @@ GameObject:
   - component: {fileID: 4086932025709530668}
   - component: {fileID: 1306205410530215226}
   - component: {fileID: 786739880596489813}
+  - component: {fileID: 7314604580967289580}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Player
@@ -15630,6 +15678,81 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 471376b87f7c56d409408430e27a7f03, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}
   activeTime: 0.03
+--- !u!114 &7314604580967289580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527966112122585668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: BlinkDamage
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 6464419158723846762}
+      timeMode: 0
+      animationSteps:
+      - stepType: 6
+        duration: 0.125
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0.75, g: 0.25, b: 0.25, a: 1}
+      - stepType: 6
+        duration: 0.125
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 1, g: 1, b: 1, a: 1}
+  - sequenceName: BlinkHeal
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 6464419158723846762}
+      timeMode: 0
+      animationSteps:
+      - stepType: 6
+        duration: 0.125
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0.25, g: 0.75, b: 0.75, a: 1}
+      - stepType: 6
+        duration: 0.125
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &3744609627315088578
 GameObject:
   m_ObjectHideFlags: 0
@@ -25623,6 +25746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ca5496c47b56f40b9603b600bb4070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCanvas
+  player: {fileID: 6530795612346585224}
   TwistedHP: {fileID: 3023833937455106793}
 --- !u!223 &8658077409935102177
 Canvas:
