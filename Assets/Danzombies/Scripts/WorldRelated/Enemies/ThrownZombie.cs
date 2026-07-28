@@ -4,9 +4,13 @@ using UnityEngine;
 public class ThrownZombie : MonoBehaviour
 {
     #region [VARIAIBLES]
-    [SerializeField][Range(0f, 20f)] private float minimunDistance;
     [SerializeField] Animator animator;
+
+    [Header("Settings")]
     [SerializeField] private Transform target;
+    [Tooltip("Este valor será sobreescrito si el ThrownZombie es lanzando por una ZombieChasingHordeThrower.")]
+    [Range(10f, 45f)] public float speed = 30f;
+    [Range(0f, 20f)] public float minimunDistance = 6f;
 
     [SerializeField] private State state;
     private enum State
@@ -17,8 +21,6 @@ public class ThrownZombie : MonoBehaviour
         Landing
     }
     private ZombieChasingHordeThrower thrower;
-    
-    [SerializeField] private float speed = 5f;
     #endregion
 
     #region [UNITY]
@@ -87,7 +89,6 @@ public class ThrownZombie : MonoBehaviour
     private void Land()
     {
         speed = 0f;
-        transform.SetParent(null, true);
         state = State.Landing;
     }
     #endregion

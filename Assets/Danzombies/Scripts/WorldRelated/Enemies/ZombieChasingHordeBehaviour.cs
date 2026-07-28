@@ -137,12 +137,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     #endregion
 
     #region Helpers
-    /// <summary>
-    /// 
-    /// </summary>
     private void SetSpeed()
     {
-        float playerDistance = Vector2.Distance(playerMovement.transform.position, transform.position);
+        float playerDistance = playerMovement.transform.position.x - transform.position.x;
         float error = playerDistance - maxDistance;
 
         float targetSpeed = playerMovement.MaxSpeed;

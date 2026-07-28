@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4643402062431404689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5387298601856714673}
+  m_Layer: 0
+  m_Name: ZombieSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5387298601856714673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4643402062431404689}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1941982350122931548}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8521461692352087471
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,24 +321,8 @@ PrefabInstance:
       value: 4.0000005
       objectReference: {fileID: 0}
     - target: {fileID: 5625345630657535605, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
-      propertyPath: m_Size.x
-      value: 13.000011
-      objectReference: {fileID: 0}
-    - target: {fileID: 5625345630657535605, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
-      propertyPath: m_Size.y
-      value: 10.000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 5625345630657535605, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5625345630657535605, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5625345630657535605, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
-      propertyPath: m_Offset.y
-      value: 4.4999995
       objectReference: {fileID: 0}
     - target: {fileID: 5798130410109413558, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
       propertyPath: OverrideMaxDistance
@@ -395,6 +410,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8044182109099556138, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 5387298601856714673}
+    - targetCorrespondingSourceObject: {fileID: 8044182109099556138, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4272864529363528815}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2967085197330972928, guid: 68c7f1849f406db42be36f6694bd4874, type: 3}
@@ -456,6 +474,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 4, y: 5.999999}
-  m_Size: {x: 9.000033, y: 7.000003}
+  m_Offset: {x: 4.5, y: 1.5}
+  m_Size: {x: 8, y: 6}
   m_Direction: 1
