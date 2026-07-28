@@ -4,9 +4,9 @@ using UnityEngine;
 public class ThrownZombie : MonoBehaviour
 {
     #region [VARIAIBLES]
-    [SerializeField,Range(20f,0f)] private float minimunDistance;
+    [SerializeField][Range(0f, 20f)] private float minimunDistance;
     [SerializeField] Animator animator;
-    [SerializeField]private Transform target;
+    [SerializeField] private Transform target;
 
     [SerializeField] private State state;
     private enum State
@@ -16,8 +16,9 @@ public class ThrownZombie : MonoBehaviour
         Jumping,
         Landing
     }
+    private ZombieChasingHordeThrower thrower;
     
-    [SerializeField] private float speed=5f;
+    [SerializeField] private float speed = 5f;
     #endregion
 
     #region [UNITY]
@@ -28,15 +29,21 @@ public class ThrownZombie : MonoBehaviour
         {
             case State.Idle:
                 return;
+
             case State.Running:
+                distance.y *= 3f;
                 transform.position += distance.normalized * (speed * Time.deltaTime);
-                if (distance.magnitude<=minimunDistance)
+                if (distance.magnitude <= minimunDistance)
                     Jump();
                 break;
+
             case State.Jumping:
-                transform.position += Vector3.right *(speed*0.8f * Time.deltaTime);
+                transform.position += Vector3.right * (speed * 0.8f * Time.deltaTime);
                 break;
+
             case State.Landing:
+                if (thrower.transform.position.x >= transform.position.x)
+                    Destroy(gameObject);
                 return;
         }
     }
@@ -48,18 +55,17 @@ public class ThrownZombie : MonoBehaviour
             if (other.TryGetComponent(out PlayerManager player))
             {
                 //Recover();
-                player.GameOver();
+                player.GetLifeDamage();
             }
         }
         else
         {
-            if(other.TryGetComponent(out ZombieChasingHordeThrower thrower))
+            if (other.TryGetComponent(out ZombieChasingHordeThrower thrower))
             {
-                thrower.ResetState();
-                Destroy(this.gameObject);
+                //thrower.ResetState();
+                Destroy(gameObject);
             }
         }
-        
     }
     #endregion
 
@@ -67,6 +73,7 @@ public class ThrownZombie : MonoBehaviour
     public void Throw(ZombieChasingHordeThrower horde, float speedValue, Transform player)
     {
         target = player;
+        thrower = horde;
         speed = speedValue;
         state = State.Running;
     }
@@ -83,6 +90,5 @@ public class ThrownZombie : MonoBehaviour
         transform.SetParent(null, true);
         state = State.Landing;
     }
-    
     #endregion
 }

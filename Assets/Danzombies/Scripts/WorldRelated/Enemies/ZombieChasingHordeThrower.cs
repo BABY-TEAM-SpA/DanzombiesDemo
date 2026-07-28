@@ -84,6 +84,4 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     }
     #endregion
     #endregion
-
-    
 }
