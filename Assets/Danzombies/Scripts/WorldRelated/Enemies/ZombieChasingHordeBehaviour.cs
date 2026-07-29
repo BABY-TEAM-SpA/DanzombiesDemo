@@ -198,7 +198,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
         railPosition = Vector2.zero;
 
-        if (_state.isChasing)
+        if (_state.isActive && _state.isChasing)
             StartChasing();
     }
     #endregion
