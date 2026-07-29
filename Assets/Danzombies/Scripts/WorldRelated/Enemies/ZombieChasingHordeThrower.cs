@@ -1,11 +1,10 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
 {
     #region [VARIABLES]
     private bool canThrow = false;
+    [SerializeField] private Transform zombieSpawn;
     [SerializeField] private UiAnimator warningElement;
 
     [Header("Settings")]
@@ -18,8 +17,9 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     [Tooltip("Variación en el periodo.")]
     [SerializeField][Range(0f, 2f)] float throwDelta;
     
-    private Transform zombieSpawn; 
-    ThrownZombie throwingZombieInstance;
+    private ThrownZombie throwingZombieInstance;
+    private ZombieChasingHordeThrowerState _state;
+
     private float elapsed;
     private float period;
     #endregion
@@ -27,16 +27,11 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     #region [UNITY]
     private void Awake()
     {
-        zombieSpawn = transform.Find("ZombieSpawn").GetComponent<Transform>();
-
         Prewarm(zombieSpawn);
         SetPeriod();
     }
 
-    public void ActivateThrown(bool value)
-    {
-        canThrow = value;
-    }
+    public void ActivateThrown(bool value) => canThrow = value;
 
     private void Update()
     {
@@ -77,16 +72,6 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     }
     #endregion
 
-    #region IResettable
-    public void CaptureState() { }
-
-    public void ResetState()
-    {
-        
-    }
-
-    #endregion
-
     #region Helpers
     private void SetPeriod()
     {
@@ -95,5 +80,45 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
         period = throwPeriod + rng;
     }
     #endregion
+    #endregion
+
+    #region IResettable
+    private struct ZombieChasingHordeThrowerState
+    {
+        public bool canThrow;
+        public bool makeFirstZombieMiss;
+
+        public float throwSpeed;
+        public float throwPeriod;
+        public float throwDelta;
+    }
+
+    public void CaptureState()
+    {
+        _state = new ZombieChasingHordeThrowerState
+        {
+            canThrow = canThrow,
+            makeFirstZombieMiss = makeFirstZombieMiss,
+
+            throwSpeed = throwSpeed,
+            throwPeriod = throwPeriod,
+            throwDelta = throwDelta
+        };
+    }
+
+    public void ResetState()
+    {
+        canThrow = _state.canThrow;
+        makeFirstZombieMiss = _state.makeFirstZombieMiss;
+
+        throwSpeed = _state.throwSpeed;
+        throwPeriod = _state.throwPeriod;
+        throwDelta = _state.throwDelta;
+
+        elapsed = 0f;
+
+        if (throwingZombieInstance != null)
+            Destroy(throwingZombieInstance.gameObject);
+    }
     #endregion
 }

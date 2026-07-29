@@ -11,7 +11,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     [SerializeField] private Transform[] checkpoints;
 
     [Header("Settings")]
-    [SerializeField] bool chaseAtStart;
+    [SerializeField] bool chaseOnEnable;
     [SerializeField][Range(1f, 40f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
     [SerializeField][Range(0f, 2f)] private float chasingFactor;
@@ -20,10 +20,13 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     [SerializeField][Range(0f, 2f)] private float lateralFollowSpeed;
 
     private PlayerManager player;
+    private ZombieChasingHordeBehaviourState _state;
+
     private float currentSpeed;
     private float currentOffset;
     private Vector2 railPosition;
     private Vector2 currentDirection;
+
     private Transform currentCheckpoint;
     private Queue<Transform> remainingCheckpoints = new();
     #endregion
@@ -31,13 +34,11 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     #region [UNITY]
     private void Awake() => player = playerMovement.GetComponent<PlayerManager>();
 
-    private void Start()
+    private void OnEnable()
     {
-        if (chaseAtStart)
+        if (chaseOnEnable)
             StartChasing();
     }
-
-    private void OnEnable() => _position = transform.position;
 
     private void Update()
     {
@@ -64,6 +65,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         SetCheckpoints();
         UpdateCheckpoint();
     }
+
+    public void UpdateStartingPointX(float x) => _state.startPosition.x = x;
+    public void UpdateStartingPointY(float y) => _state.startPosition.y = y;
 
     public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
     public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
@@ -113,33 +117,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     private void CatchPlayer() => player.GameOver();
     #endregion
 
-    #region IResettable
-    bool _isActive;
-    private Vector3 _position;
-
-    public void CaptureState()
-    {
-        _isActive = gameObject.activeSelf;
-    }
-
-    public void ResetState()
-    {
-        StopChasing();
-
-        gameObject.SetActive(_isActive);
-        if (_position != Vector3.zero)
-            transform.position = _position;
-        railPosition = Vector2.zero;
-
-        if (chaseAtStart)
-            StartChasing();
-    }
-    #endregion
-
     #region Helpers
-    /// <summary>
-    /// 
-    /// </summary>
     private void SetSpeed()
     {
         float playerDistance = playerMovement.transform.position.x - transform.position.x;
@@ -174,5 +152,54 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
             remainingCheckpoints.Enqueue(checkpoint);
     }
     #endregion
+    #endregion
+
+    #region IResettable
+    private struct ZombieChasingHordeBehaviourState
+    {
+        public bool isActive;
+        public Vector3 startPosition;
+
+        public float maxDistance;
+        public float chasingFactor;
+        public float maxLateralDeviation;
+        public float lateralFollowSpeed;
+
+        public bool isChasing;
+    }
+
+    public void CaptureState()
+    {
+        _state = new ZombieChasingHordeBehaviourState
+        {
+            isActive = gameObject.activeSelf,
+            startPosition = transform.position,
+
+            maxDistance = maxDistance,
+            chasingFactor = chasingFactor,
+            maxLateralDeviation = maxLateralDeviation,
+            lateralFollowSpeed = lateralFollowSpeed,
+
+            isChasing = currentCheckpoint != null
+        };
+    }
+
+    public void ResetState()
+    {
+        StopChasing();
+
+        gameObject.SetActive(_state.isActive);
+        transform.position = _state.startPosition;
+
+        maxDistance = _state.maxDistance;
+        chasingFactor = _state.chasingFactor;
+        maxLateralDeviation = _state.maxLateralDeviation;
+        lateralFollowSpeed = _state.lateralFollowSpeed;
+
+        railPosition = Vector2.zero;
+
+        if (_state.isChasing)
+            StartChasing();
+    }
     #endregion
 }

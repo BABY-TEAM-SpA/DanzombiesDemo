@@ -7,21 +7,16 @@ public class Checkpoint : MonoBehaviour
     #region [VARIABLES]
     [SerializeField] private bool isRespawn;
 
-    private Collider2D collider2d;
     private Transform playerSpawn;
 
-    [Tooltip("Método que triggerear cuando el Player entre a este checkpoint.")]
-    public UnityEvent OnTriggerBehaviour;
+    public UnityEvent OnTriggerBeforeCapture;
+    public UnityEvent OnTriggerAfterCapture;
 
     public Action<Checkpoint, PlayerManager> OnPlayerEntered;
     #endregion
 
     #region [UNITY]
-    private void Awake()
-    {
-        collider2d = GetComponent<Collider2D>();
-        playerSpawn = transform.GetChild(0).GetComponent<Transform>();
-    }
+    private void Awake() => playerSpawn = transform.GetChild(0).GetComponent<Transform>();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,9 +25,10 @@ public class Checkpoint : MonoBehaviour
 
         if (collision.TryGetComponent<PlayerManager>(out PlayerManager player))
         {
+            OnTriggerBeforeCapture?.Invoke();
             if (isRespawn)
                 OnPlayerEntered?.Invoke(this, player);
-            OnTriggerBehaviour?.Invoke();
+            OnTriggerAfterCapture?.Invoke();
         }
     }
     #endregion

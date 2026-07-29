@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &238046300792858772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2857918233880686953}
-  m_Layer: 0
-  m_Name: ZombieSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2857918233880686953
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238046300792858772}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8044182109099556138}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &290328755314098132
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +213,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3368531232615296695}
-  - {fileID: 2857918233880686953}
   - {fileID: 8445097022293018380}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -262,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HordeBehaviour
   playerMovement: {fileID: 0}
   checkpoints: []
-  chaseAtStart: 1
+  chaseOnEnable: 1
   maxDistance: 30
   chasingFactor: 0.7
   maxLateralDeviation: 0
@@ -282,6 +250,7 @@ MonoBehaviour:
   prefab: {fileID: 3090518747229729203, guid: 754738d5ef694fd408fdedab776c427c, type: 3}
   poolSize: 1
   inspectorQueueVisualizer: []
+  zombieSpawn: {fileID: 0}
   warningElement: {fileID: 0}
   target: {fileID: 0}
   makeFirstZombieMiss: 0
