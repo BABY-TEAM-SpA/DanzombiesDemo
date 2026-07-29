@@ -142,7 +142,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     /// </summary>
     private void SetSpeed()
     {
-        float playerDistance = Vector2.Distance(playerMovement.transform.position, transform.position);
+        float playerDistance = playerMovement.transform.position.x - transform.position.x;
         float error = playerDistance - maxDistance;
 
         float targetSpeed = playerMovement.MaxSpeed;
@@ -152,8 +152,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
             float t = Mathf.Clamp01((Mathf.Abs(error) - DIST_THRESHOLD) / maxDistance);
 
             targetSpeed = error > 0
-                ? Mathf.Lerp(playerMovement.MaxSpeed, playerMovement.MaxSpeed * 4f, t)
-                : playerMovement.MaxSpeed * chasingFactor;
+                ? Mathf.Lerp(playerMovement.MaxSpeed, playerMovement.MaxSpeed * 4f, t)  // <- Más lejos que MaxDistance
+                : playerMovement.MaxSpeed * chasingFactor;                              // <- Más cerca que MaxDistance
         }
 
         currentSpeed = targetSpeed;

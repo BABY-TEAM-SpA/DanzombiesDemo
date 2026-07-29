@@ -8,11 +8,12 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     private bool canThrow = false;
     [SerializeField] private UiAnimator warningElement;
 
-    [Header("References")]
-    [SerializeField] private Transform target;
-
     [Header("Settings")]
-    [SerializeField][Range(10f, 30f)] float throwSpeed;
+    [SerializeField] private Transform target;
+    [SerializeField] bool makeFirstZombieMiss;
+
+    [Header("Settings - Numbers")]
+    [SerializeField][Range(10f, 45f)] float throwSpeed = 30f;
     [SerializeField][Range(1f, 10f)] float throwPeriod;
     [Tooltip("Variación en el periodo.")]
     [SerializeField][Range(0f, 2f)] float throwDelta;
@@ -39,8 +40,11 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
 
     private void Update()
     {
-        if(!canThrow) return;
-        if (throwingZombieInstance != null) return;
+        if (!canThrow)
+            return;
+        if (throwingZombieInstance != null)
+            return;
+
         elapsed += Time.deltaTime;
         if (elapsed >= period)
         {
@@ -61,6 +65,14 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     public void ThrowZombie()
     {
         throwingZombieInstance = Get(zombieSpawn);
+        throwingZombieInstance.transform.SetParent(null, true);
+
+        if (makeFirstZombieMiss)
+        {
+            throwingZombieInstance.minimunDistance *= 2f;
+            makeFirstZombieMiss = false;
+        }
+
         throwingZombieInstance.Throw(this, throwSpeed, target);
     }
     #endregion
