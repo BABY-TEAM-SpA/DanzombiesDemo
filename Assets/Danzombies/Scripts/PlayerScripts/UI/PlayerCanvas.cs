@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -14,7 +12,24 @@ public class PlayerCanvas : MonoBehaviour
     public TwistedHP TwistedHP;
     #endregion
 
+    #region [UNITY]
+    private void OnEnable()
+    {
+        if (player != null)
+            player.OnPlayerDeath += ResetHP;
+    }
+
+    private void OnDisable()
+    {
+        if (player != null)
+            player.OnPlayerDeath -= ResetHP;
+    }
+    #endregion
+
     #region [METHODS]
+    #region TwistedHP
     public void SetHP() => TwistedHP?.SetHP(player.HP);
+    public void ResetHP() => TwistedHP?.Reset();
+    #endregion
     #endregion
 }

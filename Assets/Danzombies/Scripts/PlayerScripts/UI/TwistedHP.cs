@@ -27,5 +27,11 @@ public class TwistedHP : MonoBehaviour
             hearths[i].gameObject.SetActive(i < hp);
         uiAnimator.PlaySequence("Show");
     }
+
+    public void Reset()
+    {
+        for (int i = 0; i < hearths.Length; i++)
+            hearths[i].gameObject.SetActive(true);
+    }
     #endregion
 }
