@@ -16,7 +16,6 @@ public class CanonPuzzle : RhythmPuzzle
         PlayerEnter(playerManager);
         danceDatas.Clear();
         currentSequence = 0;
-        SetCounter(0);
         SetSequence(sequenceSteps[currentSequence]);
         if (zombies.Count > 0)
         {

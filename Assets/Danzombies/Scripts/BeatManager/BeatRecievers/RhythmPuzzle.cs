@@ -90,7 +90,6 @@ public abstract class RhythmPuzzle : BeatReciever
 
     protected void SetSequence(SequenceStep sequence)
     {
-        SetCounter(0);
         currentDanceData.Sequence = sequence;
         currentDanceData.Sequence.OnDanceSequenceFinished.AddListener(() => { OnDanceSequenceCleared(); });
         beatType = currentDanceData.Sequence.patternBeatType;

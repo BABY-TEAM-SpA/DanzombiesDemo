@@ -7,7 +7,6 @@ public abstract class BeatReciever : MonoBehaviour
     public bool isActive { get; set; } = false;
     public bool isOnBeat { get; private set; } = false;
     
-    protected int InnerCounter = 0; 
 
     public enum BeatFeedback
     {
@@ -36,7 +35,6 @@ public abstract class BeatReciever : MonoBehaviour
     public void SetActive(bool active)
     {
         isActive = active;
-        SetCounter();
     }
 
     private void OnUpdateSongEvent(double barDuration)
@@ -48,7 +46,7 @@ public abstract class BeatReciever : MonoBehaviour
     {
         if (!isActive) return;
         if (type != beatType) return;
-        PreBeatAction(InnerCounter);
+        PreBeatAction(beat);
         isOnBeat = true;
     }
 
@@ -56,15 +54,14 @@ public abstract class BeatReciever : MonoBehaviour
     {
         if (!isActive) return;
         if (type != beatType) return;
-        BeatAction(InnerCounter);
-        InnerCounter++;
+        BeatAction(beat);
     }
 
     private void OnPostBeatEvent(int beat, BeatType type)
     {
         if (!isActive) return;
         if (type != beatType) return; 
-        PostBeatAction(InnerCounter);
+        PostBeatAction(beat);
         isOnBeat = false;
     }
 
@@ -72,9 +69,5 @@ public abstract class BeatReciever : MonoBehaviour
     public abstract void PreBeatAction(int counter);
     public abstract void BeatAction(int counter);
     public abstract void PostBeatAction(int counter);
-
-    public void SetCounter(int value = 0)
-    {
-        InnerCounter = value;
-    }
+    
 }

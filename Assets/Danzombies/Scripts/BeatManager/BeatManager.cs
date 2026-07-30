@@ -96,14 +96,13 @@ public class BeatManager : MonoBehaviour
     {
         if (type != EVENT_CALLBACK_TYPE.TIMELINE_BEAT) return FMOD.RESULT.OK;
         TIMELINE_BEAT_PROPERTIES beat = Marshal.PtrToStructure<TIMELINE_BEAT_PROPERTIES>(parameterPtr);
-        Instance?.HandleBeat( beat.bar, beat.beat, beat.tempo);
+        Instance?.HandleBeat( beat.bar, beat.beat, beat.tempo, beat.timesignatureupper,  beat.timesignaturelower);
         return FMOD.RESULT.OK;
     }
     
-    void HandleBeat(int bar, int beat, float tempo)
+    void HandleBeat(int bar, int beat, float tempo,int upper, int lower)
     {
-        //Debug.Log("bar"+bar);
-        //Debug.Log("beat:"+beat);
+        
         //Debug.Log("---------------");
         lastBeatTime = AudioManager.Instance.SongPositionSeconds();
         quarterBeatDuration = 60d / tempo;
@@ -112,7 +111,8 @@ public class BeatManager : MonoBehaviour
         preTrigger = true;
         beatTrigger = true;
         postTrigger = false;
-        globalCounterNegra++;
+        globalCounterNegra = (beat) + ((bar - 1) * upper);
+        Debug.Log("beat:"+globalCounterNegra);
         OnBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
         HalfBeat(lastBeatTime);
         mustHalfBeat = true;
