@@ -19,7 +19,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public Vector2 Velocity { get; private set; }
 
-    private bool allowInput = true;
+    private bool alowInput = false;
     private float currentSpeed;
     private Vector2 inputDirection;
     private Vector2 scriptedDirection;
@@ -41,7 +41,7 @@ public class PlayerMovementController : MonoBehaviour
     private void HandleMovement()
     {
         Vector2 targetDirection = scriptedDirection != Vector2.zero
-            ? scriptedDirection : allowInput
+            ? scriptedDirection : alowInput
                 ? inputDirection : Vector2.zero;
 
         Velocity = Vector2.Lerp(Velocity, targetDirection.normalized * currentSpeed, acceleration * Time.deltaTime);
@@ -71,8 +71,8 @@ public class PlayerMovementController : MonoBehaviour
     #region Helpers
     public void SetSpeed(float newSpeed) => currentSpeed = newSpeed;
 
-    public void EnableInput() => allowInput = true;
-    public void DisableInput() => allowInput = false;
+    public void EnableInput() => alowInput = true;
+    public void DisableInput() => alowInput = false;
     #endregion
     #endregion
 

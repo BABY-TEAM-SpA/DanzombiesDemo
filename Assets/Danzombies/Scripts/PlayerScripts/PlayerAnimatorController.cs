@@ -22,7 +22,7 @@ public class PlayerAnimatorController : DanceAnimatorController
 
     public void OnDirectionButtonPressed(InputAction.CallbackContext context)
     {
-        if (allowInput && _danceBrain.isActive)
+        if (allowInput && _danceBrain.isActiv)
         {
             if (context.performed)
             {
@@ -50,7 +50,7 @@ public class PlayerAnimatorController : DanceAnimatorController
 
     public void OnLeanButtonPressed(InputAction.CallbackContext context)
     {
-        if (allowInput && _danceBrain.isActive)
+        if (allowInput && _danceBrain.isActiv)
         {
             
             if (context.started)

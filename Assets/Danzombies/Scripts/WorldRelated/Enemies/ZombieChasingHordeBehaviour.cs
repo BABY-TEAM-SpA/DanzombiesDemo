@@ -21,6 +21,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     private PlayerManager player;
     private ZombieChasingHordeBehaviourState _state;
+    [SerializeField] Animator animator;
 
     private float currentSpeed;
     private float currentOffset;
@@ -61,7 +62,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     {
         if (currentCheckpoint != null)
             return;
-
+        animator.SetBool("Chase",true);
         SetCheckpoints();
         UpdateCheckpoint();
     }

@@ -65,8 +65,7 @@ public class DanceAnimatorController : MonoBehaviour
     }
     public void OnStandAction()
     {
-        if(_danceBrain.isActive) _danceBrain.EnableMovement(true);
-        _danceBrain.EnableMovement(true);
+        if(_danceBrain.isActiv) _danceBrain.EnableMovement(true);
         animator.ResetTrigger("Pulse");
     }
 
