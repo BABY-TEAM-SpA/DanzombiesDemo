@@ -1,19 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class Interactuable:MonoBehaviour
+public abstract class Interactuable : MonoBehaviour
 {
     protected InteReactableComponent interactable;
+
     public void SetInteractive(InteReactableComponent target) => interactable = target;
     public void ClearInteractive(InteReactableComponent target)
     {
-        if(interactable== target) interactable = null;
+        if (interactable == target)
+            interactable = null;
     }
 
-    public virtual void Interact()
-    {
-        interactable?.HandleInteraction(transform.tag);
-    }
+    public virtual void Interact() => interactable?.HandleInteraction(transform.tag);
 }
 
 public class PlayerInteractionController : Interactuable

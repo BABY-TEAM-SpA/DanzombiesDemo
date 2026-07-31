@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4605493262668714572}
   - component: {fileID: 4396607593020790720}
   - component: {fileID: 4247861435745391757}
+  - component: {fileID: 8946989864861922934}
   m_Layer: 0
   m_Name: Render
   m_TagString: Untagged
@@ -130,6 +131,28 @@ MonoBehaviour:
   whenUse: 0
   spriteRenderers:
   - {fileID: 4605493262668714572}
+--- !u!114 &8946989864861922934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609165932610467335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmiter
+  eventRef:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  activeParam:
+    Name: 
+    Value: 0
 --- !u!1001 &3904098188273438885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,6 +255,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: interactions.Array.data[0].timesToReact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: interactions.Array.data[1].timesToReact
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6739920916111896757, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
@@ -566,7 +593,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4894039669370586922, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1605086459283941502, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
     - {fileID: 144959327300612520, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}

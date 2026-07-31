@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 
-public class SFXController : SFXEmiter
+public class SFXController : SFXEmitter
 {
    
 

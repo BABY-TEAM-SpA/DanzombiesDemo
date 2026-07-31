@@ -1,0 +1,111 @@
+using FMOD;
+using FMOD.Studio;
+using FMODUnity;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
+
+public class SFXEmitter : MonoBehaviour
+{
+    #region [VARIABLES]
+    public EventReference eventRef;
+    public ParamRef activeParam;    // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
+                                    //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
+    private EventInstance sfxInstance;
+    #endregion
+
+    #region [UNITY]
+    private void Start()
+    {
+        if (eventRef.IsNull)
+            return;
+
+        sfxInstance = RuntimeManager.CreateInstance(eventRef);
+        RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
+
+        ResolveParameterID();
+    }
+
+    private void OnDestroy()
+    {
+        if (sfxInstance.isValid())
+            sfxInstance.release();
+    }
+    #endregion
+
+    #region [METHODS]
+    #region API
+    public void Play()
+    {
+        if (!sfxInstance.isValid())
+            return;
+
+        sfxInstance.start();
+    }
+
+    public void Stop()
+    {
+
+    }
+    #endregion
+
+    #region Parameter
+    /// <summary>
+    /// Método FF para el seteo de un nuevo parámetro de FMOD activo para el evento asignado a este SFXEmitter.
+    /// Su propósito es permitir la existiencia de UpdateParameterValue, calleable desde los UnityEvent al no necesitar
+    /// que se le diga explícitamente el parámetro a actualizar, solo su valor.
+    /// </summary>
+    public void SetParameter(ParamRef param)
+    {
+        activeParam = param;
+
+        if (sfxInstance.isValid())
+            ResolveParameterID();
+    }
+
+    /// <summary>
+    /// Método FF para la actualización del valor del parámetro de FMOD activo para el evento asignado a este SFXEmitter.
+    /// La gracia es que transparenta el parámetro a actualizar, ya que se usa el activeParam, que también
+    /// puede configurarse con SetParameter.
+    /// </summary>
+    public void UpdateParameterValue(float value)
+    {
+        if (activeParam == null)
+        {
+            Debug.LogWarning($"[SFXEmitter] El parámetro activo es null, cancelando operación.", this);
+            return;
+        }
+
+        RESULT result = sfxInstance.setParameterByID(activeParam.ID, value);
+        if (result != RESULT.OK)
+        {
+            Debug.LogWarning($"[SFXEmitter] Resultado: {result}.", this);
+            return;
+        }
+
+        activeParam.Value = value;
+    }
+
+    private void ResolveParameterID()
+    {
+        if (activeParam == null || string.IsNullOrEmpty(activeParam.Name))
+            return;
+
+        RESULT result = sfxInstance.getDescription(out EventDescription description);
+        if (result != RESULT.OK)
+        {
+            Debug.LogWarning($"[SFXEmitter] Resultado: {result}.", this);
+            return;
+        }
+
+        result = description.getParameterDescriptionByName(activeParam.Name, out PARAMETER_DESCRIPTION paramDescription);
+        if (result != RESULT.OK)
+        {
+            Debug.LogWarning($"[SFXEmitter] Resultado: {result}.", this);
+            return;
+        }
+
+        activeParam.ID = paramDescription.id;
+    }
+    #endregion
+    #endregion
+}
