@@ -78,7 +78,7 @@ public class CheckpointsManager : MonoBehaviour
         lastCheckpoint = checkpoint;
 
         foreach (IResettable resettable in resettableObjects)
-            resettable.CaptureState();
+            resettable?.CaptureState();
         Debug.Log($"Nuevo Checkpoint: {checkpoint.name}, {resettableObjects.Length} objetos guardado");
 
         player.OnPlayerDeath += RecoverToLastCheckpoint;

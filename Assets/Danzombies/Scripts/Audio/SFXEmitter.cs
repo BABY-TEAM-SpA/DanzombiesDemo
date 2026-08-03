@@ -23,6 +23,7 @@ public class SFXEmitter : MonoBehaviour
         RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
 
         ResolveParameterID();
+        UpdateParameterValue(activeParam.Value);
     }
 
     private void OnDestroy()
@@ -42,13 +43,6 @@ public class SFXEmitter : MonoBehaviour
         sfxInstance.start();
     }
 
-    public void Stop()
-    {
-
-    }
-    #endregion
-
-    #region Parameter
     /// <summary>
     /// Método FF para el seteo de un nuevo parámetro de FMOD activo para el evento asignado a este SFXEmitter.
     /// Su propósito es permitir la existiencia de UpdateParameterValue, calleable desde los UnityEvent al no necesitar
@@ -92,7 +86,14 @@ public class SFXEmitter : MonoBehaviour
 
         activeParam.Value = value;
     }
+    #endregion
 
+    #region Helpers
+    /// <summary>
+    /// Método para resolver el ID del parámetro activo, a partir de su nombre, y actualizar su valor actual.
+    /// Esta es la única forma de actualizar realmente el valor utilizado por el EventInstance. El resto de los métodos
+    /// solo actualizan el valor del ParamRef, el cual se usa en este método para actuar sobre EventInstance.
+    /// </summary>
     private void ResolveParameterID()
     {
         if (activeParam == null || string.IsNullOrEmpty(activeParam.Name))
@@ -113,10 +114,6 @@ public class SFXEmitter : MonoBehaviour
         }
 
         activeParam.ID = paramDescription.id;
-
-        result = sfxInstance.getParameterByID(activeParam.ID, out float currentValue);
-        if (result == RESULT.OK)
-            activeParam.Value = currentValue;
     }
     #endregion
     #endregion
