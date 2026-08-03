@@ -62,6 +62,14 @@ public class SFXEmitter : MonoBehaviour
             ResolveParameterID();
     }
 
+    public void SetParameterByName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return;
+
+        SetParameter(new ParamRef { Name = name, Value = 0f });
+    }
+
     /// <summary>
     /// Método FF para la actualización del valor del parámetro de FMOD activo para el evento asignado a este SFXEmitter.
     /// La gracia es que transparenta el parámetro a actualizar, ya que se usa el activeParam, que también
@@ -105,6 +113,10 @@ public class SFXEmitter : MonoBehaviour
         }
 
         activeParam.ID = paramDescription.id;
+
+        result = sfxInstance.getParameterByID(activeParam.ID, out float currentValue);
+        if (result == RESULT.OK)
+            activeParam.Value = currentValue;
     }
     #endregion
     #endregion
