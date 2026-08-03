@@ -1,4 +1,5 @@
 using FMODUnity;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -44,7 +45,20 @@ public class SFXEmitterEditor : Editor
 
                 EditorGUILayout.BeginHorizontal();
 
-                EditorGUILayout.LabelField($"{param.Type}  |  Range: {param.Min} - {param.Max}  |  Default: {param.Default}");
+                if (param.Type == ParameterType.Labeled)
+                {
+                    string defaultLabel = (param.Labels != null && (int)param.Default >= 0 && (int)param.Default < param.Labels.Length)
+                        ? param.Labels[(int)param.Default]
+                        : param.Default.ToString();
+
+                    string labelsList = param.Labels != null
+                        ? string.Join(", ", param.Labels.Select((label, index) => $"{index}: {label}"))
+                        : "";
+
+                    EditorGUILayout.LabelField($"{labelsList}   |   Default={param.Default}");
+                }
+                else EditorGUILayout.LabelField($"{param.Min}-{param.Max}   |   Default={param.Default}");
+
                 if (GUILayout.Button("Use", EditorStyles.miniButton))
                     SetParameter(param);
 
