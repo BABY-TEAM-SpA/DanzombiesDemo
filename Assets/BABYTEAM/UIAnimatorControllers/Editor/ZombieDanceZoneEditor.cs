@@ -26,7 +26,7 @@ public class ZombieDanceZoneEditor : Editor
                     ZombieDanceZone zombieDanceZone = (ZombieDanceZone)target;
 
                     Undo.RecordObject(zombieDanceZone, "Refresh ZombieDanceZone Zombies");
-                    //zombieDanceZone.RefreshZombies();
+                    zombieDanceZone.RefreshZombies();
                     EditorUtility.SetDirty(zombieDanceZone);
                 }
             }

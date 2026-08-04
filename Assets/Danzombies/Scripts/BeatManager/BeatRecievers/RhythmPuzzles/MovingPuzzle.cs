@@ -52,7 +52,6 @@ public class MovingPuzzle : ZombieDanceZone
     #endregion
 
     #region RhythmPuzzle - Update
-
     public override void OnDanceSequenceCleared()
     {
         index++;
@@ -103,16 +102,17 @@ public class MovingPuzzle : ZombieDanceZone
     public void ShowHUD(bool visible) => HUD?.SetActiveCanvas(visible);
     #endregion
     #endregion
-}
 
-[Serializable]
-public class MovingSequence
-{
-    [Tooltip("Direcci�n a la que se mover� el l�der (Steph) al terminar la secuencia.")]
-    public Vector2 movingDirection;
+    [Serializable]
+    public class MovingSequence
+    {
+        [Tooltip("Dirección a la que se moverá el líder (Steph) al terminar la secuencia.")]
+        public Vector2 movingDirection;
 
-    [Tooltip("Tiempo que se mover� el l�der (Steph) al terminar la secuencia.")]
-    [Min(0f)] public float movingDuration = 0f;
+        [Tooltip("Tiempo que se moverá el líder (Steph) al terminar la secuencia.")]
+        [Min(0f)] public float movingDuration = 0f;
 
-    public SequenceStep danceSequence;
+        public SequenceStep danceSequence;
+    }
+
 }
