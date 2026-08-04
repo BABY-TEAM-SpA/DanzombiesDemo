@@ -36,7 +36,11 @@ public class MovingPuzzle : ZombieDanceZone
     #endregion
 
     #region RhythmPuzzle - Setup
-    public override void PreparePuzzle() => Connect();
+    public override void PreparePuzzle()
+    {
+        base.PreparePuzzle();
+        Connect();
+    }
 
     public override void ActivatePuzzle(bool activate)
     {

@@ -80,8 +80,9 @@ public abstract class RhythmPuzzle : BeatReciever
     protected bool PlayerHasDanced=false;
     public PlayerManager playersInside{private set; get;}
     
-    private void Start()
+    protected void Start()
     {
+        Debug.Log($"STARTING PUZZLE ({name})");
         PreparePuzzle();
         if (activateOnStart)
             ActivatePuzzle(true);
