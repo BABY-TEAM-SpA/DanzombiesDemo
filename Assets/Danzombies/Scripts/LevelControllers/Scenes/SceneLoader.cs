@@ -26,6 +26,7 @@ public class SceneLoader : MonoBehaviour
     #region [METHODS]
     public void Load()
     {
+        Debug.Log($"Loading scene: {levelsToLoad.scenes[0]}");
         SceneChangeController.Instance.LoadScenes(levelsToLoad);
         SceneChangeController.Instance.UnloadScenes(levelsToUnload);
     }

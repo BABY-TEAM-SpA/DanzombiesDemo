@@ -36,7 +36,6 @@ public class ZombieDanceZone : RhythmPuzzle
     #region RhythmPuzzle - Setup
     public override void PreparePuzzle()
     {
-        Debug.Log($"PREPARING PUZZLE ({zombies.Count})");
         SetSequence(danceSequence);
         foreach (ZombieDanceBrain zombie in zombies)
             currentDanceData.listeners.AddListener(zombie);
@@ -44,7 +43,6 @@ public class ZombieDanceZone : RhythmPuzzle
 
     public override void ActivatePuzzle(bool activate)
     {
-        Debug.Log($"ACTIVATING PUZZLE ({zombies.Count})");
         base.ActivatePuzzle(activate);
         foreach (ZombieDanceBrain zombie in zombies)
             zombie.ActivateEntity(activate);

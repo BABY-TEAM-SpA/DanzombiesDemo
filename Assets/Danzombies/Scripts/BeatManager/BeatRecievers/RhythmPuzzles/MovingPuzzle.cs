@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPuzzle : ZombieDanceZone
+public class MovingPuzzle : RhythmPuzzle
 {
     #region [METHODS]
     [Header("Moving Settings")]
@@ -36,11 +36,7 @@ public class MovingPuzzle : ZombieDanceZone
     #endregion
 
     #region RhythmPuzzle - Setup
-    public override void PreparePuzzle()
-    {
-        base.PreparePuzzle();
-        Connect();
-    }
+    public override void PreparePuzzle() => Connect();
 
     public override void ActivatePuzzle(bool activate)
     {
@@ -76,6 +72,38 @@ public class MovingPuzzle : ZombieDanceZone
 
     public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) { }
     public override void PlayerGetDamaged() { }
+    #endregion
+
+    #region BeatReceiver
+    public override void PreBeatAction(int counter)
+    {
+        if (debug)
+            Debug.Log("___Puzzle PreBeat on " + AudioManager.Instance.SongPositionSeconds().ToString());
+
+        PlayerHasDanced = false;
+        currentDanceData.SetDanceStep(counter);
+        currentDanceData.listeners.InvokePrepare(currentDanceData.DanceStep, currentDanceData.NextDanceStep);
+    }
+
+    public override void BeatAction(int counter)
+    {
+        if (debug)
+            Debug.Log("_____Puzzle Beat make " + currentDanceData.DanceStep.ToString() + " at " + counter + " on " + AudioManager.Instance.SongPositionSeconds().ToString());
+
+        currentDanceData.listeners.InvokeDance(currentDanceData.DanceStep, currentDanceData.NextDanceStep);
+    }
+
+    public override void PostBeatAction(int counter)
+    {
+        if (debug)
+            Debug.Log("___Puzzle PostBeat on " + AudioManager.Instance.SongPositionSeconds().ToString());
+
+        CheckPlayerPost();
+        currentDanceData?.listeners.InvokeRealease(currentDanceData.DanceStep, currentDanceData.NextDanceStep);
+        currentDanceData?.SetFutureDanceStep(counter);
+        currentDanceData.DanceStep = DanceStep.None;
+        PlayerHasDanced = false;
+    }
     #endregion
 
     #region Helpers
