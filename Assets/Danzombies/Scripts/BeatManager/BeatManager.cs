@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BeatManager : MonoBehaviour
 {
+    public bool useDebug = false;
+
     public enum BeatType
     {
         FullBeat,
@@ -112,7 +114,8 @@ public class BeatManager : MonoBehaviour
         beatTrigger = true;
         postTrigger = false;
         globalCounterNegra = (beat) + ((bar - 1) * upper);
-        Debug.Log("beat:"+globalCounterNegra);
+        if (useDebug)
+            Debug.Log("beat:"+globalCounterNegra);
         OnBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
         HalfBeat(lastBeatTime);
         mustHalfBeat = true;

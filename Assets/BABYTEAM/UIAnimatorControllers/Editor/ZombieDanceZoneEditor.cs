@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ZombieDanceZone))]
+[CustomEditor(typeof(ZombieDanceZone), true)]
 public class ZombieDanceZoneEditor : Editor
 {
     public override void OnInspectorGUI()
