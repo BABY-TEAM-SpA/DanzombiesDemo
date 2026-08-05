@@ -1,4 +1,3 @@
-using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -19,15 +18,13 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && other.TryGetComponent(out  targetAnimator))
-        {
+        if (other.CompareTag("Player") && other.TryGetComponent(out targetAnimator))
             FollowPlayer(targetAnimator);
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")  && other.TryGetComponent(out  targetAnimator))
+        if (other.CompareTag("Player") && other.TryGetComponent(out targetAnimator))
             stateDrivenCamera.Priority = INACTIVE_PRIORITY;
     }
     #endregion
@@ -38,7 +35,9 @@ public class PlayerTriggeredCamera : MonoBehaviour
     {
         stateDrivenCamera.AnimatedTarget = playerAnimator;
         SetInstructions();
-        foreach (CinemachineCamera camera in cameras) camera.Follow = playerAnimator.transform;
+
+        foreach (CinemachineCamera camera in cameras)
+            camera.Follow = playerAnimator.transform;
         stateDrivenCamera.Priority = ACTIVE_PRIORITY;
     }
 

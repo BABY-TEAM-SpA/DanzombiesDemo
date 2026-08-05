@@ -349,7 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3970308067129684129}
   - component: {fileID: 7378980474721160097}
-  - component: {fileID: 998044162579537410}
+  - component: {fileID: 7109070437018076952}
   m_Layer: 0
   m_Name: PlayerTriggeredCamera
   m_TagString: Untagged
@@ -389,8 +389,8 @@ MonoBehaviour:
   cameras:
   - {fileID: 7684192186967810094}
   - {fileID: 7602982556725867934}
---- !u!61 &998044162579537410
-BoxCollider2D:
+--- !u!60 &7109070437018076952
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -433,5 +433,10 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 10, y: 5}
+      - {x: 0, y: 5}
+      - {x: -10, y: -5}
+      - {x: 0, y: -5}
+  m_UseDelaunayMesh: 1
