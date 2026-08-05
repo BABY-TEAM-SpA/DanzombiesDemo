@@ -14,7 +14,7 @@ public class Interaction
     [Min(1)] public int timesToReact = 1;
 
     private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
-    [HideInInspector] public bool interacted;
+    [HideInInspector] public bool completed;
     private InteractionState _state;
 
     [SerializeField] private UnityEvent OnEnter;
@@ -38,11 +38,7 @@ public class Interaction
             InteractionComplete();
     }
 
-    public void InteractionComplete()
-    {
-        interacted = true;
-        OnComplete?.Invoke();
-    }
+    public void InteractionComplete() => OnComplete?.Invoke();
     
     public void Leave()
     {
@@ -54,23 +50,23 @@ public class Interaction
     #region IResettable
     private struct InteractionState
     {
-        public bool interacted;
+        public bool completed;
     }
 
     public void Capture()
     {
         _state = new InteractionState
         {
-            interacted = interacted,
+            completed = completed,
         };
     }
 
     public void Reset()
     {
-        if (interacted && !_state.interacted)
+        if (completed && !_state.completed)
         {
             timesIntended = 0;
-            interacted = false;
+            completed = false;
 
             OnReset?.Invoke();
         }        
@@ -128,6 +124,13 @@ public class InteReactableComponent : MonoBehaviour, IResettable
     #endregion
 
     #region IResettable
+    public void MarkAsCompleted(string type)
+    {
+        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.tag);
+        if (e != null)
+            e.completed = true;
+    }
+
     public void CaptureState()
     {
         foreach (Interaction e in interactions)
