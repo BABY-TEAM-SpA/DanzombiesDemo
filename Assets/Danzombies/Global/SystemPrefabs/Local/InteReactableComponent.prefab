@@ -47,7 +47,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eef1a4846a3589e4bb7448bcabbb6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteReactableComponent
-  interactions: []
+  interactions:
+  - tag: Player
+    timesToReact: 1
+    interacted: 0
+    OnEnter:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7944415084059879117}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnInteraction:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8541744651492588126}
+          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+          m_MethodName: PlaySequence
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    OnExit:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7944415084059879117}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    OnReset:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &4894039669370586922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +114,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SFXEmiter
+  eventRef:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  activeParam:
+    Name: 
+    Value: 0
 --- !u!60 &6748824654115441949
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -163,6 +227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteReactableFeedback
       objectReference: {fileID: 0}
+    - target: {fileID: 7885001082681582827, guid: 5230e84f4c7ac6049ac2bcf8fdfdbd7d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -173,3 +241,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2931189086061763065, guid: 5230e84f4c7ac6049ac2bcf8fdfdbd7d, type: 3}
   m_PrefabInstance: {fileID: 228871970478522918}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7944415084059879117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7885001082681582827, guid: 5230e84f4c7ac6049ac2bcf8fdfdbd7d, type: 3}
+  m_PrefabInstance: {fileID: 228871970478522918}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8541744651492588126 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8477817773855373432, guid: 5230e84f4c7ac6049ac2bcf8fdfdbd7d, type: 3}
+  m_PrefabInstance: {fileID: 228871970478522918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944415084059879117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator

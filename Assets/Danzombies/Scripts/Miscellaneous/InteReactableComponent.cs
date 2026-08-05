@@ -1,4 +1,3 @@
-using FMODUnity;
 using System;
 using System.Linq;
 using Unity.Cinemachine;
@@ -8,17 +7,26 @@ using UnityEngine.Events;
 [Serializable]
 public class Interaction
 {
+    #region [VARIABLES]
     [TagField] public string tag;
-    private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
 
     [Tooltip("Veces necesarias para que se ejecute el evento")]
-    [Range(1, 10)] public int timesToReact = 1;
+    [Min(1)] public int timesToReact = 1;
+
+    private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
+    [HideInInspector] public bool interacted;
+    private InteractionState _state;
 
     [SerializeField] private UnityEvent OnEnter;
     [SerializeField] private UnityEvent OnInteraction;
     [SerializeField] private UnityEvent OnComplete;
     [SerializeField] private UnityEvent OnExit;
 
+    [Header("Reset")]
+    public UnityEvent OnReset;
+    #endregion
+
+    #region [METHODS]
     public void React() => OnEnter.Invoke();
     
     public void Interact()
@@ -30,13 +38,44 @@ public class Interaction
             InteractionComplete();
     }
 
-    public void InteractionComplete() => OnComplete?.Invoke();
+    public void InteractionComplete()
+    {
+        interacted = true;
+        OnComplete?.Invoke();
+    }
     
     public void Leave()
     {
-        OnExit?.Invoke();
         timesIntended = 0;
+        OnExit?.Invoke();
     }
+    #endregion
+
+    #region IResettable
+    private struct InteractionState
+    {
+        public bool interacted;
+    }
+
+    public void Capture()
+    {
+        _state = new InteractionState
+        {
+            interacted = interacted,
+        };
+    }
+
+    public void Reset()
+    {
+        if (interacted && !_state.interacted)
+        {
+            timesIntended = 0;
+            interacted = false;
+
+            OnReset?.Invoke();
+        }        
+    }
+    #endregion
 }
 
 [RequireComponent(typeof(Collider2D))]
@@ -89,19 +128,16 @@ public class InteReactableComponent : MonoBehaviour, IResettable
     #endregion
 
     #region IResettable
-    private struct InteReactableComponentState
-    {
-
-    }
-
     public void CaptureState()
     {
-
+        foreach (Interaction e in interactions)
+            e.Capture();
     }
 
     public void ResetState()
     {
-
+        foreach (Interaction e in interactions)
+            e.Reset();
     }
     #endregion
 }
