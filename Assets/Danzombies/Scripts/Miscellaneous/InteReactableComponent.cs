@@ -7,18 +7,22 @@ using UnityEngine.Events;
 [Serializable]
 public class Interaction
 {
+    private enum InteractionType
+    {
+        OnEnter,
+        OnExit,
+        OnInteraction,
+    }
     #region [VARIABLES]
-    [TagField] public string tag;
-
-    [Tooltip("Veces necesarias para que se ejecute el evento")]
-    [Min(1)] public int timesToReact = 1;
-
+    [TagField] public string target;
+    
     private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
     [HideInInspector] public bool completed;
     private InteractionState _state;
-
     [SerializeField] private UnityEvent OnEnter;
     [SerializeField] private UnityEvent OnInteraction;
+    [Tooltip("Veces necesarias para que se ejecute el evento")]
+    [Min(0), Range(0,10)] public int interactionsToComplete = 1;
     [SerializeField] private UnityEvent OnComplete;
     [SerializeField] private UnityEvent OnExit;
 
@@ -32,10 +36,9 @@ public class Interaction
     public void Interact()
     {
         timesIntended++;
-        OnInteraction.Invoke();
-
-        if (timesIntended >= timesToReact)
+        if (timesIntended == interactionsToComplete)
             InteractionComplete();
+        else OnInteraction.Invoke();
     }
 
     public void InteractionComplete() => OnComplete?.Invoke();
@@ -106,19 +109,19 @@ public class InteReactableComponent : MonoBehaviour, IResettable
     #region [METHODS]
     public void HandleReaction(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.tag);
+        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
         e?.React();
     }
 
     public void HandleInteraction(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.tag);
+        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
         e?.Interact();
     }
 
     public void HandleLeave(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.tag);
+        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
         e?.Leave();
     }
     #endregion
@@ -126,7 +129,7 @@ public class InteReactableComponent : MonoBehaviour, IResettable
     #region IResettable
     public void MarkAsCompleted(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.tag);
+        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
         if (e != null)
             e.completed = true;
     }
