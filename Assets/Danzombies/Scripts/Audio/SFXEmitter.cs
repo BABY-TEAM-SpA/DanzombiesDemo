@@ -3,13 +3,14 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class SFXEmitter : MonoBehaviour
 {
     #region [VARIABLES]
     public EventReference eventRef;
-    public ParamRef activeParam;    // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
-                                    //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
+    public ParamRef activeParam; // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
+                                 //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
     private EventInstance sfxInstance;
     #endregion
 
@@ -20,7 +21,6 @@ public class SFXEmitter : MonoBehaviour
             return;
 
         sfxInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
 
         ResolveParameterID();
         UpdateParameterValue(activeParam.Value);
@@ -41,6 +41,15 @@ public class SFXEmitter : MonoBehaviour
             return;
 
         sfxInstance.start();
+        RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
+    }
+
+    public void Stop()
+    {
+        if (!sfxInstance.isValid())
+            return;
+
+        sfxInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
 
     /// <summary>

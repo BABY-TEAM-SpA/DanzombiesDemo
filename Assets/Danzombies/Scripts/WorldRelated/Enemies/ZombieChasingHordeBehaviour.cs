@@ -8,6 +8,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     [Header("References")]
     [SerializeField] private PlayerMovementController playerMovement;
+    [SerializeField] Animator animator;
+    [SerializeField] SFXEmitter sfxEmitter;
     [SerializeField] private Transform[] checkpoints;
 
     [Header("Settings")]
@@ -21,7 +23,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     private PlayerManager player;
     private ZombieChasingHordeBehaviourState _state;
-    [SerializeField] Animator animator;
 
     private float currentSpeed;
     private float currentOffset;
@@ -62,7 +63,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     {
         if (currentCheckpoint != null)
             return;
-        animator.SetBool("Chase",true);
+
+        animator.SetBool("Chase", true);
+        sfxEmitter.Play();
         SetCheckpoints();
         UpdateCheckpoint();
     }
@@ -198,6 +201,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         lateralFollowSpeed = _state.lateralFollowSpeed;
 
         railPosition = Vector2.zero;
+        sfxEmitter.Stop();
 
         if (_state.isActive && _state.isChasing)
             StartChasing();
