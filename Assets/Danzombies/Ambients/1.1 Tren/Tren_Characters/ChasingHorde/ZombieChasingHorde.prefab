@@ -189,9 +189,9 @@ GameObject:
   - component: {fileID: 8044182109099556138}
   - component: {fileID: 6999124161222888690}
   - component: {fileID: 8183483014113057772}
-  - component: {fileID: 5798130410109413558}
   - component: {fileID: 5625345630657535605}
   - component: {fileID: 2011987606634272582}
+  - component: {fileID: 6969959549384579242}
   m_Layer: 0
   m_Name: ZombieChasingHorde
   m_TagString: Zombie
@@ -229,13 +229,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HordeBehaviour
   playerMovement: {fileID: 0}
+  animator: {fileID: 8087734338586582369}
+  sfxEmitter: {fileID: 6969959549384579242}
   checkpoints: []
   chaseOnEnable: 1
   maxDistance: 30
   chasingFactor: 0.7
   maxLateralDeviation: 0
   lateralFollowSpeed: 0
-  animator: {fileID: 0}
 --- !u!114 &8183483014113057772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,37 +259,6 @@ MonoBehaviour:
   throwSpeed: 30
   throwPeriod: 1.5
   throwDelta: 2
---- !u!114 &5798130410109413558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2967085197330972928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1306821703
-      Data2: 1079348070
-      Data3: -1054336338
-      Data4: -375950811
-    Path: event:/Metro/ZombieChasingHorde
-  Event: 
-  EventPlayTrigger: 1
-  EventStopTrigger: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 50
 --- !u!70 &5625345630657535605
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -353,6 +323,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6969959549384579242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967085197330972928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 1306821703
+      Data2: 1079348070
+      Data3: -1054336338
+      Data4: -375950811
+    Path: event:/Metro/ZombieChasingHorde
+  activeParam:
+    Name: 
+    Value: 0
 --- !u!1 &4094453045320901369
 GameObject:
   m_ObjectHideFlags: 0
