@@ -31,7 +31,7 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #endregion
 
     #region [METHODS]
-    private void FollowPlayer(Animator playerAnimator)
+    public void FollowPlayer(Animator playerAnimator)
     {
         stateDrivenCamera.AnimatedTarget = playerAnimator;
         SetInstructions();

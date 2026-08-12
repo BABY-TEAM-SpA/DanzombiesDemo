@@ -5,8 +5,10 @@ using UnityEngine.Events;
 public class Checkpoint : MonoBehaviour
 {
     #region [VARIABLES]
+    public bool IsRespawn => isRespawn;
     [SerializeField] private bool isRespawn;
 
+    public Vector3 Spawn => playerSpawn.position;
     private Transform playerSpawn;
 
     public UnityEvent OnTriggerBeforeCapture;

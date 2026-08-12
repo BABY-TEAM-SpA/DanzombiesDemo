@@ -11,7 +11,10 @@ public class CheckpointsManagerEditor : Editor
         CheckpointsManager checkpointsManager = (CheckpointsManager)target;
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("Collect Resettables"))
+        if (GUILayout.Button("Collect Resettables & Update Catalog"))
+        {
             checkpointsManager.CollectResettables();
+            checkpointsManager.CollectRespawns();
+        }
     }
 }

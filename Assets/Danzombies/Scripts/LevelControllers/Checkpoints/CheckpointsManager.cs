@@ -7,6 +7,7 @@ public class CheckpointsManager : MonoBehaviour
 {
     #region [VARIABLES]
     [SerializeField] private Transform levelRoot;
+    [SerializeField] private CheckpointsCatalog catalog;
 
     private PlayerManager player;
     private Checkpoint lastCheckpoint;
@@ -27,8 +28,33 @@ public class CheckpointsManager : MonoBehaviour
         resettableObjects = searchRoot.GetComponentsInChildren<MonoBehaviour>(true)
             .Where(mb => mb is IResettable).ToArray();
 
-        Debug.Log($"El array fue actualizado con {resettableObjects.Length} objetos IResettable encontrados en la escena");
+        Debug.Log($"[CheckpointsManager] El array fue actualizado con {resettableObjects.Length} objetos IResettable encontrados en la escena.");
         UnityEditor.EditorUtility.SetDirty(this);
+    }
+
+    public void CollectRespawns()
+    {
+        if (catalog == null)
+        {
+            Debug.LogError($"[CheckpointsManager] Falta asignar el CheckpointsCatalog.");
+            return;
+        }
+
+        Dictionary<int, string> dict = new();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            if (child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint) && checkpoint.IsRespawn)
+                dict[i] = child.name;
+        }
+
+        string[] respawns = dict.Values.ToArray();
+        string sceneName = gameObject.scene.name;
+
+        catalog.SetRespawns(sceneName, respawns);
+
+        Debug.Log($"[CheckpointsManager] El catálogo fue actualizado con {respawns.Length} puntos de respawn encontrados en la escena.");
+        UnityEditor.EditorUtility.SetDirty(catalog);
     }
 #endif
 
@@ -65,6 +91,19 @@ public class CheckpointsManager : MonoBehaviour
         Debug.Log($"Respawneando en {lastCheckpoint.name}, {resettableObjects.Length} objetos restaurados");
 
         lastCheckpoint.Respawn(player);
+    }
+
+    public bool TryGetCheckpointByName(string id, out Checkpoint respawn)
+    {
+        Transform child = transform.Find(id);
+        if (child != null && child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint) && checkpoint.IsRespawn)
+        {
+            respawn = checkpoint;
+            return true;
+        }
+
+        respawn = null;
+        return false;
     }
     #endregion
 
