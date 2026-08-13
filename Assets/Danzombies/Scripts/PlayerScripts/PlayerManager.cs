@@ -118,13 +118,14 @@ public class PlayerManager : DanceBrain
         }
 
         SequenceStep.DamageMode seqtype = targetPuzzle !=null?targetPuzzle.GetDamageMode(): SequenceStep.DamageMode.None;
+        targetPuzzle?.ReactToPlayerStatus(increment >= 0 ? DancerExpression.ExpressionType.Normal : DancerExpression.ExpressionType.Angry);
         if (seqtype == SequenceStep.DamageMode.None) return 0;
         else
         {
 
             int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
             SetFlow(value);
-            targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
+            //targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
             DanceBarController.DanceBar?.UpdateFlowBars(nivelDeSeguridad);
             if (value < GameManager.Alza && seqtype == SequenceStep.DamageMode.ModificaFlowYDaña)
             {

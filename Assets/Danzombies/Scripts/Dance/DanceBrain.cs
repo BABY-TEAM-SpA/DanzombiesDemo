@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class DancerExpression
@@ -10,6 +11,7 @@ public class DancerExpression
     public ExpressionType expressionType;
     public AnimatorOverrideController alpha;
     public AnimatorOverrideController beta;
+    public UnityEvent OnReaction;
 }
 
 public abstract class DanceBrain : MonoBehaviour
@@ -83,7 +85,10 @@ public abstract class DanceBrain : MonoBehaviour
     public void React(DancerExpression.ExpressionType exp)
     {
         DancerExpression expression = dancerExpressions.FirstOrDefault((expression) => expression.expressionType == exp);
-        if(expression != null) danceAnimCtrl.SetExpression(expression.alpha, expression.beta);
+        if (expression != null) { 
+            danceAnimCtrl.SetExpression(expression.alpha, expression.beta);
+            expression.OnReaction?.Invoke();
+        }
     }
     #endregion
 }
