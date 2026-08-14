@@ -14,7 +14,61 @@ public class CheckpointsManager : MonoBehaviour
     [SerializeField] private MonoBehaviour[] resettableObjects;
     #endregion
 
-#if UNITY_EDITOR
+    #region [UNITY]
+    private void OnEnable()
+    {
+        foreach (Transform child in transform)
+            if (child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint))
+                checkpoint.OnPlayerEntered += EnableCheckpoint;
+    }
+
+    private void OnDisable()
+    {
+        if (player != null)
+            player.OnPlayerDeath -= RecoverToLastCheckpoint;
+
+        foreach (Transform child in transform)
+            if (child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint))
+                checkpoint.OnPlayerEntered -= EnableCheckpoint;
+    }
+    #endregion
+
+    #region [METHODS]
+    #region Recover
+    public void RecoverTo(Checkpoint checkpoint, PlayerManager playerManager)
+    {
+        if (checkpoint == null)
+        {
+            Debug.LogError($"[CheckpointsManager] No se puede respawnear sin un Checkpoint.");
+            return;
+        }
+
+        foreach (IResettable resettable in resettableObjects)
+            resettable.ResetState();
+        Debug.Log($"[CheckpointsManager] Respawneando en {checkpoint.name}, {resettableObjects.Length} objetos restaurados.");
+
+        checkpoint.Respawn(playerManager);
+    }
+
+    public void RecoverToLastCheckpoint() => RecoverTo(lastCheckpoint, player);
+    #endregion
+
+    #region Helpers
+    public bool TryGetCheckpointByName(string id, out Checkpoint respawn)
+    {
+        Transform child = transform.Find(id);
+        if (child != null && child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint) && checkpoint.IsRespawn)
+        {
+            respawn = checkpoint;
+            return true;
+        }
+
+        respawn = null;
+        return false;
+    }
+    #endregion
+
+    #region Collect
     /// <summary>
     /// Encuentra todos los objetos IResettable en la escena y los guarda en resettableObjects.
     /// CheckpointsManagerEditor llama a este método cuando se presiona el botón Collect Resettables en el inspector.
@@ -56,55 +110,7 @@ public class CheckpointsManager : MonoBehaviour
         Debug.Log($"[CheckpointsManager] El catálogo fue actualizado con {respawns.Length} puntos de respawn encontrados en la escena.");
         UnityEditor.EditorUtility.SetDirty(catalog);
     }
-#endif
-
-    #region [UNITY]
-    private void OnEnable()
-    {
-        foreach (Transform child in transform)
-            if (child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint))
-                checkpoint.OnPlayerEntered += EnableCheckpoint;
-    }
-
-    private void OnDisable()
-    {
-        if (player != null)
-            player.OnPlayerDeath -= RecoverToLastCheckpoint;
-
-        foreach (Transform child in transform)
-            if (child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint))
-                checkpoint.OnPlayerEntered -= EnableCheckpoint;
-    }
     #endregion
-
-    #region [METHODS]
-    public void RecoverToLastCheckpoint()
-    {
-        if (lastCheckpoint == null)
-        {
-            Debug.LogError($"No se puede respawnear sin un Checkpoint");
-            return;
-        }
-
-        foreach (IResettable resettable in resettableObjects)
-            resettable.ResetState();
-        Debug.Log($"Respawneando en {lastCheckpoint.name}, {resettableObjects.Length} objetos restaurados");
-
-        lastCheckpoint.Respawn(player);
-    }
-
-    public bool TryGetCheckpointByName(string id, out Checkpoint respawn)
-    {
-        Transform child = transform.Find(id);
-        if (child != null && child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint) && checkpoint.IsRespawn)
-        {
-            respawn = checkpoint;
-            return true;
-        }
-
-        respawn = null;
-        return false;
-    }
     #endregion
 
     #region [EVENTS]

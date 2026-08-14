@@ -10,10 +10,12 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     [SerializeField] private PlayerMovementController playerMovement;
     [SerializeField] Animator animator;
     [SerializeField] SFXEmitter sfxEmitter;
-    [SerializeField] private Transform[] checkpoints;
 
     [Header("Settings")]
     [SerializeField] bool chaseOnEnable;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform endPoint;
+
     [SerializeField][Range(1f, 40f)] private float maxDistance;
     [Tooltip("Factor al que la horda se moverá con respecto al Player (0.5f = 50% de la velocidad de Greg).")]
     [SerializeField][Range(0f, 2f)] private float chasingFactor;
@@ -23,14 +25,11 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     private PlayerManager player;
     private ZombieChasingHordeBehaviourState _state;
-
+    private bool isChasing;
     private float currentSpeed;
     private float currentOffset;
     private Vector2 railPosition;
     private Vector2 currentDirection;
-
-    private Transform currentCheckpoint;
-    private Queue<Transform> remainingCheckpoints = new();
     #endregion
 
     #region [UNITY]
@@ -44,7 +43,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
     private void Update()
     {
-        if (currentCheckpoint != null)
+        if (isChasing)
             Chase();
     }
 
@@ -61,42 +60,40 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
     #region API
     public void StartChasing()
     {
-        if (currentCheckpoint != null)
+        if (isChasing)
             return;
 
+        railPosition = transform.position;
         animator.SetBool("Chase", true);
         sfxEmitter.Play();
-        SetCheckpoints();
-        UpdateCheckpoint();
+        isChasing = true;
     }
-
-    public void UpdateStartingPointX(float x) => _state.startPosition.x = x;
-    public void UpdateStartingPointY(float y) => _state.startPosition.y = y;
-
-    public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
-    public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
-    public void UpdateMaxLateralDeviation(float maxLateralDeviation) => this.maxLateralDeviation = Mathf.Max(maxLateralDeviation, 0f);
-    public void UpdateLateralFollowSpeed(float lateralFollowSpeed) => this.lateralFollowSpeed = Mathf.Max(lateralFollowSpeed, 0f);
 
     public void StopChasing()
     {
         currentSpeed = 0f;
         currentOffset = 0f;
         currentDirection = Vector2.zero;
-        currentCheckpoint = null;
-        remainingCheckpoints.Clear();
+        isChasing = false;
     }
+
+    public void UpdateStartingPoint(Transform point) => startPoint = point;
+    public void UpdateEndPoint(Transform point) => endPoint = point;
+    public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
+    public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
+    public void UpdateMaxLateralDeviation(float maxLateralDeviation) => this.maxLateralDeviation = Mathf.Max(maxLateralDeviation, 0f);
+    public void UpdateLateralFollowSpeed(float lateralFollowSpeed) => this.lateralFollowSpeed = Mathf.Max(lateralFollowSpeed, 0f);
     #endregion
 
     #region Behaviour
     private void Chase()
     {
         SetSpeed();
-        Vector2 forward = currentDirection;
-        Vector2 perpendicular = Vector2.Perpendicular(forward);
+        currentDirection = (endPoint.position - transform.position).normalized;
+        Vector2 perpendicular = Vector2.Perpendicular(currentDirection);
 
         // Avance por la ruta
-        railPosition += forward * currentSpeed * Time.deltaTime;
+        railPosition += currentDirection * currentSpeed * Time.deltaTime;
 
         float playerOffset = Vector2.Dot((Vector2)playerMovement.transform.position - railPosition, perpendicular);
         float targetOffset = Mathf.Clamp(playerOffset, -maxLateralDeviation, maxLateralDeviation);
@@ -105,17 +102,11 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         transform.position = railPosition + perpendicular * currentOffset;
 
         // Llegada al checkpoint
-        Vector2 toCheckpoint = currentCheckpoint.position - transform.position;
+        Vector2 toCheckpoint = endPoint.position - transform.position;
         float forwardDistance = Mathf.Abs(Vector2.Dot(toCheckpoint, currentDirection));
 
         if (forwardDistance < DIST_THRESHOLD)
-        {
-            remainingCheckpoints.Dequeue();
-
-            if (remainingCheckpoints.Count > 0)
-                UpdateCheckpoint();
-            else StopChasing();
-        }
+            StopChasing();
     }
 
     private void CatchPlayer() => player.GameOver();
@@ -140,27 +131,14 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
 
         currentSpeed = targetSpeed;
     }
-
-    private void UpdateCheckpoint()
-    {
-        currentCheckpoint = remainingCheckpoints.Peek();
-        currentDirection = (currentCheckpoint.position - transform.position).normalized;
-
-        if (railPosition == Vector2.zero)
-            railPosition = transform.position;
-    }
-
-    private void SetCheckpoints()
-    {
-        foreach (Transform checkpoint in checkpoints)
-            remainingCheckpoints.Enqueue(checkpoint);
-    }
     #endregion
     #endregion
 
     #region IResettable
     private struct ZombieChasingHordeBehaviourState
     {
+        public bool initialized;
+
         public bool isActive;
         public Vector3 startPosition;
 
@@ -177,19 +155,24 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         _state = new ZombieChasingHordeBehaviourState
         {
             isActive = gameObject.activeSelf,
-            startPosition = transform.position,
+            startPosition = startPoint?.position ?? transform.position,
 
             maxDistance = maxDistance,
             chasingFactor = chasingFactor,
             maxLateralDeviation = maxLateralDeviation,
             lateralFollowSpeed = lateralFollowSpeed,
 
-            isChasing = currentCheckpoint != null
+            isChasing = isChasing,
+
+            initialized = true
         };
     }
 
     public void ResetState()
     {
+        if (!_state.initialized)
+            return;
+
         StopChasing();
 
         gameObject.SetActive(_state.isActive);
@@ -200,7 +183,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour, IResettable
         maxLateralDeviation = _state.maxLateralDeviation;
         lateralFollowSpeed = _state.lateralFollowSpeed;
 
-        railPosition = Vector2.zero;
         sfxEmitter.Stop();
 
         if (_state.isActive && _state.isChasing)

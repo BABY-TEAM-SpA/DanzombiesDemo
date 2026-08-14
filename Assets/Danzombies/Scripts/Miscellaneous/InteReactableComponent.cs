@@ -18,7 +18,7 @@ public class Interaction
     
     private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
     [HideInInspector] public bool completed;
-    private InteractionState _state;
+    private InteractionState _state = new();
     [SerializeField] private UnityEvent OnEnter;
     [SerializeField] private UnityEvent OnInteraction;
     [Tooltip("Veces necesarias para que se ejecute el evento")]

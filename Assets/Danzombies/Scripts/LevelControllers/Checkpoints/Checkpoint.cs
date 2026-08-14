@@ -27,18 +27,25 @@ public class Checkpoint : MonoBehaviour
 
         if (collision.TryGetComponent<PlayerManager>(out PlayerManager player))
         {
-            OnTriggerBeforeCapture?.Invoke();
+            RunTriggersBeforeCapture();
             if (isRespawn)
                 OnPlayerEntered?.Invoke(this, player);
-            OnTriggerAfterCapture?.Invoke();
+            RunTriggersAfterCapture();
         }
     }
     #endregion
 
     #region [METHODS]
-    public void Respawn(PlayerManager player)
+    public void Respawn(PlayerManager player) => player.transform.position = playerSpawn.position;
+
+    #region Helpers
+    public void RunTriggersBeforeCapture() => OnTriggerBeforeCapture?.Invoke();
+    public void RunTriggersAfterCapture() => OnTriggerAfterCapture?.Invoke();
+    public void RunAllTriggers()
     {
-        player.transform.position = playerSpawn.position;
+        RunTriggersBeforeCapture();
+        RunTriggersAfterCapture();
     }
+    #endregion
     #endregion
 }

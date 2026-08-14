@@ -15,19 +15,29 @@ public class DevMode : MonoBehaviour
     private Transform root;
     private bool isShowing;
 
-    public static DevMode Instance {  get; private set; } // <- Singleton
+    public static DevMode Instance { get; private set; } // <- Singleton
     #endregion
 
     #region [UNITY]
     private void Awake()
     {
-        if (Instance != null && Instance == this)
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
-        else Instance = this;
+            return;
+        }
 
+        Instance = this;
         DontDestroyOnLoad(gameObject);
+
         root = transform.GetChild(0);
         HideCanvas();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     private void LateUpdate()
@@ -126,7 +136,7 @@ public class DevMode : MonoBehaviour
             return;
         }
 
-        player.transform.position = checkpoint.Spawn;
+        manager.RecoverTo(checkpoint, player);
         Debug.Log($"[DevMode] Salto a Checkpoint '{respawn}' en '{scene.name}'.");
     }
     #endregion

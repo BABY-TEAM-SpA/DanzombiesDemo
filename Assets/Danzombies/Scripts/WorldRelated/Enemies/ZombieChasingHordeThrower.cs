@@ -18,7 +18,7 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>, IResettable
     [SerializeField][Range(0f, 2f)] float throwDelta;
     
     private ThrownZombie throwingZombieInstance;
-    private ZombieChasingHordeThrowerState _state;
+    private ZombieChasingHordeThrowerState _state = new();
 
     private float elapsed;
     private float period;
