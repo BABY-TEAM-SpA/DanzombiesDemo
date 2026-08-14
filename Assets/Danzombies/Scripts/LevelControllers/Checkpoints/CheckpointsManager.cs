@@ -16,7 +16,7 @@ public class CheckpointsManager : MonoBehaviour
 
 #if UNITY_EDITOR
     /// <summary>
-    /// Encuentra todos los objetos IResettable en la escena y los guarda en `resettableObjects`.
+    /// Encuentra todos los objetos IResettable en la escena y los guarda en resettableObjects.
     /// CheckpointsManagerEditor llama a este método cuando se presiona el botón Collect Resettables en el inspector.
     /// </summary>
     public void CollectResettables()
