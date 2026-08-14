@@ -1,8 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static CheckpointsCatalog;
 
+/// <summary>
+/// Deprecado por DevMode (Canvas).
+/// </summary>
 public class DevModeWindow : EditorWindow
 {
     #region [VARIABLES]
@@ -34,7 +36,7 @@ public class DevModeWindow : EditorWindow
 
     #region [METHODS]
     #region Window
-    [MenuItem("Window/DevMode &#d")]
+    [MenuItem("Window/DevMode")]
     public static void ShowWindow()
     {
         GetWindow<DevModeWindow>("DevMode");
@@ -42,6 +44,8 @@ public class DevModeWindow : EditorWindow
 
     private void FillWindow()
     {
+        GUILayout.Label($"¡DEPRECADO! Preferir el Canvas DevMode.", EditorStyles.boldLabel);
+
         foreach (CheckpointsCatalog.SceneRespawns respawns in catalog.Respawns)
         {
             GUILayout.BeginVertical(EditorStyles.helpBox);
@@ -70,10 +74,10 @@ public class DevModeWindow : EditorWindow
     #region Play Mode
     private void PlayFrom(string sceneName, string respawn)
     {
-        Scene crrentScene = SceneManager.GetActiveScene();
-        if (crrentScene.name == sceneName)
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == sceneName)
         {
-            RespawnInScene(crrentScene, respawn);
+            RespawnInScene(currentScene, respawn);
             return;
         }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class DevMode : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class DevMode : MonoBehaviour
             Destroy(gameObject);
         else Instance = this;
 
+        DontDestroyOnLoad(gameObject);
         root = transform.GetChild(0);
+        HideCanvas();
     }
 
     private void LateUpdate()
@@ -72,9 +75,60 @@ public class DevMode : MonoBehaviour
     }
     #endregion
 
-    private void PlayFrom()
+    #region Respawn
+    private void PlayFrom(string sceneName, string respawn)
     {
-        Debug.Log($"Play From");
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == sceneName)
+        {
+            RespawnInScene(currentScene, respawn);
+            return;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            if (scene.name == sceneName)
+                RespawnInScene(scene, respawn);
+        }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
+
+    private void RespawnInScene(Scene scene, string respawn)
+    {
+        CheckpointsManager manager = null;
+        foreach (GameObject root in scene.GetRootGameObjects())
+        {
+            manager = root.GetComponentInChildren<CheckpointsManager>(true);
+            if (manager != null)
+                break;
+        }
+
+        if (manager == null)
+        {
+            Debug.LogError($"[DevMode] No se encontró un CheckpointsManager en la escena '{scene.name}'.");
+            return;
+        }
+
+        if (!manager.TryGetCheckpointByName(respawn, out Checkpoint checkpoint))
+        {
+            Debug.LogError($"[DevMode] El respawn '{respawn}' ya no existe en '{scene.name}'." +
+                $"Vuelve a apretar el botón Collect Resettables & Update Catalog del CheckpointsManager en la escena.");
+            return;
+        }
+
+        PlayerManager player = FindAnyObjectByType<PlayerManager>();
+        if (player == null)
+        {
+            Debug.LogError($"[DevMode] No se encontró un PlayerManager en la escena '{scene.name}'.");
+            return;
+        }
+
+        player.transform.position = checkpoint.Spawn;
+        Debug.Log($"[DevMode] Salto a Checkpoint '{respawn}' en '{scene.name}'.");
+    }
+    #endregion
     #endregion
 }

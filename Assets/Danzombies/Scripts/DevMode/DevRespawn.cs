@@ -13,11 +13,11 @@ public class DevRespawn : MonoBehaviour
 
     #region [METHODS]
     #endregion
-    public void Setup(string sceneName, string respawnId, Action PlayFrom)
+    public void Setup(string sceneName, string respawn, Action<string, string> PlayFrom)
     {
         ambientTmp.text = sceneName;
-        respawnTmp.text = respawnId;
+        respawnTmp.text = respawn;
 
-        playButton.onClick.AddListener(() => PlayFrom());
+        playButton.onClick.AddListener(() => PlayFrom(sceneName, respawn));
     }
 }
