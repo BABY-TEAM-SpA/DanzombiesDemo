@@ -1,9 +1,7 @@
 using UnityEngine;
-using static BeatManager;
 
 public abstract class BeatReciever : MonoBehaviour
 {
-    protected BeatType beatType = BeatType.FullBeat;
     public bool isActive { get; set; } = false;
     public bool isOnBeat { get; private set; } = false;
     
@@ -42,32 +40,29 @@ public abstract class BeatReciever : MonoBehaviour
         OnUpdateSongAction();
     }
 
-    private void OnPreBeatEvent(int beat, BeatType type)
+    private void OnPreBeatEvent(int beat, BeatManager.BeatType type)
     {
         if (!isActive) return;
-        if (type != beatType) return;
-        PreBeatAction(beat);
+        PreBeatAction(beat, type);
         isOnBeat = true;
     }
 
-    private void OnBeatEvent(int beat, BeatType type)
+    private void OnBeatEvent(int beat, BeatManager.BeatType type)
     {
         if (!isActive) return;
-        if (type != beatType) return;
-        BeatAction(beat);
+        BeatAction(beat, type);
     }
 
-    private void OnPostBeatEvent(int beat, BeatType type)
+    private void OnPostBeatEvent(int beat, BeatManager.BeatType type)
     {
         if (!isActive) return;
-        if (type != beatType) return; 
-        PostBeatAction(beat);
+        PostBeatAction(beat, type);
         isOnBeat = false;
     }
 
     public virtual void OnUpdateSongAction(){}
-    public abstract void PreBeatAction(int counter);
-    public abstract void BeatAction(int counter);
-    public abstract void PostBeatAction(int counter);
+    public abstract void PreBeatAction(int beat, BeatManager.BeatType type);
+    public abstract void BeatAction(int beat, BeatManager.BeatType type);
+    public abstract void PostBeatAction(int beat, BeatManager.BeatType type);
     
 }

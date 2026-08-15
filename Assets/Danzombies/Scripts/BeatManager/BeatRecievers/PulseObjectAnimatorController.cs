@@ -17,22 +17,21 @@ public class PulseObjectAnimatorController : BeatReciever
             animator.runtimeAnimatorController = animatorOverrideController;
             animator.enabled = true;
             isActive=true;
-            beatType = beatMode;
         }
     }
 
-    public override void PreBeatAction(int counter)
+    public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
         //throw new System.NotImplementedException();
     }
 
-    public override void BeatAction(int counter)
+    public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        animator.SetTrigger("Pulse");
+        if(type == BeatManager.BeatType.FullBeat) animator.SetTrigger("Pulse");
         //Debug.Log(counter);
     }
 
-    public override void PostBeatAction(int counter)
+    public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
         animator.ResetTrigger("Pulse");
     }
@@ -44,7 +43,7 @@ public class PulseObjectAnimatorController : BeatReciever
     }
     private void SetBeatDuration()
     {
-        double duration = BeatManager.Instance? BeatManager.Instance.eighthBeatDuration:1d;
+        double duration = BeatManager.Instance? BeatManager.Instance.quarterBeatDuration:1d;
         animator.SetFloat("Beat",(float)(1f/duration));
     }
 

@@ -29,7 +29,7 @@ public class PlayerManager : DanceBrain
     public static PlayerManager Player;
 
     [Header("Puzzle")]
-    public RhythmPuzzle targetPuzzle;
+    public DanceZone danceTarget;
 
     public Action OnPlayerDeath;
     #endregion
@@ -44,9 +44,11 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region [METHODS]
-    public void AddTargetPuzzle(RhythmPuzzle puzzle)
+    public void AddTargetPuzzle(DanceZone target)
     {
-        targetPuzzle = puzzle;
+        
+        if(target != danceTarget) danceTarget?.PlayerLeave(this);
+        danceTarget = target;
         ActivateDanceHUD(true);
     }
 
@@ -56,24 +58,22 @@ public class PlayerManager : DanceBrain
         DanceBarController.DanceBar?.Activate(activate);
     }
 
-    public void RemoveTargetPuzzle(RhythmPuzzle puzzle)
+    public void RemoveTargetPuzzle(DanceZone target)
     {
-        
-        if (puzzle == targetPuzzle)
+        if (target == danceTarget)
         {
-            targetPuzzle = null;
+            danceTarget = null;
             ActivateDanceHUD(false);
         }
     }
 
-    public override void OnDance(DanceStep step)
+    public override void OnDanceStepAction(DanceStep step)
     {
-        if (targetPuzzle == null)
-            return;
-        if (targetPuzzle.SetPlayerInput(step, out BeatReciever.BeatFeedback bf))
-        {
-            ApplyDanceFeedback(bf);
-        }
+        if (danceTarget == null) return;
+        onDance?.Invoke(step);
+        danceAnimCtrl?.OnDanceBegin(step);
+        danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
+        ApplyDanceFeedback(bf);
     }
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
@@ -104,11 +104,6 @@ public class PlayerManager : DanceBrain
         DanceFeedbackEvent?.Invoke(bf);
     }
 
-    public void ReportEmptyDance()
-    {
-        ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
-    }
-
     public int IncreaseFlow(int increment)
     {
         if (isInSafeZone && increment < 0)
@@ -117,9 +112,10 @@ public class PlayerManager : DanceBrain
             Debug.Log($"[PlayerManager] ¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
         }
 
-        SequenceStep.DamageMode seqtype = targetPuzzle !=null?targetPuzzle.GetDamageMode(): SequenceStep.DamageMode.None;
-        targetPuzzle?.ReactToPlayerStatus(increment >= 0 ? DancerExpression.ExpressionType.Normal : DancerExpression.ExpressionType.Angry);
-        if (seqtype == SequenceStep.DamageMode.None) return 0;
+        DamageMode dmgMode = danceTarget !=null? danceTarget.GetDamageMode(): DamageMode.None;
+        
+        //danceTarget?.React(increment >= 0 ? DancerExpression.ExpressionType.Normal : DancerExpression.ExpressionType.Angry);
+        if (dmgMode == DamageMode.None) return 0;
         else
         {
 
@@ -127,10 +123,9 @@ public class PlayerManager : DanceBrain
             SetFlow(value);
             //targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
             DanceBarController.DanceBar?.UpdateFlowBars(nivelDeSeguridad);
-            if (value < GameManager.Alza && seqtype == SequenceStep.DamageMode.ModificaFlowYDaña)
+            if (value < GameManager.Alza && dmgMode == DamageMode.ModificaFlowYDaña)
             {
                 GetLifeDamage(true);
-                targetPuzzle?.PlayerGetDamaged();
                 SetFlow(5);
             }
             return value;

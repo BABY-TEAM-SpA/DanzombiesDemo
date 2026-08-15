@@ -10,7 +10,22 @@ public class PlayerBeatReciever : BeatReciever
         animator.enabled = true;
         SetBeatDuration();
     }
-    
+
+    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void BeatAction(int beat, BeatManager.BeatType type)
+    {
+        if(type == BeatManager.BeatType.FullBeat) animator.SetTrigger("Pulse");
+    }
+
+    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    {
+        //throw new NotImplementedException();
+    }
+
     private void SetBeatDuration()
     {
         if (animator != null)
@@ -19,23 +34,7 @@ public class PlayerBeatReciever : BeatReciever
             animator.SetFloat("Beat",(float)(1f/duration));
         }
     }
-
-    public override void PreBeatAction(int counter)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void BeatAction(int counter)
-    {
-        SetBeatDuration();
-        animator.SetTrigger("Pulse");
-        //Invoke("ResetIdle",0.1f);
-    }
-
-    public override void PostBeatAction(int counter)
-    {
-        //throw new NotImplementedException();
-    }
+    
     
 
     public void ResetIdle()

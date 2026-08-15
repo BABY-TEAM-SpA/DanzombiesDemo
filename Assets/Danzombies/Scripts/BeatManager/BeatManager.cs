@@ -11,46 +11,43 @@ public class BeatManager : MonoBehaviour
     public enum BeatType
     {
         FullBeat,
+        FirThird,
+        SecThird,
         HalfBeat
     }
 
-    [Header("Sync")]
-    [Range(0f, 0.4f)]
-    public double margenPercentOnBeat = 0.25d;
+    [Header("Sync")] [Range(0f, 0.4f)] public double margenPercentOnBeat = 0.25d;
 
-    [Range(0f, 1f)]
-    public double greatPercentOnMargin = 0.5d;
+    [Range(0f, 1f)] public double greatPercentOnMargin = 0.5d;
 
-    [Range(0f, 0.5f)]
-    public double perfectPercentOnMargin = 0.1d;
+    [Range(0f, 0.5f)] public double perfectPercentOnMargin = 0.1d;
 
     public double quarterBeatDuration { get; private set; } = 1f;
-    public double eighthBeatDuration { get; private set; } = 0.5f;
-    private bool mustHalfBeat = false;
 
-    public int localCounterNegra { get; private set; } = 1;
     public int globalCounterNegra { get; private set; } = 1;
-    public int globalCounterCorchea { get; private set; } = 1;
 
     public delegate void OnUpdate(double beatDuration);
+
     public static event OnUpdate OnUpdateEvent;
+    private bool beatManagerReady;
     double songTime;
 
     double lastBeatTime;
     double nextBeatTime;
-    
-    double lastHalfBeatTime;
+
+    double partBeatTime;
     double nextHalfBeatTime;
 
     private bool preTrigger;
     private bool beatTrigger;
     private bool postTrigger;
-    
+
     private bool halfPreTrigger;
     private bool halfBeatTrigger;
     private bool halfPostTrigger;
-    
+
     public delegate void OnBeatEvent(int counter, BeatType beatType);
+
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
@@ -66,73 +63,56 @@ public class BeatManager : MonoBehaviour
         Instance = this;
     }
 
-    void OnEnable()
-    {
-        AudioManager.OnPlay += OnPlayEvent;
-    }
-
-    void OnDisable()
-    {
-        AudioManager.OnPlay -= OnPlayEvent;
-    }
 
     void Update()
     {
         if (!AudioManager.Instance.IsPlaying()) return;
         songTime = AudioManager.Instance.SongPositionSeconds();
         HandlePrePostBeat();
-        HandleHalfPrePostBeat();
     }
 
     void OnPlayEvent(bool resetCounter)
     {
         ResetBeatManager(resetCounter);
-        if (AudioManager.Instance.TryGetCurrentRhythmTrack(out trackedMusic)) 
-            trackedMusic.setCallback( TimelineCallback, EVENT_CALLBACK_TYPE.TIMELINE_BEAT);
         OnUpdateEvent?.Invoke(quarterBeatDuration);
-        
     }
-    
-    [AOT.MonoPInvokeCallback(typeof(EVENT_CALLBACK))]
-    static FMOD.RESULT TimelineCallback(EVENT_CALLBACK_TYPE type,IntPtr instancePtr,IntPtr parameterPtr)
+
+
+    public void HandleBeat(int bar, int beat, float tempo, int upper, int lower, int pos)
     {
-        if (type != EVENT_CALLBACK_TYPE.TIMELINE_BEAT) return FMOD.RESULT.OK;
-        TIMELINE_BEAT_PROPERTIES beat = Marshal.PtrToStructure<TIMELINE_BEAT_PROPERTIES>(parameterPtr);
-        Instance?.HandleBeat( beat.bar, beat.beat, beat.tempo, beat.timesignatureupper,  beat.timesignaturelower);
-        return FMOD.RESULT.OK;
-    }
-    
-    void HandleBeat(int bar, int beat, float tempo,int upper, int lower)
-    {
-        
-        //Debug.Log("---------------");
-        lastBeatTime = AudioManager.Instance.SongPositionSeconds();
+
+        if (!beatManagerReady)
+        {
+            beatManagerReady = true;
+            OnPlayEvent(false);
+        }
+
+        lastBeatTime = pos / 1000d;
         quarterBeatDuration = 60d / tempo;
-        eighthBeatDuration = 30d / tempo;
+        partBeatTime = quarterBeatDuration / 6;
         nextBeatTime = lastBeatTime + quarterBeatDuration;
         preTrigger = true;
         beatTrigger = true;
         postTrigger = false;
         globalCounterNegra = (beat) + ((bar - 1) * upper);
-        if (useDebug)
-            Debug.Log("beat:"+globalCounterNegra);
+        if (useDebug) Debug.Log("beat:" + globalCounterNegra);
         OnBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
-        HalfBeat(lastBeatTime);
-        mustHalfBeat = true;
 
     }
+
     void HandlePrePostBeat()
     {
         double margin = quarterBeatDuration * margenPercentOnBeat;
-        
+
         //preBeat
-        if (!preTrigger  && songTime >= nextBeatTime - margin)
+        if (!preTrigger && songTime >= nextBeatTime - margin)
         {
             preTrigger = true;
             beatTrigger = false;
             postTrigger = true;
             OnPreBeat?.Invoke(globalCounterNegra, BeatType.FullBeat);
         }
+
         //postBeat
         if (!postTrigger && beatTrigger && songTime >= lastBeatTime + margin)
         {
@@ -143,53 +123,12 @@ public class BeatManager : MonoBehaviour
         }
     }
     
-    void HalfBeat(double time)
-    {
-        lastHalfBeatTime = time;
-        nextHalfBeatTime = lastBeatTime + eighthBeatDuration;
-        halfPreTrigger = true;
-        halfBeatTrigger = true;
-        halfPostTrigger = false;
-        globalCounterCorchea++;
-        OnBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
-    }
-    
-    
-    void HandleHalfPrePostBeat()
-    {
-        double margin = eighthBeatDuration * margenPercentOnBeat;
-        
-        //preBeat
-        if (!halfPreTrigger && songTime >= nextHalfBeatTime - margin)
-        {
-            halfPreTrigger = true;
-            halfBeatTrigger = false;
-            halfPostTrigger = false;
-            OnPreBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
-        }
 
-        if (halfPreTrigger && !halfBeatTrigger && !halfPostTrigger && songTime > nextHalfBeatTime&& mustHalfBeat)
-        {
-            HalfBeat(songTime);
-            mustHalfBeat = false;
-        }
-        
-        //postBeat
-        if (halfBeatTrigger && !halfPostTrigger && songTime >= lastHalfBeatTime + margin)
-        {
-            halfPreTrigger = false;
-            halfBeatTrigger = true;
-            halfPostTrigger = true;
-            OnPostBeat?.Invoke(globalCounterCorchea, BeatType.HalfBeat);
-        }
-    }
-    
     public void ResetBeatManager(bool resetCounter)
     {
         if (resetCounter)
         {
             globalCounterNegra = 0;
-            globalCounterCorchea = 0;
         }
 
         lastBeatTime = 0;
@@ -197,17 +136,13 @@ public class BeatManager : MonoBehaviour
         nextHalfBeatTime = 0;
     }
 
-    public BeatReciever.BeatFeedback EvaluateInput(BeatType type)
+    public BeatReciever.BeatFeedback EvaluateInput()
     {
-        double duration = (type == BeatType.FullBeat)? quarterBeatDuration : eighthBeatDuration;
         double nearestTime;
-
-        if (type == BeatType.FullBeat) nearestTime = Math.Abs(songTime - lastBeatTime)<Math.Abs(songTime - nextBeatTime)? lastBeatTime: nextBeatTime;
-        else nearestTime = nextHalfBeatTime;
-        
+        nearestTime = Math.Abs(songTime - lastBeatTime)<Math.Abs(songTime - nextBeatTime)? lastBeatTime: nextBeatTime;
         double delta = songTime - nearestTime;
         double absDelta = Math.Abs(delta);
-        double maxWindow = duration * margenPercentOnBeat;
+        double maxWindow = partBeatTime;
         double greatWindow =maxWindow * greatPercentOnMargin;
         double perfectWindow = greatWindow * perfectPercentOnMargin;
         if (absDelta <= perfectWindow) return BeatReciever.BeatFeedback.Perfect;
@@ -218,6 +153,6 @@ public class BeatManager : MonoBehaviour
 
     public int GetCounter(BeatType beatType)
     {
-        return (beatType==BeatType.FullBeat)? globalCounterNegra : globalCounterCorchea;
+        return globalCounterNegra;
     }
 }

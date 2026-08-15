@@ -31,17 +31,16 @@ public class TutorialDanceBrain : ZombieDanceBrain
     }
     
 
-    public override void OnPrepareStepAction(DanceStep step,DanceStep nextStep)
+    public override void OnPrepareStepAction(DanceStep step)
     {
         if (step != DanceStep.None && danceCanvas.isActiveAndEnabled)
         {
             string view = step.ToString()[0].ToString();
             string orientation = step.ToString().Remove(0,2);
             danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).active;
-            
         }
     }
-    public override void OnDanceStepAction(DanceStep step, DanceStep futureStep)
+    public override void OnDanceStepAction(DanceStep step)
     {
         if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
         {
@@ -66,7 +65,7 @@ public class TutorialDanceBrain : ZombieDanceBrain
         }
     }
     
-    public override void OnReleaseStepAction(DanceStep step, DanceStep futureStep)
+    public override void OnReleaseStepAction(DanceStep step)
     {
         
         if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
@@ -83,7 +82,12 @@ public class TutorialDanceBrain : ZombieDanceBrain
                 leftDirIcon.iconRenderer.sprite = currentLeftScheme.buttons[0].active;
             };
         }
-        futureDanceStep = futureStep;
+        
+    }
+
+    public override void OnSetNextSetAction(DanceStep step)
+    {
+        futureDanceStep = step;
         PrepareUI();
     }
 

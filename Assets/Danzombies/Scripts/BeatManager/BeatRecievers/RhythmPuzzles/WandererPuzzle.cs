@@ -4,55 +4,28 @@ using UnityEngine;
 
 public class WandererPuzzle : RhythmPuzzle
 {
-    [SerializeField] private ZombieDanceBrain zombie;
-    public SequenceStep danceSequence;
-    public bool RandomizeSteps= false;
+    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void BeatAction(int beat, BeatManager.BeatType type)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    {
+        throw new NotImplementedException();
+    }
 
     public override void PreparePuzzle()
     {
-        SetSequence(danceSequence);
-        //zombie.Connect(this);
-    }
-
-    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
-    {
-        throw new System.NotImplementedException();
-    }
-    
-
-    public override void OnDanceSequenceCleared()
-    {
         throw new NotImplementedException();
     }
 
-
-    public override void OnUpdateSongAction()
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    public override void PreBeatAction(int counter)
+    public override void OnPuzzleCompleted()
     {
         throw new NotImplementedException();
     }
-
-    public override void BeatAction(int counter)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void PostBeatAction(int counter)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
-        {
-            // if (zoneMaterial != null) zoneMaterial.SetFloat("_ActiveState", 0f);  
-            PlayerLeave(player);
-        }
-    }
-    
 }

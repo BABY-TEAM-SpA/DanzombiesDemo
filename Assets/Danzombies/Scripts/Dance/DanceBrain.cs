@@ -4,17 +4,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum ExpressionType {Normal,Angry}
 [Serializable]
 public class DancerExpression
 {
-    public enum ExpressionType {Normal,Angry}
+    
     public ExpressionType expressionType;
     public AnimatorOverrideController alpha;
     public AnimatorOverrideController beta;
     public UnityEvent OnReaction;
 }
 
-public abstract class DanceBrain : MonoBehaviour
+public abstract class DanceBrain : Dancer
 {
     #region [VARIABLES]
     [SerializeField] protected bool debug;
@@ -27,8 +28,8 @@ public abstract class DanceBrain : MonoBehaviour
     public bool isLeftLooking;
     
     [SerializeField] List<DancerExpression> dancerExpressions = new List<DancerExpression>();
-
     public event Action<bool> OnDirectionChanged;
+    
     #endregion
 
     #region [METHODS]
@@ -57,9 +58,7 @@ public abstract class DanceBrain : MonoBehaviour
         EnableDance(activate);
         beatReciever.SetActive(activate);
     }
-
-    public abstract void OnDance(DanceStep step);
-
+    
     public void OnMoving(Vector3 direction)
     {
         danceAnimCtrl.OnMoving(direction);
@@ -79,10 +78,9 @@ public abstract class DanceBrain : MonoBehaviour
                 OnDirectionChanged?.Invoke(isLeft);
             }
         }
-        
     }
     
-    public void React(DancerExpression.ExpressionType exp)
+    public void React(ExpressionType exp)
     {
         DancerExpression expression = dancerExpressions.FirstOrDefault((expression) => expression.expressionType == exp);
         if (expression != null) { 
@@ -91,4 +89,5 @@ public abstract class DanceBrain : MonoBehaviour
         }
     }
     #endregion
+    
 }

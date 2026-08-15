@@ -125,9 +125,9 @@ public class EnemyBrain : MonoBehaviour
         patrol.AddTransition(chase,() => SawPlayer);
         
         chase.AddTransition(idle,() => !SawPlayer);
-        chase.AddTransition(dancing,() => puzzle.playersInside!=null);
+        //chase.AddTransition(dancing,() => puzzle.playersInside!=null); Sorry Franco es culpa de la feña
         
-        dancing.AddTransition(chase,() => puzzle.playersInside==null);
+        //dancing.AddTransition(chase,() => puzzle.playersInside==null); Sorry Franco es culpa de la feña
         dancing.AddTransition(stunned,() => IsStunned);
 
         stunned.AddTransition(idle,() => !IsStunned);

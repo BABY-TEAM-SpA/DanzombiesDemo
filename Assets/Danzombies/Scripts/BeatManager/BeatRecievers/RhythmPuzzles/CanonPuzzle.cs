@@ -1,78 +1,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CanonPuzzle : RhythmPuzzle
 {
-    [SerializeField] private List<ZombieDanceBrain> zombies =new List<ZombieDanceBrain>();
-    [SerializeField] List<SequenceStep> sequenceSteps = new List<SequenceStep>();
-    int currentSequence = 0;
-    List<DanceData> danceDatas = new List<DanceData>();
+    [SerializeField] private List<Dancer> dancers =new List<Dancer>();
+    private int currentDancerIndex = 0;
     
-    [SerializeField] PlayerManager playerManager = new PlayerManager();
+    int currentSequenceIndex = 0;
+    private int innerCounter=0;
     
+    public List<DanceSequence> danceSequences = new List<DanceSequence>();
     
     public override void PreparePuzzle()
     {
-        PlayerEnter(playerManager);
-        danceDatas.Clear();
-        currentSequence = 0;
-        SetSequence(sequenceSteps[currentSequence]);
-        if (zombies.Count > 0)
+
+        currentSequenceIndex = 0;
+        currentDancerIndex = 0;
+        SetSequence(danceSequences[currentSequenceIndex]);
+    }
+
+    public override void OnPuzzleCompleted()
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    {
+        currentStep = danceSequence.GetDanceStep(innerCounter,type);
+        dancers[currentDancerIndex].OnPrepareStepAction(currentStep);
+    }
+
+    public override void BeatAction(int beat, BeatManager.BeatType type)
+    {
+        dancers[currentDancerIndex].OnDanceStepAction(currentStep);
+    }
+
+    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    {
+        dancers[currentDancerIndex].OnReleaseStepAction(currentStep);
+        innerCounter++;
+        if (innerCounter == danceSequence.coreography.StepInBar.Count)
         {
-            foreach (ZombieDanceBrain zombie in zombies)
-            {
-                DanceData data = new DanceData();
-                data.listeners.AddListener(zombie);
-                data.Sequence = sequenceSteps[currentSequence];
-                danceDatas.Add(data);
-            }
+            innerCounter = 0;
+            SetNextDancer();
         }
-        
+    }
+
+    public void SetNextDancer()
+    {
+        if(currentDancerIndex+1== dancers.Count) AllDancersHasDanced();
+        currentDancerIndex = (currentDancerIndex+1)%dancers.Count;
+    }
+
+    public void AllDancersHasDanced()
+    {
+        currentSequenceIndex++;
     }
     
-    public void OnDisable()
-    {
-        foreach (var danceData in danceDatas)
-        {
-            danceData.listeners.RemoveAllListeners();
-        }
-    }
-
-    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp) { }
-
-    public override void OnDanceSequenceCleared()
-    {
-        //currentSequence++;
-        //SetSequence(sequenceSteps[currentSequence]);
-        ActivatePuzzle(false);
-    }
-
-    public override void PreBeatAction(int counter)
-    {
-        PlayerHasDanced = false;
-        int count = zombies.Count;
-        foreach (var danceData in danceDatas)
-        {
-            danceData.SetDanceStep(counter+count);
-            count--;
-        }
-        currentDanceData?.SetDanceStep(counter);
-    }
-
-    public override void BeatAction(int counter)
-    {
-        foreach (var danceData in danceDatas)
-        {
-            danceData.listeners.InvokeDance(danceData.DanceStep);
-        }
-        currentDanceData?.SetDanceStep(counter); 
-    }
-
-    public override void PostBeatAction(int counter)
-    {
-        currentDanceData?.SetFutureDanceStep(counter);
-        CheckPlayerPost();
-        currentDanceData.DanceStep = DanceStep.None;
-        PlayerHasDanced = false;
-    }
+    
 }

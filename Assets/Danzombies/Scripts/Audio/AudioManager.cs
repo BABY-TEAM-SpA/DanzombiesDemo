@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.InteropServices;
+using FMOD;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
@@ -10,7 +13,6 @@ public class AudioManager : MonoBehaviour
     private EventInstance currentRhythmTrack;
 
     public delegate void OnMusicEvent(bool reset);
-    public static event OnMusicEvent OnPlay;
     public static event OnMusicEvent OnResume;
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
@@ -33,9 +35,13 @@ public class AudioManager : MonoBehaviour
         if (interrupt)
             StopSong();
         currentRhythmTrack = RuntimeManager.CreateInstance(eventRef);
-        currentRhythmTrack.start();
         isPaused = false;
-        OnPlay?.Invoke(true);
+        currentRhythmTrack.setCallback(
+            TimelineCallback,
+            EVENT_CALLBACK_TYPE.TIMELINE_BEAT
+        );
+
+        currentRhythmTrack.start();
     }
 
     public void PlaySfx(EventReference eventRef)
@@ -93,6 +99,15 @@ public class AudioManager : MonoBehaviour
             return 0f;
         currentRhythmTrack.getTimelinePosition(out int ms);
         return Mathf.RoundToInt(ms / 1000f);
+    }
+    [AOT.MonoPInvokeCallback(typeof(EVENT_CALLBACK))]
+    private static FMOD.RESULT TimelineCallback(EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)
+    {
+        if (type != EVENT_CALLBACK_TYPE.TIMELINE_BEAT) return FMOD.RESULT.OK;
+
+        TIMELINE_BEAT_PROPERTIES beat = Marshal.PtrToStructure<TIMELINE_BEAT_PROPERTIES>(parameterPtr);
+        BeatManager.Instance?.HandleBeat(beat.bar, beat.beat, beat.tempo, beat.timesignatureupper, beat.timesignaturelower, beat.position);
+        return FMOD.RESULT.OK;
     }
 
     public bool IsPlaying()

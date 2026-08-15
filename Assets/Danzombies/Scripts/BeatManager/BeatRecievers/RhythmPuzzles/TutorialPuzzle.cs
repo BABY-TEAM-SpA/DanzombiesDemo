@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialPuzzle : ZombieDanceZone
+public class TutorialPuzzle : RhythmPuzzle
 {
     #region [VARIABLES]
     [SerializeField] private ZombieDanceBrain Steph;
@@ -10,48 +10,58 @@ public class TutorialPuzzle : ZombieDanceZone
     [HideInInspector] public int currentTutorialSequence = 0;
     
     [Header("Tutorial Dance Settings")]
-    public List<SequenceStep> TutorialSequences = new List<SequenceStep>();
+    public List<DanceSequence> TutorialSequences = new List<DanceSequence>();
+    
+    PlayerManager player;
     
     #endregion
 
-    #region [UNITY]
+
     private void OnDisable()
     {
-        currentDanceData.listeners.RemoveAllListeners();
+        eventManager.RemoveAllListeners();
     }
-    #endregion
+
+    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void BeatAction(int beat, BeatManager.BeatType type)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    {
+        throw new System.NotImplementedException();
+    }
+
 
     #region [METHODS]
     public override void PreparePuzzle()
     {
-        currentDanceData.listeners.AddListener(Steph);
-        currentDanceData.listeners.AddListener(HUD);
+        eventManager.AddListener(Steph);
+        eventManager.AddListener(HUD);
     }
 
-    public override void ActivatePuzzle(bool activate)
+    public override void SetActivePuzzle(bool activate)
     {
         HUD.SetActiveCanvas(activate);
-        base.ActivatePuzzle(activate);
+        base.SetActivePuzzle(activate);
         if (currentTutorialSequence < TutorialSequences.Count) SetSequence(TutorialSequences[currentTutorialSequence]);
     }
-    
+
+    public override void OnPuzzleCompleted()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void ActivatePuzzleByIndex(int index)
     {
         currentTutorialSequence = index;
-        ActivatePuzzle(true);
+        SetActivePuzzle(true);
     }
-
-
-    public override void ReactToPlayerStatus(DancerExpression.ExpressionType exp)
-    {
-        //Nothing to do
-    }
-
-    public override void OnDanceSequenceCleared()
-    {
-        Debug.Log("OnDanceSequenceCleared");
-        currentTutorialSequence += 1;
-        ActivatePuzzle(false);
-    }
+    
     #endregion
 }

@@ -281,6 +281,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1073535529}
     m_Modifications:
     - target: {fileID: 7056290208718765735, guid: 7e42ddd06f7e14d43b417e65a4fbf624, type: 3}
+      propertyPath: ActivateOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056290208718765735, guid: 7e42ddd06f7e14d43b417e65a4fbf624, type: 3}
       propertyPath: dancerExpressions.Array.data[0].beta
       value: 
       objectReference: {fileID: 22100000, guid: 2ec500a46a0ef814dbfe8b792f2d22df, type: 2}
@@ -322,6 +326,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7910420591908278673, guid: 7e42ddd06f7e14d43b417e65a4fbf624, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495347835561046655, guid: 7e42ddd06f7e14d43b417e65a4fbf624, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8640736686685673340, guid: 7e42ddd06f7e14d43b417e65a4fbf624, type: 3}
@@ -601,6 +609,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
+      propertyPath: ActivateOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: dancerExpressions.Array.data[0].beta
       value: 
       objectReference: {fileID: 22100000, guid: d698ae0e9e5be42469f0975a51cac59a, type: 2}
@@ -608,6 +620,10 @@ PrefabInstance:
       propertyPath: dancerExpressions.Array.data[0].alpha
       value: 
       objectReference: {fileID: 22100000, guid: 3a7a5e091aeb9af4ba43bb5560544a0c, type: 2}
+    - target: {fileID: 5584085731872573711, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7472942076168638150, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: m_Name
       value: StephNPC
@@ -652,7 +668,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5584085731872573711, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -686,27 +703,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].actionToPlay
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Path
-      value: event:/4cuartos
+      value: event:/MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data1
-      value: -1746929068
+      value: 1165983101
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data2
-      value: 1271898998
+      value: 1214122780
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data3
-      value: -804343158
+      value: 358301375
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data4
-      value: -813185291
+      value: -400812891
       objectReference: {fileID: 0}
     - target: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: m_Name
@@ -813,7 +830,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
@@ -892,7 +909,6 @@ GameObject:
   - component: {fileID: 5315296557307901567}
   - component: {fileID: 8586757225164995394}
   - component: {fileID: 8586757225164995393}
-  - component: {fileID: 8081909947077626715}
   m_Layer: 0
   m_Name: Greg
   m_TagString: Player
@@ -983,7 +999,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1366706313
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ce834e428a8ffdd42b32b7d01ec0b27c, type: 3}
@@ -1011,19 +1027,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4270764139323226954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8081909947077626715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5167387637725079974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2344564086320948266}
 --- !u!1 &8127856157041912579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,10 +1093,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieDanceBrain
   debug: 0
-  ActivateOnStart: 0
+  ActivateOnStart: 1
   movCtrl: {fileID: 8586757225164995393}
   danceAnimCtrl: {fileID: 8685644219300128619}
-  beatReciever: {fileID: 8081909947077626715}
   isLeftLooking: 1
   dancerExpressions:
   - expressionType: 0

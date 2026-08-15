@@ -49,10 +49,6 @@ public class DanceAnimatorController : MonoBehaviour
     {
         bool moving = velocity != Vector3.zero;
         animator.SetBool("LeftLooking", _danceBrain.isLeftLooking);
-        if (moving)
-        {
-            animator.ResetTrigger("Pulse");
-        }
         animator.SetBool("Walking", moving);
         animator.SetFloat("WalkingSpeed", velocity.magnitude);
     }
@@ -60,13 +56,11 @@ public class DanceAnimatorController : MonoBehaviour
     public void OnDanceBegin(DanceStep step)
     {
         _danceBrain?.EnableMovement(false);
-        _danceBrain.OnDance(step);
         animator.Play(step.ToString(), 0,0f);
     }
     public void OnStandAction()
     {
         if(_danceBrain.isActiv) _danceBrain.EnableMovement(true);
-        animator.ResetTrigger("Pulse");
     }
 
     public void SetExpression(AnimatorOverrideController alpha, AnimatorOverrideController beta)

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ZombieDanceZone), true)]
+[CustomEditor(typeof(DanceZone), true)]
 public class ZombieDanceZoneEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -23,10 +23,10 @@ public class ZombieDanceZoneEditor : Editor
 
                 if (GUILayout.Button("Refresh"))
                 {
-                    ZombieDanceZone zombieDanceZone = (ZombieDanceZone)target;
+                    DanceZone zombieDanceZone = (DanceZone)target;
 
                     Undo.RecordObject(zombieDanceZone, "Refresh ZombieDanceZone Zombies");
-                    zombieDanceZone.RefreshZombies();
+                    //zombieDanceZone.RefreshZombies();
                     EditorUtility.SetDirty(zombieDanceZone);
                 }
             }
