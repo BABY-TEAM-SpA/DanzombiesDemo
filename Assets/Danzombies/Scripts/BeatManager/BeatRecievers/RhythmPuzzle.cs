@@ -31,8 +31,8 @@ public abstract class RhythmPuzzle : BeatReciever
     public virtual void SetActivePuzzle(bool activate)
     {
         isActive = activate;
-        if (!activate)
-            return;
+        if (!activate) return;
+        eventManager.InvokeReseatPuzzle();
     }
     
 
@@ -42,5 +42,6 @@ public abstract class RhythmPuzzle : BeatReciever
     }
 
     public abstract void OnPuzzleCompleted();
+    
 
 }

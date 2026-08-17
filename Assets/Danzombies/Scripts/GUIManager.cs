@@ -4,12 +4,8 @@ public class GUIManager : MonoBehaviour
 {
     public static GUIManager Instance { get; private set; }
     
-    public GameObject PlayerCanvas;
     public GameObject PauseCanvas;
     public GameObject TransitionCanvas;
-
-    public DanceBarController DanceBar => danceBarController;
-    [SerializeField] private DanceBarController danceBarController;
 
     private void Awake()
     {

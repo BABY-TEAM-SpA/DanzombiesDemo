@@ -81,7 +81,7 @@ public class PlayerAnimatorController : DanceAnimatorController
             if(isTutorial)animator.SetBool("PrepareDance",false);
             danceTriggered=true;
             DanceStep step = Enum.Parse<DanceStep>( currentLean + "_" + currentDirection );
-            _danceBrain.OnDanceStepAction(step);
+            _danceBrain.OnDanceStepAction(BeatManager.Instance.globalBeatCount,BeatManager.BeatType.FullBeat, step);
         }
     }
     

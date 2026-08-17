@@ -57,6 +57,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -289,9 +290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf99b5fa5490249b42ec46c8aaf2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
-  beatType: 0
   animator: {fileID: 0}
   animatorOverrideController: {fileID: 0}
+  beatMode: 1
 --- !u!1 &6861835003544163992
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,8 +492,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -332.291
       objectReference: {fileID: 0}
+    - target: {fileID: 8624661376338695154, guid: cfb87dd7f6cbcd44fbcb920e22fdcb91, type: 3}
+      propertyPath: PlayerCanvas
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2352815850135550668, guid: cfb87dd7f6cbcd44fbcb920e22fdcb91, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3890851278176369164, guid: cfb87dd7f6cbcd44fbcb920e22fdcb91, type: 3}
       insertIndex: -1
@@ -617,6 +623,10 @@ PrefabInstance:
     - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: margenPercentOnBeat
+      value: 0.30000001192092896
       objectReference: {fileID: 0}
     - target: {fileID: 8874700405571119761, guid: ed5411465da445045ba84757f34286ab, type: 3}
       propertyPath: m_Name

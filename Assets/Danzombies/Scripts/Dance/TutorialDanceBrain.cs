@@ -31,7 +31,7 @@ public class TutorialDanceBrain : ZombieDanceBrain
     }
     
 
-    public override void OnPrepareStepAction(DanceStep step)
+    public override void OnPrepareStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
     {
         if (step != DanceStep.None && danceCanvas.isActiveAndEnabled)
         {
@@ -40,7 +40,7 @@ public class TutorialDanceBrain : ZombieDanceBrain
             danceIcon.iconRenderer.sprite = currentDanceScheme.buttons.Find(x => x.buttonName == orientation).active;
         }
     }
-    public override void OnDanceStepAction(DanceStep step)
+    public override void OnDanceStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
     {
         if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
         {
@@ -65,7 +65,7 @@ public class TutorialDanceBrain : ZombieDanceBrain
         }
     }
     
-    public override void OnReleaseStepAction(DanceStep step)
+    public override void OnReleaseStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
     {
         
         if (step != DanceStep.None&& danceCanvas.isActiveAndEnabled)
@@ -85,7 +85,7 @@ public class TutorialDanceBrain : ZombieDanceBrain
         
     }
 
-    public override void OnSetNextSetAction(DanceStep step)
+    public override void OnSetNextSetAction(int beat,BeatManager.BeatType beatType, DanceStep step)
     {
         futureDanceStep = step;
         PrepareUI();

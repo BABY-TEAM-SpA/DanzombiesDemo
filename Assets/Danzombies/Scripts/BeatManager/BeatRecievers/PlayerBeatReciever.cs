@@ -5,10 +5,12 @@ public class PlayerBeatReciever : BeatReciever
 {
     [SerializeField] Animator animator;
 
-    public override void OnUpdateSongAction()
+    public override void OnUpdateSongAction(double barDuration)
     {
         animator.enabled = true;
-        SetBeatDuration();
+        double duration = barDuration;
+        float value = (float)(1f / duration);
+        animator.SetFloat("Beat",value);
     }
 
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
@@ -25,16 +27,6 @@ public class PlayerBeatReciever : BeatReciever
     {
         //throw new NotImplementedException();
     }
-
-    private void SetBeatDuration()
-    {
-        if (animator != null)
-        {
-            double duration = BeatManager.Instance? BeatManager.Instance.quarterBeatDuration:1d;
-            animator.SetFloat("Beat",(float)(1f/duration));
-        }
-    }
-    
     
 
     public void ResetIdle()

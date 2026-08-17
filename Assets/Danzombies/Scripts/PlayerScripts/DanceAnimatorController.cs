@@ -76,12 +76,6 @@ public class DanceAnimatorController : MonoBehaviour
         animator.SetBool("LeftLooking", isLeft);
         animator.runtimeAnimatorController = isLeft? alphaOverrider : betaOverrider;
     }
-    private void SetBeatDuration()
-    {
-        currentBeatOnPlayer = BeatManager.Instance.quarterBeatDuration;
-        animator.enabled = true;
-        animator.SetFloat("Beat",(float)(1/currentBeatOnPlayer));
-    }
     
     public void Activate()
     {

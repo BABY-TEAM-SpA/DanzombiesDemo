@@ -46,7 +46,6 @@ public class PlayerManager : DanceBrain
     #region [METHODS]
     public void AddTargetPuzzle(DanceZone target)
     {
-        
         if(target != danceTarget) danceTarget?.PlayerLeave(this);
         danceTarget = target;
         ActivateDanceHUD(true);
@@ -67,7 +66,7 @@ public class PlayerManager : DanceBrain
         }
     }
 
-    public override void OnDanceStepAction(DanceStep step)
+    public override void OnDanceStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
     {
         if (danceTarget == null) return;
         onDance?.Invoke(step);
@@ -109,7 +108,7 @@ public class PlayerManager : DanceBrain
         if (isInSafeZone && increment < 0)
         {
             increment = 0;
-            Debug.Log($"[PlayerManager] ¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
+            //¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
         }
 
         DamageMode dmgMode = danceTarget !=null? danceTarget.GetDamageMode(): DamageMode.None;
@@ -142,12 +141,10 @@ public class PlayerManager : DanceBrain
         hp = Math.Clamp(hp, 0, 3);
         //PlayerUIController.Instance?.UpdateLifesPlayer(hp);
 
-        if (receiveDamage)
-            LifeDamagedEvent?.Invoke();
+        if (receiveDamage) LifeDamagedEvent?.Invoke();
         else LifeHealedEvent?.Invoke();
 
-        if (hp <= 0)
-            GameOver();
+        if (hp <= 0) GameOver();
     }
 
     public void GameOver()

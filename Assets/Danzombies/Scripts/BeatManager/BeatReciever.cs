@@ -37,7 +37,7 @@ public abstract class BeatReciever : MonoBehaviour
 
     private void OnUpdateSongEvent(double barDuration)
     {
-        OnUpdateSongAction();
+        OnUpdateSongAction( barDuration);
     }
 
     private void OnPreBeatEvent(int beat, BeatManager.BeatType type)
@@ -60,9 +60,10 @@ public abstract class BeatReciever : MonoBehaviour
         isOnBeat = false;
     }
 
-    public virtual void OnUpdateSongAction(){}
+    public virtual void OnUpdateSongAction(double barDuration){}
     public abstract void PreBeatAction(int beat, BeatManager.BeatType type);
     public abstract void BeatAction(int beat, BeatManager.BeatType type);
     public abstract void PostBeatAction(int beat, BeatManager.BeatType type);
     
+
 }

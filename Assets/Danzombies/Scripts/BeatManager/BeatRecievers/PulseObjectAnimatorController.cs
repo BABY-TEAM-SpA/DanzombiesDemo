@@ -36,16 +36,14 @@ public class PulseObjectAnimatorController : BeatReciever
         animator.ResetTrigger("Pulse");
     }
 
-    public override void OnUpdateSongAction()
+    public override void OnUpdateSongAction(double barDuration)
     {
         animator.enabled=true;
-        SetBeatDuration();
+        double duration = barDuration;
+        float value = (float)(1f / duration);
+        animator.SetFloat("Beat",value);
     }
-    private void SetBeatDuration()
-    {
-        double duration = BeatManager.Instance? BeatManager.Instance.quarterBeatDuration:1d;
-        animator.SetFloat("Beat",(float)(1f/duration));
-    }
+    
 
    
 }

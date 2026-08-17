@@ -10,21 +10,20 @@ public enum DamageMode
     ModificaFlowYDaña
 }
 
-public interface IDanceInputZone
-{
-    public void SetPlayerInput(DanceStep step, out BeatReciever.BeatFeedback bf);
-    public DamageMode GetDamageMode();
-}
 
-public class DanceZone : Dancer, IDanceInputZone
+public class DanceZone : Dancer
 {
-    public SpriteRenderer Renderer;
+    [SerializeField] private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
     public DanceEventManager listeners = new DanceEventManager();
     
     [Header("Players")] 
     protected bool PlayerHasDanced=false;
+    
+    private BeatManager.BeatType compareBeatType;
+    
+    
     public PlayerManager playersInside{private set; get;}
 
     [SerializeField]
@@ -44,24 +43,43 @@ public class DanceZone : Dancer, IDanceInputZone
     {
         foreach (ZombieDanceBrain dancer in dancers) listeners.AddListener(dancer);
     }
-    
-    public override void OnDanceStepAction(DanceStep step)
-    {
-        listeners.InvokeDance(step);
-        onDance?.Invoke(step);
-    }
-
     private void OnDisable()
     {
         listeners.RemoveAllListeners();
     }
+    
+    public override void OnPrepareStepAction(int prevbeat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        PlayerHasDanced = false;
+        currentBeat = BeatManager.Instance.globalBeatCount+1;
+        currentBeatType = beatType;
+        base.OnPrepareStepAction(prevbeat,beatType, danceStep);
+    }
+    
+    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        currentBeat = BeatManager.Instance.globalBeatCount;
+        listeners.InvokeDance(beat,beatType, danceStep);
+        onDance?.Invoke(danceStep);
+    }
+
+    public override void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        if (playersInside!= null &&!PlayerHasDanced && danceStep != DanceStep.None && danceStep != DanceStep.Idle)
+        {
+            Debug.Log("didntDance");
+            playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
+        }
+        base.OnReleaseStepAction(beat,beatType, danceStep);
+    }
+    
 
     private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
                 PlayerEnter(player);
         }
-    public virtual void PlayerEnter(PlayerManager player)
+    public void PlayerEnter(PlayerManager player)
     {
         player.AddTargetPuzzle(this);
         playersInside = player;
@@ -77,44 +95,27 @@ public class DanceZone : Dancer, IDanceInputZone
         player.RemoveTargetPuzzle(this);
     }
 
-    public override void OnPrepareStepAction(DanceStep step)
-    {
-        PlayerHasDanced = false;
-        Renderer.enabled = true;
-        base.OnPrepareStepAction(step);
-    }
-
-    public override void OnReleaseStepAction(DanceStep step)
-    {
-        if (playersInside!= null &&!PlayerHasDanced && step != DanceStep.None)
-        {
-            Debug.Log("didntDance");
-            playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
-        }
-        Renderer.enabled = false;
-        base.OnReleaseStepAction(step);
-    }
     
-
+    
+    public void React(ExpressionType exp)
+    {
+        foreach (ZombieDanceBrain dancer in dancers)
+            dancer.React(exp);
+        
+    }
     public void SetPlayerInput(DanceStep step, out BeatReciever.BeatFeedback bf)
     {
-        Debug.Log(step.ToString()+currentDanceStep.ToString());
         
         bf = BeatReciever.BeatFeedback.Bad;
         if (PlayerHasDanced) return;
         else
         {
             PlayerHasDanced = true;
-            bool isCorrect = step == currentDanceStep;
-            bf = isCorrect ? BeatManager.Instance.EvaluateInput() : BeatReciever.BeatFeedback.Bad;
+            bool isTheSameStep = step == currentDanceStep;
+            //Debug.Log(isTheSameStep);
+            bf = isTheSameStep ? BeatManager.Instance.EvaluateInput(currentBeat,currentBeatType) : BeatReciever.BeatFeedback.Bad;
             React(bf==BeatReciever.BeatFeedback.Bad?ExpressionType.Angry:ExpressionType.Normal);
         }
-        
-    }
-    public void React(ExpressionType exp)
-    {
-        foreach (ZombieDanceBrain dancer in dancers)
-            dancer.React(exp);
         
     }
 }

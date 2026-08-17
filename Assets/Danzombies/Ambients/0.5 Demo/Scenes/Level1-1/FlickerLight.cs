@@ -2,17 +2,13 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.U2D;
 
-public class FlickerLight : MonoBehaviour
+public class FlickerLight : BeatReciever
 {
-    
-    private int innerCounter;
     [SerializeField,Min(0f)] private float minIntensity = 0.5f;
     private float maxIntensity = 1.2f;
-    [SerializeField, Min(0f)] private float timeBetweenIntensity = 0.1f;
     public bool useBeatTime;
-    public BeatManager.BeatType beatType;
-    [Min(1)] public int beatMarginUpdate =1;
-
+    [SerializeField, Min(0f)] private float timeBetweenIntensity = 0.1f;
+    
     private Light2D lightToFlicker;
     private float currentTimer;
 
@@ -27,26 +23,34 @@ public class FlickerLight : MonoBehaviour
             lightToFlicker = GetComponent<Light2D>();
             maxIntensity = lightToFlicker.intensity;   
         }
-        
     }
 
     private void Update()
     {
-        
-        if (useBeatTime)
-        {
-            int counter = BeatManager.Instance.GetCounter(beatType);
-            if ( counter <= innerCounter+beatMarginUpdate-1) return;
-            innerCounter=counter;
-        }
-        else
-        {
-            currentTimer+= Time.deltaTime;
-            if (!(currentTimer >= timeBetweenIntensity)) return;
-            currentTimer = 0;
-        }
-        lightToFlicker.intensity = Random.Range(minIntensity, maxIntensity);
-        
+        if (useBeatTime) return;
+        currentTimer+= Time.deltaTime;
+        if (!(currentTimer >= timeBetweenIntensity)) return;
+        currentTimer = 0;
+        Flick();
+    }
 
+    private void Flick()
+    {
+        lightToFlicker.intensity = Random.Range(minIntensity, maxIntensity);
+    }
+
+    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void BeatAction(int beat, BeatManager.BeatType type)
+    {
+        if(useBeatTime && type == BeatManager.BeatType.FullBeat) Flick();
+    }
+
+    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    {
+        //throw new System.NotImplementedException();
     }
 }

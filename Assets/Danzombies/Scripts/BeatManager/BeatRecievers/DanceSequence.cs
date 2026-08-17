@@ -24,40 +24,7 @@ public enum DanceStep
 [Serializable]
 public class DanceStepPerBeat
  {
-     [Description("Pasos en 1 Beat (recomendable 1)")]
-     public class MaxElementsAttribute : PropertyAttribute
-     {
-         public int Max { get; private set; }
-         public MaxElementsAttribute(int max) { Max = max; }
-     }
-     #if UNITY_EDITOR
-     
-         [CustomPropertyDrawer(typeof(MaxElementsAttribute))]
-         public class MaxElementsDrawer : PropertyDrawer
-         {
-             public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-             {
-                 MaxElementsAttribute maxAttribute = (MaxElementsAttribute)attribute;
-     
-                 if (property.isArray)
-                 {
-                     if (property.arraySize > maxAttribute.Max)
-                     {
-                         property.arraySize = maxAttribute.Max;
-                         Debug.LogWarning($"[Límite] No puedes añadir más de {maxAttribute.Max} subdivisiones aquí.");
-                     }
-                 }
-                 EditorGUI.PropertyField(position, property, label, true);
-             }
-     
-             public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-             {
-                 return EditorGUI.GetPropertyHeight(property, label, true);
-             }
-         }
-     #endif
-     
-     [MaxElements(2)]
+     [Tooltip("Pasos en 1 Beat (recomendable 1). Si se ponen 2 hará como Corcheas y si se ponen 3 hará Trecillos")]
      public List<DanceStep> StepPerBeat = new List<DanceStep>();
  }
 
@@ -65,13 +32,13 @@ public class DanceStepPerBeat
  public class DancePattern
  {
      
-     [Description("Coreo por Beat (recomendable 4)")]
+     [Tooltip("Coreo por Beat (recomendable 4)")]
      public List<DanceStepPerBeat> StepInBar = new List<DanceStepPerBeat>();
  }
 
  public class DanceSequence : MonoBehaviour
  {
-     public enum SeqMode
+     public enum SeqStopMode
      {
          OneShot,
          StopOnCombo,
@@ -79,10 +46,9 @@ public class DanceStepPerBeat
          Loop,
          LoopShuffled
      }
-     public SeqMode sequenceType=SeqMode.OneShot;
+     public SeqStopMode sequenceStopMode = SeqStopMode.OneShot;
      public DancePattern coreography;
-     public delegate void ResetPointReached();
-     public event ResetPointReached OnResetPointReached;
+     
      public UnityEvent OnDanceSequenceFinished = new UnityEvent();
 
      public DanceStep GetDanceStep(int beat, BeatManager.BeatType beatPart)
@@ -93,7 +59,7 @@ public class DanceStepPerBeat
              DanceStepPerBeat beatDances = coreography.StepInBar[beat % coreography.StepInBar.Count];
              if (beatPart == BeatManager.BeatType.FullBeat)
              {
-                 step = beatDances.StepPerBeat[0];
+                 step = beatDances.StepPerBeat.Count!=0?beatDances.StepPerBeat[0]:DanceStep.None;
                  if (step == DanceStep.None) step = DanceStep.Idle;
              }
              else step = (beatDances.StepPerBeat.Count==2)? beatDances.StepPerBeat[1] : DanceStep.None;
@@ -101,10 +67,12 @@ public class DanceStepPerBeat
          }
          return step;
      }
+     
 
+     //Aqui esta el problema del looping
      public DanceStep GetFutureStep(int nextStepCounter)
      {
-         if(nextStepCounter >= coreography.StepInBar.Count) EndSequence();
+         //if(nextStepCounter >= coreography.StepInBar.Count) EndSequence();
          /*for (int i = 0; i < coreography.StepInBar.Count; i++)
          {
              int aux = i+coreography;
@@ -119,16 +87,24 @@ public class DanceStepPerBeat
      {
          coreography.StepInBar = coreography.StepInBar.OrderBy(x => UnityEngine.Random.value).ToList();
      }
+     
+     public bool CheckEndOfSequence(int beat)
+     {
+         if(beat == coreography.StepInBar.Count)
+         {
+             if(sequenceStopMode == SeqStopMode.LoopShuffled)
+             {
+                 ShuffleSteps();
+                 return false;
+             }
+             if(sequenceStopMode == SeqStopMode.OneShot)
+             {
+                 return true;
+             }
+         }
+         return false;
+     }
 
-     private void EndSequence()
-     {
-         OnResetPointReached?.Invoke();
-         if(sequenceType == SeqMode.LoopShuffled) ShuffleSteps();
-         if(sequenceType == SeqMode.OneShot) CompleteSequence();
-     }
-     public void CompleteSequence()
-     {
-         OnDanceSequenceFinished?.Invoke();
-     }
+     
 
  }
