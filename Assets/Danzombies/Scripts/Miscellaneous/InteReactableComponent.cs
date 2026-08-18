@@ -7,12 +7,6 @@ using UnityEngine.Events;
 [Serializable]
 public class Interaction
 {
-    private enum InteractionType
-    {
-        OnEnter,
-        OnExit,
-        OnInteraction,
-    }
     #region [VARIABLES]
     [TagField] public string target;
     [HideInInspector] public bool completed;

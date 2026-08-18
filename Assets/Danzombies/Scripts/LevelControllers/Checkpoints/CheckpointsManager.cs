@@ -11,7 +11,7 @@ public class CheckpointsManager : MonoBehaviour
 
     private PlayerManager player;
     private Checkpoint lastCheckpoint;
-    [SerializeField] private MonoBehaviour[] resettableObjects;
+    [SerializeField] private Resettable[] resettableObjects;
     #endregion
 
     #region [UNITY]
@@ -78,7 +78,6 @@ public class CheckpointsManager : MonoBehaviour
         Transform searchRoot = levelRoot != null
             ? levelRoot : transform.root;
 
-        Array.Clear(resettableObjects, 0, resettableObjects.Length);
         resettableObjects = searchRoot.GetComponentsInChildren<Resettable>(true);
 
         Debug.Log($"[CheckpointsManager] El array fue actualizado con {resettableObjects.Length} objetos Resettable encontrados en la escena.");

@@ -7,5 +7,5 @@ public class TempMetroCanvas : MonoBehaviour
 {
     [SerializeField] private ZombieChasingHordeBehaviour horde;
 
-    private void Start() => horde.StopChasing();
+    private void Start() => horde.SetChase(false);
 }
