@@ -43,8 +43,8 @@ public class CheckpointsManager : MonoBehaviour
             return;
         }
 
-        foreach (IResettable resettable in resettableObjects)
-            resettable.ResetState();
+        foreach (Resettable resettable in resettableObjects)
+            resettable.ResetState(checkpoint);
         Debug.Log($"[CheckpointsManager] Respawneando en {checkpoint.name}, {resettableObjects.Length} objetos restaurados.");
 
         checkpoint.Respawn(playerManager);
@@ -79,10 +79,9 @@ public class CheckpointsManager : MonoBehaviour
             ? levelRoot : transform.root;
 
         Array.Clear(resettableObjects, 0, resettableObjects.Length);
-        resettableObjects = searchRoot.GetComponentsInChildren<MonoBehaviour>(true)
-            .Where(mb => mb is IResettable).ToArray();
+        resettableObjects = searchRoot.GetComponentsInChildren<Resettable>(true);
 
-        Debug.Log($"[CheckpointsManager] El array fue actualizado con {resettableObjects.Length} objetos IResettable encontrados en la escena.");
+        Debug.Log($"[CheckpointsManager] El array fue actualizado con {resettableObjects.Length} objetos Resettable encontrados en la escena.");
         UnityEditor.EditorUtility.SetDirty(this);
     }
 
@@ -122,10 +121,7 @@ public class CheckpointsManager : MonoBehaviour
         player = playerManager;
         lastCheckpoint = checkpoint;
 
-        foreach (IResettable resettable in resettableObjects)
-            resettable?.CaptureState();
-        Debug.Log($"Nuevo Checkpoint: {checkpoint.name}, {resettableObjects.Length} objetos guardado");
-
+        Debug.Log($"[CheckpointsManager] Checkpoint '{checkpoint.name}' cruzado");
         player.OnPlayerDeath += RecoverToLastCheckpoint;
     }
     #endregion

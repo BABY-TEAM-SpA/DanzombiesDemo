@@ -15,19 +15,16 @@ public class Interaction
     }
     #region [VARIABLES]
     [TagField] public string target;
-    
-    private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
     [HideInInspector] public bool completed;
-    private InteractionState _state = new();
+    private int timesIntended; // <- Veces que el Player ha interactuado/entrado en el área de reacción
+
     [SerializeField] private UnityEvent OnEnter;
     [SerializeField] private UnityEvent OnInteraction;
-    [Tooltip("Veces necesarias para que se ejecute el evento")]
-    [Min(0), Range(0,10)] public int interactionsToComplete = 1;
+
+    [Tooltip("Veces necesarias para que se ejecute el evento.")]
+    [Min(0)] public int timesToComplete = 1;
     [SerializeField] private UnityEvent OnComplete;
     [SerializeField] private UnityEvent OnExit;
-
-    [Header("Reset")]
-    public UnityEvent OnReset;
     #endregion
 
     #region [METHODS]
@@ -35,8 +32,11 @@ public class Interaction
     
     public void Interact()
     {
+        if (completed)
+            return;
+
         timesIntended++;
-        if (timesIntended == interactionsToComplete)
+        if (timesIntended == timesToComplete)
             InteractionComplete();
         else OnInteraction.Invoke();
     }
@@ -49,36 +49,10 @@ public class Interaction
         OnExit?.Invoke();
     }
     #endregion
-
-    #region IResettable
-    private struct InteractionState
-    {
-        public bool completed;
-    }
-
-    public void Capture()
-    {
-        _state = new InteractionState
-        {
-            completed = completed,
-        };
-    }
-
-    public void Reset()
-    {
-        if (completed && !_state.completed)
-        {
-            timesIntended = 0;
-            completed = false;
-
-            OnReset?.Invoke();
-        }        
-    }
-    #endregion
 }
 
 [RequireComponent(typeof(Collider2D))]
-public class InteReactableComponent : MonoBehaviour, IResettable
+public class InteReactableComponent : MonoBehaviour
 {
     #region [VARIABLES]
     [SerializeField] private Interaction[] interactions;
@@ -107,43 +81,46 @@ public class InteReactableComponent : MonoBehaviour, IResettable
     #endregion
 
     #region [METHODS]
+    #region Handlers
     public void HandleReaction(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
-        e?.React();
+        if (GetInteraction(type, out Interaction interaction))
+            interaction.React();
     }
 
     public void HandleInteraction(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
-        e?.Interact();
+        if (GetInteraction(type, out Interaction interaction))
+            interaction.Interact();
     }
 
     public void HandleLeave(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
-        e?.Leave();
+        if (GetInteraction(type, out Interaction interaction))
+            interaction.Leave();
     }
     #endregion
 
-    #region IResettable
+    #region Completeness
     public void MarkAsCompleted(string type)
     {
-        Interaction e = interactions.FirstOrDefault(interaction => type == interaction.target);
-        if (e != null)
-            e.completed = true;
+        if (GetInteraction(type, out Interaction interaction))
+            interaction.completed = true;
     }
 
-    public void CaptureState()
+    public void MarkAsUncompleted(string type)
     {
-        foreach (Interaction e in interactions)
-            e.Capture();
+        if (GetInteraction(type, out Interaction interaction))
+            interaction.completed = false;
     }
+    #endregion
 
-    public void ResetState()
+    #region Helpers
+    private bool GetInteraction(string type, out Interaction interaction)
     {
-        foreach (Interaction e in interactions)
-            e.Reset();
+        interaction = interactions.FirstOrDefault(e => type == e.target);
+        return interaction != null;
     }
+    #endregion
     #endregion
 }
