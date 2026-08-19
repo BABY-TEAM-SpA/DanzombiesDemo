@@ -141,14 +141,18 @@ public class PlayerManager : DanceBrain
         hp = Math.Clamp(hp, 0, 3);
         //PlayerUIController.Instance?.UpdateLifesPlayer(hp);
 
-        if (receiveDamage) LifeDamagedEvent?.Invoke();
+        if (receiveDamage)
+            LifeDamagedEvent?.Invoke();
         else LifeHealedEvent?.Invoke();
 
-        if (hp <= 0) GameOver();
+        if (hp <= 0)
+            GameOver();
     }
 
     public void GameOver()
     {
+        hp = 3; // <- [Frco] Está hardcodeado, convendría generalizar porque no se está
+                //    comunicando con el PlayerCanvas, sino a través de OnPlayerDeath
         OnPlayerDeath?.Invoke();
     }
     

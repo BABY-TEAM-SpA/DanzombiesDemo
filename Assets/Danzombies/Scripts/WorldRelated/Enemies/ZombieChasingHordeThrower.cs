@@ -50,7 +50,13 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
 
     #region [METHODS]
     #region Behaviour
-    public void SetThrow(bool value) => canThrow = value;
+    public void SetThrow(bool value)
+    {
+        if (throwingZombieInstance != null)
+            Destroy(throwingZombieInstance.gameObject);
+        canThrow = value;
+    }
+
     private void StartThrowAction() => warningElement.PlaySequence(0);
 
     public void ThrowZombie()
@@ -75,6 +81,8 @@ public class ZombieChasingHordeThrower : ObjectPool<ThrownZombie>
         float rng = Random.Range(-delta, delta);
         period = throwPeriod + rng;
     }
+
+    public void SetFirstZombieMiss(bool value) => makeFirstZombieMiss = value;
     #endregion
     #endregion
 }
