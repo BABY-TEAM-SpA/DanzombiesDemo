@@ -35,6 +35,12 @@ public class CheckpointsManager : MonoBehaviour
 
     #region [METHODS]
     #region Recover
+    /// <summary>
+    /// El flujo de un Respawn (también el salto entre Respawns del DevMode) es:
+    /// 1. [CheckpointsManager] Los Resettables ejecutan ResetState -> sus eventos OnReset
+    /// 2. [Checkpoint] El Checkpoint ejecuta Respawn sobre el Player -> teletransportación a su PlayerSpawn
+    /// 3. [Checkpoint] Al teletrasportarse sobre el Checkpoint, el OnTriggerEnter2D ejecuta los eventos OnCheckpoint
+    /// </summary>
     public void RecoverTo(Checkpoint checkpoint, PlayerManager playerManager)
     {
         if (checkpoint == null)

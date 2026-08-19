@@ -54,19 +54,11 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         if (isChasing == chase)
             return;
 
+        RecalculateRail();
         if (chase)
         {
-            railDirection = ((Vector2)endPoint.position - (Vector2)startPoint.position).normalized;
-            perpendicular = Vector2.Perpendicular(railDirection);
-            railLength = Vector2.Distance(startPoint.position, endPoint.position);
-
             float projected = Vector2.Dot((Vector2)transform.position - (Vector2)startPoint.position, railDirection);
             railProgress = Mathf.Clamp(projected, 0f, railLength);
-        }
-        else
-        {
-            currentSpeed = 0f;
-            currentOffset = 0f;
         }
 
         animator.SetBool("Chase", chase);
@@ -75,9 +67,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
 
     public void TeleportToStartPoint()
     {
-        currentOffset = 0f;
-        railProgress = 0f;
-
+        RecalculateRail();
         transform.position = startPoint.position;
     }
     #endregion
@@ -112,6 +102,17 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #endregion
 
     #region Helpers
+    private void RecalculateRail()
+    {
+        railDirection = ((Vector2)endPoint.position - (Vector2)startPoint.position).normalized;
+        perpendicular = Vector2.Perpendicular(railDirection);
+        railLength = Vector2.Distance(startPoint.position, endPoint.position);
+
+        currentOffset = 0f;
+        railProgress = 0f;
+        currentSpeed = 0f;
+    }
+
     private void SetSpeed()
     {
         float playerDistance = playerMovement.transform.position.x - transform.position.x;
