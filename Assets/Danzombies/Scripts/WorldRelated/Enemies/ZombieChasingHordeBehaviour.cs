@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieChasingHordeBehaviour : MonoBehaviour
@@ -60,8 +59,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
             float projected = Vector2.Dot((Vector2)transform.position - (Vector2)startPoint.position, railDirection);
             railProgress = Mathf.Clamp(projected, 0f, railLength);
         }
-
-        animator.SetBool("Chase", chase);
         isChasing = chase;
     }
 

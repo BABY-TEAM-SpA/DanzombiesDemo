@@ -943,6 +943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9053167430778589234}
   - component: {fileID: 913695276543440257}
+  - component: {fileID: 5512254492765987691}
   m_Layer: 0
   m_Name: OustideWagon
   m_TagString: Untagged
@@ -1223,3 +1224,50 @@ MonoBehaviour:
         rotation: {x: 0, y: 0, z: 0}
         alpha: 0
         color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &5512254492765987691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6402686411651265229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d644e095024e73459938a627d97bcff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Resettable
+  states:
+  - name: Hidden
+    respawn: {fileID: 0}
+    OnReset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 913695276543440257}
+          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+          m_MethodName: PlaySequence
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Hide
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Covering
+    respawn: {fileID: 0}
+    OnReset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 913695276543440257}
+          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+          m_MethodName: PlaySequence
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Show
+            m_BoolArgument: 0
+          m_CallState: 2

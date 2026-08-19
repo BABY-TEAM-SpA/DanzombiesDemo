@@ -31,6 +31,7 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #endregion
 
     #region [METHODS]
+    #region API
     public void FollowPlayer(Animator playerAnimator)
     {
         stateDrivenCamera.AnimatedTarget = playerAnimator;
@@ -40,6 +41,16 @@ public class PlayerTriggeredCamera : MonoBehaviour
             camera.Follow = playerAnimator.transform;
         stateDrivenCamera.Priority = ACTIVE_PRIORITY;
     }
+
+    public void UnfollowPlayer()
+    {
+        stateDrivenCamera.AnimatedTarget = null;
+
+        foreach (CinemachineCamera camera in cameras)
+            camera.Follow = null;
+        stateDrivenCamera.Priority = INACTIVE_PRIORITY;
+    }
+    #endregion
 
     private void SetInstructions()
     {

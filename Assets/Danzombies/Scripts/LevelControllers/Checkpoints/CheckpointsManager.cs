@@ -6,7 +6,6 @@ using UnityEngine;
 public class CheckpointsManager : MonoBehaviour
 {
     #region [VARIABLES]
-    [SerializeField] private Transform levelRoot;
     [SerializeField] private CheckpointsCatalog catalog;
 
     private PlayerManager player;
@@ -81,13 +80,12 @@ public class CheckpointsManager : MonoBehaviour
     /// </summary>
     public void CollectResettables()
     {
-        Transform searchRoot = levelRoot != null
-            ? levelRoot : transform.root;
+        resettableObjects = FindObjectsByType<Resettable>(FindObjectsInactive.Include);
 
-        resettableObjects = searchRoot.GetComponentsInChildren<Resettable>(true);
-
+#if UNITY_EDITOR
         Debug.Log($"[CheckpointsManager] El array fue actualizado con {resettableObjects.Length} objetos Resettable encontrados en la escena.");
         UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 
     public void CollectRespawns()

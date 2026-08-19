@@ -349,7 +349,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3970308067129684129}
   - component: {fileID: 7378980474721160097}
-  - component: {fileID: 7109070437018076952}
+  - component: {fileID: 3311506408518523866}
+  - component: {fileID: 15811530534686295}
   m_Layer: 0
   m_Name: PlayerTriggeredCamera
   m_TagString: Untagged
@@ -389,7 +390,37 @@ MonoBehaviour:
   cameras:
   - {fileID: 7684192186967810094}
   - {fileID: 7602982556725867934}
---- !u!60 &7109070437018076952
+--- !u!114 &3311506408518523866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732777166139270469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d644e095024e73459938a627d97bcff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Resettable
+  states:
+  - name: Reset
+    respawn: {fileID: 0}
+    OnReset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7378980474721160097}
+          m_TargetAssemblyTypeName: PlayerTriggeredCamera, Assembly-CSharp
+          m_MethodName: UnfollowPlayer
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!60 &15811530534686295
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,7 +467,7 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 10, y: 5}
-      - {x: 0, y: 5}
+      - {x: -5, y: 5}
       - {x: -10, y: -5}
-      - {x: 0, y: -5}
+      - {x: 5, y: -5}
   m_UseDelaunayMesh: 1
