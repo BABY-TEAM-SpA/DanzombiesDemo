@@ -11,6 +11,8 @@ public class SFXEmitter : MonoBehaviour
     public EventReference eventRef;
     public ParamRef activeParam; // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
                                  //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
+    [SerializeField] private bool playOnStart;
+
     private EventInstance sfxInstance;
     #endregion
 
@@ -24,6 +26,9 @@ public class SFXEmitter : MonoBehaviour
 
         ResolveParameterID();
         UpdateParameterValue(activeParam.Value);
+
+        if (playOnStart)
+            Play();
     }
 
     private void OnDestroy()

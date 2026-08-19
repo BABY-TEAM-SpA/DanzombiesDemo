@@ -211,6 +211,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4894039669370586922, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: playOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894039669370586922, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: eventRef.Path
       value: event:/Metro/ZombieChasingHorde
       objectReference: {fileID: 0}
@@ -347,7 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ZombieChasingHordeBehaviour
   playerMovement: {fileID: 0}
   animator: {fileID: 414116548035363276}
-  chaseOnEnable: 1
+  chaseOnStart: 0
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
   maxDistance: 30
