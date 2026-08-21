@@ -13,7 +13,7 @@ public enum DamageMode
 
 public class DanceZone : Dancer
 {
-    private bool isActive;
+    [SerializeField] private bool isActive;
     private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();

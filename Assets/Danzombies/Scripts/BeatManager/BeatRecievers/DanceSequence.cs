@@ -96,7 +96,9 @@ public class DanceStepPerBeat
              }*/
          if (sequenceStopMode == SeqStopMode.StopOnFullFlow)
          {
-             return DanceBarController.DanceBar.isBarFilled? true: false;
+             bool value = DanceBarController.DanceBar.isBarFilled;
+             if (value) OnDanceSequenceFinished?.Invoke();
+             return value;
          }
          
          if(beat == coreography.StepInBar.Count)
@@ -108,6 +110,7 @@ public class DanceStepPerBeat
              }
              if(sequenceStopMode == SeqStopMode.OneShot)
              {
+                 OnDanceSequenceFinished?.Invoke();
                  return true;
              }
          }
