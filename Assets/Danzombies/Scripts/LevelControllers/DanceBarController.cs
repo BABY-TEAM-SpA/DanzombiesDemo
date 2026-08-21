@@ -46,7 +46,6 @@ public class DanceBarController : MonoBehaviour
         
         //PlayerManager.Player.danceBar = this; // [Frco] Lo cambié para que sea el propio PlayerManager quien busca y asigna la DanceBar
         UpdateFlowBars(0);
-        UpdateIconFeedback();
     }
     #endregion
 
@@ -54,8 +53,7 @@ public class DanceBarController : MonoBehaviour
     public void Activate(bool activation)
     {
         UpdateFlowBars(PlayerManager.Player.FlowValue);
-        UpdateIconFeedback();
-        uiAnimator?.PlaySequence(isActive ? "Open" : "Close");
+        uiAnimator?.PlaySequence(activation ? "Open" : "Close");
 
         isActive = activation;
     }
@@ -63,43 +61,20 @@ public class DanceBarController : MonoBehaviour
     #region Updates
     public void UpdateFlowBars(int value)
     {
+        FlowState state = PlayerManager.Player.FlowState;
         int maxSafety = PlayerManager.Player.SafetyLevels.y;
-
-        if (value >= maxSafety)
-        {
-            //if (!isBarFilled)
-            //    OnBarFilled?.Invoke();
-
-            //isBarFilled = true;
-        }
-        else
-        {
-            //if (value <= maxSafety * StatePercentatge(DanceBarState.State.Danger))
-            //{
-            //    if (!isBarLow)
-            //        OnBarLow?.Invoke();
-
-            //    isBarLow = true;
-            //    state = DanceBarState.State.Danger;
-            //}
-            //else if (value <= maxSafety * StatePercentatge(DanceBarState.State.Normal))
-            //    state = DanceBarState.State.Normal;
-            //else if (value < maxSafety * StatePercentatge(DanceBarState.State.Flow))
-            //    state = DanceBarState.State.Flow;
-
-            //isBarFilled = false;
-        }
         
-        foreach (Image barra in flowBars)
+        foreach (Image bar in flowBars)
         {
-            barra.fillAmount = value/10f;
-            //barra.color = barReactions[currentReaction];
-            //beatBarMaterial.SetFloat("_RainbowEnabled", value==10?1f:0f);
+            bar.fillAmount = value / (float)maxSafety;
+            bar.color = StateColor(state);
+            beatBarMaterial.SetFloat("_RainbowEnabled", value == maxSafety ? 1f : 0f);
         }
+
         UpdateIconFeedback();
     }
 
-    public void UpdateIconFeedback()
+    private void UpdateIconFeedback()
     {
         if (iconImage != null)
             iconImage.sprite = isActive

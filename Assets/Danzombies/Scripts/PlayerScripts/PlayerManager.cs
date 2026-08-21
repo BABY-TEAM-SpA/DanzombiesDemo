@@ -28,8 +28,8 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region Combo
-    //public ComboState ComboState => ;
-    //public int ComboCount => ;
+    public ComboState ComboState => comboController.State;
+    public int ComboCount => comboController.Count;
     #endregion
 
     #region SafeZone
@@ -72,7 +72,7 @@ public class PlayerManager : DanceBrain
 
     public void ActivateDanceHUD(bool activate)
     {
-        DanceBarController.DanceBar?.UpdateFlowBars(flowController.Flow);
+        DanceBarController.DanceBar?.UpdateFlowBars(FlowValue);
         DanceBarController.DanceBar?.Activate(activate);
     }
 
