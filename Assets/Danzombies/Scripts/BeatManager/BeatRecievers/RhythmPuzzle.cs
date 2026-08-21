@@ -19,10 +19,8 @@ public abstract class RhythmPuzzle : BeatReciever
     
     protected void Start()
     {
-        if(debug)Debug.Log($"STARTING PUZZLE ({name})");
         PreparePuzzle();
-        if (activateOnStart)
-            SetActivePuzzle(true);
+        if (activateOnStart) SetActivePuzzle(true);
     }
     
     
@@ -31,8 +29,18 @@ public abstract class RhythmPuzzle : BeatReciever
     public virtual void SetActivePuzzle(bool activate)
     {
         isActive = activate;
+        
+        if(isActive)
+        {
+            if(debug)Debug.Log($"Starting PUZZLE ({name})");
+            eventManager.InvokeEnablePuzzle(this);
+        } else
+        {
+            if(debug)Debug.Log($"Stopping PUZZLE ({name})");
+            eventManager.InvokeDisablePuzzle(this);
+        }
         if (!activate) return;
-        eventManager.InvokeReseatPuzzle();
+        
     }
     
 
@@ -42,6 +50,6 @@ public abstract class RhythmPuzzle : BeatReciever
     }
 
     public abstract void OnPuzzleCompleted();
-    
+
 
 }

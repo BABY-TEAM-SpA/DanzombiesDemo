@@ -5,8 +5,10 @@ using UnityEngine.Events;
 
 public class DanceEventManager
 {
-    private delegate void OnPuzzle();
+    private delegate void OnPuzzle(RhythmPuzzle puzzle);
+    private event OnPuzzle OnEnable;
     private event OnPuzzle OnReseat;
+    private event OnPuzzle OnDisable;
     private delegate void OnDanceSetEvent(int beat, BeatManager.BeatType beatType,DanceStep danceStep);
     private event OnDanceSetEvent OnPrepareStep;
     private event OnDanceSetEvent OnDanceStep;
@@ -15,7 +17,9 @@ public class DanceEventManager
     
     public void AddListener(Dancer dancer)
     {
+        OnEnable  += dancer.OnEnablePuzzle;
         OnReseat  += dancer.OnReseatPuzzle;
+        OnDisable  += dancer.OnDisablePuzzle;
         OnPrepareStep += dancer.OnPrepareStepAction;
         OnDanceStep += dancer.OnDanceStepAction;
         OnReleaseStep += dancer.OnReleaseStepAction;
@@ -23,7 +27,9 @@ public class DanceEventManager
     }
     public void RemoveListener(Dancer dancer)
     {
+        OnEnable  -= dancer.OnEnablePuzzle;
         OnReseat  -= dancer.OnReseatPuzzle;
+        OnDisable  -= dancer.OnDisablePuzzle;
         OnPrepareStep -= dancer.OnPrepareStepAction;
         OnDanceStep -= dancer.OnDanceStepAction;
         OnReleaseStep -= dancer.OnReleaseStepAction;
@@ -37,7 +43,9 @@ public class DanceEventManager
         OnNextStep = null;
     }
     
-    public void InvokeReseatPuzzle() => OnReseat?.Invoke();
+    public void InvokeEnablePuzzle(RhythmPuzzle puzzle) => OnEnable?.Invoke(puzzle);
+    public void InvokeReseatPuzzle(RhythmPuzzle puzzle) => OnReseat?.Invoke(puzzle);
+    public void InvokeDisablePuzzle(RhythmPuzzle puzzle) => OnDisable?.Invoke(puzzle);
 
     public void InvokePrepare(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
@@ -63,11 +71,13 @@ public class Dancer: MonoBehaviour
     public UnityEvent<DanceStep> onDance;
     public UnityEvent<ExpressionType> onReaction;
 
-    public virtual void OnReseatPuzzle()
+    public virtual void OnEnablePuzzle(RhythmPuzzle puzzl){}
+    public virtual void OnReseatPuzzle(RhythmPuzzle puzzl)
     {
         currentDanceStep = DanceStep.None;
         currentBeat = 0;
     }
+    public virtual void OnDisablePuzzle(RhythmPuzzle puzzl){}
     
     public virtual void OnPrepareStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
     {

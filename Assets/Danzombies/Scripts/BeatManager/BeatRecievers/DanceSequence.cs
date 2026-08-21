@@ -41,7 +41,7 @@ public class DanceStepPerBeat
      public enum SeqStopMode
      {
          OneShot,
-         StopOnCombo,
+         StopAmazingCombo,
          StopOnFullFlow,
          Loop,
          LoopShuffled
@@ -90,6 +90,15 @@ public class DanceStepPerBeat
      
      public bool CheckEndOfSequence(int beat)
      {
+         /*if (sequenceStopMode == SeqStopMode.StopAmazingCombo)
+             {
+                 return PlayerManager.Instance.ComboState = AMAZING!!!!????true:false;
+             }*/
+         if (sequenceStopMode == SeqStopMode.StopOnFullFlow)
+         {
+             return DanceBarController.DanceBar.isBarFilled? true: false;
+         }
+         
          if(beat == coreography.StepInBar.Count)
          {
              if(sequenceStopMode == SeqStopMode.LoopShuffled)

@@ -4,62 +4,68 @@ using UnityEngine;
 public class TutorialPuzzle : RhythmPuzzle
 {
     #region [VARIABLES]
-    [SerializeField] private ZombieDanceBrain Steph;
-    [SerializeField] private TutorialDanceBrain HUD;
-    public int puzzleGoal;
-    [HideInInspector] public int currentTutorialSequence = 0;
+    [SerializeField] private DanceZone zone;
     
     [Header("Tutorial Dance Settings")]
     public List<DanceSequence> TutorialSequences = new List<DanceSequence>();
-    
-    PlayerManager player;
+    int currentSequenceIndex = 0;
+    private bool availableToDance=false;
     
     #endregion
-
+    #region [METHODS]
 
     private void OnDisable()
     {
         eventManager.RemoveAllListeners();
     }
 
+    public override void SetActivePuzzle(bool activate)
+    {
+        availableToDance = false;
+        base.SetActivePuzzle(activate);
+        if (currentSequenceIndex < TutorialSequences.Count) SetSequence(TutorialSequences[currentSequenceIndex]);
+    }
+    
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
-        throw new System.NotImplementedException();
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true;
+        if (!availableToDance) return;
+        currentStep = danceSequence.GetDanceStep(beat,type);
+        eventManager.InvokePrepare(beat,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        throw new System.NotImplementedException();
+        if (!availableToDance) return;
+        eventManager.InvokeDance(beat,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
-        throw new System.NotImplementedException();
+        if (!availableToDance) return;
+        eventManager.InvokeRealease(beat,type,currentStep);
+        CheckEnd(beat);
     }
-
-
-    #region [METHODS]
+    
     public override void PreparePuzzle()
     {
-        eventManager.AddListener(Steph);
-        eventManager.AddListener(HUD);
+        eventManager.AddListener(zone);
+        //eventManager.AddListener(HUD);
     }
-
-    public override void SetActivePuzzle(bool activate)
+    
+    public void CheckEnd(int beat)
     {
-        HUD.SetActiveCanvas(activate);
-        base.SetActivePuzzle(activate);
-        if (currentTutorialSequence < TutorialSequences.Count) SetSequence(TutorialSequences[currentTutorialSequence]);
+        if(TutorialSequences[currentSequenceIndex].CheckEndOfSequence(beat))OnPuzzleCompleted();
     }
 
     public override void OnPuzzleCompleted()
     {
-        throw new System.NotImplementedException();
+        SetActivePuzzle(false);
     }
 
     public void ActivatePuzzleByIndex(int index)
     {
-        currentTutorialSequence = index;
+        currentSequenceIndex = index;
         SetActivePuzzle(true);
     }
     

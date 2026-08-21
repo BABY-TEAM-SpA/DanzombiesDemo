@@ -79,6 +79,8 @@ public class PlayerManager : DanceBrain
     {
         switch (bf)
         {
+            case BeatReciever.BeatFeedback.Ignored:
+                return;
             case BeatReciever.BeatFeedback.Perfect:
                 IncreaseFlow(2);
                 break;

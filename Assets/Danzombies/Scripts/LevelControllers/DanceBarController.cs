@@ -6,19 +6,21 @@ using UnityEngine.UI;
 
 public class DanceBarController : MonoBehaviour
 {
-    public bool isActive =false;
-    [Header("Barras de Flow")] 
-    [SerializeField] private Image IconImage;
+    public bool isActive = false;
+
+    [Header("Barras de Flow")] [SerializeField]
+    private Image IconImage;
+
     private int currentReaction = 0;
     [SerializeField] private Sprite IconDefaultState;
-    [SerializeField] private Sprite[] IconStates = new Sprite[] {};
+    [SerializeField] private Sprite[] IconStates = new Sprite[] { };
     [SerializeField] private List<Image> FlowBars = new List<Image>();
-    [SerializeField] private Color[] barReactions = new Color[] {};
+    [SerializeField] private Color[] barReactions = new Color[] { };
     [SerializeField] private List<Image> beatBars = new List<Image>();
     [SerializeField] private Material beatBarMaterial;
     [SerializeField] private UiAnimator uiAnimator;
     public UnityEvent onBarFilled;
-    private bool isBarFilled = false;
+    public bool isBarFilled { private set; get; } = false;
 
     public static DanceBarController DanceBar;
 

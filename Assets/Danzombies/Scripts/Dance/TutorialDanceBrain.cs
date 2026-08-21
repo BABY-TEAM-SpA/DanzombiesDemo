@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class TutorialDanceBrain : ZombieDanceBrain
+public class TutorialDanceBrain : Dancer
 {
     
     [SerializeField] PlayerInput _playerInput;

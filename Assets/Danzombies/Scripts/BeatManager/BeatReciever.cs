@@ -12,7 +12,8 @@ public abstract class BeatReciever : MonoBehaviour
         Early,
         Great,
         Perfect,
-        Late
+        Late,
+        Ignored
     }
 
     private void OnEnable()

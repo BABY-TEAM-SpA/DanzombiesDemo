@@ -13,7 +13,8 @@ public enum DamageMode
 
 public class DanceZone : Dancer
 {
-    [SerializeField] private RhythmPuzzle puzzle;
+    private bool isActive;
+    private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
     public DanceEventManager listeners = new DanceEventManager();
@@ -47,24 +48,40 @@ public class DanceZone : Dancer
     {
         listeners.RemoveAllListeners();
     }
+
+    public override void OnEnablePuzzle(RhythmPuzzle puz)
+    {
+        Debug.Log("OnEnablePuzzle");
+        isActive = true;
+        puzzle = puz;
+    }
+
+    public override void OnDisablePuzzle(RhythmPuzzle puz)
+    {
+        Debug.Log("OnDisablePuzzle");
+        isActive = false;
+    }
     
     public override void OnPrepareStepAction(int prevbeat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
+        if (!isActive) return;
         PlayerHasDanced = false;
-        currentBeat = BeatManager.Instance.globalBeatCount+1;
+        currentBeat = BeatManager.Instance? BeatManager.Instance.globalBeatCount+1:1;
         currentBeatType = beatType;
         base.OnPrepareStepAction(prevbeat,beatType, danceStep);
     }
     
     public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
-        currentBeat = BeatManager.Instance.globalBeatCount;
+        if (!isActive) return;
+        currentBeat = BeatManager.Instance? BeatManager.Instance.globalBeatCount:1;
         listeners.InvokeDance(beat,beatType, danceStep);
         onDance?.Invoke(danceStep);
     }
 
     public override void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
+        if (!isActive) return;
         if (playersInside!= null &&!PlayerHasDanced && danceStep != DanceStep.None && danceStep != DanceStep.Idle)
         {
             Debug.Log("didntDance");
@@ -105,8 +122,8 @@ public class DanceZone : Dancer
     }
     public void SetPlayerInput(DanceStep step, out BeatReciever.BeatFeedback bf)
     {
-        
-        bf = BeatReciever.BeatFeedback.Bad;
+        bf = BeatReciever.BeatFeedback.Ignored;
+        if (!isActive) return;
         if (PlayerHasDanced) return;
         else
         {
