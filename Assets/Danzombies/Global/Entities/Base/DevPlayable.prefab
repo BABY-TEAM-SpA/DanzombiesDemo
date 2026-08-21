@@ -4905,6 +4905,8 @@ GameObject:
   - component: {fileID: 8897676056707518989}
   - component: {fileID: 719892519200694072}
   - component: {fileID: 6530795612346585224}
+  - component: {fileID: 5825363922643408486}
+  - component: {fileID: 9216565697310443677}
   - component: {fileID: 3968905282911785478}
   - component: {fileID: 3465130852895728156}
   - component: {fileID: 3308144933667447571}
@@ -5012,7 +5014,8 @@ MonoBehaviour:
     OnReaction:
       m_PersistentCalls:
         m_Calls: []
-  nivelDeSeguridad: 5
+  flowController: {fileID: 5825363922643408486}
+  comboController: {fileID: 0}
   LifeDamagedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -5067,7 +5070,57 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  InDangerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  InFlowEvent:
+    m_PersistentCalls:
+      m_Calls: []
   danceTarget: {fileID: 0}
+--- !u!114 &5825363922643408486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542709926716473569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6317c40483d300a4f96447aa00a95dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFlowController
+  currentFlow: 5
+  safetyLevels: {x: 0, y: 10}
+  states:
+  - state: 0
+    percentage: 80
+  - state: 1
+    percentage: 25
+  - state: 2
+    percentage: 0
+--- !u!114 &9216565697310443677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542709926716473569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20de27ff729a2e048815b55c628ff05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerComboController
+  states:
+  - state: 0
+    count: 10
+  - state: 1
+    count: 6
+  - state: 2
+    count: 3
+  - state: 3
+    count: 1
+  - state: 4
+    count: 0
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5258,6 +5311,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f3866801-bcc6-404e-b1eb-34838ed9f760
     m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 58859bd5-bf5d-40bd-b767-069f4a757383
+    m_ActionName: 'UI/DevMode[/Keyboard/backquote]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
