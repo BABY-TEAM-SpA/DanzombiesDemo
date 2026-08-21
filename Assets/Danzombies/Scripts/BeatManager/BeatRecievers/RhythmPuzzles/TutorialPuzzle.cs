@@ -14,10 +14,7 @@ public class TutorialPuzzle : RhythmPuzzle
     #endregion
     #region [METHODS]
 
-    private void OnDisable()
-    {
-        eventManager.RemoveAllListeners();
-    }
+    
 
     public override void SetActivePuzzle(bool activate)
     {
@@ -58,10 +55,7 @@ public class TutorialPuzzle : RhythmPuzzle
         if(TutorialSequences[currentSequenceIndex].CheckEndOfSequence(beat))OnPuzzleCompleted();
     }
 
-    public override void OnPuzzleCompleted()
-    {
-        SetActivePuzzle(false);
-    }
+ 
 
     public void ActivatePuzzleByIndex(int index)
     {

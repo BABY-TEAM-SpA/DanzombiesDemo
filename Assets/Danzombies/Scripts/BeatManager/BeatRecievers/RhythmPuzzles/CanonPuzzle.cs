@@ -68,11 +68,7 @@ public class CanonPuzzle : RhythmPuzzle
             
         }
     }
-    public override void OnPuzzleCompleted()
-    {
-        //Debug.Log("Puzzle Is Over");
-        SetActivePuzzle(false);
-    }
+    
     
     
 }

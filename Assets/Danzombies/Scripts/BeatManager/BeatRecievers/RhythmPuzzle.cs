@@ -22,6 +22,10 @@ public abstract class RhythmPuzzle : BeatReciever
         PreparePuzzle();
         if (activateOnStart) SetActivePuzzle(true);
     }
+    private void OnDisable()
+    {
+        eventManager.RemoveAllListeners();
+    }
     
     
     public abstract void PreparePuzzle();
@@ -49,7 +53,10 @@ public abstract class RhythmPuzzle : BeatReciever
         danceSequence = sequence;
     }
 
-    public abstract void OnPuzzleCompleted();
-
+    public virtual void OnPuzzleCompleted()
+    {
+        //Debug.Log("Puzzle Is Over");
+        SetActivePuzzle(false);
+    }
 
 }

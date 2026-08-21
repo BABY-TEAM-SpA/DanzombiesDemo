@@ -23,9 +23,5 @@ public class WandererPuzzle : RhythmPuzzle
     {
         throw new NotImplementedException();
     }
-
-    public override void OnPuzzleCompleted()
-    {
-        throw new NotImplementedException();
-    }
+    
 }
