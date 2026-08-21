@@ -265,13 +265,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceBarController
   isActive: 0
-  IconImage: {fileID: 6344760114191100369}
-  IconDefaultState: {fileID: 21300000, guid: d0d9dd09c6bf76d4aa9eaf694c2626a8, type: 3}
-  IconStates:
+  states:
+  - name: Flow
+    percentage: 100
+    icon: {fileID: 21300000, guid: c14a20df97c2a39488c30d3610cab684, type: 3}
+    color: {r: 0.3529412, g: 0.5372549, b: 0.42745098, a: 1}
+  - name: Normal
+    percentage: 50
+    icon: {fileID: 21300000, guid: e7650e0760ad9d646b804b74d390da68, type: 3}
+    color: {r: 0.8156863, g: 0.9647059, b: 0.38431373, a: 1}
+  - name: Danger
+    percentage: 20
+    icon: {fileID: 21300000, guid: 6b613c9c82ee2f548b8d0c7a4ea72d5e, type: 3}
+    color: {r: 0.7176471, g: 0.22352941, b: 0.07450981, a: 1}
+  iconImage: {fileID: 6344760114191100369}
+  iconDefaultState: {fileID: 21300000, guid: d0d9dd09c6bf76d4aa9eaf694c2626a8, type: 3}
+  iconStates:
   - {fileID: 21300000, guid: c14a20df97c2a39488c30d3610cab684, type: 3}
   - {fileID: 21300000, guid: e7650e0760ad9d646b804b74d390da68, type: 3}
   - {fileID: 21300000, guid: 6b613c9c82ee2f548b8d0c7a4ea72d5e, type: 3}
-  FlowBars:
+  flowBars:
   - {fileID: 7185560596199236438}
   - {fileID: 2361077661694535175}
   barReactions:
@@ -283,7 +296,10 @@ MonoBehaviour:
   - {fileID: 6353186759954279768}
   beatBarMaterial: {fileID: 2100000, guid: 78f68a961843c304f9ed2e0494d26229, type: 2}
   uiAnimator: {fileID: 8277422874104646979}
-  onBarFilled:
+  OnBarLow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBarFull:
     m_PersistentCalls:
       m_Calls: []
 --- !u!222 &1938398673631077670

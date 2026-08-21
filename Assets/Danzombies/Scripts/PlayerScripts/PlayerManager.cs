@@ -2,36 +2,55 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 
-public enum SeguridadState
-{
-    Normal,
-    Insecure,
-    Flow
-}
-
 [Serializable]
 public class PlayerManager : DanceBrain
 {
     #region [VARIABLES]
+    [Header("PlayerManager")]
+    [SerializeField] private PlayerFlowController flowController;
+    [SerializeField] private PlayerComboController comboController;
+
+    #region Instance
+    public static PlayerManager Player;
+    public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
+    #endregion
+
+    #region HP
+    private const int MAX_HP = 3;
     public int HP => hp;
-    private int hp = 3;
+    private int hp = MAX_HP;
+    #endregion
 
-    public int flow => nivelDeSeguridad;
-    [SerializeField][Range(0, 10)] private int nivelDeSeguridad = 5;
+    #region Flow
+    public FlowState FlowState => flowController.State;
+    public int FlowValue => flowController.Flow;
+    public Vector2Int SafetyLevels => new Vector2Int(flowController.MinSafety, flowController.MaxSafety);
+    #endregion
 
+    #region Combo
+    //public ComboState ComboState => ;
+    //public int ComboCount => ;
+    #endregion
+
+    #region SafeZone
     public bool IsSafe => isInSafeZone;
     private bool isInSafeZone;
-    
+    #endregion
+
+    #region Events
+    [Header("Life Events")]
     public UnityEvent LifeDamagedEvent;
     public UnityEvent LifeHealedEvent;
-    public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
 
-    public static PlayerManager Player;
+    [Header("Flow Events")]
+    public UnityEvent InDangerEvent;
+    public UnityEvent InFlowEvent;
+
+    public Action OnPlayerDeath;
+    #endregion
 
     [Header("Puzzle")]
     public DanceZone danceTarget;
-
-    public Action OnPlayerDeath;
     #endregion
 
     #region [UNITY]
@@ -53,7 +72,7 @@ public class PlayerManager : DanceBrain
 
     public void ActivateDanceHUD(bool activate)
     {
-        DanceBarController.DanceBar?.UpdateFlowBars(nivelDeSeguridad);
+        DanceBarController.DanceBar?.UpdateFlowBars(flowController.Flow);
         DanceBarController.DanceBar?.Activate(activate);
     }
 
@@ -108,7 +127,7 @@ public class PlayerManager : DanceBrain
         if (isInSafeZone && increment < 0)
         {
             increment = 0;
-            //¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
+            //Debug.Log("¡Se limitó la pérdida de Flow porque Grerg está en una zona segura!");
         }
 
         DamageMode dmgMode = danceTarget !=null? danceTarget.GetDamageMode(): DamageMode.None;
@@ -118,10 +137,10 @@ public class PlayerManager : DanceBrain
         else
         {
 
-            int value = Math.Clamp(nivelDeSeguridad + (GameManager.Alza * increment), 0, 10);
+            int value = Math.Clamp(FlowValue + (GameManager.Alza * increment), 0, 10);
             SetFlow(value);
             //targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
-            DanceBarController.DanceBar?.UpdateFlowBars(nivelDeSeguridad);
+            DanceBarController.DanceBar?.UpdateFlowBars(FlowValue);
             if (value < GameManager.Alza && dmgMode == DamageMode.ModificaFlowYDaña)
             {
                 GetLifeDamage(true);
@@ -132,7 +151,7 @@ public class PlayerManager : DanceBrain
         
     }
 
-    private void SetFlow(int value) => nivelDeSeguridad = value;
+    private void SetFlow(int value) => flowController.SetFlow(value);
     public void SetInSafeZone(bool value) => isInSafeZone = value;
 
     public void GetLifeDamage(bool receiveDamage = true)
