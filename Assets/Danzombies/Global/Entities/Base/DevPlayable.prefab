@@ -5070,12 +5070,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  InDangerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  InFlowEvent:
-    m_PersistentCalls:
-      m_Calls: []
   danceTarget: {fileID: 0}
 --- !u!114 &5825363922643408486
 MonoBehaviour:
@@ -5089,8 +5083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6317c40483d300a4f96447aa00a95dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFlowController
-  currentFlow: 5
-  safetyLevels: {x: 0, y: 10}
+  flow: 5
+  maxFlow: 10
   states:
   - state: 0
     percentage: 80
@@ -5098,6 +5092,34 @@ MonoBehaviour:
     percentage: 25
   - state: 2
     percentage: 0
+  modifiers:
+  - feedback: 0
+    modifier: -1
+    isPercentage: 0
+  - feedback: 1
+    modifier: 0
+    isPercentage: 0
+  - feedback: 2
+    modifier: 1
+    isPercentage: 0
+  - feedback: 3
+    modifier: 2
+    isPercentage: 0
+  - feedback: 4
+    modifier: 0
+    isPercentage: 0
+  - feedback: 5
+    modifier: -2
+    isPercentage: 0
+  InDangerEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  NormalEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  InFlowEntered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9216565697310443677
 MonoBehaviour:
   m_ObjectHideFlags: 0

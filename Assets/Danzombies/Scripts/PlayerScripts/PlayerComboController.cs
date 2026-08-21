@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum ComboState { S, A, B, C, D };
 
@@ -19,17 +20,39 @@ public class PlayerComboController : MonoBehaviour
         public ComboState state;
         [Tooltip("A partir de este número, el Combo entra a este estado.")]
         [Min(0)] public int count;
+
+        public UnityEvent OnStateEntered;
+        public UnityEvent OnStateExited;
     }
     #endregion
 
     #region [UNITY]
-    private void Start() => states = states.OrderByDescending(s => s.count).ToArray();
+    private void Awake()
+    {
+        states = states.OrderByDescending(s => s.count).ToArray();
+        Reset();
+    }
     #endregion
 
     #region [METHODS]
-    public void Increase() => count = Mathf.Max(count + 1, 0);
-    public void Decrease() => count = Mathf.Max(count - 1, 0);
+    public void Increase(int value)
+    {
+        ComboState prevState = State;
+
+        count = Mathf.Max(count + value, 0);
+
+        if (prevState != State) // <- Se compara con el getter del State, por eso prevState puede diferir de State
+        {
+            GetComboState(prevState)?.OnStateEntered?.Invoke();
+            GetComboState(State)?.OnStateExited?.Invoke();
+        }
+    }
 
     public void Reset() => count = 0;
+
+    #region Helpers
+    private PlayerComboState GetComboState(ComboState state)
+        => states.FirstOrDefault(s => state == s.state);
+    #endregion
     #endregion
 }

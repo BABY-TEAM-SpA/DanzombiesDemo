@@ -9,6 +9,8 @@ public class DanceBarController : MonoBehaviour
 {
     #region [VARIABLES]
     public bool isActive;
+    public bool isBarFilled { private set; get; } = false;
+
     [SerializeField] private Sprite iconDefaultState;
     [SerializeField] private DanceBarState[] states;
     [Serializable]
@@ -25,7 +27,6 @@ public class DanceBarController : MonoBehaviour
     [SerializeField] private List<Image> beatBars = new List<Image>();
     [SerializeField] private Material beatBarMaterial;
     [SerializeField] private UiAnimator uiAnimator;
-    public bool isBarFilled { private set; get; } = false;
 
     public static DanceBarController DanceBar;
     #endregion
@@ -46,31 +47,32 @@ public class DanceBarController : MonoBehaviour
             bar.material = newMat;
         
         //PlayerManager.Player.danceBar = this; // [Frco] Lo cambié para que sea el propio PlayerManager quien busca y asigna la DanceBar
-        UpdateFlowBars(0);
+        UpdateFlowBars(PlayerManager.Player.FlowValue);
     }
     #endregion
 
     #region [METHODS]
     public void Activate(bool activation)
     {
+        isActive = activation;
+
         UpdateFlowBars(PlayerManager.Player.FlowValue);
         uiAnimator?.PlaySequence(activation ? "Open" : "Close");
-
-        isActive = activation;
     }
 
     #region Updates
     public void UpdateFlowBars(int value)
     {
         FlowState state = PlayerManager.Player.FlowState;
-        int maxSafety = PlayerManager.Player.SafetyLevels.y;
-        isBarFilled = value == maxSafety;
+        int maxFlow = PlayerManager.Player.MaxFlow;
+        isBarFilled = value == maxFlow;
+
         foreach (Image bar in flowBars)
         {
-            bar.fillAmount = value / (float)maxSafety;
+            bar.fillAmount = value / (float)maxFlow;
             
             bar.color = StateColor(state);
-            beatBarMaterial.SetFloat("_RainbowEnabled", value == maxSafety ? 1f : 0f);
+            beatBarMaterial.SetFloat("_RainbowEnabled", value == maxFlow ? 1f : 0f);
         }
 
         UpdateIconFeedback();
@@ -91,8 +93,8 @@ public class DanceBarController : MonoBehaviour
     #region Helpers
     private DanceBarState GetState(FlowState state) => states.FirstOrDefault(s => s.state == state);
 
-    private Sprite StateIcon(FlowState state) => GetState(state).icon;
-    private Color StateColor(FlowState state) => GetState(state).color;
+    private Sprite StateIcon(FlowState state) => GetState(state)?.icon ?? iconImage?.sprite ?? default;
+    private Color StateColor(FlowState state) => GetState(state)?.color ?? default;
     #endregion
     #endregion
 }
