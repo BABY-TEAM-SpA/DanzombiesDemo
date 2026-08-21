@@ -1264,15 +1264,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.4100003
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.9499998
+      value: 2.52
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.57
+      value: -8.82
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1324,11 +1324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8491078318934677944, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: near clip plane
-      value: 0
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8491078318934677944, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: orthographic size
-      value: 7.31
+      value: 6.95
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1756,11 +1756,11 @@ PrefabInstance:
       objectReference: {fileID: 1022852519}
     - target: {fileID: 5848019546511833440, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9499997
+      value: 0.4100002
       objectReference: {fileID: 0}
     - target: {fileID: 5848019546511833440, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.07
+      value: -0.48000008
       objectReference: {fileID: 0}
     - target: {fileID: 5848019546511833440, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4957,184 +4957,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialPuzzle
   debug: 0
   activateOnStart: 0
-  zombies: []
-  danceSequence:
-    patternBeatType: 0
-    damageMode: 0
-    pattern: 
-    endingSeq: 0
-    xCorrectSteps: 1
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls: []
+  danceSequence: {fileID: 0}
   Steph: {fileID: 1740428034531047183}
   HUD: {fileID: 1740428034531047182}
   puzzleGoal: 0
   currentTutorialSequence: 0
   TutorialSequences:
-  - patternBeatType: 0
-    damageMode: 0
-    pattern: 00000000080000000000000008000000
-    endingSeq: 1
-    xCorrectSteps: 8
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 21423761}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 2010002781}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  - patternBeatType: 0
-    damageMode: 0
-    pattern: 00000000070000000000000007000000
-    endingSeq: 1
-    xCorrectSteps: 8
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 21423761}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    damageMode: 0
-    pattern: 07000000000000000800000000000000
-    endingSeq: 1
-    xCorrectSteps: 8
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 21423761}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1851455983}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  - patternBeatType: 0
-    damageMode: 0
-    pattern: 00000000080000000800000000000000
-    endingSeq: 1
-    xCorrectSteps: 12
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 21423761}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    damageMode: 1
-    pattern: 00000000070000000700000000000000
-    endingSeq: 1
-    xCorrectSteps: 12
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 21423761}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    damageMode: 1
-    pattern: 07000000000000000800000008000000
-    endingSeq: 1
-    xCorrectSteps: 16
-    ResetStepsCountOn: 0
-    OnDanceSequenceFinished:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 21423761}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 6
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1721686558}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1689679295
 Transform:
   m_ObjectHideFlags: 0
@@ -5706,184 +5540,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &1870643610
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!4 &1888884384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
@@ -6305,7 +5961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 465364908743595820, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 571429579162688800, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: Lens.OrthographicSize
@@ -6317,11 +5973,11 @@ PrefabInstance:
       objectReference: {fileID: 893039706}
     - target: {fileID: 763872021651696868, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9499997
+      value: 0.4100002
       objectReference: {fileID: 0}
     - target: {fileID: 763872021651696868, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.93
+      value: 2.52
       objectReference: {fileID: 0}
     - target: {fileID: 763872021651696868, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6409,11 +6065,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8184408606771940663, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0500002
+      value: 4.4100003
       objectReference: {fileID: 0}
     - target: {fileID: 8184408606771940663, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.93
+      value: 2.52
       objectReference: {fileID: 0}
     - target: {fileID: 8184408606771940663, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6654,6 +6310,10 @@ PrefabInstance:
     - target: {fileID: 4358738841489132629, guid: 4ce533c4c08dade41a019f31ef771c7d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5919028385023857290, guid: 4ce533c4c08dade41a019f31ef771c7d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.7200003
       objectReference: {fileID: 0}
     - target: {fileID: 6793604675828747788, guid: 4ce533c4c08dade41a019f31ef771c7d, type: 3}
       propertyPath: m_SortingOrder
