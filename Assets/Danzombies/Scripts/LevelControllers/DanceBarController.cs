@@ -25,6 +25,7 @@ public class DanceBarController : MonoBehaviour
     [SerializeField] private List<Image> beatBars = new List<Image>();
     [SerializeField] private Material beatBarMaterial;
     [SerializeField] private UiAnimator uiAnimator;
+    public bool isBarFilled { private set; get; } = false;
 
     public static DanceBarController DanceBar;
     #endregion
@@ -63,10 +64,11 @@ public class DanceBarController : MonoBehaviour
     {
         FlowState state = PlayerManager.Player.FlowState;
         int maxSafety = PlayerManager.Player.SafetyLevels.y;
-        
+        isBarFilled = value == maxSafety;
         foreach (Image bar in flowBars)
         {
             bar.fillAmount = value / (float)maxSafety;
+            
             bar.color = StateColor(state);
             beatBarMaterial.SetFloat("_RainbowEnabled", value == maxSafety ? 1f : 0f);
         }
