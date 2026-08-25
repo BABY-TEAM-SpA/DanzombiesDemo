@@ -9,22 +9,23 @@ public class CanonPuzzle : RhythmPuzzle
     
     private int innerBeatCounter=0;
     int currentSequenceIndex = 0;
-    
-    
     public List<DanceSequence> danceSequences = new List<DanceSequence>();
-
-    public override void SetActivePuzzle(bool activate)
-    {
-        base.SetActivePuzzle(activate);
-        PreparePuzzle();
-    }
-
+    
+    
     public override void PreparePuzzle()
     {
         currentSequenceIndex = 0;
         currentDancerIndex = 0;
         SetSequence(danceSequences[currentSequenceIndex]);
     }
+    public override void SetActivePuzzle(bool activate)
+    {
+        base.SetActivePuzzle(activate);
+        //PreparePuzzle();
+        dancers[currentDancerIndex].OnEnablePuzzle(this);
+    }
+
+    
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
@@ -43,25 +44,31 @@ public class CanonPuzzle : RhythmPuzzle
         innerBeatCounter++;
         if (innerBeatCounter == danceSequence.coreography.StepInBar.Count)
         {
+            dancers[currentDancerIndex].OnDisablePuzzle(this);
             SetNextDancer();
         }
     }
 
     public void SetNextDancer()
     {
-        if(currentDancerIndex+1== dancers.Count) AllDancersHasDanced();
-        currentDancerIndex = (currentDancerIndex+1)%dancers.Count;
-        innerBeatCounter = 0;
+        bool hasEnded = false;
+        if(currentDancerIndex+1!= dancers.Count)
+        {
+            currentDancerIndex = (currentDancerIndex+1)%dancers.Count;
+            innerBeatCounter = 0;
+            dancers[currentDancerIndex].OnEnablePuzzle(this);
+            return;
+
+        }
+        AllDancersHasDanced();
+        
     }
 
     public void AllDancersHasDanced()
     {
-        //Debug.Log("AllDancersHasDanced");
-        bool hasEnded = danceSequences[currentSequenceIndex].CheckEndOfSequence(innerBeatCounter);
-        
-        if(hasEnded)
+        if(danceSequences[currentSequenceIndex].CheckEndOfSequence(innerBeatCounter))
         {
-            //Debug.Log("Sequence has been ended");
+            currentDancerIndex=0;
             currentSequenceIndex++;
             if(currentSequenceIndex < danceSequences.Count) SetSequence(danceSequences[currentSequenceIndex]);
             else OnPuzzleCompleted();

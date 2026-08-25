@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum DamageMode
 {
@@ -13,6 +14,8 @@ public enum DamageMode
 
 public class DanceZone : Dancer
 {
+    public UnityEvent OnActivated;
+    public UnityEvent OnDeactivated;
     [SerializeField] private bool isActive;
     private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
@@ -29,6 +32,8 @@ public class DanceZone : Dancer
 
     [SerializeField]
     private DamageMode damageMode;
+
+    
     
     public DamageMode GetDamageMode()
     {
@@ -52,6 +57,7 @@ public class DanceZone : Dancer
     public override void OnEnablePuzzle(RhythmPuzzle puz)
     {
         Debug.Log("OnEnablePuzzle");
+        OnActivated?.Invoke();
         isActive = true;
         puzzle = puz;
     }
@@ -60,6 +66,7 @@ public class DanceZone : Dancer
     {
         Debug.Log("OnDisablePuzzle");
         isActive = false;
+        OnDeactivated?.Invoke();
     }
     
     public override void OnPrepareStepAction(int prevbeat, BeatManager.BeatType beatType, DanceStep danceStep)

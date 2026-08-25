@@ -133,6 +133,13 @@ public class PlayerManager : DanceBrain
         }
     }
 
+    public void SetFlow(int value)
+    {
+        flowController.SetFlow(value);
+        DanceBarController.DanceBar?.UpdateFlowBars(FlowValue);
+        
+    }
+
     #region HP & SafeZone
     public void GetLifeDamage(bool receiveDamage = true)
     {
