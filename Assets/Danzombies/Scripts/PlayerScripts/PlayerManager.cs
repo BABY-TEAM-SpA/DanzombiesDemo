@@ -84,7 +84,7 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region RhythmPuzzle - Dance
-    public override void OnDanceStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
+    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
         if (danceTarget == null)
             return;
@@ -92,6 +92,7 @@ public class PlayerManager : DanceBrain
         onDance?.Invoke(step);
         danceAnimCtrl?.OnDanceBegin(step);
         danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
+        comboController.Increase(bf, 1);
         ApplyDanceFeedback(bf);
     }
 
