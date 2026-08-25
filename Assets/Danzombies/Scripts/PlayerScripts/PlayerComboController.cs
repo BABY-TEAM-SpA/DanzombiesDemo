@@ -46,9 +46,12 @@ public class PlayerComboController : MonoBehaviour
             GetComboState(prevState)?.OnStateEntered?.Invoke();
             GetComboState(State)?.OnStateExited?.Invoke();
         }
+
+        // <- Aquí iría el llamado a un ComboUIController o similar, mismo patrón que con PlayerFlowController y DanceBarController
+        Debug.Log($"[PlayerComboController] Combo = {count}");
     }
 
-    public void Reset() => count = 0;
+    public void Reset() => Increase(-count);
 
     #region Helpers
     private PlayerComboState GetComboState(ComboState state)

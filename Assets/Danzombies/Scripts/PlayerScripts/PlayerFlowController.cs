@@ -67,6 +67,8 @@ public class PlayerFlowController : MonoBehaviour
             GetFlowState(prevState)?.OnStateExited?.Invoke();
             GetFlowState(State)?.OnStateEntered?.Invoke();
         }
+
+        DanceBarController.DanceBar?.UpdateFlowBars(Flow);
     }
 
     public void Increase(int value)
@@ -76,8 +78,6 @@ public class PlayerFlowController : MonoBehaviour
 
         int result = Flow + (GameManager.Alza * value);
         SetFlow(result);
-        
-        DanceBarController.DanceBar?.UpdateFlowBars(Flow);
     }
     #endregion
 

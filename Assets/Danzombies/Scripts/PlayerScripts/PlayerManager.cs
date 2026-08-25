@@ -108,38 +108,6 @@ public class PlayerManager : DanceBrain
     }
     #endregion
 
-    public int IncreaseFlow(int increment)
-    {
-        if (isInSafeZone && increment < 0)
-            increment = 0;
-
-        DamageMode dmgMode = danceTarget !=null? danceTarget.GetDamageMode(): DamageMode.None;
-        
-        //danceTarget?.React(increment >= 0 ? DancerExpression.ExpressionType.Normal : DancerExpression.ExpressionType.Angry);
-        if (dmgMode == DamageMode.None)
-            return 0;
-        else
-        {
-            int value = Math.Clamp(FlowValue + (GameManager.Alza * increment), 0, 10);
-            flowController.SetFlow(value);
-            //targetPuzzle?.ReactToPlayerStatus(nivelDeSeguridad>5?DancerExpression.ExpressionType.Normal:DancerExpression.ExpressionType.Angry);
-            DanceBarController.DanceBar?.UpdateFlowBars(FlowValue);
-            //if (value < GameManager.Alza && dmgMode == DamageMode.ModificaFlowYDaña) <- [Frco] En teoría deprecado, la HP no es para el baile
-            //{
-            //    GetLifeDamage(true);
-            //    flowController.SetFlow(5);
-            //}
-            return value;
-        }
-    }
-
-    public void SetFlow(int value)
-    {
-        flowController.SetFlow(value);
-        DanceBarController.DanceBar?.UpdateFlowBars(FlowValue);
-        
-    }
-
     #region HP & SafeZone
     public void GetLifeDamage(bool receiveDamage = true)
     {

@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(DanceZone), true)]
-public class ZombieDanceZoneEditor : Editor
+public class DanceZoneEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -17,17 +17,17 @@ public class ZombieDanceZoneEditor : Editor
 
             EditorGUILayout.PropertyField(property, true);
 
-            if (property.name == "zombies")
+            if (property.name == "dancers")
             {
                 EditorGUILayout.Space();
 
                 if (GUILayout.Button("Refresh"))
                 {
-                    DanceZone zombieDanceZone = (DanceZone)target;
+                    DanceZone danceZone = (DanceZone)target;
 
-                    Undo.RecordObject(zombieDanceZone, "Refresh ZombieDanceZone Zombies");
-                    //zombieDanceZone.RefreshZombies();
-                    EditorUtility.SetDirty(zombieDanceZone);
+                    Undo.RecordObject(danceZone, "Refresh DanceZone Zombies");
+                    danceZone.RefreshZombies();
+                    EditorUtility.SetDirty(danceZone);
                 }
             }
         }

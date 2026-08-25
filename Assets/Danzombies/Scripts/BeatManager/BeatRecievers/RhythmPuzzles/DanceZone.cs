@@ -19,6 +19,7 @@ public class DanceZone : Dancer
     [SerializeField] private bool isActive;
     private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
+    [SerializeField] private DamageMode damageMode;
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
     public DanceEventManager listeners = new DanceEventManager();
     
@@ -30,8 +31,6 @@ public class DanceZone : Dancer
     
     public PlayerManager playersInside{private set; get;}
 
-    [SerializeField]
-    private DamageMode damageMode;
 
     
     
@@ -141,5 +140,14 @@ public class DanceZone : Dancer
             React(bf==BeatReciever.BeatFeedback.Bad?ExpressionType.Angry:ExpressionType.Normal);
         }
         
+    }
+
+    public void RefreshZombies()
+    {
+        dancers.Clear();
+
+        foreach (Transform child in transform)
+            if (child.TryGetComponent<ZombieDanceBrain>(out ZombieDanceBrain zombie))
+                dancers.Add(zombie);
     }
 }

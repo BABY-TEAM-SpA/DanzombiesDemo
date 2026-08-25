@@ -88,28 +88,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d63e4aa1af44cc946bcb2fc4145e1776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceEventEmiter
-  onL_North:
+  onNorth:
     m_PersistentCalls:
       m_Calls: []
-  onR_North:
+  onSouth:
     m_PersistentCalls:
       m_Calls: []
-  onL_South:
+  onWest:
     m_PersistentCalls:
       m_Calls: []
-  onR_South:
-    m_PersistentCalls:
-      m_Calls: []
-  onL_West:
-    m_PersistentCalls:
-      m_Calls: []
-  onR_West:
-    m_PersistentCalls:
-      m_Calls: []
-  onL_East:
-    m_PersistentCalls:
-      m_Calls: []
-  onR_East:
+  onEast:
     m_PersistentCalls:
       m_Calls: []
 --- !u!70 &6065324922489293100
@@ -179,8 +167,15 @@ MonoBehaviour:
   onReaction:
     m_PersistentCalls:
       m_Calls: []
+  OnActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  isActive: 0
   dancers: []
-  damageMode: 2
+  damageMode: 1
 --- !u!1001 &20434162094458597
 PrefabInstance:
   m_ObjectHideFlags: 0
