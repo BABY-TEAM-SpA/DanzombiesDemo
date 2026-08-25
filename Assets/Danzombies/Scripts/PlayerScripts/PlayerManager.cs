@@ -127,8 +127,10 @@ public class PlayerManager : DanceBrain
 
     public void GameOver()
     {
-        hp = 3; // <- [Frco] Está hardcodeado, convendría generalizar porque no se está
-                //    comunicando con el PlayerCanvas, sino a través de OnPlayerDeath
+        hp = MAX_HP;
+        flowController?.SetFlow(MaxFlow / 2);
+        comboController?.Reset();
+
         OnPlayerDeath?.Invoke();
     }
     #endregion

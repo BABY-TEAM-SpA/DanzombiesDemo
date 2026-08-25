@@ -28,7 +28,8 @@ public class PlayerCanvas : MonoBehaviour
 
     #region [METHODS]
     #region TwistedHP
-    public void SetHP() => TwistedHP?.SetHP(player.HP);
+    public void SetHP(int value) => TwistedHP?.SetHP(value);
+    public void UpdateHP() => TwistedHP?.SetHP(player.HP);
     public void ResetHP() => TwistedHP?.Reset();
     #endregion
     #endregion
