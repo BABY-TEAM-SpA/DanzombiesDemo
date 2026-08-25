@@ -44,6 +44,9 @@ public class PlayerFlowController : MonoBehaviour
         [Tooltip("Si es True, entonces un Modifier igual a 5f representa 5%.")]
         public bool isPercentage;
     }
+
+    public UnityEvent OnFlowFilled;
+    public UnityEvent OnFlowEmptied;
     #endregion
 
     #region [UNITY]
@@ -59,6 +62,7 @@ public class PlayerFlowController : MonoBehaviour
     public void SetFlow(int value)
     {
         FlowState prevState = State;
+        int prevFlow = flow;
 
         flow = Mathf.Clamp(value, 0, MaxFlow);
         
@@ -66,6 +70,12 @@ public class PlayerFlowController : MonoBehaviour
         {
             GetFlowState(prevState)?.OnStateExited?.Invoke();
             GetFlowState(State)?.OnStateEntered?.Invoke();
+        }
+
+        if (prevFlow != Flow)
+        {
+            if (Flow == 0) OnFlowEmptied?.Invoke();
+            if (Flow == MaxFlow) OnFlowFilled?.Invoke();
         }
 
         DanceBarController.DanceBar?.UpdateFlowBars(Flow);

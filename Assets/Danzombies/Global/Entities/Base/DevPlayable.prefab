@@ -5088,10 +5088,28 @@ MonoBehaviour:
   states:
   - state: 0
     percentage: 80
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   - state: 1
     percentage: 25
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   - state: 2
     percentage: 0
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   modifiers:
   - feedback: 0
     modifier: -1
@@ -5111,15 +5129,24 @@ MonoBehaviour:
   - feedback: 5
     modifier: -2
     isPercentage: 0
-  InDangerEntered:
+  OnFlowFilled:
     m_PersistentCalls:
       m_Calls: []
-  NormalEntered:
+  OnFlowEmptied:
     m_PersistentCalls:
-      m_Calls: []
-  InFlowEntered:
-    m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6530795612346585224}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9216565697310443677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5135,14 +5162,44 @@ MonoBehaviour:
   states:
   - state: 0
     count: 10
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   - state: 1
     count: 6
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   - state: 2
     count: 3
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   - state: 3
     count: 1
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
   - state: 4
     count: 0
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
