@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{e1c3f123-e1a2-43c1-bebc-d3b55db55678}">
+		<property name="name">
+			<value>ZombieAttack</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bf1ded92-bc11-498d-b90f-e3b388ecb39a}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{ace1b30c-32cd-41b3-8497-a312d7141842}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{ace1b30c-32cd-41b3-8497-a312d7141842}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Run</value>
+			<value>Jump</value>
+			<value>Fall</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
