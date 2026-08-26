@@ -138,6 +138,7 @@ public class DanceZone : Dancer
             //Debug.Log(isTheSameStep);
             bf = isTheSameStep ? BeatManager.Instance.EvaluateInput(currentBeat,currentBeatType) : BeatReciever.BeatFeedback.Bad;
             React(bf==BeatReciever.BeatFeedback.Bad?ExpressionType.Angry:ExpressionType.Normal);
+            puzzle?.ResolvePlayerInput(bf);
         }
         
     }

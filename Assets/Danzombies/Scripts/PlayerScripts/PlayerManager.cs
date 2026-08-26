@@ -62,7 +62,9 @@ public class PlayerManager : DanceBrain
     #region RhythmPuzzle - Puzzle
     public void AddTargetPuzzle(DanceZone target)
     {
-        if(target != danceTarget) danceTarget?.PlayerLeave(this);
+        if (target != danceTarget)
+            danceTarget?.PlayerLeave(this);
+
         danceTarget = target;
         ActivateDanceHUD(true);
     }

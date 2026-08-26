@@ -33,7 +33,7 @@ public class DanceEventManager
         OnPrepareStep -= dancer.OnPrepareStepAction;
         OnDanceStep -= dancer.OnDanceStepAction;
         OnReleaseStep -= dancer.OnReleaseStepAction;
-        OnNextStep += dancer.OnSetNextSetAction;
+        OnNextStep -= dancer.OnSetNextSetAction;
     }
     public void RemoveAllListeners()
     {

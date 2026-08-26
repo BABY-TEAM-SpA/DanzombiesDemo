@@ -29,16 +29,16 @@ public abstract class DanceBrain : Dancer
     
     [SerializeField] List<DancerExpression> dancerExpressions = new List<DancerExpression>();
     public event Action<bool> OnDirectionChanged;
-    
+
     #endregion
 
     #region [METHODS]
-    public void EnableMovement(bool isON=false)
+    public void EnableMovement(bool isON = false)
     {
-        movCtrl?.StopScriptedMovement();
         if (isON) movCtrl?.EnableInput();
         else movCtrl?.DisableInput();
     }
+    public void ResetScriptedMovement() => movCtrl?.StopScriptedMovement();
     public void EnableDance(bool isON=false)
     {
         if (isON) danceAnimCtrl?.Activate();
@@ -54,6 +54,7 @@ public abstract class DanceBrain : Dancer
     public virtual void ActivateEntity(bool  activate)
     {
         isActiv = activate;
+        if (activate) movCtrl?.StopScriptedMovement();
         EnableMovement(activate);
         EnableDance(activate);
         beatReciever.SetActive(activate);

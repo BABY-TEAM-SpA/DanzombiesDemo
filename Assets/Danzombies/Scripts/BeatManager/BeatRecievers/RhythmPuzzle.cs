@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,20 @@ public abstract class RhythmPuzzle : BeatReciever
     protected DanceEventManager eventManager = new DanceEventManager();
     [SerializeField] protected DanceSequence danceSequence;
     protected DanceStep currentStep;
+
+    [SerializeField] protected PlayerInputEvent[] playerInputs;
+    [Serializable]
+    public class PlayerInputEvent
+    {
+        public BeatReciever.BeatFeedback feedback;
+        public UnityEvent OnPlayerSuccess;
+    }
+
+    public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
+    {
+        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
+        e?.OnPlayerSuccess?.Invoke();
+    }
     
     protected void Start()
     {
