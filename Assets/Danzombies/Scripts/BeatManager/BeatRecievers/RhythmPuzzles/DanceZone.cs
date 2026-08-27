@@ -32,8 +32,19 @@ public class DanceZone : Dancer
     public PlayerManager playersInside{private set; get;}
 
 
-    
-    
+    // [Frco] <¬ Para poder añadir/remover un Dancer de una DanceZone desde un UnityEvent
+    public void AddListener(Dancer dancer)
+    {
+        if (dancer != null)
+            listeners.AddListener(dancer);
+    }
+    public void RemoveListener(Dancer dancer)
+    {
+        if (dancer != null)
+            listeners.RemoveListener(dancer);
+    }
+
+
     public DamageMode GetDamageMode()
     {
         return damageMode;

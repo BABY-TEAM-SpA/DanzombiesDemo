@@ -54,6 +54,14 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     #region Scripted Movement
+    public void MoveToPoint(Transform point)
+    {
+        float dist = Vector3.Distance(point.position, transform.position);
+        float duration = dist / walkingSpeed;
+        Vector2 direction = point.position - transform.position;
+        BeginScriptedMovememnt(duration, direction);
+    }
+
     public void BeginScriptedMovememnt(float duration = 0f, Vector2 direction = default, Action onFinished = null)
     {
         if (duration != 0f)
