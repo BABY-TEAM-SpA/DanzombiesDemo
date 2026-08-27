@@ -383,9 +383,9 @@ MonoBehaviour:
             m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1331777157}
+        - m_Target: {fileID: 1212863501}
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
@@ -443,6 +443,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 617003223}
+          m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
+          m_MethodName: SetFlow
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - currentDialogText: 0
     dialogData: {fileID: 11400000, guid: a7ccdd05793ffc94eaec9c96bc0f70ac, type: 2}
     OnDialogEndEvent:
@@ -456,6 +468,18 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 617003223}
+          m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
+          m_MethodName: SetFlow
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
@@ -477,14 +501,26 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 617003223}
+          m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
+          m_MethodName: SetFlow
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - currentDialogText: 0
     dialogData: {fileID: 11400000, guid: ffadc9665df0e1840b5678888b91aefb, type: 2}
     OnDialogEndEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1328048185}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
+        - m_Target: {fileID: 1689679294}
+          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
+          m_MethodName: set_isActive
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -492,24 +528,12 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 573273500}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 1192884338}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 578991906}
+          m_TargetAssemblyTypeName: CanonPuzzle, Assembly-CSharp
+          m_MethodName: ActivatePuzzleByIndex
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1208,6 +1232,60 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &390470600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 390470601}
+  - component: {fileID: 390470602}
+  m_Layer: 0
+  m_Name: Seq_1.5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &390470601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390470600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578991907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &390470602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390470600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 0
+  coreography:
+    StepInBar:
+    - StepPerBeat: 08000000
+    - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 08000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &412078454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1619,7 +1697,7 @@ GameObject:
   - component: {fileID: 516003371}
   - component: {fileID: 516003372}
   m_Layer: 0
-  m_Name: Seq
+  m_Name: Seq_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1656,9 +1734,9 @@ MonoBehaviour:
   coreography:
     StepInBar:
     - StepPerBeat: 08000000
-    - StepPerBeat: 08000000
-    - StepPerBeat: 08000000
-    - StepPerBeat: 08000000
+    - StepPerBeat: 00000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 00000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -1883,11 +1961,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: a341a1c00c721174fb557c5e22fe3967, type: 3}
   m_PrefabInstance: {fileID: 542597972}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &573273500 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 465364908743595820, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
-  m_PrefabInstance: {fileID: 2043203722}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &578991903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,7 +1998,13 @@ MonoBehaviour:
   - {fileID: 1212863503}
   - {fileID: 466104985}
   danceSequences:
+  - {fileID: 2082925420}
+  - {fileID: 1970092847}
   - {fileID: 516003372}
+  - {fileID: 1215246815}
+  - {fileID: 1934261534}
+  - {fileID: 1702498077}
+  - {fileID: 390470602}
   - {fileID: 1300788864}
   - {fileID: 1992971137}
 --- !u!4 &578991907
@@ -1941,7 +2020,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2082925419}
+  - {fileID: 1970092846}
   - {fileID: 516003371}
+  - {fileID: 1215246814}
+  - {fileID: 1934261533}
+  - {fileID: 1702498076}
+  - {fileID: 390470601}
   - {fileID: 1300788863}
   - {fileID: 1992971136}
   m_Father: {fileID: 1185187998}
@@ -2035,6 +2120,10 @@ PrefabInstance:
       propertyPath: alphaOverrider
       value: 
       objectReference: {fileID: 22100000, guid: b9a567801162e064d9ea15e05f98b580, type: 2}
+    - target: {fileID: 2358122796841332024, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3304133862253112204, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
       propertyPath: m_Name
       value: Greg_Tutorial
@@ -3869,6 +3958,60 @@ MonoBehaviour:
   damageMode: 1
   dancers:
   - {fileID: 1740428034531047183}
+--- !u!1 &1215246813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1215246814}
+  - component: {fileID: 1215246815}
+  m_Layer: 0
+  m_Name: Seq_1.2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1215246814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215246813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578991907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1215246815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215246813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 0
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 00000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1222380364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
@@ -3976,7 +4119,7 @@ GameObject:
   - component: {fileID: 1300788863}
   - component: {fileID: 1300788864}
   m_Layer: 0
-  m_Name: Seq_1
+  m_Name: Seq_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4013,9 +4156,10 @@ MonoBehaviour:
   coreography:
     StepInBar:
     - StepPerBeat: 07000000
-    - StepPerBeat: 07000000
-    - StepPerBeat: 07000000
-    - StepPerBeat: 07000000
+    - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 00000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -4196,7 +4340,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 798.86523, y: 508}
+  m_AnchoredPosition: {x: 701.3186, y: 367.9734}
   m_SizeDelta: {x: 2462.9998, y: 447.38086}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1331777159
@@ -6100,7 +6244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 2
+  sequenceStopMode: 0
   coreography:
     StepInBar:
     - StepPerBeat: 00000000
@@ -6134,7 +6278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 2
+  sequenceStopMode: 0
   coreography:
     StepInBar:
     - StepPerBeat: 07000000
@@ -6168,7 +6312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 2
+  sequenceStopMode: 0
   coreography:
     StepInBar:
     - StepPerBeat: 07000000
@@ -6200,7 +6344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 2
+  sequenceStopMode: 0
   coreography:
     StepInBar:
     - StepPerBeat: 08000000
@@ -6269,8 +6413,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: margenPercentOnBeat
+      value: 0.3889999985694885
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: greatPercentOnMargin
+      value: 0.8690000176429749
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
       propertyPath: perfectPercentOnMargin
-      value: 0.25099998712539673
+      value: 0.15700000524520874
       objectReference: {fileID: 0}
     - target: {fileID: 8874700405571119761, guid: ed5411465da445045ba84757f34286ab, type: 3}
       propertyPath: m_Name
@@ -6286,6 +6438,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
   m_PrefabInstance: {fileID: 1692733635}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1702498075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1702498076}
+  - component: {fileID: 1702498077}
+  m_Layer: 0
+  m_Name: Seq_1.4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1702498076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702498075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578991907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1702498077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702498075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 0
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 00000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1721686558
 GameObject:
   m_ObjectHideFlags: 0
@@ -6443,6 +6649,184 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
   m_PrefabInstance: {fileID: 802946150}
   m_PrefabAsset: {fileID: 0}
+--- !u!43 &1765447843
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!4 &1773732429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4188233598647882172, guid: 351afa4d57760934aad548ea1a49d33c, type: 3}
@@ -6759,184 +7143,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &1866800582
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!4 &1888884384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
@@ -7033,6 +7239,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1093010189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1934261532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934261533}
+  - component: {fileID: 1934261534}
+  m_Layer: 0
+  m_Name: Seq_1.3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1934261533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934261532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578991907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1934261534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934261532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 0
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 00000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &1951115200 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7349589596115931360, guid: 4ce533c4c08dade41a019f31ef771c7d, type: 3}
@@ -7174,6 +7434,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
   m_PrefabInstance: {fileID: 1966466835}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1970092845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1970092846}
+  - component: {fileID: 1970092847}
+  m_Layer: 0
+  m_Name: Seq_0.1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1970092846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970092845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578991907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970092847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970092845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 0
+  coreography:
+    StepInBar:
+    - StepPerBeat: 07000000
+    - StepPerBeat: 00000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1992971135
 GameObject:
   m_ObjectHideFlags: 0
@@ -7185,7 +7497,7 @@ GameObject:
   - component: {fileID: 1992971136}
   - component: {fileID: 1992971137}
   m_Layer: 0
-  m_Name: Seq_2
+  m_Name: Seq_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7221,10 +7533,10 @@ MonoBehaviour:
   sequenceStopMode: 0
   coreography:
     StepInBar:
-    - StepPerBeat: 07000000
     - StepPerBeat: 08000000
     - StepPerBeat: 07000000
     - StepPerBeat: 08000000
+    - StepPerBeat: 00000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -7487,6 +7799,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1526986262881265730, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
   m_PrefabInstance: {fileID: 2043203722}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2082925418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2082925419}
+  - component: {fileID: 2082925420}
+  m_Layer: 0
+  m_Name: Seq_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2082925419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082925418}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578991907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2082925420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082925418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 0
+  coreography:
+    StepInBar:
+    - StepPerBeat: 08000000
+    - StepPerBeat: 00000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2107949287 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4188233598647882172, guid: 351afa4d57760934aad548ea1a49d33c, type: 3}
