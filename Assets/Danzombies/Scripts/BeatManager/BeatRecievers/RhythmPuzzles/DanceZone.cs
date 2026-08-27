@@ -46,7 +46,7 @@ public class DanceZone : Dancer
 
     public void SetZone()
     {
-        foreach (ZombieDanceBrain dancer in dancers) listeners.AddListener(dancer);
+        if(dancers.Count>0)foreach (Dancer dancer in dancers) listeners.AddListener(dancer);
     }
     private void OnDisable()
     {
@@ -55,7 +55,7 @@ public class DanceZone : Dancer
 
     public override void OnEnablePuzzle(RhythmPuzzle puz)
     {
-        Debug.Log("OnEnablePuzzle");
+        //Debug.Log("OnEnablePuzzle");
         OnActivated?.Invoke();
         isActive = true;
         puzzle = puz;
@@ -63,7 +63,7 @@ public class DanceZone : Dancer
 
     public override void OnDisablePuzzle(RhythmPuzzle puz)
     {
-        Debug.Log("OnDisablePuzzle");
+        //Debug.Log("OnDisablePuzzle");
         isActive = false;
         OnDeactivated?.Invoke();
     }
@@ -90,7 +90,7 @@ public class DanceZone : Dancer
         if (!isActive) return;
         if (playersInside!= null &&!PlayerHasDanced && danceStep != DanceStep.None && danceStep != DanceStep.Idle)
         {
-            Debug.Log("didntDance");
+            //Debug.Log("didntDance");
             playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
         }
         base.OnReleaseStepAction(beat,beatType, danceStep);
@@ -122,7 +122,7 @@ public class DanceZone : Dancer
     
     public void React(ExpressionType exp)
     {
-        foreach (ZombieDanceBrain dancer in dancers)
+        foreach (Dancer dancer in dancers)
             dancer.React(exp);
         
     }

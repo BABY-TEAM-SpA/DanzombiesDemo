@@ -16,15 +16,23 @@ public class CanonPuzzle : RhythmPuzzle
     {
         currentSequenceIndex = 0;
         currentDancerIndex = 0;
-        SetSequence(danceSequences[currentSequenceIndex]);
+    }
+    public void ActivatePuzzleByIndex(int index)
+    {
+        Debug.Log("ActivatePuzzleByIndex"+index);
+        currentSequenceIndex = index;
+        SetActivePuzzle(true);
     }
     public override void SetActivePuzzle(bool activate)
     {
         base.SetActivePuzzle(activate);
-        //PreparePuzzle();
-        dancers[currentDancerIndex].OnEnablePuzzle(this);
+        currentDancerIndex = 0;
+        innerBeatCounter = 0;
+        SetSequence(danceSequences[currentSequenceIndex]);
+        if(activate) dancers[0].OnEnablePuzzle(this);
     }
 
+    
     
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
@@ -42,40 +50,41 @@ public class CanonPuzzle : RhythmPuzzle
     {
         dancers[currentDancerIndex].OnReleaseStepAction(beat,type, currentStep);
         innerBeatCounter++;
-        if (innerBeatCounter == danceSequence.coreography.StepInBar.Count)
-        {
-            dancers[currentDancerIndex].OnDisablePuzzle(this);
-            SetNextDancer();
-        }
+        if (innerBeatCounter >= danceSequence.coreography.StepInBar.Count) SetNextDancer();
     }
 
     public void SetNextDancer()
     {
-        bool hasEnded = false;
-        if(currentDancerIndex+1!= dancers.Count)
+        dancers[currentDancerIndex].OnDisablePuzzle(this);
+        if(currentDancerIndex+1 >= dancers.Count)
         {
-            currentDancerIndex = (currentDancerIndex+1)%dancers.Count;
+            Debug.Log("AllDancersHasDanced");
+            if (danceSequences[currentSequenceIndex].CheckEndOfSequence(innerBeatCounter))
+            {
+                Debug.Log("activateByIndex");
+                if (currentSequenceIndex+1 >= danceSequences.Count)
+                {
+                    Debug.Log("EndOof Puzzle");
+                    OnPuzzleCompleted();
+                    return;
+                }
+                else
+                {
+                    Debug.Log("NextSequence");
+                    ActivatePuzzleByIndex(currentSequenceIndex+1);
+                }
+            }
+            else
+            {
+                Debug.Log("Loop");
+                ActivatePuzzleByIndex(currentSequenceIndex);
+            }
+        }
+        else
+        {
+            currentDancerIndex +=1;
             innerBeatCounter = 0;
             dancers[currentDancerIndex].OnEnablePuzzle(this);
-            return;
-
-        }
-        AllDancersHasDanced();
-        
-    }
-
-    public void AllDancersHasDanced()
-    {
-        if(danceSequences[currentSequenceIndex].CheckEndOfSequence(innerBeatCounter))
-        {
-            currentDancerIndex=0;
-            currentSequenceIndex++;
-            if(currentSequenceIndex < danceSequences.Count) SetSequence(danceSequences[currentSequenceIndex]);
-            else OnPuzzleCompleted();
-            
         }
     }
-    
-    
-    
 }
