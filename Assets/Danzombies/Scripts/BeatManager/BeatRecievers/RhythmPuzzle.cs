@@ -15,8 +15,9 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] protected bool debug;
     [SerializeField] bool activateOnStart;
     protected DanceEventManager eventManager = new DanceEventManager();
-    [SerializeField] protected DanceSequence danceSequence;
+    protected DanceSequence currentDanceSequence;
     protected DanceStep currentStep;
+    protected bool availableToDance = false;
 
     [SerializeField] protected PlayerInputEvent[] playerInputs;
     [Serializable]
@@ -42,13 +43,12 @@ public abstract class RhythmPuzzle : BeatReciever
         eventManager.RemoveAllListeners();
     }
     
-    
     public abstract void PreparePuzzle();
     
     public virtual void SetActivePuzzle(bool activate)
     {
         isActive = activate;
-        
+        availableToDance = false;
         if(isActive)
         {
             if(debug)Debug.Log($"Starting PUZZLE ({name})");
@@ -65,7 +65,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
     protected void SetSequence(DanceSequence sequence)
     {
-        danceSequence = sequence;
+        currentDanceSequence = sequence;
     }
 
     public virtual void OnPuzzleCompleted()

@@ -9,7 +9,6 @@ public class TutorialPuzzle : RhythmPuzzle
     [Header("Tutorial Dance Settings")]
     public List<DanceSequence> TutorialSequences = new List<DanceSequence>();
     int currentSequenceIndex = 0;
-    private bool availableToDance=false;
     
     #endregion
     #region [METHODS]
@@ -18,16 +17,15 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public override void SetActivePuzzle(bool activate)
     {
-        availableToDance = false;
         base.SetActivePuzzle(activate);
         if (currentSequenceIndex < TutorialSequences.Count) SetSequence(TutorialSequences[currentSequenceIndex]);
     }
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true;
-                                              if (!availableToDance) return;
-        currentStep = danceSequence.GetDanceStep(beat,type);
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true; 
+        if (!availableToDance) return;
+        currentStep = currentDanceSequence.GetDanceStep(beat,type);
         eventManager.InvokePrepare(beat,type,currentStep);
     }
 

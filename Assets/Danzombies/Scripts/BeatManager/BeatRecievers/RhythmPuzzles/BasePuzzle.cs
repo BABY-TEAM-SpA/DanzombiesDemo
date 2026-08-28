@@ -3,11 +3,14 @@ using UnityEngine;
 public class BasePuzzle : RhythmPuzzle
 {
     public Dancer dancer;
+    public DanceSequence danceSequence;
     
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
-        currentStep = danceSequence.GetDanceStep(beat,type);
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true; 
+        if (!availableToDance) return;
+        currentStep = currentDanceSequence.GetDanceStep(beat,type);
         eventManager.InvokePrepare(beat,type,currentStep);
     }
 
@@ -23,6 +26,7 @@ public class BasePuzzle : RhythmPuzzle
 
     public override void PreparePuzzle()
     {
+        currentDanceSequence = danceSequence; 
         eventManager.AddListener(dancer);
     }
     
