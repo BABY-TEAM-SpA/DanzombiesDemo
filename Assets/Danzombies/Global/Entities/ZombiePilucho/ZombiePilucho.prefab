@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1741135023226665144}
   - component: {fileID: 7724229193317757106}
   - component: {fileID: 5896840713004236461}
+  - component: {fileID: 5584149735106694538}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -120,7 +121,7 @@ Animator:
   m_GameObject: {fileID: 619528994784383385}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ce57fbffe31e78b4a9e00062b65c20ae, type: 2}
+  m_Controller: {fileID: 9100000, guid: d1ea03c5dcb17d64592ab7a6c09dc1fa, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -199,6 +200,19 @@ PolygonCollider2D:
       - {x: -0.95303816, y: 1.078268}
       - {x: -2.4263203, y: 0.015653461}
   m_UseDelaunayMesh: 0
+--- !u!114 &5584149735106694538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619528994784383385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBeatReciever
+  animator: {fileID: 1741135023226665144}
 --- !u!1 &4427987756750461755
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +239,7 @@ Transform:
   m_GameObject: {fileID: 4427987756750461755}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.2, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -404,15 +418,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onReaction:
+    m_PersistentCalls:
+      m_Calls: []
   debug: 0
   ActivateOnStart: 0
   movCtrl: {fileID: 9083009641924841184}
   danceAnimCtrl: {fileID: 7724229193317757106}
+  beatReciever: {fileID: 5584149735106694538}
   isLeftLooking: 1
   dancerExpressions:
   - expressionType: 0
     alpha: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
     beta: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
+    OnReaction:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &9083009641924841184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +453,8 @@ MonoBehaviour:
   walkingSpeed: 10
   acceleration: 0
   sprintFactor: 1.5
+  scriptedDuration: 0
+  scriptedDirection: {x: 0, y: 0}
 --- !u!114 &1519313315476876159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,3 +477,5 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1

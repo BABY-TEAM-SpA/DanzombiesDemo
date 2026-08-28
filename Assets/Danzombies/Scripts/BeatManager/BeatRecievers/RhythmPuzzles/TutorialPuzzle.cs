@@ -26,7 +26,7 @@ public class TutorialPuzzle : RhythmPuzzle
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true;
-        if (!availableToDance) return;
+                                              if (!availableToDance) return;
         currentStep = danceSequence.GetDanceStep(beat,type);
         eventManager.InvokePrepare(beat,type,currentStep);
     }

@@ -9,7 +9,9 @@ public class CanonPuzzle : RhythmPuzzle
     
     private int innerBeatCounter=0;
     int currentSequenceIndex = 0;
+    private bool availableToDance = false;
     public List<DanceSequence> danceSequences = new List<DanceSequence>();
+
     
     
     public override void PreparePuzzle()
@@ -26,28 +28,30 @@ public class CanonPuzzle : RhythmPuzzle
     public override void SetActivePuzzle(bool activate)
     {
         base.SetActivePuzzle(activate);
+        availableToDance = false;
         currentDancerIndex = 0;
         innerBeatCounter = 0;
         SetSequence(danceSequences[currentSequenceIndex]);
         if(activate) dancers[0].OnEnablePuzzle(this);
     }
-
-    
-    
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true;
+        if (!availableToDance) return;
         currentStep = danceSequence.GetDanceStep(innerBeatCounter,type);
         dancers[currentDancerIndex].OnPrepareStepAction(beat,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         dancers[currentDancerIndex].OnDanceStepAction(beat,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         dancers[currentDancerIndex].OnReleaseStepAction(beat,type, currentStep);
         innerBeatCounter++;
         if (innerBeatCounter >= danceSequence.coreography.StepInBar.Count) SetNextDancer();
