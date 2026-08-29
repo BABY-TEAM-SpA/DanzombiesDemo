@@ -8,7 +8,6 @@ public class CanonPuzzle : RhythmPuzzle
     private int currentDancerIndex = 0;
     
     private int innerBeatCounter=0;
-    int currentSequenceIndex = 0;
     
     public List<DanceSequence> danceSequences = new List<DanceSequence>();
 
@@ -19,12 +18,7 @@ public class CanonPuzzle : RhythmPuzzle
         currentSequenceIndex = 0;
         currentDancerIndex = 0;
     }
-    public void ActivatePuzzleByIndex(int index)
-    {
-        Debug.Log("ActivatePuzzleByIndex"+index);
-        currentSequenceIndex = index;
-        SetActivePuzzle(true);
-    }
+    
     public override void SetActivePuzzle(bool activate)
     {
         base.SetActivePuzzle(activate);
@@ -61,25 +55,25 @@ public class CanonPuzzle : RhythmPuzzle
         dancers[currentDancerIndex].OnDisablePuzzle(this);
         if(currentDancerIndex+1 >= dancers.Count)
         {
-            Debug.Log("AllDancersHasDanced");
+            //Debug.Log("AllDancersHasDanced");
             if (danceSequences[currentSequenceIndex].CheckEndOfSequence(innerBeatCounter))
             {
-                Debug.Log("activateByIndex");
+                //Debug.Log("activateByIndex");
                 if (currentSequenceIndex+1 >= danceSequences.Count)
                 {
-                    Debug.Log("EndOof Puzzle");
+                    //Debug.Log("EndOof Puzzle");
                     OnPuzzleCompleted();
                     return;
                 }
                 else
                 {
-                    Debug.Log("NextSequence");
+                    //Debug.Log("NextSequence");
                     ActivatePuzzleByIndex(currentSequenceIndex+1);
                 }
             }
             else
             {
-                Debug.Log("Loop");
+                //Debug.Log("Loop");
                 ActivatePuzzleByIndex(currentSequenceIndex);
             }
         }

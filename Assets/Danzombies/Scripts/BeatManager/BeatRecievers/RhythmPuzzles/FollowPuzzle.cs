@@ -41,7 +41,6 @@ public class FollowPuzzle : RhythmPuzzle
     public Dancer leader;
     public bool leaderTurn;
     private int innerBeatCounter=0;
-    int currentSequenceIndex = 0;
     
     public List<FollowDanceSequence> followDanceSequences = new List<FollowDanceSequence>();
     
@@ -73,12 +72,14 @@ public class FollowPuzzle : RhythmPuzzle
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         if(leaderTurn) eventManager.InvokeDance(beat, type, currentStep);
         else followDanceSequences[currentSequenceIndex].OnDanceStepAction(beat,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         if(leaderTurn) eventManager.InvokeRealease(beat, type, currentStep);
         else followDanceSequences[currentSequenceIndex].OnReleaseStepAction(beat,type, currentStep);
         innerBeatCounter++;

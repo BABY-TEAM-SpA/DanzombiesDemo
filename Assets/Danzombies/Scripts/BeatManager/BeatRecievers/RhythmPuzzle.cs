@@ -16,6 +16,7 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] bool activateOnStart;
     protected DanceEventManager eventManager = new DanceEventManager();
     protected DanceSequence currentDanceSequence;
+    protected int currentSequenceIndex;
     protected DanceStep currentStep;
     protected bool availableToDance = false;
 
@@ -63,7 +64,7 @@ public abstract class RhythmPuzzle : BeatReciever
     }
     
 
-    protected void SetSequence(DanceSequence sequence)
+    public void SetSequence(DanceSequence sequence)
     {
         currentDanceSequence = sequence;
     }
@@ -73,5 +74,12 @@ public abstract class RhythmPuzzle : BeatReciever
         //Debug.Log("Puzzle Is Over");
         SetActivePuzzle(false);
     }
+    
+    public void ActivatePuzzleByIndex(int index)
+    {
+        currentSequenceIndex = index;
+        SetActivePuzzle(true);
+    }
+    
 
 }

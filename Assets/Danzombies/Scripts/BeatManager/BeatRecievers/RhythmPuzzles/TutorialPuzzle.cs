@@ -8,7 +8,6 @@ public class TutorialPuzzle : RhythmPuzzle
     
     [Header("Tutorial Dance Settings")]
     public List<DanceSequence> TutorialSequences = new List<DanceSequence>();
-    int currentSequenceIndex = 0;
     
     #endregion
     #region [METHODS]

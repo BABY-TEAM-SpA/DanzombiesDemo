@@ -16,11 +16,13 @@ public class BasePuzzle : RhythmPuzzle
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         eventManager.InvokeDance(beat,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         eventManager.InvokeRealease(beat,type,currentStep);
     }
 
