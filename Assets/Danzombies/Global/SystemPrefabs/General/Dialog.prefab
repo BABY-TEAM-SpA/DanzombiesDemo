@@ -191,18 +191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6540f4e4015381d4486cb12184bb49be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogController
-  activeOnStart: 0
   animateWriting: 0
-  Container: {fileID: 5459047289198947867}
+  dialogRender: {fileID: 5459047289198947867}
   profileImage: {fileID: 3600985339516955268}
   textContainer: {fileID: 2135638324276654543}
   pin: {fileID: 344104637577904185}
-  dialogScripts:
-  - currentDialogText: 0
-    dialogData: {fileID: 0}
-    OnDialogEndEvent:
-      m_PersistentCalls:
-        m_Calls: []
+  dialogScripts: []
 --- !u!1 &1374177788421796281
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 6979889564446608754}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!1 &2014929354785209976
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +489,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4894039669370586922}
   - component: {fileID: 6923170542412582767}
   m_Layer: 0
-  m_Name: InteReactableComponent
+  m_Name: InteractableArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,6 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2181064906861186601}
   - {fileID: 3134700133109472223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -181,6 +182,8 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!60 &6923170542412582767
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -232,6 +235,51 @@ PolygonCollider2D:
       - {x: -1.77, y: -1.77}
       - {x: 1.1800001, y: 2.9499998}
   m_UseDelaunayMesh: 1
+--- !u!1 &6939904392060238889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2181064906861186601}
+  - component: {fileID: 445573308025390920}
+  m_Layer: 0
+  m_Name: DialogEmitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2181064906861186601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6939904392060238889}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.25564, y: 2.5410004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6496852749541688592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &445573308025390920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6939904392060238889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08593bc7eb0b8564b90f90e96802602f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogEmiter
+  dialogScripts: []
 --- !u!1001 &228871970478522918
 PrefabInstance:
   m_ObjectHideFlags: 0

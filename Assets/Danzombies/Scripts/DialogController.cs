@@ -9,46 +9,71 @@ using UnityEngine.UI;
 [Serializable]
 public class DialogSequence
 {
-    public int currentDialogText = 0;
+    [HideInInspector] public int currentDialogText = 0;
+    public float timeToAutoContinue;
     public DialogDataSO dialogData;
     public UnityEvent OnDialogEndEvent;
 }
 
 public class DialogController : MonoBehaviour
 {
-    [SerializeField] private bool activeOnStart = false;
     public bool animateWriting = false;
     private Coroutine currentWrittingRoutine;
-    [SerializeField] private GameObject Container;
+    [SerializeField] private GameObject dialogRender;
     [SerializeField] private Image profileImage;
     [SerializeField] private TMP_Text textContainer;
     [SerializeField] private GameObject pin;
     public int currentScriptSequence { get; private set; } = 0;
     public List<DialogSequence> dialogScripts = new List<DialogSequence>();
     
-    // Sequence variables
+    private DialogSequence currentDialogSequence;
+    private float currentTimer;
     
+    public static DialogController Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+            return;
+        Instance = this;
+    }
 
     private void OnDisable()
     {
         if (currentWrittingRoutine != null) StopCoroutine(currentWrittingRoutine);
     }
 
-    private void Start()
+    private void Update()
     {
-        if(activeOnStart) ActivateDialogScript(0);
+        if (currentTimer > 0 && currentDialogSequence.timeToAutoContinue > 0)
+        {
+            currentTimer -= Time.deltaTime;
+            if (currentTimer <= 0)
+            {
+                ContinueWritting();
+            }
+        }
+    }
+
+    public void PlayDialog(DialogSequence dialog)
+    {
+        currentDialogSequence =  dialog;
+        ActivateDialogScript();
     }
 
     public void ActivateDialogScript(int scriptNumber = -1)
     {
-        if (scriptNumber >=0)
-        {
-            currentScriptSequence = scriptNumber;
-        }
-        int currentDialog = dialogScripts[currentScriptSequence].currentDialogText;
-        profileImage.sprite = dialogScripts[currentScriptSequence].dialogData.dialogs[currentDialog].profile;
-        Container.SetActive(true);
-        
+        if (scriptNumber <= 0 || scriptNumber > dialogScripts.Count) return;    
+        currentScriptSequence = scriptNumber;
+        currentDialogSequence = dialogScripts[currentScriptSequence];
+    }
+
+    public void ActivateDialogScript()
+    {
+        currentTimer = currentDialogSequence.timeToAutoContinue;
+        int currentDialog = currentDialogSequence.currentDialogText;
+        profileImage.sprite = currentDialogSequence.dialogData.dialogs[currentDialog].profile;
+        dialogRender.SetActive(true);
         if (animateWriting)
         {
             
@@ -61,8 +86,8 @@ public class DialogController : MonoBehaviour
 
     private void OnWrittingComplete()
     {
-        int currentDialog = dialogScripts[currentScriptSequence].currentDialogText;
-        DialogText dialogText = dialogScripts[currentScriptSequence].dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
+        int currentDialog = currentDialogSequence.currentDialogText;
+        DialogText dialogText = currentDialogSequence.dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
         textContainer.text = (dialogText!=null)?dialogText.text:"";
         currentWrittingRoutine = null;
         pin.gameObject.SetActive(true);
@@ -71,15 +96,15 @@ public class DialogController : MonoBehaviour
     public void ContinueWritting()
     {
         Debug.Log("Continue writting");
-        int value =dialogScripts[currentScriptSequence].currentDialogText+1;
-        if (value >= dialogScripts[currentScriptSequence].dialogData.dialogs.Count)
+        int value =currentDialogSequence.currentDialogText+1;
+        if (value >= currentDialogSequence.dialogData.dialogs.Count)
         {
-            Container.SetActive(false);
-            dialogScripts[currentScriptSequence].OnDialogEndEvent?.Invoke();
+            dialogRender.SetActive(false);
+            currentDialogSequence.OnDialogEndEvent?.Invoke();
         }
         else
         {
-            dialogScripts[currentScriptSequence].currentDialogText=value;
+            currentDialogSequence.currentDialogText=value;
             ActivateDialogScript();
         }
     }
