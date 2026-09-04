@@ -41,7 +41,10 @@ public class DanceStepPerBeat
      public enum SeqStopMode
      {
          OneShot,
-         StopAmazingCombo,
+         StopOnComboC,
+         StopOnComboB,
+         StopOnComboA,
+         StopOnComboS,
          StopOnFullFlow,
          Loop,
          LoopShuffled
@@ -90,10 +93,12 @@ public class DanceStepPerBeat
      
      public bool CheckEndOfSequence(int beat)
      {
-         /*if (sequenceStopMode == SeqStopMode.StopAmazingCombo)
-             {
-                 return PlayerManager.Instance.ComboState = AMAZING!!!!????true:false;
-             }*/
+         if (sequenceStopMode.ToString().Substring(0,sequenceStopMode.ToString().Length-1) == "StopOnCombo")
+         {
+             bool value = PlayerManager.Player.ComboState.ToString() == sequenceStopMode.ToString().Substring(sequenceStopMode.ToString().Length-1);
+             if (value) OnDanceSequenceFinished?.Invoke();
+             return value;
+         }
          if (sequenceStopMode == SeqStopMode.StopOnFullFlow)
          {
              bool value = DanceBarController.DanceBar.isBarFilled;

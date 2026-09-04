@@ -264,6 +264,72 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 351afa4d57760934aad548ea1a49d33c, type: 3}
+--- !u!1001 &16579471
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 92160025}
+    m_Modifications:
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 906.1953
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1078.6267
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: useDebug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874700405571119761, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed5411465da445045ba84757f34286ab, type: 3}
+--- !u!4 &16579472 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+  m_PrefabInstance: {fileID: 16579471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &21423759
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 21423760}
   - component: {fileID: 21423761}
+  - component: {fileID: 21423762}
   m_Layer: 0
   m_Name: DialogController
   m_TagString: Untagged
@@ -308,14 +375,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6540f4e4015381d4486cb12184bb49be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogController
-  activeOnStart: 1
   animateWriting: 0
-  Container: {fileID: 5459047289313645071}
+  dialogRender: {fileID: 1253571327960988288}
   profileImage: {fileID: 3600985339664422544}
   textContainer: {fileID: 2135638324296158683}
   pin: {fileID: 344104637827071021}
+--- !u!114 &21423762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21423759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08593bc7eb0b8564b90f90e96802602f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogEmiter
+  playOnStart: 1
   dialogScripts:
   - currentDialogText: 0
+    timeToAutoContinue: 0
     dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
     OnDialogEndEvent:
       m_PersistentCalls:
@@ -330,7 +410,7 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 1331777157}
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -356,8 +436,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - currentDialogText: 0
-    dialogData: {fileID: 11400000, guid: 3d000f0633bc00d4ebdfc54007398860, type: 2}
+    timeToAutoContinue: 0
+    dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
     OnDialogEndEvent:
       m_PersistentCalls:
         m_Calls:
@@ -371,7 +464,7 @@ MonoBehaviour:
             m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 1689679294}
           m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
@@ -383,7 +476,7 @@ MonoBehaviour:
             m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
         - m_Target: {fileID: 1212863501}
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -397,8 +490,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - currentDialogText: 0
-    dialogData: {fileID: 11400000, guid: 1bc04e235740fa747a7e6395fb68062e, type: 2}
+    timeToAutoContinue: 0
+    dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
     OnDialogEndEvent:
       m_PersistentCalls:
         m_Calls:
@@ -412,7 +518,7 @@ MonoBehaviour:
             m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 1689679294}
           m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
@@ -426,11 +532,36 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - currentDialogText: 0
-    dialogData: {fileID: 11400000, guid: 11fed36cd747b394faec39006f30a0d7, type: 2}
+    timeToAutoContinue: 0
+    dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
     OnDialogEndEvent:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 617003223}
+          m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
+          m_MethodName: SetFlow
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 1689679294}
           m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
           m_MethodName: ActivatePuzzleByIndex
@@ -443,6 +574,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - currentDialogText: 0
+    timeToAutoContinue: 0
+    dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
+    OnDialogEndEvent:
+      m_PersistentCalls:
+        m_Calls:
         - m_Target: {fileID: 617003223}
           m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
           m_MethodName: SetFlow
@@ -453,13 +602,8 @@ MonoBehaviour:
             m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
-  - currentDialogText: 0
-    dialogData: {fileID: 11400000, guid: a7ccdd05793ffc94eaec9c96bc0f70ac, type: 2}
-    OnDialogEndEvent:
-      m_PersistentCalls:
-        m_Calls:
         - m_Target: {fileID: 1689679294}
           m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
           m_MethodName: ActivatePuzzleByIndex
@@ -472,6 +616,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - currentDialogText: 0
+    timeToAutoContinue: 0
+    dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
+    OnDialogEndEvent:
+      m_PersistentCalls:
+        m_Calls:
         - m_Target: {fileID: 617003223}
           m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
           m_MethodName: SetFlow
@@ -482,13 +644,8 @@ MonoBehaviour:
             m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 1
+            m_BoolArgument: 0
           m_CallState: 2
-  - currentDialogText: 0
-    dialogData: {fileID: 11400000, guid: 4daaa6f5d620a1f419be50ea71f68eed, type: 2}
-    OnDialogEndEvent:
-      m_PersistentCalls:
-        m_Calls:
         - m_Target: {fileID: 1689679294}
           m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
           m_MethodName: ActivatePuzzleByIndex
@@ -501,26 +658,63 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-        - m_Target: {fileID: 617003223}
-          m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
-          m_MethodName: SetFlow
-          m_Mode: 3
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - currentDialogText: 0
+    timeToAutoContinue: 0
+    dialogData: {fileID: 11400000, guid: 5e37a7fcf09ad2b488d25b81a6c50e14, type: 2}
+    OnDialogEndEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1530793695}
+          m_TargetAssemblyTypeName: PlayerComboController, Assembly-CSharp
+          m_MethodName: Reset
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1689679293}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 578991906}
+          m_TargetAssemblyTypeName: CanonPuzzle, Assembly-CSharp
+          m_MethodName: ActivatePuzzleByIndex
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-  - currentDialogText: 0
-    dialogData: {fileID: 11400000, guid: ffadc9665df0e1840b5678888b91aefb, type: 2}
-    OnDialogEndEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1689679294}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: set_isActive
+        - m_Target: {fileID: 1607467819}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -530,10 +724,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 578991906}
-          m_TargetAssemblyTypeName: CanonPuzzle, Assembly-CSharp
-          m_MethodName: ActivatePuzzleByIndex
-          m_Mode: 3
+        - m_Target: {fileID: 466104984}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1212863501}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -746,7 +952,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1692733636}
+  - {fileID: 16579472}
   - {fileID: 1035470061}
   - {fileID: 540270596}
   - {fileID: 412078455}
@@ -1033,6 +1239,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 33601882}
     m_Modifications:
+    - target: {fileID: 95786746680586957, guid: 351afa4d57760934aad548ea1a49d33c, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642014830050825095, guid: 351afa4d57760934aad548ea1a49d33c, type: 3}
       propertyPath: 'spriteRenderers.Array.data[1]'
       value: 
@@ -1390,7 +1600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &466104985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1992,7 +2202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CanonPuzzle
   debug: 0
   activateOnStart: 0
-  danceSequence: {fileID: 0}
   playerInputs: []
   dancers:
   - {fileID: 1212863503}
@@ -2188,6 +2397,26 @@ PrefabInstance:
       propertyPath: dancerExpressions.Array.data[0].alpha
       value: 
       objectReference: {fileID: 22100000, guid: e4e1faaff2140ab42a17c2aeb06a34af, type: 2}
+    - target: {fileID: 8828579673587154187, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: states.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828579673587154187, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: states.Array.data[3].state
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828579673587154187, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: states.Array.data[1].OnStateExited.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828579673587154187, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: states.Array.data[1].OnStateExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828579673587154187, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: states.Array.data[1].OnStateExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2863,6 +3092,184 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4139237420492939030, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
   m_PrefabInstance: {fileID: 617003222}
   m_PrefabAsset: {fileID: 0}
+--- !u!43 &904535061
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1 &909824508
 GameObject:
   m_ObjectHideFlags: 0
@@ -3890,7 +4297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1212863502
 Transform:
   m_ObjectHideFlags: 0
@@ -5080,6 +5487,143 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1470603486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470603487}
+  - component: {fileID: 1470603489}
+  - component: {fileID: 1470603488}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1470603487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470603486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1660810918}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 507.28, y: 472.4}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1470603488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470603486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 0
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 29af39c2d6a1e0d48bd8bcb3b7b376b3, type: 2}
+  m_sharedMaterial: {fileID: 7721979190839807810, guid: 29af39c2d6a1e0d48bd8bcb3b7b376b3, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 500
+  m_fontSizeBase: 500
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1470603489
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470603486}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1499969030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5228,6 +5772,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: a341a1c00c721174fb557c5e22fe3967, type: 3}
   m_PrefabInstance: {fileID: 1520741887}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1530793695 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175950610325660656, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+  m_PrefabInstance: {fileID: 617003222}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20de27ff729a2e048815b55c628ff05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerComboController
 --- !u!1001 &1569534283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5393,6 +5948,7 @@ MonoBehaviour:
   damageMode: 1
   dancers:
   - {fileID: 1740428034531047183}
+  - {fileID: 1660810920}
 --- !u!60 &1607467821
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5923,6 +6479,109 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 977854871585507625, guid: 0b51cefb8235d1b4baf4c15ab171f72b, type: 3}
   m_PrefabInstance: {fileID: 1636123373}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1660810917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660810918}
+  - component: {fileID: 1660810920}
+  - component: {fileID: 1660810919}
+  m_Layer: 5
+  m_Name: DancerNumber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1660810918
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660810917}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1470603487}
+  m_Father: {fileID: 1827324070}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -419}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1660810919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660810917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Dance
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 1
+      objectToAnimate: {fileID: 1470603487}
+      timeMode: 0
+      animationSteps:
+      - stepType: 4
+        duration: 0.1
+        easing: 2
+        position: {x: 0, y: 0}
+        scale: {x: 1.1, y: 1.1, z: 1.1}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 4
+        duration: 0.4
+        easing: 1
+        position: {x: 0, y: 0}
+        scale: {x: 0.7, y: 0.7, z: 0.7}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1660810920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660810917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa980fc09de259841b55ee4219bbf5d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIDancerBeatCounter
+  onDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onReaction:
+    m_PersistentCalls:
+      m_Calls: []
+  feedbackText: {fileID: 1470603488}
+  animator: {fileID: 1660810919}
 --- !u!1001 &1668535390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6091,7 +6750,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialPuzzle
   debug: 0
   activateOnStart: 0
-  danceSequence: {fileID: 1689679301}
   playerInputs: []
   zone: {fileID: 1607467820}
   TutorialSequences:
@@ -6186,9 +6844,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 21423761}
-        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-        m_MethodName: ActivateDialogScript
+      - m_Target: {fileID: 21423762}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6210,19 +6868,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 0
+  sequenceStopMode: 3
   coreography:
     StepInBar:
     - StepPerBeat: 00000000
-    - StepPerBeat: 07000000
-    - StepPerBeat: 07000000
     - StepPerBeat: 00000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 07000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21423761}
-        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-        m_MethodName: ActivateDialogScript
+      - m_Target: {fileID: 21423762}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6244,19 +6902,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 0
+  sequenceStopMode: 3
   coreography:
     StepInBar:
     - StepPerBeat: 00000000
-    - StepPerBeat: 08000000
-    - StepPerBeat: 08000000
     - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 08000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21423761}
-        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-        m_MethodName: ActivateDialogScript
+      - m_Target: {fileID: 21423762}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6278,7 +6936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 0
+  sequenceStopMode: 1
   coreography:
     StepInBar:
     - StepPerBeat: 07000000
@@ -6288,9 +6946,9 @@ MonoBehaviour:
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21423761}
-        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-        m_MethodName: ActivateDialogScript
+      - m_Target: {fileID: 21423762}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6312,17 +6970,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 0
+  sequenceStopMode: 1
   coreography:
     StepInBar:
-    - StepPerBeat: 07000000
     - StepPerBeat: 00000000
+    - StepPerBeat: 07000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21423761}
-        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-        m_MethodName: ActivateDialogScript
+      - m_Target: {fileID: 21423762}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6344,17 +7002,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 0
+  sequenceStopMode: 1
   coreography:
     StepInBar:
+    - StepPerBeat: 00000000
     - StepPerBeat: 08000000
     - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21423761}
-        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-        m_MethodName: ActivateDialogScript
+      - m_Target: {fileID: 21423762}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6364,80 +7024,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1001 &1692733635
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 92160025}
-    m_Modifications:
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.22988
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.79571
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: margenPercentOnBeat
-      value: 0.3889999985694885
-      objectReference: {fileID: 0}
-    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: greatPercentOnMargin
-      value: 0.8690000176429749
-      objectReference: {fileID: 0}
-    - target: {fileID: 7036951948407971296, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: perfectPercentOnMargin
-      value: 0.15700000524520874
-      objectReference: {fileID: 0}
-    - target: {fileID: 8874700405571119761, guid: ed5411465da445045ba84757f34286ab, type: 3}
-      propertyPath: m_Name
-      value: AudioManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ed5411465da445045ba84757f34286ab, type: 3}
---- !u!4 &1692733636 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
-  m_PrefabInstance: {fileID: 1692733635}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1702498075
 GameObject:
   m_ObjectHideFlags: 0
@@ -6863,6 +7449,7 @@ RectTransform:
   - {fileID: 1192884339}
   - {fileID: 8194010380476505949}
   - {fileID: 1331777158}
+  - {fileID: 1660810918}
   m_Father: {fileID: 731285633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7683,184 +8270,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4188233598647882172, guid: 351afa4d57760934aad548ea1a49d33c, type: 3}
   m_PrefabInstance: {fileID: 14535057}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &2144578627
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!1 &344104637827071021
 GameObject:
   m_ObjectHideFlags: 0
@@ -8008,7 +8417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1374177788374191533
 GameObject:
   m_ObjectHideFlags: 0

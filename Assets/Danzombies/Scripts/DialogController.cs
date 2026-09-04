@@ -23,8 +23,6 @@ public class DialogController : MonoBehaviour
     [SerializeField] private Image profileImage;
     [SerializeField] private TMP_Text textContainer;
     [SerializeField] private GameObject pin;
-    public int currentScriptSequence { get; private set; } = 0;
-    public List<DialogSequence> dialogScripts = new List<DialogSequence>();
     
     private DialogSequence currentDialogSequence;
     private float currentTimer;
@@ -60,13 +58,7 @@ public class DialogController : MonoBehaviour
         currentDialogSequence =  dialog;
         ActivateDialogScript();
     }
-
-    public void ActivateDialogScript(int scriptNumber = -1)
-    {
-        if (scriptNumber <= 0 || scriptNumber > dialogScripts.Count) return;    
-        currentScriptSequence = scriptNumber;
-        currentDialogSequence = dialogScripts[currentScriptSequence];
-    }
+    
 
     public void ActivateDialogScript()
     {
@@ -95,7 +87,7 @@ public class DialogController : MonoBehaviour
 
     public void ContinueWritting()
     {
-        Debug.Log("Continue writting");
+        //Debug.Log("Continue writting");
         int value =currentDialogSequence.currentDialogText+1;
         if (value >= currentDialogSequence.dialogData.dialogs.Count)
         {
@@ -108,8 +100,7 @@ public class DialogController : MonoBehaviour
             ActivateDialogScript();
         }
     }
-
-
+    
     /*private IEnumerator Writting()
     {
 

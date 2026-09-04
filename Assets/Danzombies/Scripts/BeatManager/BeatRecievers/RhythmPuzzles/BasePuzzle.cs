@@ -10,7 +10,7 @@ public class BasePuzzle : RhythmPuzzle
     {
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true; 
         if (!availableToDance) return;
-        currentStep = currentDanceSequence.GetDanceStep(beat,type);
+        currentStep = currentDanceSequence.GetDanceStep(beat-1,type);
         eventManager.InvokePrepare(beat,type,currentStep);
     }
 
