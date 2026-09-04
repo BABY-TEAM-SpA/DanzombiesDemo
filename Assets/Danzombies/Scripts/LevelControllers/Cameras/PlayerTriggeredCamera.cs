@@ -1,19 +1,25 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerTriggeredCamera : MonoBehaviour
 {
     #region [VARIABLES]
-    private const int ACTIVE_PRIORITY = 1;
-    private const int INACTIVE_PRIORITY = 0;
+    private const int FOLLOW_PRIORITY = 1;
+    private const int IDLE_PRIORITY = 0;
     private Animator targetAnimator;
 
     [SerializeField] private CinemachineStateDrivenCamera stateDrivenCamera;
     [SerializeField] private CinemachineCamera[] cameras;
+
+    public CinemachineCamera ActiveCamera => stateDrivenCamera?.LiveChild as CinemachineCamera;
+
+    public Action<PlayerTriggeredCamera> OnPlayerFollowed;
+    public Action<PlayerTriggeredCamera> OnPlayerUnfollowed;
     #endregion
 
     #region [UNITY]
-    private void Start() => stateDrivenCamera.Priority = INACTIVE_PRIORITY;
+    private void Start() => stateDrivenCamera.Priority = IDLE_PRIORITY;
 
     #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,11 +28,11 @@ public class PlayerTriggeredCamera : MonoBehaviour
             FollowPlayer(targetAnimator);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && other.TryGetComponent(out targetAnimator))
-            stateDrivenCamera.Priority = INACTIVE_PRIORITY;
-    }
+    //private void OnTriggerExit2D(Collider2D other)
+    //{
+    //    if (other.CompareTag("Player") && other.TryGetComponent(out targetAnimator))
+    //        UnfollowPlayer();
+    //}
     #endregion
     #endregion
 
@@ -39,7 +45,9 @@ public class PlayerTriggeredCamera : MonoBehaviour
 
         foreach (CinemachineCamera camera in cameras)
             camera.Follow = playerAnimator.transform;
-        stateDrivenCamera.Priority = ACTIVE_PRIORITY;
+        stateDrivenCamera.Priority = FOLLOW_PRIORITY;
+
+        OnPlayerFollowed?.Invoke(this);
     }
 
     public void UnfollowPlayer()
@@ -48,7 +56,18 @@ public class PlayerTriggeredCamera : MonoBehaviour
 
         foreach (CinemachineCamera camera in cameras)
             camera.Follow = null;
-        stateDrivenCamera.Priority = INACTIVE_PRIORITY;
+        stateDrivenCamera.Priority = IDLE_PRIORITY;
+
+        OnPlayerUnfollowed?.Invoke(this);
+    }
+
+    public float GetAverageCamerasX()
+    {
+        float center = 0f;
+        foreach (CinemachineCamera camera in cameras)
+            center += camera.transform.position.x;
+
+        return center / cameras.Length;
     }
     #endregion
 
