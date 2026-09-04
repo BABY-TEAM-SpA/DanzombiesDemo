@@ -155,7 +155,9 @@ public class AnimationStep
 
         if(stepType == UiStepType.Color || stepType == UiStepType.Fade)
         {
-            sprite = target.GetComponent<SpriteRenderer>();
+            canvasGroup = target.GetComponent<CanvasGroup>();
+            if (!canvasGroup) sprite = target.GetComponent<SpriteRenderer>();
+            if (!canvasGroup && !sprite) graphic = target.GetComponent<Graphic>();
         }
 
         if (stepType == UiStepType.Color) graphic = target.GetComponent<Graphic>();
@@ -163,6 +165,7 @@ public class AnimationStep
         float startAlpha = 1;
         if(canvasGroup) startAlpha = canvasGroup.alpha;
         else if(sprite) startAlpha = sprite.color.a;
+        else if (graphic) startAlpha = graphic.color.a;
         Color startColor = Color.white;
 
         if(graphic)
@@ -273,6 +276,12 @@ public class AnimationStep
                     Color c = sprite.color;
                     c.a = Mathf.LerpUnclamped(startAlpha, alpha, t);
                     sprite.color = c;
+                }
+                else if (graphic)
+                {
+                    Color c = graphic.color;
+                    c.a = Mathf.LerpUnclamped(startAlpha, alpha, t);
+                    graphic.color = c;
                 }
                 break;
 
