@@ -25,7 +25,6 @@ public class UIBeatReceiver : BeatReciever
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        Debug.Log($"[UIBeatReceiver] Beat ({beat})");
         OnBeat?.Invoke();
     }
 
