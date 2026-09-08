@@ -4594,6 +4594,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3096178524590211591, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
+      propertyPath: m_Name
+      value: InDangerFeedback
+      objectReference: {fileID: 0}
     - target: {fileID: 3310809118880083988, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4613,6 +4617,10 @@ PrefabInstance:
     - target: {fileID: 3794120523132436048, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878454606501014870, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
+      propertyPath: m_Name
+      value: InFlowFeedback
       objectReference: {fileID: 0}
     - target: {fileID: 4006657929722773850, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4923,17 +4931,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
---- !u!114 &1074181500 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7265604639071625260, guid: d8893cb331b2f4f45ba9ba2a89e454a3, type: 3}
-  m_PrefabInstance: {fileID: 1074181499}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!1001 &1108877611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6581,102 +6578,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1074181500}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1074181500}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1074181500}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlaySequence
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlaySequence
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlaySequence
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UiAnimator, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UiAnimator, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UiAnimator, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: InFlow
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Normal
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: InDanger
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[0].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[1].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218771254948530993, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
-      propertyPath: states.Array.data[2].OnStateEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1917447543063203295, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
       propertyPath: danceTarget
       value: 
@@ -7340,6 +7241,184 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1858678255
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1001 &1869650806
 PrefabInstance:
   m_ObjectHideFlags: 0

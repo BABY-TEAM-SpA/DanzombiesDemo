@@ -47,6 +47,8 @@ public class PlayerFlowController : MonoBehaviour
 
     public UnityEvent OnFlowFilled;
     public UnityEvent OnFlowEmptied;
+
+    public Action<FlowState> OnStateChanged;
     #endregion
 
     #region [UNITY]
@@ -55,6 +57,8 @@ public class PlayerFlowController : MonoBehaviour
         states = states.OrderByDescending(s => s.percentage).ToArray();
         GetFlowState(State)?.OnStateEntered?.Invoke();
     }
+
+    private void Start() => FlowFeedbackController.FlowFeedback?.Show(State);
     #endregion
 
     #region [METHODS]
@@ -70,6 +74,8 @@ public class PlayerFlowController : MonoBehaviour
         {
             GetFlowState(prevState)?.OnStateExited?.Invoke();
             GetFlowState(State)?.OnStateEntered?.Invoke();
+            
+            FlowFeedbackController.FlowFeedback?.Show(State);
         }
 
         if (prevFlow != Flow)
