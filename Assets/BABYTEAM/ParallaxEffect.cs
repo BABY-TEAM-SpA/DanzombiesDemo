@@ -16,7 +16,7 @@ public class ParallaxEffect : MonoBehaviour
         public SpriteRenderer target;
 
         [Tooltip("0 : Sin movimiento.\n1 : Misma velocidad que la cámara.")]
-        [Range(0f, 1f)] public float parallaxSpeed;
+        [Range(0f, 1f)] public Vector2 parallaxSpeed;
 
         [Tooltip("Si está activo, el fondo se repetirá infinitamente.")]
         public bool infinite;
@@ -64,7 +64,7 @@ public class ParallaxEffect : MonoBehaviour
                 foreach (Transform tile in p.tiles)
                 {
                     Vector3 tilePos = tile.position;
-                    tilePos.x += deltaX * p.parallaxSpeed;
+                    tilePos.x += deltaX * p.parallaxSpeed.x;
                     tile.position = tilePos;
                 }
 
@@ -73,7 +73,7 @@ public class ParallaxEffect : MonoBehaviour
             else
             {
                 Vector3 pos = p.target.transform.position;
-                pos.x += deltaX * p.parallaxSpeed;
+                pos.x += deltaX * p.parallaxSpeed.x;
                 p.target.transform.position = pos;
             }
         }
