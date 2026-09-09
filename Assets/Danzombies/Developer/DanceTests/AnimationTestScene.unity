@@ -164,11 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7aa1bd3f36ff24d8f6b31affd911d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasePuzzle
-  debug: 0
-  activateOnStart: 0
+  debug: 1
+  activateOnStart: 1
   playerInputs: []
   dancer: {fileID: 1073535528}
   danceSequence: {fileID: 1777973058}
+  innerCounter: 0
 --- !u!4 &117284420
 Transform:
   m_ObjectHideFlags: 0
@@ -1975,23 +1976,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Path
-      value: event:/MainMenu
+      value: event:/4cuartos
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data1
-      value: 1165983101
+      value: -1746929068
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data2
-      value: 1214122780
+      value: 1271898998
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data3
-      value: 358301375
+      value: -804343158
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data4
-      value: -400812891
+      value: -813185291
       objectReference: {fileID: 0}
     - target: {fileID: 4305621260357416950, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: m_Name
@@ -2213,9 +2214,13 @@ MonoBehaviour:
   sequenceStopMode: 3
   coreography:
     StepInBar:
-    - StepPerBeat: 00000000
     - StepPerBeat: 08000000
-    - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 07000000
+    - StepPerBeat: 07000000
     - StepPerBeat: 07000000
   OnDanceSequenceFinished:
     m_PersistentCalls:
@@ -2273,6 +2278,9 @@ MonoBehaviour:
   - {fileID: 1106397072}
   danceSequences:
   - {fileID: 1777973058}
+  OnAvailable:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1824861066
 Transform:
   m_ObjectHideFlags: 0

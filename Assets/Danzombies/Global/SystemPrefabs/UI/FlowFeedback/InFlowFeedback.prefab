@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7354744909755823254}
   - component: {fileID: 6537990066707893500}
   - component: {fileID: 6150406609534412157}
+  - component: {fileID: 125167789666777204}
   m_Layer: 5
   m_Name: InFlowFeedback
   m_TagString: Untagged
@@ -70,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.1137255, g: 0.03529412, b: 0.19607845, a: 0.7490196}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -385,6 +386,18 @@ MonoBehaviour:
         rotation: {x: 0, y: 0, z: 0}
         alpha: 0
         color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!225 &125167789666777204
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5196656893147596596}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &243448534193784232
 PrefabInstance:
   m_ObjectHideFlags: 0

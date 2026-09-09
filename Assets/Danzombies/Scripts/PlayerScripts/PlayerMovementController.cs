@@ -23,7 +23,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public Vector2 Velocity { get; private set; }
 
-    private bool allowInput;
+    public bool allowInput;
     private bool scriptedMovement;
     private float currentSpeed;
     private Vector2 inputDirection;

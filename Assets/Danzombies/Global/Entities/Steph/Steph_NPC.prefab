@@ -1,5 +1,117 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &425077907083202419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 23045753226742542}
+  - component: {fileID: 4218520726215775754}
+  m_Layer: 0
+  m_Name: SFX_E
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &23045753226742542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425077907083202419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8905244471892853122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4218520726215775754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425077907083202419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: -684507415
+      Data2: 1265254416
+      Data3: 817359276
+      Data4: 674214952
+    Path: event:/SFX/Dance_System/Dance_Patterns/Steph/StephEast 2
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
+--- !u!1 &6748019445471104016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2367617688741111425}
+  - component: {fileID: 1599137904772563689}
+  m_Layer: 0
+  m_Name: SFX_W
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2367617688741111425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6748019445471104016}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8905244471892853122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1599137904772563689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6748019445471104016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: -571911788
+      Data2: 1285755572
+      Data3: 1699034029
+      Data4: -290684908
+    Path: event:/SFX/Dance_System/Dance_Patterns/East
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!1 &7472942076168638150
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,6 +125,7 @@ GameObject:
   - component: {fileID: 548811813407721316}
   - component: {fileID: 2536597401598945149}
   - component: {fileID: 1707382129364674341}
+  - component: {fileID: 3651001649101913600}
   m_Layer: 0
   m_Name: Steph_NPC
   m_TagString: Untagged
@@ -35,6 +148,10 @@ Transform:
   m_Children:
   - {fileID: 6902356677252027810}
   - {fileID: 4935623386620763509}
+  - {fileID: 1495009326321001639}
+  - {fileID: 9122157330189912370}
+  - {fileID: 2367617688741111425}
+  - {fileID: 23045753226742542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &3604940919443706688
@@ -115,7 +232,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDance:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3651001649101913600}
+        m_TargetAssemblyTypeName: DanceEventEmiter, Assembly-CSharp
+        m_MethodName: OnDanceBuffer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onReaction:
     m_PersistentCalls:
       m_Calls: []
@@ -150,6 +279,135 @@ MonoBehaviour:
   sprintFactor: 1.5
   scriptedDuration: 0
   scriptedDirection: {x: 0, y: 0}
+  allowInput: 0
+--- !u!114 &3651001649101913600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7472942076168638150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63e4aa1af44cc946bcb2fc4145e1776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceEventEmiter
+  onNorth:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1994671431119757983}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSouth:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3502171951793807867}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onWest:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1599137904772563689}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onEast:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4218520726215775754}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &7559455917757343732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495009326321001639}
+  - component: {fileID: 1994671431119757983}
+  m_Layer: 0
+  m_Name: SFX_N
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495009326321001639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7559455917757343732}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8905244471892853122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1994671431119757983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7559455917757343732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: -571911788
+      Data2: 1285755572
+      Data3: 1699034029
+      Data4: -290684908
+    Path: event:/SFX/Dance_System/Dance_Patterns/East
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!1 &8426862267633352703
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,3 +664,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &8934889339738878910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9122157330189912370}
+  - component: {fileID: 3502171951793807867}
+  m_Layer: 0
+  m_Name: SFX_S
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9122157330189912370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8934889339738878910}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8905244471892853122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3502171951793807867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8934889339738878910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: -571911788
+      Data2: 1285755572
+      Data3: 1699034029
+      Data4: -290684908
+    Path: event:/SFX/Dance_System/Dance_Patterns/East
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1

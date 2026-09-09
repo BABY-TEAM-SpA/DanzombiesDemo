@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7104464789819278032}
   - component: {fileID: 3328392452177608953}
+  - component: {fileID: 1739416909373635647}
   m_Layer: 5
   m_Name: FlowFeedback
   m_TagString: Untagged
@@ -159,6 +160,18 @@ MonoBehaviour:
             m_StringArgument: FadeIn
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!225 &1739416909373635647
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3632338392775211630}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &2077410594473319012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,6 +263,10 @@ PrefabInstance:
     - target: {fileID: 8169051076234801221, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
       propertyPath: m_Name
       value: InDangerFeedback
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169051076234801221, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -449,7 +466,8 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 125167789666777204, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

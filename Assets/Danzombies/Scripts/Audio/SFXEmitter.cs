@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using FMOD;
 using FMOD.Studio;
 using FMODUnity;
@@ -54,6 +55,15 @@ public class SFXEmitter : MonoBehaviour
         RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
     }
 
+    public void Play(string paramLabel)
+    {
+        //SetParameterByName(param);
+        //ParamRef paramRef = param == "L" ? new ParamRef{ Name = param, Value = 0f } : new ParamRef{ Name = param, Value = 1f };
+        Debug.Log($"[SFXEmitter] Play param: {paramLabel}");
+        UpdateParameterName(paramLabel);
+        Play();
+    }
+
     public void Stop()
     {
         if (!sfxInstance.isValid())
@@ -106,6 +116,23 @@ public class SFXEmitter : MonoBehaviour
         }
 
         activeParam.Value = value;
+    }
+    
+    public void UpdateParameterName(string label)
+    {
+        if (activeParam == null)
+        {
+            Debug.LogWarning($"[SFXEmitter] El parámetro activo es null, cancelando operación.", this);
+            return;
+        }
+
+        RESULT result = sfxInstance.setParameterByIDWithLabel(activeParam.ID, label);
+        if (result != RESULT.OK)
+        {
+            Debug.LogWarning($"[SFXEmitter] Resultado: {result}.", this);
+            return;
+        }
+        
     }
     #endregion
 

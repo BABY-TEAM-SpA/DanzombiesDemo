@@ -28,7 +28,7 @@ public class AnimationFeedback
 public class DanceAnimatorController : MonoBehaviour
 {
     [SerializeField] protected DanceBrain _danceBrain;
-    [SerializeField] protected bool allowInput = false;
+    [SerializeField] public bool allowInput = false;
     [SerializeField] public Animator animator;
     //[SerializeField] private SpriteRenderer renderer;
     private AnimatorOverrideController alphaOverrider;
@@ -47,6 +47,7 @@ public class DanceAnimatorController : MonoBehaviour
     
     public void OnMoving(Vector3 velocity)
     {
+        if(!allowInput)  return;
         bool moving = velocity != Vector3.zero;
         animator?.SetBool("LeftLooking", _danceBrain.isLeftLooking);
         animator?.SetBool("Walking", moving);
