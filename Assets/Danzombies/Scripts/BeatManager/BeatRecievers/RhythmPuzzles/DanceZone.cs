@@ -78,7 +78,12 @@ public class DanceZone : Dancer
         isActive = false;
         OnDeactivated?.Invoke();
     }
-    
+
+    public override void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        listeners.InvokePreDance(beat,beatType);
+    }
+
     public override void OnPrepareStepAction(int prevbeat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
         if (!isActive) return;

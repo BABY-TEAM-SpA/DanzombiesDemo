@@ -31,7 +31,12 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        if (!availableToDance) return;
+        if (!availableToDance)
+        {
+            Debug.Log(BeatManager.Instance.localBeatCount);
+            eventManager.InvokePreDance(beat, type);
+            return;
+        }
         //Debug.Log(BeatManager.Instance.localBeatCount);
         eventManager.InvokeDance(beat,type,currentStep);
     }

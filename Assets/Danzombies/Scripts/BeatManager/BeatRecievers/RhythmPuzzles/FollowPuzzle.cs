@@ -66,15 +66,19 @@ public class FollowPuzzle : RhythmPuzzle
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true; 
         if (!availableToDance) return;
         currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,type);
-        if(leaderTurn) eventManager.InvokePrepare(beat, type, currentStep);
-        else followDanceSequences[currentSequenceIndex].OnPrepareStepAction(beat,type,currentStep);
+        if(leaderTurn) eventManager.InvokePrepare(innerBeatCounter, type, currentStep);
+        else followDanceSequences[currentSequenceIndex].OnPrepareStepAction(innerBeatCounter,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        if (!availableToDance) return;
-        if(leaderTurn) eventManager.InvokeDance(beat, type, currentStep);
-        else followDanceSequences[currentSequenceIndex].OnDanceStepAction(beat,type,currentStep);
+        if (!availableToDance)
+        {
+            eventManager.InvokePreDance(beat, type);
+            return;
+        }
+        if(leaderTurn) eventManager.InvokeDance(innerBeatCounter, type, currentStep);
+        else followDanceSequences[currentSequenceIndex].OnDanceStepAction(innerBeatCounter,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)

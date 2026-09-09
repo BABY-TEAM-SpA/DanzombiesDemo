@@ -31,24 +31,30 @@ public class CanonPuzzle : RhythmPuzzle
         if (!availableToDance) return;
         Debug.Log(BeatManager.Instance.localBeatCount);
         currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,type);
-        dancers[currentDancerIndex].OnPrepareStepAction(beat,type,currentStep);
+        dancers[currentDancerIndex].OnPrepareStepAction(innerBeatCounter,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        if (!availableToDance) return;
-        dancers[currentDancerIndex].OnDanceStepAction(beat,type,currentStep);
+        if (!availableToDance)
+        {
+            //eventManager.InvokePreDance(innerBeatCounter, type);
+            return;
+        }
+        Debug.Log(innerBeatCounter.ToString() + "Cannon Puzzle");
+        dancers[currentDancerIndex].OnDanceStepAction(innerBeatCounter,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
         if (availableToDance)
         {
-            dancers[currentDancerIndex].OnReleaseStepAction(beat, type, currentStep);
+            dancers[currentDancerIndex].OnReleaseStepAction(innerBeatCounter, type, currentStep);
             innerBeatCounter++;
             if (innerBeatCounter >= currentDanceSequence.coreography.StepInBar.Count) SetNextDancer();
         }
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true;
+        
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar) availableToDance = true;
     }
 
     public void SetNextDancer()
