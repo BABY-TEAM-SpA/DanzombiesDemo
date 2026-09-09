@@ -62,6 +62,7 @@ public abstract class DanceBrain : Dancer
     
     public void OnMoving(Vector3 direction)
     {
+        if (direction == Vector3.zero) return;
         danceAnimCtrl.OnMoving(direction);
     }
 

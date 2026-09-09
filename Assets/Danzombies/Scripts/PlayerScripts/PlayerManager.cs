@@ -88,11 +88,9 @@ public class PlayerManager : DanceBrain
     #region RhythmPuzzle - Dance
     public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
-        if (danceTarget == null)
-            return;
-
         onDance?.Invoke(step);
         danceAnimCtrl?.OnDanceBegin(step);
+        if (danceTarget == null) return;
         danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
         comboController.Increase(bf, 1);
         ApplyDanceFeedback(bf);

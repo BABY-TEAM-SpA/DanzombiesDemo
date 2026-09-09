@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class CanonPuzzle : RhythmPuzzle
@@ -8,7 +9,7 @@ public class CanonPuzzle : RhythmPuzzle
     private int currentDancerIndex = 0;
     private int innerBeatCounter=0;
     public List<DanceSequence> danceSequences = new List<DanceSequence>();
-
+    public UnityEvent OnAvailable; 
     
     
     public override void PreparePuzzle()
@@ -54,7 +55,11 @@ public class CanonPuzzle : RhythmPuzzle
             if (innerBeatCounter >= currentDanceSequence.coreography.StepInBar.Count) SetNextDancer();
         }
         
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar) availableToDance = true;
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar)
+        {
+            availableToDance = true;
+            OnAvailable?.Invoke();
+        };
     }
 
     public void SetNextDancer()
