@@ -9,7 +9,7 @@ public class UIDancerBeatCounter : Dancer
 
     public override void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
-        Debug.Log("OnPreDanceStepAction UI");
+        //Debug.Log("OnPreDanceStepAction UI");
         feedbackText.text = (BeatManager.Instance.globalUpperBar-BeatManager.Instance.localBeatCount)>0 ? 
             (BeatManager.Instance.globalUpperBar - BeatManager.Instance.localBeatCount).ToString()
             : "go";

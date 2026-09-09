@@ -29,7 +29,7 @@ public class SFXEmitter : MonoBehaviour
         sfxInstance = RuntimeManager.CreateInstance(eventRef);
 
         ResolveParameterID();
-        UpdateParameterValue(activeParam.Value);
+        //UpdateParameterValue(activeParam.Value);
         SetVolume(volume);
 
         if (playOnStart)
