@@ -61,11 +61,11 @@ public class PlayerTriggeredCamera : MonoBehaviour
         OnPlayerUnfollowed?.Invoke(this);
     }
 
-    public float GetAverageCamerasX()
+    public Vector2 GetAverageCameras()
     {
-        float center = 0f;
+        Vector2 center = Vector2.zero;
         foreach (CinemachineCamera camera in cameras)
-            center += camera.transform.position.x;
+            center += (Vector2)camera.transform.position;
 
         return center / cameras.Length;
     }

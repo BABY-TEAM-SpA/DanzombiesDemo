@@ -8,7 +8,7 @@ public class CamerasController : MonoBehaviour
     private PlayerTriggeredCamera playerTriggeredCamera;
 
     public CinemachineCamera CurrentCamera => playerTriggeredCamera?.ActiveCamera;
-    public float CenterOfCamera => playerTriggeredCamera?.GetAverageCamerasX() ?? 0f;
+    public Vector2 CenterOfCamera => playerTriggeredCamera?.GetAverageCameras() ?? Vector2.zero;
     #endregion
 
     #region [UNITY]

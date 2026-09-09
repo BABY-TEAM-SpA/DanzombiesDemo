@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
+/// <summary>
+/// Controlador x escena de todos los SpriteRenderers marcados para parallax, con la posibilidad de repetirlos infinitamente.
+/// </summary>
 public class ParallaxEffect : MonoBehaviour
 {
     #region [VARIABLES]
@@ -13,24 +13,33 @@ public class ParallaxEffect : MonoBehaviour
     [Serializable]
     private class ParallaxTarget
     {
-        public SpriteRenderer target;
+        public enum ParallaxType
+        {
+            Horizontal,
+            Vertical
+        }
 
-        [Tooltip("0 : Sin movimiento.\n1 : Misma velocidad que la cámara.")]
-        [Range(0f, 1f)] public Vector2 parallaxSpeed;
+        public SpriteRenderer target;
+        public bool cameraDriven;
+        public ParallaxType type;
+
+        [Tooltip("-1 : Velocidad inversa a la cámara / Izquierda o abajo.\n0 : Sin movimiento.\n1 : Misma velocidad que la cámara / Derecha o arriba.")]
+        [Range(-1f, 1f)] public float parallaxFactor;
 
         [Tooltip("Si está activo, el fondo se repetirá infinitamente.")]
         public bool infinite;
         [Min(1)] public int tileCount = 3;
 
         [HideInInspector] public Transform[] tiles;
-        [HideInInspector] public float tileWidth;
+        [HideInInspector] public Vector2 tileSize;
+        [HideInInspector] public Vector3 Dimension => type == ParallaxType.Horizontal ? Vector3.right : Vector3.up;
     }
 
-    private float lastCamX;
+    private Vector2 lastCamPos;
     private bool isParallaxing;
     #endregion
 
-    #region [VARIABLES]
+    #region [UNITY EVENTS]
     private void Awake()
     {
         if (targets == null || targets.Length == 0)
@@ -46,46 +55,52 @@ public class ParallaxEffect : MonoBehaviour
         if (camerasController?.CurrentCamera == null)
             return;
 
-        float cc = camerasController.CenterOfCamera;
+        Vector2 cc = camerasController.CenterOfCamera;
         if (!isParallaxing) // <- 1er frame
         {
-            lastCamX = cc;
+            lastCamPos = cc;
             isParallaxing = true;
             return;
         }
 
-        float deltaX = cc - lastCamX;
-        lastCamX = cc;
+        Vector2 delta = cc - lastCamPos;
+        lastCamPos = cc;
 
         foreach (ParallaxTarget p in targets)
-        {
-            if (p.infinite && p.tiles != null)
-            {
-                foreach (Transform tile in p.tiles)
-                {
-                    Vector3 tilePos = tile.position;
-                    tilePos.x += deltaX * p.parallaxSpeed.x;
-                    tile.position = tilePos;
-                }
-
-                RecycleTiles(p, cc);
-            }
-            else
-            {
-                Vector3 pos = p.target.transform.position;
-                pos.x += deltaX * p.parallaxSpeed.x;
-                p.target.transform.position = pos;
-            }
-        }
+            ApplyParallax(p, p.cameraDriven ? delta : p.Dimension);
     }
     #endregion
 
     #region [METHODS]
+    #region Parallax
+    private void ApplyParallax(ParallaxTarget p, Vector2 delta)
+    {
+        if (p.infinite && p.tiles != null)
+        {
+            foreach (Transform tile in p.tiles)
+            {
+                Vector3 tilePos = tile.position;
+                tilePos += (Vector3)(delta * (Vector2)p.Dimension * p.parallaxFactor);
+                tile.position = tilePos;
+            }
+
+            RecycleTiles(p, lastCamPos);
+        }
+        else
+        {
+            Vector3 pos = p.target.transform.position;
+            pos += (Vector3)(delta * (Vector2)p.Dimension * p.parallaxFactor);
+            p.target.transform.position = pos;
+        }
+    }
+    #endregion
+
+    #region Helpers
     private void ExpandToInfinite(ParallaxTarget p)
     {
         // Settings
         SpriteRenderer original = p.target;
-        p.tileWidth = original.bounds.size.x;
+        p.tileSize = original.bounds.size;
 
         int count = p.tileCount % 2 == 0
             ? p.tileCount + 1
@@ -102,36 +117,66 @@ public class ParallaxEffect : MonoBehaviour
         }
 
         // Reposition
-        float startX = original.transform.position.x - (p.tileWidth * (count - 1) / 2f);
+        bool horizontal = p.type == ParallaxTarget.ParallaxType.Horizontal;
+        float axisSize = horizontal
+            ? p.tileSize.x
+            : p.tileSize.y;
+        float axisOrigin = horizontal
+            ? original.transform.position.x
+            : original.transform.position.y;
+        float axisStart = axisOrigin - axisSize * (count - 1) / 2f;
+
         for (int i = 0; i < count; i++)
         {
             Vector3 pos = p.tiles[i].position;
-            pos.x = startX + p.tileWidth * i;
+            if (horizontal)
+                pos.x = axisStart + axisSize * i;
+            else
+                pos.y = axisStart + axisSize * i;
             p.tiles[i].position = pos;
         }
     }
 
-    private void RecycleTiles(ParallaxTarget p, float cameraX)
+    private void RecycleTiles(ParallaxTarget p, Vector2 cc)
     {
-        float totalWidth = p.tileWidth * p.tiles.Length;
-        float maxDistance = totalWidth * 0.5f;
+        bool horizontal = p.type == ParallaxTarget.ParallaxType.Horizontal;
+        float axisTileSize = horizontal
+            ? p.tileSize.x
+            : p.tileSize.y;
+        float totalSize = axisTileSize * p.tiles.Length;
+        float maxDistance = totalSize * 0.5f;
 
         foreach (Transform tile in p.tiles)
         {
-            float distance = cameraX - tile.position.x;
+            float tileAxisPos = horizontal
+                ? tile.position.x
+                : tile.position.y;
+            float camAxisPos = horizontal
+                ? cc.x
+                : cc.y;
+            float distance = camAxisPos - tileAxisPos;
 
             while (distance > maxDistance)
             {
-                tile.position += Vector3.right * totalWidth;
-                distance -= totalWidth;
+                Vector3 t = tile.position;
+                if (horizontal)
+                    t.x += totalSize;
+                else t.y += totalSize;
+                tile.position = t;
+                distance -= totalSize;
             }
 
             while (distance < -maxDistance)
             {
-                tile.position -= Vector3.right * totalWidth;
-                distance += totalWidth;
+                Vector3 t = tile.position;
+                if (horizontal)
+                    t.x -= totalSize;
+                else t.y -= totalSize;
+                tile.position = t;
+                distance += totalSize;
             }
         }
     }
+    #endregion
     #endregion
 }
