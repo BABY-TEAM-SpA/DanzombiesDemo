@@ -11,14 +11,17 @@ public class VideoController : MonoBehaviour
     [SerializeField] private bool shouldPlayOnStart;
 
     [Header("FMOD Configuration")]
-    // Usamos el tipo correcto y moderno de FMOD
     [SerializeField] private FMODUnity.EventReference fmodEvent; 
     [SerializeField] private AudioSource unityAudioSource;
 
     private FMOD.Studio.EventInstance videoAudioInstance;
+    private FMOD.Studio.Bus masterBus; // Almacena el bus maestro para pausar/silenciar el resto
 
     void Start()
     {
+        // Obtenemos el bus maestro de FMOD para controlar todo el audio previo
+        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+
         if (shouldPlayOnStart) PlayVideo();
     }
 
@@ -35,18 +38,17 @@ public class VideoController : MonoBehaviour
     void PlayVideo()
     {
         videoPlayer.clip = videoClip;
-
-        // Comprobamos si el evento de FMOD es válido antes de usarlo
+        
         if (hasAudio && !fmodEvent.IsNull && unityAudioSource != null)
         {
-            // 1. Enrutar el audio del video hacia el AudioSource de Unity
+            // 1. Detener o mutear el audio previo antes de arrancar el nuevo
+            // Opción A: Pausar absolutamente todo el juego (Recomendado para cinemáticas)
+            masterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); 
+
             videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
             videoPlayer.SetTargetAudioSource(0, unityAudioSource);
-
-            // 2. Crear la instancia usando la EventReference
-            videoAudioInstance = FMODUnity.RuntimeManager.CreateInstance(fmodEvent);
             
-            // 3. Vincular la posición 3D (opcional pero recomendado si el video está en el mundo)
+            videoAudioInstance = FMODUnity.RuntimeManager.CreateInstance(fmodEvent);
             FMODUnity.RuntimeManager.AttachInstanceToGameObject(videoAudioInstance, transform);
             
             videoAudioInstance.start();
@@ -55,8 +57,6 @@ public class VideoController : MonoBehaviour
         {
             videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
         }
-
-        // 4. Iniciar el video en sincronía
         videoPlayer.Play();
     }
 

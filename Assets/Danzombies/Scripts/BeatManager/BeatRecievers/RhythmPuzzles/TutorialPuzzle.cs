@@ -23,8 +23,8 @@ public class TutorialPuzzle : RhythmPuzzle
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
         if (!availableToDance) return;
-        Debug.Log(BeatManager.Instance.localBeatCount);
-        Debug.Log(beat);
+        //g.Log(BeatManager.Instance.localBeatCount);
+        //Debug.Log(beat);
         currentStep = currentDanceSequence.GetDanceStep(beat-1,type);
         eventManager.InvokePrepare(beat,type,currentStep);
     }
@@ -33,7 +33,7 @@ public class TutorialPuzzle : RhythmPuzzle
     {
         if (!availableToDance)
         {
-            Debug.Log(BeatManager.Instance.localBeatCount);
+            //Debug.Log(BeatManager.Instance.localBeatCount);
             eventManager.InvokePreDance(beat, type);
             return;
         }

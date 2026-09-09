@@ -41,7 +41,7 @@ public class CanonPuzzle : RhythmPuzzle
             //eventManager.InvokePreDance(innerBeatCounter, type);
             return;
         }
-        Debug.Log(innerBeatCounter.ToString() + "Cannon Puzzle");
+        //Debug.Log(innerBeatCounter.ToString() + "Cannon Puzzle");
         dancers[currentDancerIndex].OnDanceStepAction(innerBeatCounter,type,currentStep);
     }
 

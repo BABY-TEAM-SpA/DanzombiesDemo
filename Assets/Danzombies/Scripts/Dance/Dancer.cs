@@ -53,8 +53,8 @@ public class DanceEventManager
     
     public void InvokePreDance(int beat, BeatManager.BeatType beatType) 
     {
-        Debug.Log("Invoke PreDanceStepAction EVENT MANAGER");
-        Debug.Log(OnPreDanceStep.GetInvocationList()[0].ToString());
+        //Debug.Log("Invoke PreDanceStepAction EVENT MANAGER");
+        //Debug.Log(OnPreDanceStep.GetInvocationList()[0].ToString());
         OnPreDanceStep?.Invoke(beat, beatType, DanceStep.None);
     }
 
@@ -91,7 +91,7 @@ public class Dancer: MonoBehaviour
 
     public virtual void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
-        Debug.Log("OnPreDanceStepAction Dancer:"+this.transform.name);
+        //Debug.Log("OnPreDanceStepAction Dancer:"+this.transform.name);
     }
     
     public virtual void OnPrepareStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
