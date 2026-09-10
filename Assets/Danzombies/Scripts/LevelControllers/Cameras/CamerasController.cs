@@ -19,6 +19,8 @@ public class CamerasController : MonoBehaviour
         foreach (PlayerTriggeredCamera cam in cameras)
             cam.OnPlayerFollowed += OnCameraFollowed;
     }
+
+    private void Update() => CameraFrustum.Update();
     #endregion
 
     #region [EVENTS]
