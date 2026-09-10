@@ -26,6 +26,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     private float currentSpeed;
     private float currentOffset;
 
+    private Vector3 railStart;
     private float railLength;
     private float railProgress;
     private Vector2 railDirection;
@@ -53,10 +54,12 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         if (isChasing == chase)
             return;
 
+        railStart = startPoint.position;
         RecalculateRail();
+
         if (chase)
         {
-            Vector2 toObject = (Vector2)transform.position - (Vector2)startPoint.position;
+            Vector2 toObject = (Vector2)transform.position - (Vector2)railStart;
             railProgress = Mathf.Clamp(Vector2.Dot(toObject, railDirection), 0f, railLength);
             currentOffset = Mathf.Clamp(Vector2.Dot(toObject, perpendicular), -maxLateralDeviation, maxLateralDeviation);
         }
@@ -67,6 +70,8 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     {
         RecalculateRail();
         transform.position = startPoint.position;
+
+        railStart = startPoint.position;
     }
     #endregion
 
@@ -86,7 +91,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         if (isChasing)
         {
             RecalculateRail();
-            float projected = Vector2.Dot((Vector2)transform.position - (Vector2)startPoint.position, railDirection);
+            float projected = Vector2.Dot((Vector2)transform.position - (Vector2)railStart, railDirection);
             railProgress = Mathf.Clamp(projected, 0f, railLength);
         }
     }
@@ -103,7 +108,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         SetSpeed();
         railProgress = Mathf.Min(railProgress + currentSpeed * Time.deltaTime, railLength);
 
-        Vector2 pointOnRail = (Vector2)startPoint.position + railDirection * railProgress;
+        Vector2 pointOnRail = (Vector2)railStart + railDirection * railProgress;
 
         float playerOffset = Vector2.Dot((Vector2)playerMovement.transform.position - pointOnRail, perpendicular);
         float targetOffset = Mathf.Clamp(playerOffset, -maxLateralDeviation, maxLateralDeviation);
@@ -119,9 +124,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #region Helpers
     private void RecalculateRail()
     {
-        railDirection = ((Vector2)endPoint.position - (Vector2)startPoint.position).normalized;
+        railDirection = ((Vector2)endPoint.position - (Vector2)railStart).normalized;
         perpendicular = Vector2.Perpendicular(railDirection);
-        railLength = Vector2.Distance(startPoint.position, endPoint.position);
+        railLength = Vector2.Distance(railStart, endPoint.position);
 
         currentOffset = 0f;
         railProgress = 0f;
