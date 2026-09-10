@@ -660,7 +660,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 539e8152d1f83c24caaf7c86f753e283, type: 3}
@@ -751,7 +751,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 539e8152d1f83c24caaf7c86f753e283, type: 3}
@@ -1274,7 +1274,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 539e8152d1f83c24caaf7c86f753e283, type: 3}
@@ -1365,7 +1365,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 539e8152d1f83c24caaf7c86f753e283, type: 3}
@@ -1401,6 +1401,22 @@ PrefabInstance:
     - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: isLeftLooking
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651001649101913600, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
+      propertyPath: onEast.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651001649101913600, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
+      propertyPath: onWest.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651001649101913600, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
+      propertyPath: onNorth.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651001649101913600, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
+      propertyPath: onSouth.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4935623386620763509, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1495,13 +1511,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fd2ff6ec9e1bb428b59a4ea6c8e79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialDanceBrain
-  debug: 0
-  ActivateOnStart: 0
-  movCtrl: {fileID: 0}
-  danceAnimCtrl: {fileID: 0}
-  beatReciever: {fileID: 0}
-  isLeftLooking: 0
-  dancerExpressions: []
+  onDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onReaction:
+    m_PersistentCalls:
+      m_Calls: []
   _playerInput: {fileID: 0}
   danceCanvas: {fileID: 3611225574761071510}
   danceIcon:

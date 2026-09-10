@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &111313147
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.39042
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.58506
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 213270410435810108, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874700405571119761, guid: ed5411465da445045ba84757f34286ab, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed5411465da445045ba84757f34286ab, type: 3}
 --- !u!1001 &308747120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4294,21 +4351,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2767494195921713143
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6896394213872258650}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6161, y: -0.47254, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2785937370387513630
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5629,6 +5671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 2969029782531513357}
   animatorOverrideController: {fileID: 22100000, guid: 9f4272436b53b2c41901d808917356ac, type: 2}
+  beatMode: 0
 --- !u!1 &3572494688194298084
 GameObject:
   m_ObjectHideFlags: 0
@@ -5929,6 +5972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 0}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!224 &3711493890940399367
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6829,6 +6873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 0}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!224 &4171441628249089789
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7575,7 +7620,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  textRender: {fileID: 0}
+  selectOnEnable: 0
+  textRender: {fileID: 4458820631244424325}
   textFadeDuration: 0.2
 --- !u!222 &4703987695161565376
 CanvasRenderer:
@@ -8025,21 +8071,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4987151112884140331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6896394213872258650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa0952c6f7bd31d438cb650e026d7fc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BeatManager
-  margenPercentOnBeat: 0.25
-  greatPercentOnMargin: 0.5
-  perfectPercentOnMargin: 0.1
 --- !u!114 &4992638949359120117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8364,27 +8395,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceBarController
   isActive: 0
-  IconImage: {fileID: 8712762214587298431}
-  IconDefaultState: {fileID: 21300000, guid: d0d9dd09c6bf76d4aa9eaf694c2626a8, type: 3}
-  IconStates:
-  - {fileID: 21300000, guid: c14a20df97c2a39488c30d3610cab684, type: 3}
-  - {fileID: 21300000, guid: e7650e0760ad9d646b804b74d390da68, type: 3}
-  - {fileID: 21300000, guid: 6b613c9c82ee2f548b8d0c7a4ea72d5e, type: 3}
-  FlowBars:
-  - {fileID: 4853987517486692600}
-  - {fileID: 9241639707950505}
-  barReactions:
-  - {r: 0.3529412, g: 0.5372549, b: 0.427451, a: 1}
-  - {r: 0.81568635, g: 0.96470594, b: 0.38431376, a: 1}
-  - {r: 0.7176471, g: 0.22352943, b: 0.07450981, a: 1}
+  iconDefaultState: {fileID: 0}
+  states: []
+  iconImage: {fileID: 0}
+  flowBars: []
   beatBars:
   - {fileID: 2540582419376081213}
   - {fileID: 8705426287441524470}
   beatBarMaterial: {fileID: 2100000, guid: 78f68a961843c304f9ed2e0494d26229, type: 2}
   uiAnimator: {fileID: 5925539298156074733}
-  onBarFilled:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5090579218343583406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8540,6 +8559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 4971293626834542648}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!222 &5207040034859308139
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8862,6 +8882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 8778813113359958740}
   animatorOverrideController: {fileID: 22100000, guid: 9f4272436b53b2c41901d808917356ac, type: 2}
+  beatMode: 0
 --- !u!224 &5416447599809482579
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9140,7 +9161,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  textRender: {fileID: 0}
+  selectOnEnable: 0
+  textRender: {fileID: 3741934944012820422}
   textFadeDuration: 0.2
 --- !u!1 &5508201141801299977
 GameObject:
@@ -9926,7 +9948,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  textRender: {fileID: 0}
+  selectOnEnable: 0
+  textRender: {fileID: 8851552301497612224}
   textFadeDuration: 0.2
 --- !u!114 &5952525454485964930
 MonoBehaviour:
@@ -10382,6 +10405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 0}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!1 &6355551968226051019
 GameObject:
   m_ObjectHideFlags: 0
@@ -10623,6 +10647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 367093814136202854}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!114 &6537223889781265985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11063,7 +11088,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  textRender: {fileID: 0}
+  selectOnEnable: 0
+  textRender: {fileID: 727131908171822819}
   textFadeDuration: 0.2
 --- !u!224 &6688092091799743913
 RectTransform:
@@ -11380,6 +11406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 7467259102038208122}
   animatorOverrideController: {fileID: 22100000, guid: 9f4272436b53b2c41901d808917356ac, type: 2}
+  beatMode: 0
 --- !u!224 &6853621504100366915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11480,24 +11507,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &6896394213872258650
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2767494195921713143}
-  - component: {fileID: 9015656305216401088}
-  - component: {fileID: 4987151112884140331}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!222 &6903527759342567574
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12953,6 +12962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 0}
   animatorOverrideController: {fileID: 0}
+  beatMode: 0
 --- !u!114 &8199525182754573290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13973,10 +13983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3061d14bfdb26b34fb59e108174217aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GUIManager
-  PlayerCanvas: {fileID: 3310809119665253920}
   PauseCanvas: {fileID: 1110724087935067815}
   TransitionCanvas: {fileID: 27616979199448429}
-  danceBarController: {fileID: 5081933149210192114}
 --- !u!114 &8905736074441113373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14112,18 +14120,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &9015656305216401088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6896394213872258650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0d7d6834990564ab9054f7c29b00a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
 --- !u!225 &9030337958971156100
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -14523,6 +14519,6 @@ SceneRoots:
   - {fileID: 583551258}
   - {fileID: 1032466470}
   - {fileID: 308747120}
-  - {fileID: 2767494195921713143}
   - {fileID: 7096447500372320740}
   - {fileID: 4083549119529496288}
+  - {fileID: 111313147}

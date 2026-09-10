@@ -11,6 +11,7 @@ public class DanceEventManager
     private event OnPuzzle OnDisable;
     private delegate void OnDanceSetEvent(int beat, BeatManager.BeatType beatType,DanceStep danceStep);
     private event OnDanceSetEvent OnPrepareStep;
+    private event OnDanceSetEvent OnPreDanceStep;
     private event OnDanceSetEvent OnDanceStep;
     private event OnDanceSetEvent OnReleaseStep;
     private event OnDanceSetEvent OnNextStep;
@@ -21,6 +22,7 @@ public class DanceEventManager
         OnReseat  += dancer.OnReseatPuzzle;
         OnDisable  += dancer.OnDisablePuzzle;
         OnPrepareStep += dancer.OnPrepareStepAction;
+        OnPreDanceStep += dancer.OnPreDanceStepAction;
         OnDanceStep += dancer.OnDanceStepAction;
         OnReleaseStep += dancer.OnReleaseStepAction;
         OnNextStep += dancer.OnSetNextSetAction;
@@ -31,13 +33,15 @@ public class DanceEventManager
         OnReseat  -= dancer.OnReseatPuzzle;
         OnDisable  -= dancer.OnDisablePuzzle;
         OnPrepareStep -= dancer.OnPrepareStepAction;
+        OnPreDanceStep -= dancer.OnPreDanceStepAction;
         OnDanceStep -= dancer.OnDanceStepAction;
         OnReleaseStep -= dancer.OnReleaseStepAction;
-        OnNextStep += dancer.OnSetNextSetAction;
+        OnNextStep -= dancer.OnSetNextSetAction;
     }
     public void RemoveAllListeners()
     {
         OnPrepareStep = null;
+        OnPreDanceStep = null;
         OnDanceStep = null;
         OnReleaseStep = null;
         OnNextStep = null;
@@ -46,6 +50,13 @@ public class DanceEventManager
     public void InvokeEnablePuzzle(RhythmPuzzle puzzle) => OnEnable?.Invoke(puzzle);
     public void InvokeReseatPuzzle(RhythmPuzzle puzzle) => OnReseat?.Invoke(puzzle);
     public void InvokeDisablePuzzle(RhythmPuzzle puzzle) => OnDisable?.Invoke(puzzle);
+    
+    public void InvokePreDance(int beat, BeatManager.BeatType beatType) 
+    {
+        //Debug.Log("Invoke PreDanceStepAction EVENT MANAGER");
+        //Debug.Log(OnPreDanceStep.GetInvocationList()[0].ToString());
+        OnPreDanceStep?.Invoke(beat, beatType, DanceStep.None);
+    }
 
     public void InvokePrepare(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
@@ -77,13 +88,17 @@ public class Dancer: MonoBehaviour
         currentDanceStep = DanceStep.None;
         currentBeat = 0;
     }
-    public virtual void OnDisablePuzzle(RhythmPuzzle puzzl){}
+
+    public virtual void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        //Debug.Log("OnPreDanceStepAction Dancer:"+this.transform.name);
+    }
     
     public virtual void OnPrepareStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
     {
         currentDanceStep = danceStep;
     }
-
+    
     public virtual void OnDanceStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep){}
 
     public virtual void OnReleaseStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
@@ -91,5 +106,6 @@ public class Dancer: MonoBehaviour
         currentDanceStep = DanceStep.None;
     }
     public virtual void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType,DanceStep nextDanceStep) { }
+    public virtual void OnDisablePuzzle(RhythmPuzzle puzzl){}
     public virtual void React(ExpressionType exp) { }
 }

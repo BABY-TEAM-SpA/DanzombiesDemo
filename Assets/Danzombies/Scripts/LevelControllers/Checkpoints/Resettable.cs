@@ -26,5 +26,7 @@ public class Resettable : MonoBehaviour
         ResetConfig config = states.FirstOrDefault(r => r.respawn == checkpoint);
         config?.OnReset?.Invoke();
     }
+
+    public void TeleportTo(Transform point) => transform.position = point.position;
     #endregion
 }

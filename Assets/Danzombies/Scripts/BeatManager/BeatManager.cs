@@ -98,7 +98,9 @@ public class BeatManager : MonoBehaviour
         globalUpperBar = upper;
         globalLowerBar = lower;
         
-        if (useDebug) Debug.Log("beat:" + globalBeatCount);
+        if (useDebug) Debug.Log("beat:" + localBeatCount);
+        lastBeatTime = AudioManager.Instance.SongPositionSeconds();
+        nextBeatTime = lastBeatTime+BeatTimeSec;
         OnBeat?.Invoke(globalBeatCount, BeatType.FullBeat); ///1, 2 ,3, 4, 1, 2, 3, 4 (segun el Upper)
     }
     void Update()
@@ -118,6 +120,8 @@ public class BeatManager : MonoBehaviour
             preTrigger = true;
             beatTrigger = false;
             postTrigger = true;
+            localBeatCount = (localBeatCount+1<=globalUpperBar)?localBeatCount+1:1;
+            if (useDebug) Debug.Log("Prebeat:" + localBeatCount);
             OnPreBeat?.Invoke(localBeatCount, BeatType.FullBeat);
         }
 
@@ -127,6 +131,7 @@ public class BeatManager : MonoBehaviour
             preTrigger = false;
             beatTrigger = true;
             postTrigger = true;
+            if (useDebug) Debug.Log("Postbeat:" + localBeatCount);
             OnPostBeat?.Invoke(localBeatCount, BeatType.FullBeat);
         }
     }

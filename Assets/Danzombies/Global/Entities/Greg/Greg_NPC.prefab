@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 2577410278601818433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0.28, z: 0}
-  m_LocalScale: {x: 2.5, y: 1, z: 1}
+  m_LocalPosition: {x: -0.2, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1704513675290613706}
@@ -420,6 +420,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieDanceBrain
+  onDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onReaction:
+    m_PersistentCalls:
+      m_Calls: []
   debug: 0
   ActivateOnStart: 0
   movCtrl: {fileID: 2434316132513533978}
@@ -430,6 +436,9 @@ MonoBehaviour:
   - expressionType: 0
     alpha: {fileID: 22100000, guid: 8c97e7dc513c1d745b60e18a65af5851, type: 2}
     beta: {fileID: 22100000, guid: 3954cc89651de984fb1b8d095f021ca8, type: 2}
+    OnReaction:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &2434316132513533978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +455,8 @@ MonoBehaviour:
   walkingSpeed: 5
   acceleration: 25
   sprintFactor: 1.6
+  scriptedDuration: 0
+  scriptedDirection: {x: 0, y: 0}
 --- !u!114 &7528633603488111658
 MonoBehaviour:
   m_ObjectHideFlags: 0

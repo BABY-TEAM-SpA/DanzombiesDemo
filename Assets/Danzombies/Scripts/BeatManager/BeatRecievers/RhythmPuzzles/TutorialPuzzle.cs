@@ -8,8 +8,6 @@ public class TutorialPuzzle : RhythmPuzzle
     
     [Header("Tutorial Dance Settings")]
     public List<DanceSequence> TutorialSequences = new List<DanceSequence>();
-    int currentSequenceIndex = 0;
-    private bool availableToDance=false;
     
     #endregion
     #region [METHODS]
@@ -18,30 +16,40 @@ public class TutorialPuzzle : RhythmPuzzle
 
     public override void SetActivePuzzle(bool activate)
     {
-        availableToDance = false;
         base.SetActivePuzzle(activate);
         if (currentSequenceIndex < TutorialSequences.Count) SetSequence(TutorialSequences[currentSequenceIndex]);
     }
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true;
         if (!availableToDance) return;
-        currentStep = danceSequence.GetDanceStep(beat,type);
+        //g.Log(BeatManager.Instance.localBeatCount);
+        //Debug.Log(beat);
+        currentStep = currentDanceSequence.GetDanceStep(beat-1,type);
         eventManager.InvokePrepare(beat,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        if (!availableToDance) return;
+        if (!availableToDance)
+        {
+            //Debug.Log(BeatManager.Instance.localBeatCount);
+            eventManager.InvokePreDance(beat, type);
+            return;
+        }
+        //Debug.Log(BeatManager.Instance.localBeatCount);
         eventManager.InvokeDance(beat,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
-        if (!availableToDance) return;
-        eventManager.InvokeRealease(beat,type,currentStep);
-        CheckEnd(beat);
+        if (availableToDance)
+        {
+            //Debug.Log(BeatManager.Instance.localBeatCount);
+            eventManager.InvokeRealease(beat, type, currentStep);
+            CheckEnd(beat);
+        }
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar) availableToDance = true; 
     }
     
     public override void PreparePuzzle()

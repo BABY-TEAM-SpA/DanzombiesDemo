@@ -13,6 +13,8 @@ public class PlayerComboController : MonoBehaviour
     public int Count => count;
     private int count;
 
+    [Tooltip("Cuando el Player no logra uno de estos feedbacks, el contador se resetea.")]
+    [SerializeField] private BeatReciever.BeatFeedback[] allowedFeedbacks;
     [SerializeField] private PlayerComboState[] states;
     [Serializable]
     private class PlayerComboState
@@ -35,6 +37,13 @@ public class PlayerComboController : MonoBehaviour
     #endregion
 
     #region [METHODS]
+    public void Increase(BeatReciever.BeatFeedback feedback, int value)
+    {
+        if (allowedFeedbacks.Contains(feedback))
+            Increase(value);
+        else Reset();
+    }
+
     public void Increase(int value)
     {
         ComboState prevState = State;
@@ -47,8 +56,9 @@ public class PlayerComboController : MonoBehaviour
             GetComboState(State)?.OnStateExited?.Invoke();
         }
 
-        // <- Aquí iría el llamado a un ComboUIController o similar, mismo patrón que con PlayerFlowController y DanceBarController
-        Debug.Log($"[PlayerComboController] Combo = {count}");
+        // <- Aquí iría el llamado a un ComboUIController o similar, mismo patrón que con PlayerFlowController
+        //    y DanceBarController, dejo el Debug.Log por mientras
+        Debug.Log($"[PlayerComboController] Combo = {State} ({Count})");
     }
 
     public void Reset() => Increase(-count);

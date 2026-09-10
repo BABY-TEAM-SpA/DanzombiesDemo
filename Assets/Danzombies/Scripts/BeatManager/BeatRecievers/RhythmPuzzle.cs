@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,8 +15,24 @@ public abstract class RhythmPuzzle : BeatReciever
     [SerializeField] protected bool debug;
     [SerializeField] bool activateOnStart;
     protected DanceEventManager eventManager = new DanceEventManager();
-    [SerializeField] protected DanceSequence danceSequence;
+    protected DanceSequence currentDanceSequence;
+    protected int currentSequenceIndex;
     protected DanceStep currentStep;
+    protected bool availableToDance = false;
+
+    [SerializeField] protected PlayerInputEvent[] playerInputs;
+    [Serializable]
+    public class PlayerInputEvent
+    {
+        public BeatReciever.BeatFeedback feedback;
+        public UnityEvent OnPlayerSuccess;
+    }
+
+    public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
+    {
+        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
+        e?.OnPlayerSuccess?.Invoke();
+    }
     
     protected void Start()
     {
@@ -27,13 +44,12 @@ public abstract class RhythmPuzzle : BeatReciever
         eventManager.RemoveAllListeners();
     }
     
-    
     public abstract void PreparePuzzle();
     
     public virtual void SetActivePuzzle(bool activate)
     {
         isActive = activate;
-        
+        availableToDance = false;
         if(isActive)
         {
             if(debug)Debug.Log($"Starting PUZZLE ({name})");
@@ -48,9 +64,9 @@ public abstract class RhythmPuzzle : BeatReciever
     }
     
 
-    protected void SetSequence(DanceSequence sequence)
+    public void SetSequence(DanceSequence sequence)
     {
-        danceSequence = sequence;
+        currentDanceSequence = sequence;
     }
 
     public virtual void OnPuzzleCompleted()
@@ -58,5 +74,12 @@ public abstract class RhythmPuzzle : BeatReciever
         //Debug.Log("Puzzle Is Over");
         SetActivePuzzle(false);
     }
+    
+    public void ActivatePuzzleByIndex(int index)
+    {
+        currentSequenceIndex = index;
+        SetActivePuzzle(true);
+    }
+    
 
 }

@@ -62,7 +62,9 @@ public class PlayerManager : DanceBrain
     #region RhythmPuzzle - Puzzle
     public void AddTargetPuzzle(DanceZone target)
     {
-        if(target != danceTarget) danceTarget?.PlayerLeave(this);
+        if (target != danceTarget)
+            danceTarget?.PlayerLeave(this);
+
         danceTarget = target;
         ActivateDanceHUD(true);
     }
@@ -84,14 +86,13 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region RhythmPuzzle - Dance
-    public override void OnDanceStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
+    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
-        if (danceTarget == null)
-            return;
-
         onDance?.Invoke(step);
         danceAnimCtrl?.OnDanceBegin(step);
+        if (danceTarget == null) return;
         danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
+        comboController.Increase(bf, 1);
         ApplyDanceFeedback(bf);
     }
 

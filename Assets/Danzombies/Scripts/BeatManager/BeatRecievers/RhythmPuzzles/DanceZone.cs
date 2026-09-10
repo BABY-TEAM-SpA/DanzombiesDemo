@@ -32,8 +32,19 @@ public class DanceZone : Dancer
     public PlayerManager playersInside{private set; get;}
 
 
-    
-    
+    // [Frco] <¬ Para poder añadir/remover un Dancer de una DanceZone desde un UnityEvent
+    public void AddListener(Dancer dancer)
+    {
+        if (dancer != null)
+            listeners.AddListener(dancer);
+    }
+    public void RemoveListener(Dancer dancer)
+    {
+        if (dancer != null)
+            listeners.RemoveListener(dancer);
+    }
+
+
     public DamageMode GetDamageMode()
     {
         return damageMode;
@@ -46,7 +57,7 @@ public class DanceZone : Dancer
 
     public void SetZone()
     {
-        foreach (ZombieDanceBrain dancer in dancers) listeners.AddListener(dancer);
+        if(dancers.Count>0)foreach (Dancer dancer in dancers) listeners.AddListener(dancer);
     }
     private void OnDisable()
     {
@@ -55,7 +66,7 @@ public class DanceZone : Dancer
 
     public override void OnEnablePuzzle(RhythmPuzzle puz)
     {
-        Debug.Log("OnEnablePuzzle");
+        //Debug.Log("OnEnablePuzzle");
         OnActivated?.Invoke();
         isActive = true;
         puzzle = puz;
@@ -63,11 +74,16 @@ public class DanceZone : Dancer
 
     public override void OnDisablePuzzle(RhythmPuzzle puz)
     {
-        Debug.Log("OnDisablePuzzle");
+        //Debug.Log("OnDisablePuzzle");
         isActive = false;
         OnDeactivated?.Invoke();
     }
-    
+
+    public override void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        listeners.InvokePreDance(beat,beatType);
+    }
+
     public override void OnPrepareStepAction(int prevbeat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
         if (!isActive) return;
@@ -90,7 +106,7 @@ public class DanceZone : Dancer
         if (!isActive) return;
         if (playersInside!= null &&!PlayerHasDanced && danceStep != DanceStep.None && danceStep != DanceStep.Idle)
         {
-            Debug.Log("didntDance");
+            //Debug.Log("didntDance");
             playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
         }
         base.OnReleaseStepAction(beat,beatType, danceStep);
@@ -122,7 +138,7 @@ public class DanceZone : Dancer
     
     public void React(ExpressionType exp)
     {
-        foreach (ZombieDanceBrain dancer in dancers)
+        foreach (Dancer dancer in dancers)
             dancer.React(exp);
         
     }
@@ -138,6 +154,7 @@ public class DanceZone : Dancer
             //Debug.Log(isTheSameStep);
             bf = isTheSameStep ? BeatManager.Instance.EvaluateInput(currentBeat,currentBeatType) : BeatReciever.BeatFeedback.Bad;
             React(bf==BeatReciever.BeatFeedback.Bad?ExpressionType.Angry:ExpressionType.Normal);
+            puzzle?.ResolvePlayerInput(bf);
         }
         
     }

@@ -10,6 +10,7 @@ public class FollowDanceSequence
     
     public void OnPrepareStepAction(int beat, BeatManager.BeatType type, DanceStep step)
     {
+        
         foreach (Dancer dancer in dancers)
         {
             dancer.OnEnablePuzzle(null);
@@ -40,7 +41,6 @@ public class FollowPuzzle : RhythmPuzzle
     public Dancer leader;
     public bool leaderTurn;
     private int innerBeatCounter=0;
-    int currentSequenceIndex = 0;
     
     public List<FollowDanceSequence> followDanceSequences = new List<FollowDanceSequence>();
     
@@ -52,26 +52,42 @@ public class FollowPuzzle : RhythmPuzzle
         eventManager.AddListener(leader);
         SetSequence(followDanceSequences[currentSequenceIndex].danceSequence);
     }
-    
+
+    public override void SetActivePuzzle(bool activate)
+    {
+        base.SetActivePuzzle(activate);
+        leaderTurn = true;
+        innerBeatCounter = 0;
+        
+    }
+
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
-        currentStep = danceSequence.GetDanceStep(innerBeatCounter,type);
-        if(leaderTurn) eventManager.InvokePrepare(beat, type, currentStep);
-        else followDanceSequences[currentSequenceIndex].OnPrepareStepAction(beat,type,currentStep);
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 1) availableToDance = true; 
+        if (!availableToDance) return;
+        currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,type);
+        if(leaderTurn) eventManager.InvokePrepare(innerBeatCounter, type, currentStep);
+        else followDanceSequences[currentSequenceIndex].OnPrepareStepAction(innerBeatCounter,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
-        if(leaderTurn) eventManager.InvokeDance(beat, type, currentStep);
-        else followDanceSequences[currentSequenceIndex].OnDanceStepAction(beat,type,currentStep);
+        if (!availableToDance)
+        {
+            eventManager.InvokePreDance(beat, type);
+            return;
+        }
+        if(leaderTurn) eventManager.InvokeDance(innerBeatCounter, type, currentStep);
+        else followDanceSequences[currentSequenceIndex].OnDanceStepAction(innerBeatCounter,type,currentStep);
     }
 
     public override void PostBeatAction(int beat, BeatManager.BeatType type)
     {
+        if (!availableToDance) return;
         if(leaderTurn) eventManager.InvokeRealease(beat, type, currentStep);
         else followDanceSequences[currentSequenceIndex].OnReleaseStepAction(beat,type, currentStep);
         innerBeatCounter++;
-        if (innerBeatCounter == danceSequence.coreography.StepInBar.Count)SetNextDancer();
+        if (innerBeatCounter == currentDanceSequence.coreography.StepInBar.Count)SetNextDancer();
     }
 
     public void SetNextDancer()

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using FMOD;
 using FMOD.Studio;
 using FMODUnity;
@@ -8,10 +9,14 @@ using STOP_MODE = FMOD.Studio.STOP_MODE;
 public class SFXEmitter : MonoBehaviour
 {
     #region [VARIABLES]
+    private const float MIN_VOLUME = 0f;
+    private const float MAX_VOLUME = 2f;
+
     public EventReference eventRef;
     public ParamRef activeParam; // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
                                  //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
     [SerializeField] private bool playOnStart;
+    [SerializeField][Range(MIN_VOLUME, MAX_VOLUME)] private float volume = 1f;
 
     private EventInstance sfxInstance;
     #endregion
@@ -25,7 +30,8 @@ public class SFXEmitter : MonoBehaviour
         sfxInstance = RuntimeManager.CreateInstance(eventRef);
 
         ResolveParameterID();
-        UpdateParameterValue(activeParam.Value);
+        //UpdateParameterValue(activeParam.Value);
+        SetVolume(volume);
 
         if (playOnStart)
             Play();
@@ -39,7 +45,7 @@ public class SFXEmitter : MonoBehaviour
     #endregion
 
     #region [METHODS]
-    #region API
+    #region API - Studio
     public void Play()
     {
         if (!sfxInstance.isValid())
@@ -49,6 +55,15 @@ public class SFXEmitter : MonoBehaviour
         RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
     }
 
+    public void Play(string paramLabel)
+    {
+        //SetParameterByName(param);
+        //ParamRef paramRef = param == "L" ? new ParamRef{ Name = param, Value = 0f } : new ParamRef{ Name = param, Value = 1f };
+        Debug.Log($"[SFXEmitter] Play param: {paramLabel}");
+        UpdateParameterName(paramLabel);
+        Play();
+    }
+
     public void Stop()
     {
         if (!sfxInstance.isValid())
@@ -56,7 +71,9 @@ public class SFXEmitter : MonoBehaviour
 
         sfxInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
+    #endregion
 
+    #region API - Parameters
     /// <summary>
     /// Método FF para el seteo de un nuevo parámetro de FMOD activo para el evento asignado a este SFXEmitter.
     /// Su propósito es permitir la existiencia de UpdateParameterValue, calleable desde los UnityEvent al no necesitar
@@ -99,6 +116,33 @@ public class SFXEmitter : MonoBehaviour
         }
 
         activeParam.Value = value;
+    }
+    
+    public void UpdateParameterName(string label)
+    {
+        if (activeParam == null)
+        {
+            Debug.LogWarning($"[SFXEmitter] El parámetro activo es null, cancelando operación.", this);
+            return;
+        }
+
+        RESULT result = sfxInstance.setParameterByIDWithLabel(activeParam.ID, label);
+        if (result != RESULT.OK)
+        {
+            Debug.LogWarning($"[SFXEmitter] Resultado: {result}.", this);
+            return;
+        }
+        
+    }
+    #endregion
+
+    #region API - Volume
+    public void SetVolume(float value)
+    {
+        volume = Mathf.Clamp(value, MIN_VOLUME, MAX_VOLUME);
+        
+        if (sfxInstance.isValid())
+            sfxInstance.setVolume(volume);
     }
     #endregion
 

@@ -71,7 +71,7 @@ public class UiAnimator : MonoBehaviour
             StopCoroutine(currentSequence);
             currentSequence = null;
         }
-        StopAllCoroutines();
+        //StopAllCoroutines();
     }
 
     private void OnDisable()

@@ -56,8 +56,9 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         RecalculateRail();
         if (chase)
         {
-            float projected = Vector2.Dot((Vector2)transform.position - (Vector2)startPoint.position, railDirection);
-            railProgress = Mathf.Clamp(projected, 0f, railLength);
+            Vector2 toObject = (Vector2)transform.position - (Vector2)startPoint.position;
+            railProgress = Mathf.Clamp(Vector2.Dot(toObject, railDirection), 0f, railLength);
+            currentOffset = Mathf.Clamp(Vector2.Dot(toObject, perpendicular), -maxLateralDeviation, maxLateralDeviation);
         }
         isChasing = chase;
     }
@@ -70,11 +71,28 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #endregion
 
     #region Updates
-    public void UpdateStartingPoint(Transform point) => startPoint = point;
-    public void UpdateEndPoint(Transform point) => endPoint = point;
+    public void UpdateStartingPoint(Transform point)
+    {
+        startPoint = point;
+        UpdatePoint();
+    }
+    public void UpdateEndPoint(Transform point)
+    {
+        endPoint = point;
+        UpdatePoint();
+    }
+    private void UpdatePoint()
+    {
+        if (isChasing)
+        {
+            RecalculateRail();
+            float projected = Vector2.Dot((Vector2)transform.position - (Vector2)startPoint.position, railDirection);
+            railProgress = Mathf.Clamp(projected, 0f, railLength);
+        }
+    }
 
-    public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0f);
-    public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Max(chasingFactor, 0f);
+    public void UpdateMaxDistance(float maxDistance) => this.maxDistance = Mathf.Max(maxDistance, 0.01f);
+    public void UpdateChasingFactor(float chasingFactor) => this.chasingFactor = Mathf.Clamp(chasingFactor, 0f, 2f);
     public void UpdateMaxLateralDeviation(float maxLateralDeviation) => this.maxLateralDeviation = Mathf.Max(maxLateralDeviation, 0f);
     public void UpdateLateralFollowSpeed(float lateralFollowSpeed) => this.lateralFollowSpeed = Mathf.Max(lateralFollowSpeed, 0f);
     #endregion

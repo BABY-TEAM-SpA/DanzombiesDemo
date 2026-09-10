@@ -4,89 +4,149 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [Serializable]
 public class DialogSequence
 {
-    public int currentDialogText = 0;
+    [HideInInspector] public int currentDialogText = 0;
+    public float timeToAutoContinue;
     public DialogDataSO dialogData;
     public UnityEvent OnDialogEndEvent;
 }
 
-public class DialogController : MonoBehaviour
+public class DialogController : MonoBehaviour, ISubmitHandler, IPointerClickHandler
 {
-    [SerializeField] private bool activeOnStart = false;
     public bool animateWriting = false;
-    private Coroutine currentWrittingRoutine;
-    [SerializeField] private GameObject Container;
+    [SerializeField] private float timePerLetter = 0.03f;
+
+    [SerializeField] private Button dialogRender;
     [SerializeField] private Image profileImage;
     [SerializeField] private TMP_Text textContainer;
     [SerializeField] private GameObject pin;
-    public int currentScriptSequence { get; private set; } = 0;
-    public List<DialogSequence> dialogScripts = new List<DialogSequence>();
     
-    // Sequence variables
+    private DialogSequence currentDialogSequence;
+    private float currentTimer;
     
+    private string fullTextTarget = "";
+    private int currentCharacterCount = 0;
+    private float letterTimer = 0f;
+    private bool isWriting = false;
 
-    private void OnDisable()
+    private bool pendingFocus = false;
+
+    public static DialogController Instance { get; private set; }
+
+    void Awake()
     {
-        if (currentWrittingRoutine != null) StopCoroutine(currentWrittingRoutine);
+        if (Instance != null && Instance != this) return;
+        Instance = this;
     }
 
-    private void Start()
+    private void Update()
     {
-        if(activeOnStart) ActivateDialogScript(0);
-    }
-
-    public void ActivateDialogScript(int scriptNumber = -1)
-    {
-        if (scriptNumber >=0)
+        if (pendingFocus)
         {
-            currentScriptSequence = scriptNumber;
+            if (EventSystem.current != null && dialogRender != null) EventSystem.current.SetSelectedGameObject(dialogRender.gameObject);
+            pendingFocus = false;
         }
-        int currentDialog = dialogScripts[currentScriptSequence].currentDialogText;
-        profileImage.sprite = dialogScripts[currentScriptSequence].dialogData.dialogs[currentDialog].profile;
-        Container.SetActive(true);
-        
-        if (animateWriting)
+
+        if (isWriting)
         {
-            
+            letterTimer += Time.deltaTime;
+            if (letterTimer >= timePerLetter)
+            {
+                letterTimer = 0f;
+                currentCharacterCount++;
+                
+                textContainer.text = fullTextTarget.Substring(0, currentCharacterCount);
+
+                if (currentCharacterCount >= fullTextTarget.Length) OnWrittingComplete();
+            }
+        }
+
+        if (!isWriting && currentTimer > 0 && currentDialogSequence.timeToAutoContinue > 0)
+        {
+            currentTimer -= Time.deltaTime;
+            if (currentTimer <= 0) ContinueWritting();
+        }
+    }
+    
+    public void OnSubmit(BaseEventData eventData)
+    {
+        HandleInputTrigger();
+    }
+    
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        HandleInputTrigger();
+    }
+
+    private void HandleInputTrigger()
+    {
+        if (isWriting) OnWrittingComplete();
+        else 
+        {
+            if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+            ContinueWritting();
+        }
+    }
+
+    public void PlayDialog(DialogSequence dialog)
+    {
+        currentDialogSequence = dialog;
+        currentDialogSequence.currentDialogText = 0;
+        ActivateDialogScript();
+    }
+
+    public void ActivateDialogScript()
+    {
+        pin.gameObject.SetActive(false);
+        currentTimer = 0f; 
+
+        int currentDialog = currentDialogSequence.currentDialogText;
+        profileImage.sprite = currentDialogSequence.dialogData.dialogs[currentDialog].profile;
+        dialogRender.gameObject.SetActive(true);
+        pendingFocus = true;
+
+        DialogText dialogText = currentDialogSequence.dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
+        fullTextTarget = (dialogText != null) ? dialogText.text : "";
+
+        if (animateWriting && !string.IsNullOrEmpty(fullTextTarget))
+        {
+            isWriting = true;
+            currentCharacterCount = 0;
+            letterTimer = 0f;
+            textContainer.text = "";
         }
         else
         {
+            textContainer.text = fullTextTarget;
             OnWrittingComplete();
         }
     }
 
     private void OnWrittingComplete()
     {
-        int currentDialog = dialogScripts[currentScriptSequence].currentDialogText;
-        DialogText dialogText = dialogScripts[currentScriptSequence].dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
-        textContainer.text = (dialogText!=null)?dialogText.text:"";
-        currentWrittingRoutine = null;
+        isWriting = false;
+        textContainer.text = fullTextTarget;
+        currentTimer = currentDialogSequence.timeToAutoContinue;
         pin.gameObject.SetActive(true);
     }
 
     public void ContinueWritting()
     {
-        Debug.Log("Continue writting");
-        int value =dialogScripts[currentScriptSequence].currentDialogText+1;
-        if (value >= dialogScripts[currentScriptSequence].dialogData.dialogs.Count)
+        int value = currentDialogSequence.currentDialogText + 1;
+        if (value >= currentDialogSequence.dialogData.dialogs.Count)
         {
-            Container.SetActive(false);
-            dialogScripts[currentScriptSequence].OnDialogEndEvent?.Invoke();
+            dialogRender.gameObject.SetActive(false);
+            currentDialogSequence.OnDialogEndEvent?.Invoke();
         }
         else
         {
-            dialogScripts[currentScriptSequence].currentDialogText=value;
+            currentDialogSequence.currentDialogText = value;
             ActivateDialogScript();
         }
     }
-
-
-    /*private IEnumerator Writting()
-    {
-
-    }*/
 }
