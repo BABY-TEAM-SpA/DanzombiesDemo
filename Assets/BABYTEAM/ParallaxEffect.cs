@@ -24,15 +24,17 @@ public class ParallaxEffect : MonoBehaviour
         public ParallaxType type;
 
         [Tooltip("-1 : Velocidad inversa a la cámara / Izquierda o abajo.\n0 : Sin movimiento.\n1 : Misma velocidad que la cámara / Derecha o arriba.")]
-        [Range(-1f, 1f)] public float parallaxFactor;
+        public Vector2 parallaxFactor;
 
         [Tooltip("Si está activo, el fondo se repetirá infinitamente.")]
         public bool infinite;
         [Min(1)] public int tileCount = 3;
+        
+        [Tooltip("Por si el comienzo de la Tile no calza con su final, ocupar este campo para corregir la posición de la siguiente Tile.")]
+        public float nextTileOffset = 0f;
 
         [HideInInspector] public Transform[] tiles;
         [HideInInspector] public Vector2 tileSize;
-        [HideInInspector] public Vector3 Dimension => type == ParallaxType.Horizontal ? Vector3.right : Vector3.up;
     }
 
     private Vector2 lastCamPos;
@@ -67,7 +69,7 @@ public class ParallaxEffect : MonoBehaviour
         lastCamPos = cc;
 
         foreach (ParallaxTarget p in targets)
-            ApplyParallax(p, p.cameraDriven ? delta : p.Dimension);
+            ApplyParallax(p, p.cameraDriven ? delta : Vector2.one);
     }
     #endregion
 
@@ -80,7 +82,7 @@ public class ParallaxEffect : MonoBehaviour
             foreach (Transform tile in p.tiles)
             {
                 Vector3 tilePos = tile.position;
-                tilePos += (Vector3)(delta * (Vector2)p.Dimension * p.parallaxFactor);
+                tilePos += (Vector3)(delta * p.parallaxFactor);
                 tile.position = tilePos;
             }
 
@@ -89,7 +91,7 @@ public class ParallaxEffect : MonoBehaviour
         else
         {
             Vector3 pos = p.target.transform.position;
-            pos += (Vector3)(delta * (Vector2)p.Dimension * p.parallaxFactor);
+            pos += (Vector3)(delta * p.parallaxFactor);
             p.target.transform.position = pos;
         }
     }

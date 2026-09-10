@@ -17,24 +17,23 @@ public class OnCameraDetector : MonoBehaviour
     #endregion
 
     #region [UNITY]
-    private void Update()
-    {
-        if (isVisible != CheckVisibility())
-        {
-            isVisible = !isVisible;
-
-            if (isVisible)
-                OnVisible?.Invoke();
-            else OnInvisible?.Invoke();
-        }
-    }
+    private void OnEnable() => CameraFrustum.OnPlanesUpdated += CheckVisibility;
+    private void OnDisable() => CameraFrustum.OnPlanesUpdated -= CheckVisibility;
     #endregion
 
     #region [METHODS]
-    private bool CheckVisibility()
+    private void CheckVisibility()
     {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        return GeometryUtility.TestPlanesAABB(planes, spriteRenderer.bounds);
+        bool nowVisible = CameraFrustum.IsVisible(spriteRenderer);
+        if (nowVisible == isVisible)
+            return;
+
+        isVisible = nowVisible;
+        Debug.Log($"[OnCameraDetector] {spriteRenderer} is now visible? {isVisible}.");
+
+        if (isVisible)
+            OnVisible?.Invoke();
+        else OnInvisible?.Invoke();
     }
     #endregion
 }

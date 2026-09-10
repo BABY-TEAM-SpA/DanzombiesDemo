@@ -20,7 +20,7 @@ public class CamerasController : MonoBehaviour
             cam.OnPlayerFollowed += OnCameraFollowed;
     }
 
-    private void Update() => CameraFrustum.Update();
+    private void LateUpdate() => CameraFrustum.Update();
     #endregion
 
     #region [EVENTS]
