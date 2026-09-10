@@ -29,9 +29,6 @@ public class ParallaxEffect : MonoBehaviour
         [Tooltip("Si está activo, el fondo se repetirá infinitamente.")]
         public bool infinite;
         [Min(1)] public int tileCount = 3;
-        
-        [Tooltip("Por si el comienzo de la Tile no calza con su final, ocupar este campo para corregir la posición de la siguiente Tile.")]
-        public float nextTileOffset = 0f;
 
         [HideInInspector] public Transform[] tiles;
         [HideInInspector] public Vector2 tileSize;
