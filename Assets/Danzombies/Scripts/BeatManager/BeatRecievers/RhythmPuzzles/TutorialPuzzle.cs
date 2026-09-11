@@ -26,7 +26,9 @@ public class TutorialPuzzle : RhythmPuzzle
         //g.Log(BeatManager.Instance.localBeatCount);
         //Debug.Log(beat);
         currentStep = currentDanceSequence.GetDanceStep(beat-1,type);
+        GetNextStep(beat,type);
         eventManager.InvokePrepare(beat,type,currentStep);
+        
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
@@ -50,6 +52,12 @@ public class TutorialPuzzle : RhythmPuzzle
             CheckEnd(beat);
         }
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar) availableToDance = true; 
+    }
+
+    public void GetNextStep(int beat, BeatManager.BeatType type)
+    {
+        DanceStep nextStep = currentDanceSequence.GetFutureStep(beat-1,type);
+        eventManager.InvokeNextStep(beat,type,nextStep);
     }
     
     public override void PreparePuzzle()

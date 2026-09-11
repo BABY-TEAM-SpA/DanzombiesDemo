@@ -16,8 +16,7 @@ public enum DanceStep
     L_West,
     R_West,
     L_East,
-    R_East,
-    Idle
+    R_East
 }
 
 
@@ -63,7 +62,6 @@ public class DanceStepPerBeat
              if (beatPart == BeatManager.BeatType.FullBeat)
              {
                  step = beatDances.StepPerBeat.Count!=0?beatDances.StepPerBeat[0]:DanceStep.None;
-                 if (step == DanceStep.None) step = DanceStep.Idle;
              }
              else step = (beatDances.StepPerBeat.Count==2)? beatDances.StepPerBeat[1] : DanceStep.None;
              
@@ -73,17 +71,10 @@ public class DanceStepPerBeat
      
 
      //Aqui esta el problema del looping
-     public DanceStep GetFutureStep(int nextStepCounter)
+     public DanceStep GetFutureStep(int currentBeat, BeatManager.BeatType beatPart )
      {
-         //if(nextStepCounter >= coreography.StepInBar.Count) EndSequence();
-         /*for (int i = 0; i < coreography.StepInBar.Count; i++)
-         {
-             int aux = i+coreography;
-             aux = aux % coreography.Count;
-             if (coreography[aux] != DanceStep.None)
-                 return coreography[aux];
-         }*/
-         return DanceStep.None;
+         int nextStepCounter = (currentBeat + 1) % coreography.StepInBar.Count;
+         return coreography.StepInBar[nextStepCounter].StepPerBeat[0];
      }
      
      public void ShuffleSteps()

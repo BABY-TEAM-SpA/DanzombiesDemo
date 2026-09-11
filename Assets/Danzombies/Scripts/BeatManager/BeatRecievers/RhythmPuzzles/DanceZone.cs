@@ -70,6 +70,7 @@ public class DanceZone : Dancer
         OnActivated?.Invoke();
         isActive = true;
         puzzle = puz;
+        listeners.InvokeEnablePuzzle(puz);
     }
 
     public override void OnDisablePuzzle(RhythmPuzzle puz)
@@ -77,6 +78,7 @@ public class DanceZone : Dancer
         //Debug.Log("OnDisablePuzzle");
         isActive = false;
         OnDeactivated?.Invoke();
+        listeners.InvokeDisablePuzzle(puz);
     }
 
     public override void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
@@ -91,6 +93,7 @@ public class DanceZone : Dancer
         currentBeat = BeatManager.Instance? BeatManager.Instance.globalBeatCount+1:1;
         currentBeatType = beatType;
         base.OnPrepareStepAction(prevbeat,beatType, danceStep);
+        listeners.InvokePrepare(prevbeat,beatType, danceStep);
     }
     
     public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
@@ -104,14 +107,19 @@ public class DanceZone : Dancer
     public override void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
         if (!isActive) return;
-        if (playersInside!= null &&!PlayerHasDanced && danceStep != DanceStep.None && danceStep != DanceStep.Idle)
+        if (playersInside!= null &&!PlayerHasDanced && danceStep != DanceStep.None)
         {
             //Debug.Log("didntDance");
             playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
         }
         base.OnReleaseStepAction(beat,beatType, danceStep);
     }
-    
+
+    public override void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep)
+    {
+        listeners.InvokeNextStep(nextBeat, beatType, nextDanceStep);
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
         {
@@ -133,6 +141,9 @@ public class DanceZone : Dancer
         playersInside = null;
         player.RemoveTargetPuzzle(this);
     }
+    
+   
+   
 
     
     
