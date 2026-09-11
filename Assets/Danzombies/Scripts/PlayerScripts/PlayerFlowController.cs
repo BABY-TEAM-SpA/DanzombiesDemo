@@ -74,13 +74,27 @@ public class PlayerFlowController : MonoBehaviour
         {
             GetFlowState(prevState)?.OnStateExited?.Invoke();
             GetFlowState(State)?.OnStateEntered?.Invoke();
-            
             FlowFeedbackController.FlowFeedback?.Show(State);
         }
 
         if (prevFlow != Flow)
         {
-            if (Flow == 0) OnFlowEmptied?.Invoke();
+            if (Flow == 0)
+            {
+                DanceZone target = null;
+                if (!PlayerManager.Player.TryGetTargetPuzzle(out target)) return;
+                switch (target.damageMode)
+                {
+                    case DamageMode.None:
+                        break;
+                    case DamageMode.ModificaFlow:
+                        break;
+                    case DamageMode.ModificaFlowYDaña:
+                        OnFlowEmptied?.Invoke();
+                        break;
+                }
+                return;
+            }
             if (Flow == MaxFlow) OnFlowFilled?.Invoke();
         }
 

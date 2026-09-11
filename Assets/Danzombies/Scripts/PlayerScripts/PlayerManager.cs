@@ -47,6 +47,7 @@ public class PlayerManager : DanceBrain
 
     [Header("Puzzle")]
     public DanceZone danceTarget;
+    private bool hasTargetZone = false;
     #endregion
 
     #region [UNITY]
@@ -66,7 +67,13 @@ public class PlayerManager : DanceBrain
             danceTarget?.PlayerLeave(this);
 
         danceTarget = target;
+        hasTargetZone = true;
         ActivateDanceHUD(true);
+    }
+    public bool TryGetTargetPuzzle(out DanceZone target)
+    {
+        target= (hasTargetZone)?danceTarget:null ;
+        return hasTargetZone;
     }
 
     public void ActivateDanceHUD(bool activate)
@@ -80,6 +87,7 @@ public class PlayerManager : DanceBrain
         if (target == danceTarget)
         {
             danceTarget = null;
+            hasTargetZone = false;
             ActivateDanceHUD(false);
         }
     }
@@ -98,12 +106,7 @@ public class PlayerManager : DanceBrain
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
-        DamageMode dmgMode = danceTarget != null
-            ? danceTarget.GetDamageMode()
-            : DamageMode.None;
-        if (dmgMode == DamageMode.None)
-            return;
-
+        DamageMode dmgMode = hasTargetZone ? danceTarget.GetDamageMode() : DamageMode.None;
         flowController.ApplyFeedback(bf);
         DanceFeedbackEvent?.Invoke(bf);
     }

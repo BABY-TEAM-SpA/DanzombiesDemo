@@ -19,7 +19,7 @@ public class DanceZone : Dancer
     [SerializeField] private bool isActive;
     private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
-    [SerializeField] private DamageMode damageMode;
+    [SerializeField] public DamageMode damageMode;
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
     public DanceEventManager listeners = new DanceEventManager();
     
