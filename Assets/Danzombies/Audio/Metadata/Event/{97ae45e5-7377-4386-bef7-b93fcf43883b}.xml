@@ -5,7 +5,7 @@
 			<value>ZombiesGroupYoho</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{3d5d9a31-f5f2-4acb-b7c2-31d8cdfabf6b}</destination>
@@ -120,6 +120,7 @@
 	<object class="MixerBusEffectChain" id="{f6488e67-a622-41df-856f-9b6bb656c018}">
 		<relationship name="effects">
 			<destination>{6086ea11-9141-475e-a094-bb5a1e0913fa}</destination>
+			<destination>{c2cb9e59-1ca2-402d-9032-7b2ef432b040}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{683eb364-9663-4b9d-ac29-5cfcaaa6f37a}" />
@@ -156,5 +157,16 @@
 	</object>
 	<object class="MixerBusPanner" id="{03cedba9-2a2b-4c8c-ba2c-be8946d4532d}" />
 	<object class="MixerBusFader" id="{6086ea11-9141-475e-a094-bb5a1e0913fa}" />
+	<object class="SpatialiserEffect" id="{c2cb9e59-1ca2-402d-9032-7b2ef432b040}">
+		<property name="minimumDistance">
+			<value>10</value>
+		</property>
+		<property name="maximumDistance">
+			<value>50</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{15c6a8a1-a5e6-4093-810e-66ddb8f364a2}" />
 </objects>

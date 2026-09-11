@@ -5,7 +5,7 @@
 			<value>ZombiesGroupVoicesTuned</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{3d5d9a31-f5f2-4acb-b7c2-31d8cdfabf6b}</destination>
@@ -157,6 +157,7 @@
 	<object class="MixerBusEffectChain" id="{4fba97fa-ba23-467a-a814-21d27977b055}">
 		<relationship name="effects">
 			<destination>{0b394db0-4f0c-4f05-a6dd-977cddac96ae}</destination>
+			<destination>{5bfc3ac6-61cb-425d-adb7-c9ce19f6b671}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{5eae3031-ae25-4244-8f4a-483f65b9eed3}" />
@@ -229,6 +230,17 @@
 	</object>
 	<object class="MixerBusPanner" id="{b49f6195-870c-4ff4-9efe-634198fe3493}" />
 	<object class="MixerBusFader" id="{0b394db0-4f0c-4f05-a6dd-977cddac96ae}" />
+	<object class="SpatialiserEffect" id="{5bfc3ac6-61cb-425d-adb7-c9ce19f6b671}">
+		<property name="minimumDistance">
+			<value>10</value>
+		</property>
+		<property name="maximumDistance">
+			<value>50</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{0adba199-6fd8-49eb-98c2-8a6e2ffdea62}" />
 	<object class="MixerBusFader" id="{73bbc331-a727-4555-8a23-9a8c7c212590}" />
 </objects>
