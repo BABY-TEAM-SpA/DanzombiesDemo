@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 8363791228508436864}
   - component: {fileID: 4479713091533355244}
   - component: {fileID: 6103876806482945050}
+  - component: {fileID: 960864543902166943}
   m_Layer: 0
   m_Name: ThrownZombie
   m_TagString: Zombie
@@ -307,3 +308,27 @@ MonoBehaviour:
   spriteRenderers:
   - {fileID: 1230369310550788304}
   - {fileID: 9057598171223411155}
+--- !u!114 &960864543902166943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592839606221443569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 1814120698
+      Data2: 1138138521
+      Data3: -1888562275
+      Data4: 17900161
+    Path: event:/Metro/ZombieAttack
+  activeParam:
+    Name: ZombieAttack
+    Value: 0
+  playOnStart: 0
+  volume: 0.8
