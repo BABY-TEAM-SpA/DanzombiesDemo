@@ -106,8 +106,10 @@ public class PlayerManager : DanceBrain
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
-        DamageMode dmgMode = hasTargetZone ? danceTarget.GetDamageMode() : DamageMode.None;
-        flowController.ApplyFeedback(bf);
+        DamageMode dmgMode = hasTargetZone
+            ? danceTarget.GetDamageMode()
+            : DamageMode.None;
+        flowController.ApplyFeedback(bf, dmgMode == DamageMode.None);
         DanceFeedbackEvent?.Invoke(bf);
     }
     #endregion

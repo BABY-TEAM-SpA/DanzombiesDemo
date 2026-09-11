@@ -112,8 +112,8 @@ public class PlayerFlowController : MonoBehaviour
     #endregion
 
     #region API - Beat Feedback
-    public void ApplyFeedback(BeatReciever.BeatFeedback feedback)
-        => Increase(GetModifier(feedback));
+    public void ApplyFeedback(BeatReciever.BeatFeedback feedback, bool ignore)
+        => Increase(ignore ? 0 : GetModifier(feedback));
     #endregion
 
     #region Helpers
