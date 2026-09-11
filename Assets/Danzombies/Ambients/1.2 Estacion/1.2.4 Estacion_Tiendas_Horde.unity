@@ -1462,6 +1462,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b9a1a57c8d756d49b35b2722dff3ad3, type: 3}
+--- !u!1 &129790165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129790167}
+  - component: {fileID: 129790166}
+  m_Layer: 0
+  m_Name: Seq 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &129790166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129790165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 5
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 08000000
+    - StepPerBeat: 02000000
+    - StepPerBeat: 01000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &129790167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129790165}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.63, y: 2.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1539324786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &133200894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
@@ -1609,6 +1663,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
   m_PrefabInstance: {fileID: 685004521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &178389489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 178389490}
+  - component: {fileID: 178389491}
+  m_Layer: 0
+  m_Name: Seq 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &178389490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178389489}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.63, y: 2.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1539324786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &178389491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178389489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 5
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 02000000
+    - StepPerBeat: 01000000
+    - StepPerBeat: 00000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &181114444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8160,6 +8268,184 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
   m_PrefabInstance: {fileID: 1430560470}
   m_PrefabAsset: {fileID: 0}
+--- !u!43 &672909501
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!114 &674143328 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7850483395008931799, guid: bfb29745e39efbd4eba949474ea7db39, type: 3}
@@ -15668,22 +15954,50 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: 2e99f9be1b4181d4182802ff6b1be42c, type: 2}
+      objectReference: {fileID: 11400000, guid: dc5d272d9e14128488e46cf739b25891, type: 2}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].dialogData
       value: 
-      objectReference: {fileID: 11400000, guid: 2e99f9be1b4181d4182802ff6b1be42c, type: 2}
+      objectReference: {fileID: 11400000, guid: 4a6ebb5a99723244ca9f9d837de8a9e8, type: 2}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].dialogData
+      value: 
+      objectReference: {fileID: 11400000, guid: b6fe3fe073f438e4eb6bce7c2263d618, type: 2}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].dialogData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a450bcaa68db40409392feecbcbe9e4, type: 2}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[4].dialogData
+      value: 
+      objectReference: {fileID: 11400000, guid: 730d5109a79298149bb5ff0bd1183fdf, type: 2}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[4].timeToAutoContinue
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
@@ -15696,7 +16010,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -15705,7 +16031,19 @@ PrefabInstance:
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1742470635}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1742470635}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1742470635}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1742470631}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -15719,12 +16057,32 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ActivatePuzzleByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActivePuzzle
+      value: ActivatePuzzleByIndex
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivatePuzzleByIndex
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivatePuzzleByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -15736,7 +16094,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BasePuzzle, Assembly-CSharp
+      value: TutorialPuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TutorialPuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TutorialPuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
@@ -15748,7 +16126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -15756,6 +16134,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 445573308025390920, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
+      propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1285006427088833972, guid: 568f442f8a060b94c8046e5b5354e309, type: 3}
@@ -16652,6 +17038,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95138ec9328597468b5d9a00c0cffec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1287992104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287992105}
+  - component: {fileID: 1287992106}
+  m_Layer: 0
+  m_Name: Seq 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1287992105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287992104}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.63, y: 2.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1539324786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1287992106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287992104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 5
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 02000000
+    - StepPerBeat: 00000000
+    - StepPerBeat: 01000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1201709263}
+        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
+        m_MethodName: PlayDialogByIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1292214561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
@@ -19874,6 +20326,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1287992105}
+  - {fileID: 178389490}
+  - {fileID: 1817910691}
+  - {fileID: 129790167}
   - {fileID: 287439559}
   m_Father: {fileID: 1742470634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22641,7 +23097,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1742470634}
-  - component: {fileID: 1742470632}
   - component: {fileID: 1742470635}
   m_Layer: 0
   m_Name: Tutorial2Puzzle
@@ -22650,38 +23105,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1742470632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742470631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
-  sequenceStopMode: 2
-  coreography:
-    StepInBar:
-    - StepPerBeat: 00000000
-    - StepPerBeat: 02000000
-  OnDanceSequenceFinished:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1201709263}
-        m_TargetAssemblyTypeName: DialogEmiter, Assembly-CSharp
-        m_MethodName: PlayDialogByIndex
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!4 &1742470634
 Transform:
   m_ObjectHideFlags: 0
@@ -22715,7 +23138,10 @@ MonoBehaviour:
   playerInputs: []
   zone: {fileID: 1539324785}
   TutorialSequences:
-  - {fileID: 1742470632}
+  - {fileID: 1287992106}
+  - {fileID: 178389491}
+  - {fileID: 1817910692}
+  - {fileID: 129790166}
 --- !u!1001 &1746989372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23610,6 +24036,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8359742273604666994, guid: 1b9a1a57c8d756d49b35b2722dff3ad3, type: 3}
   m_PrefabInstance: {fileID: 1813475509}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1817910690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817910691}
+  - component: {fileID: 1817910692}
+  m_Layer: 0
+  m_Name: Seq 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817910691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817910690}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.63, y: 2.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1539324786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1817910692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817910690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76c7cd00ace524694053c34d0101e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
+  sequenceStopMode: 5
+  coreography:
+    StepInBar:
+    - StepPerBeat: 00000000
+    - StepPerBeat: 02000000
+    - StepPerBeat: 02000000
+    - StepPerBeat: 01000000
+  OnDanceSequenceFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1819120021
 PrefabInstance:
   m_ObjectHideFlags: 0
