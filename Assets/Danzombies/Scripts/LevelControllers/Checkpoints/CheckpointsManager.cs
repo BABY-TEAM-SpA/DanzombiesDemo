@@ -106,11 +106,12 @@ public class CheckpointsManager : MonoBehaviour
 
         string[] respawns = dict.Values.ToArray();
         string sceneName = gameObject.scene.name;
-
+#if UNITY_EDITOR
         catalog.SetRespawns(sceneName, respawns);
-
         Debug.Log($"[CheckpointsManager] El catálogo fue actualizado con {respawns.Length} puntos de respawn encontrados en la escena.");
-        UnityEditor.EditorUtility.SetDirty(catalog);
+        //UnityEditor.EditorUtility.SetDirty(catalog);
+#endif
+        
     }
     #endregion
     #endregion
