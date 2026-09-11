@@ -35,7 +35,7 @@ public class DanceFeedbackReciever : MonoBehaviour
             case BeatReciever.BeatFeedback.Perfect:
                 EventSender(PerfectEvent, PerfectDanceEvent);
                 break;
-            case BeatReciever.BeatFeedback.Great:
+            case BeatReciever.BeatFeedback.Good:
                 EventSender(GreatEvent, GreatDanceEvent);
                 break;
             case BeatReciever.BeatFeedback.Bad:

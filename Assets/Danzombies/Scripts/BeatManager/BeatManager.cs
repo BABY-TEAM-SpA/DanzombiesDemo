@@ -152,7 +152,7 @@ public class BeatManager : MonoBehaviour
         double greatWindow =maxWindow * greatPercentOnMargin;
         double perfectWindow = greatWindow * perfectPercentOnMargin;
         if (absDelta <= perfectWindow) return BeatReciever.BeatFeedback.Perfect;
-        if (absDelta <= greatWindow) return BeatReciever.BeatFeedback.Great;
+        if (absDelta <= greatWindow) return BeatReciever.BeatFeedback.Good;
         if (absDelta <= maxWindow) return delta < 0? BeatReciever.BeatFeedback.Early : BeatReciever.BeatFeedback.Late;
         return BeatReciever.BeatFeedback.Bad;
     }

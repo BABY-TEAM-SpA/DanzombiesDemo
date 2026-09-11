@@ -9,10 +9,10 @@ public abstract class BeatReciever : MonoBehaviour
     public enum BeatFeedback
     {
         Bad,
-        Early,
-        Great,
+        Early,  // 'Ok'
+        Good,   // Antiguamente 'Great'
         Perfect,
-        Late,
+        Late,   // 'Ok'
         Ignored
     }
 
