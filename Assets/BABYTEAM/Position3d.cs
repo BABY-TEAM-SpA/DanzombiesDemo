@@ -22,8 +22,7 @@ public class Position3D : MonoBehaviour
         if (spriteRenderers == null || spriteRenderers.Length == 0)
             RefreshRenderers();
 
-        if (whenUse == SortingLayers.OnStart)
-            SetLayerOnSprites();
+        //if (whenUse == SortingLayers.OnStart) SetLayerOnSprites();
     }
 
     void LateUpdate()
