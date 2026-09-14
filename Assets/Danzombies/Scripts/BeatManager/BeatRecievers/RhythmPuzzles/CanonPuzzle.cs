@@ -59,6 +59,7 @@ public class CanonPuzzle : RhythmPuzzle
         {
             availableToDance = true;
             OnAvailable?.Invoke();
+            currentDanceSequence.ActivateSequence();
         };
     }
 

@@ -60,15 +60,15 @@ public class DanceEventManager
 
     public void InvokePrepare(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
-        if(danceStep!=DanceStep.None)OnPrepareStep?.Invoke(beat, beatType, danceStep);
+        OnPrepareStep?.Invoke(beat, beatType, danceStep);
     }
     public void InvokeDance(int beat, BeatManager.BeatType beatType,DanceStep danceStep) 
     {
-        if(danceStep!=DanceStep.None)OnDanceStep?.Invoke(beat, beatType, danceStep);
+        OnDanceStep?.Invoke(beat, beatType, danceStep);
     }
     public void InvokeRealease(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
     {
-        if(danceStep!=DanceStep.None)OnReleaseStep?.Invoke(beat, beatType, danceStep);
+        OnReleaseStep?.Invoke(beat, beatType, danceStep);
     }
     public void InvokeNextStep(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep) =>OnNextStep?.Invoke(nextBeat, beatType, nextDanceStep); 
 }
@@ -79,10 +79,16 @@ public class Dancer: MonoBehaviour
     protected DanceStep currentDanceStep;
     protected int currentBeat;
     protected BeatManager.BeatType currentBeatType;
+    public UnityEvent onActivated;
     public UnityEvent<DanceStep> onDance;
+    public UnityEvent<DanceStep> onPostDance;
+    public UnityEvent onDeactivated;
     public UnityEvent<ExpressionType> onReaction;
 
-    public virtual void OnEnablePuzzle(RhythmPuzzle puzzl){}
+    public virtual void OnEnablePuzzle(RhythmPuzzle puzzl)
+    {
+        onActivated?.Invoke();
+    }
     public virtual void OnReseatPuzzle(RhythmPuzzle puzzl)
     {
         currentDanceStep = DanceStep.None;
@@ -98,14 +104,22 @@ public class Dancer: MonoBehaviour
     {
         currentDanceStep = danceStep;
     }
-    
-    public virtual void OnDanceStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep){}
+
+    public virtual void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    {
+        onDance?.Invoke(danceStep);
+    }
 
     public virtual void OnReleaseStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
     {
+        onPostDance?.Invoke(danceStep);
         currentDanceStep = DanceStep.None;
     }
     public virtual void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType,DanceStep nextDanceStep) { }
-    public virtual void OnDisablePuzzle(RhythmPuzzle puzzl){}
+
+    public virtual void OnDisablePuzzle(RhythmPuzzle puzzl)
+    {
+        onDeactivated?.Invoke();
+    }
     public virtual void React(ExpressionType exp) { }
 }

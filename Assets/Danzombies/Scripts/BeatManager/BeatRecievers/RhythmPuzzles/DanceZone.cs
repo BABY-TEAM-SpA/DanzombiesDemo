@@ -14,8 +14,6 @@ public enum DamageMode
 
 public class DanceZone : Dancer
 {
-    public UnityEvent OnActivated;
-    public UnityEvent OnDeactivated;
     [SerializeField] private bool isActive;
     private RhythmPuzzle puzzle;
     [Header("Dance Zone Settings")]
@@ -66,8 +64,7 @@ public class DanceZone : Dancer
 
     public override void OnEnablePuzzle(RhythmPuzzle puz)
     {
-        //Debug.Log("OnEnablePuzzle");
-        OnActivated?.Invoke();
+        base.OnEnablePuzzle(puz);
         isActive = true;
         puzzle = puz;
         listeners.InvokeEnablePuzzle(puz);
@@ -75,9 +72,8 @@ public class DanceZone : Dancer
 
     public override void OnDisablePuzzle(RhythmPuzzle puz)
     {
-        //Debug.Log("OnDisablePuzzle");
+        base.OnDisablePuzzle(puz);
         isActive = false;
-        OnDeactivated?.Invoke();
         listeners.InvokeDisablePuzzle(puz);
     }
 
@@ -113,6 +109,8 @@ public class DanceZone : Dancer
             playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
         }
         base.OnReleaseStepAction(beat,beatType, danceStep);
+        listeners.InvokeRealease(beat,beatType,danceStep);
+        
     }
 
     public override void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep)
@@ -142,9 +140,6 @@ public class DanceZone : Dancer
         player.RemoveTargetPuzzle(this);
     }
     
-   
-   
-
     
     
     public void React(ExpressionType exp)

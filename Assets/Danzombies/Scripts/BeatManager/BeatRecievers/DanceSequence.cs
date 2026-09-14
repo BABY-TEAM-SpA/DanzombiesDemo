@@ -49,10 +49,18 @@ public class DanceStepPerBeat
          LoopShuffled
      }
      public SeqStopMode sequenceStopMode = SeqStopMode.OneShot;
+     
+     [SerializeField]private UnityEvent OnDanceSequenceStarted = new UnityEvent();
+     
      public DancePattern coreography;
      
      public UnityEvent OnDanceSequenceFinished = new UnityEvent();
 
+     public void ActivateSequence()
+     {
+         OnDanceSequenceStarted?.Invoke();
+     }
+     
      public DanceStep GetDanceStep(int beat, BeatManager.BeatType beatPart)
      {
          DanceStep step = DanceStep.None;
@@ -68,7 +76,8 @@ public class DanceStepPerBeat
          }
          return step;
      }
-     
+
+    
 
      //Aqui esta el problema del looping
      public DanceStep GetFutureStep(int currentBeat, BeatManager.BeatType beatPart )
