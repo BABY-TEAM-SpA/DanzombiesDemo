@@ -30,6 +30,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
     public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
     {
+        currentDanceSequence?.RegisterStepFeedback(fb);
         PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
         e?.OnPlayerSuccess?.Invoke();
     }
@@ -66,6 +67,7 @@ public abstract class RhythmPuzzle : BeatReciever
 
     public void SetSequence(DanceSequence sequence)
     {
+        currentDanceSequence?.ResetProgress();
         currentDanceSequence = sequence;
     }
 
