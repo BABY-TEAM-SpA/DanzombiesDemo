@@ -107,6 +107,7 @@ public class Dancer: MonoBehaviour
 
     public virtual void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
+        currentDanceStep = danceStep;
         onDance?.Invoke(danceStep);
     }
 

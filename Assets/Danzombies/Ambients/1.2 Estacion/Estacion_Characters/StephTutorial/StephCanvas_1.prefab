@@ -328,7 +328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 6.495819}
+  m_AnchoredPosition: {x: 0, y: 6.4958496}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2914643842120354261
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5931306291317814499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +407,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e5c7ac06e027f439ada00fbaee846f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIDancerTutorial
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
   onDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onPostDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivated:
     m_PersistentCalls:
       m_Calls: []
   onReaction:
@@ -423,17 +432,17 @@ MonoBehaviour:
       defaultSprite: {fileID: 21300000, guid: c9f3dd8fc5328c04499e10fed711f259, type: 3}
       buttons:
       - buttonName: North
-        active: {fileID: 21300000, guid: 9d40ee742964cd043b79a1e6d1dfa403, type: 3}
-        pressed: {fileID: 21300000, guid: 6316c8b57fbfa5846bbb69a5b2ec38a6, type: 3}
-      - buttonName: South
-        active: {fileID: 21300000, guid: ffec2cfec9aff1847b7c906c67306354, type: 3}
-        pressed: {fileID: 21300000, guid: 01b0442c05c7d684b933e6f191ddbbbb, type: 3}
-      - buttonName: East
         active: {fileID: 21300000, guid: b9862d7188123284c9e6e7df0dce206a, type: 3}
         pressed: {fileID: 21300000, guid: 2948de5d444647f478a011fcca0d272a, type: 3}
-      - buttonName: West
+      - buttonName: South
         active: {fileID: 21300000, guid: 60112d4a9c8e78843bec945367ea90e9, type: 3}
         pressed: {fileID: 21300000, guid: 13ccad4008f697a49a2006d65d9634cc, type: 3}
+      - buttonName: East
+        active: {fileID: 21300000, guid: ffec2cfec9aff1847b7c906c67306354, type: 3}
+        pressed: {fileID: 21300000, guid: 01b0442c05c7d684b933e6f191ddbbbb, type: 3}
+      - buttonName: West
+        active: {fileID: 21300000, guid: 9d40ee742964cd043b79a1e6d1dfa403, type: 3}
+        pressed: {fileID: 21300000, guid: 6316c8b57fbfa5846bbb69a5b2ec38a6, type: 3}
     - schemeName: Keyboard&Mouse
       spriteFX: {fileID: 21300000, guid: 704370be2f2168b48bffa62830481edb, type: 3}
       defaultSprite: {fileID: 21300000, guid: 19b65ce7c3beb96439140d5eb39d0ca8, type: 3}
@@ -490,7 +499,7 @@ MonoBehaviour:
         pressed: {fileID: 21300000, guid: 8b73df0b44f077c46b1f19d348265089, type: 3}
   _playerInput: {fileID: 0}
   danceCanvas: {fileID: 8219248346433202027}
-  unactiveAlpha: 0.25
+  incomingAlpha: 0.25
 --- !u!1 &3000337121620874951
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,7 +807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2972892503428883940
 RectTransform:
   m_ObjectHideFlags: 0
