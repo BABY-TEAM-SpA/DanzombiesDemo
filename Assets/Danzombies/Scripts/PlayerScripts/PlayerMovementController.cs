@@ -10,23 +10,18 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private DanceBrain danceBrain;
 
     [Header("Movement")]
+    private float currentSpeed;
+    [SerializeField] private Vector2 moveDirection;
     [SerializeField] private float walkingSpeed = 10f;
-    [SerializeField] private float acceleration = 15f;
     [Tooltip("Multiplicador de velocidad al sprintear")]
-    [SerializeField][Range(1f, 2f)] private float sprintFactor = 1.5f;
-
+    [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
+    public float MaxSpeed => walkingSpeed * sprintFactor;
+    public Vector2 Velocity => currentSpeed * moveDirection;
+    
     [Header("Scripted Movement")]
     [SerializeField][Min(0f)] private float scriptedDuration;
-    [SerializeField] private Vector2 scriptedDirection;
-
-    public float MaxSpeed => walkingSpeed * sprintFactor;
-
-    public Vector2 Velocity { get; private set; }
-
-    public bool allowInput;
     private bool scriptedMovement;
-    private float currentSpeed;
-    private Vector2 inputDirection;
+    
     #endregion
 
     #region [UNITY]
@@ -38,15 +33,9 @@ public class PlayerMovementController : MonoBehaviour
     #region [METHODS]
     private void HandleMovement()
     {
-        Vector2 targetDirection = scriptedMovement
-            ? scriptedDirection : allowInput
-                ? inputDirection : Vector2.zero;
-
-        Velocity = Vector2.Lerp(Velocity, targetDirection.normalized * currentSpeed, acceleration * Time.deltaTime);
-        if (Velocity.magnitude < 0.05f)
-            Velocity = Vector2.zero;
-
-        transform.localPosition += (Vector3)(Velocity * Time.deltaTime);
+        
+        Vector2 velocity = (Velocity.magnitude > 0.05f)? Velocity: Vector2.zero;
+        transform.localPosition += (Vector3)(velocity * Time.deltaTime);
         danceBrain.OnMoving(Velocity / walkingSpeed);
 
         if (Mathf.Abs(Velocity.x) > 0.01f)
@@ -64,11 +53,8 @@ public class PlayerMovementController : MonoBehaviour
 
     public void BeginScriptedMovememnt(float duration = 0f, Vector2 direction = default, Action onFinished = null)
     {
-        if (duration != 0f)
-            SetScriptedDuration(duration);
-        if (direction != default)
-            SetScriptedDirection(direction);
-
+        if (duration != 0f) SetScriptedDuration(duration);
+        if (direction != default)  SetScriptedDirection(direction);
         scriptedMovement = true;
         StartCoroutine(MoveForSecondsRoutine(onFinished));
     }
@@ -79,16 +65,18 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     public void SetScriptedDuration(float duration) => scriptedDuration = Mathf.Max(duration, 0f);
-    public void SetScriptedDirection(Vector2 direction) => scriptedDirection = direction.normalized;
+    public void SetScriptedDirection(Vector2 direction) => moveDirection = direction.normalized;
 
     public void StopScriptedMovement() => scriptedMovement = false;
     #endregion
 
     #region Helpers
     public void SetSpeed(float newSpeed) => currentSpeed = newSpeed;
-
-    public void EnableInput() => allowInput = true;
-    public void DisableInput() => allowInput = false;
+    public void SetDirection(Vector2 direction) => moveDirection = direction.normalized;
+    public void SetRun(bool run)
+    {
+        currentSpeed = walkingSpeed * ((run) ? sprintFactor : 1f);
+    }
     #endregion
     #endregion
 
@@ -101,22 +89,6 @@ public class PlayerMovementController : MonoBehaviour
     }
     #endregion
 
-    #region [EVENTS]
-    public void OnMoveEvent(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            inputDirection = context.ReadValue<Vector2>();
-
-        if (context.canceled)
-            inputDirection = Vector2.zero;
-    }
-
-    public void OnSprintEvent(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            SetSpeed(walkingSpeed * sprintFactor);
-        else if (context.canceled)
-            SetSpeed(walkingSpeed);
-    }
-    #endregion
+    
+    
 }

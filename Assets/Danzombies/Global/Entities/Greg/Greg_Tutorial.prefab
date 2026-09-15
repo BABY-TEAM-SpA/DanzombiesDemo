@@ -360,6 +360,14 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
       value: 0.52718115
       objectReference: {fileID: 0}
+    - target: {fileID: 5126339938898163705, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
+      propertyPath: allowInput
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5126339938898163705, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
+      propertyPath: _playerManager
+      value: 
+      objectReference: {fileID: 8138215571376651237}
     - target: {fileID: 5167387638728023478, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
       propertyPath: m_Name
       value: Greg_Tutorial
@@ -473,6 +481,8 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!1 &1548694297012879369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9156533626105443891, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
@@ -500,6 +510,8 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!1 &1920619820395718953 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8127856158041808659, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
@@ -584,6 +596,8 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!114 &35347520161725782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,6 +620,8 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!1 &3304133862253112204 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5167387638728023478, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
@@ -669,3 +685,16 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
+--- !u!114 &8138215571376651237 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1917447543063203295, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
+  m_PrefabInstance: {fileID: 7668675309135164986}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304133862253112204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f77188784b2d7a44877cda4460cb466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager

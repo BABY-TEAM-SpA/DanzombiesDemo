@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+public enum DanceLean
+{
+    None,
+    L,
+    R,
+}
 
 public enum DanceDirection{
     None,
@@ -10,13 +16,6 @@ public enum DanceDirection{
     South,
     West,
     East
-}
-
-public enum DanceLean
-{
-    None,
-    L,
-    R,
 }
 
 [Serializable]
@@ -28,9 +27,7 @@ public class AnimationFeedback
 public class DanceAnimatorController : MonoBehaviour
 {
     [SerializeField] protected DanceBrain _danceBrain;
-    [SerializeField] public bool allowInput = false;
     [SerializeField] public Animator animator;
-    //[SerializeField] private SpriteRenderer renderer;
     private AnimatorOverrideController alphaOverrider;
     private AnimatorOverrideController betaOverrider;
     private double currentBeatOnPlayer = 0d;
@@ -44,10 +41,8 @@ public class DanceAnimatorController : MonoBehaviour
         SetAnimatorOverrideDirection();
     }
     
-    
-    public void OnMoving(Vector3 velocity)
+    public void AnimateOnMoving(Vector3 velocity)
     {
-        if(!allowInput)  return;
         bool moving = velocity != Vector3.zero;
         animator?.SetBool("LeftLooking", _danceBrain.isLeftLooking);
         animator?.SetBool("Walking", moving);
@@ -61,7 +56,7 @@ public class DanceAnimatorController : MonoBehaviour
     }
     public void OnStandAction()
     {
-        if(_danceBrain.isActiv) _danceBrain.EnableMovement(true);
+        _danceBrain.EnableMovement(true);
     }
 
     public void SetExpression(AnimatorOverrideController alpha, AnimatorOverrideController beta)
@@ -78,15 +73,6 @@ public class DanceAnimatorController : MonoBehaviour
         animator.runtimeAnimatorController = isLeft? alphaOverrider : betaOverrider;
     }
     
-    public void Activate()
-    {
-        allowInput = true;   
-    }
-
-    public void Disactivate()
-    {
-        allowInput = false;
-    }
 
     public void AnimationFeedbackEvent(string eventName)
     {

@@ -9,6 +9,7 @@ public class PlayerManager : DanceBrain
     [Header("PlayerManager")]
     [SerializeField] private PlayerFlowController flowController;
     [SerializeField] private PlayerComboController comboController;
+    [SerializeField] private bool isTutorial;
 
     #region Instance
     public static PlayerManager Player;
@@ -60,6 +61,8 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region [METHODS]
+
+
     #region RhythmPuzzle - Puzzle
     public void AddTargetPuzzle(DanceZone target)
     {
@@ -146,4 +149,18 @@ public class PlayerManager : DanceBrain
         return danceAnimCtrl.animator;
     }
     #endregion
+    
+    public void InputDance(DanceLean lean, DanceDirection direction)
+    {
+        if(isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance",false);
+        if (lean != DanceLean.None && direction != DanceDirection.None)
+        {
+            DanceStep step = Enum.Parse<DanceStep>( lean + "_" + direction );
+            OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat, step);
+        }
+    }
+    public void InputSprint(bool isSprinting)
+    {
+        movCtrl.SetRun(isSprinting);
+    }
 }

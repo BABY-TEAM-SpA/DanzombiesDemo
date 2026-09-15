@@ -30,16 +30,7 @@ public class PlayerInteractionController : Interactuable
     private void Start() => PlayerManager.Player.OnDirectionChanged += OnDirectionChanged;
     private void OnDestroy() => PlayerManager.Player.OnDirectionChanged -= OnDirectionChanged;
     #endregion
-
-    #region [METHODS]
-    public void OnInteractEvent(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            Interact();
-    }
     
-    
-    #endregion
 
     #region [EVENTS]
     /// <summary>
