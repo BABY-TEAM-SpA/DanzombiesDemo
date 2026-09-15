@@ -450,6 +450,34 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_Target
+      value: 
+      objectReference: {fileID: 7994506702250058539}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_TargetAssemblyTypeName
+      value: SFXEmitter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7271809236675250850, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -470,7 +498,13 @@ PrefabInstance:
     - {fileID: 125167789666777204, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5196656893147596596, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7994506702250058539}
+    - targetCorrespondingSourceObject: {fileID: 5196656893147596596, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3239200210608785801}
   m_SourcePrefab: {fileID: 100100000, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
 --- !u!224 &1779497360594837831 stripped
 RectTransform:
@@ -493,3 +527,51 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5196656893147596596, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
   m_PrefabInstance: {fileID: 4229120518205293124}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7994506702250058539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263790156093621616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: -45405139
+      Data2: 1289429912
+      Data3: 516053146
+      Data4: 1957313155
+    Path: event:/SFX/Dance_System/Dance_Hits/Global/StreakStart
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
+--- !u!114 &3239200210608785801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263790156093621616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 1390580609
+      Data2: 1153590237
+      Data3: -760304512
+      Data4: -509080875
+    Path: event:/SFX/Dance_System/Dance_Hits/Global/StreakEnd
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
