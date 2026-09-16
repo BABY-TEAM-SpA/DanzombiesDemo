@@ -22,6 +22,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField][Min(0f)] private float scriptedDuration;
     private bool scriptedMovement;
     private bool isMovementEnabled =true;
+    private Transform target; 
     
     #endregion
 
@@ -46,29 +47,29 @@ public class PlayerMovementController : MonoBehaviour
     #region Scripted Movement
     public void MoveToPoint(Transform point)
     {
-        float dist = Vector3.Distance(point.position, transform.position);
-        float duration = dist / walkingSpeed;
-        Vector2 direction = point.position - transform.position;
-        BeginScriptedMovememnt(duration, direction);
+        Debug.Log("MoveToPoint");
+        target = point;
+        Vector2 direction = (point.position - transform.position);
+        BeginScriptedMovememnt(direction);
     }
 
-    public void BeginScriptedMovememnt(float duration = 0f, Vector2 direction = default, Action onFinished = null)
+    public void BeginScriptedMovememnt(Vector2 direction = default, Action onFinished = null)
     {
-        if (duration != 0f) SetScriptedDuration(duration);
-        if (direction != default)  SetScriptedDirection(direction);
-        scriptedMovement = true;
-        StartCoroutine(MoveForSecondsRoutine(onFinished));
+        moveDirection = direction.normalized;
+        StartCoroutine(MoveToTargetRoutine(onFinished));
     }
     public void BeginScriptedMovememnt()
     {
         scriptedMovement = true;
-        StartCoroutine(MoveForSecondsRoutine());
+        StartCoroutine(MoveToTargetRoutine());
     }
 
-    public void SetScriptedDuration(float duration) => scriptedDuration = Mathf.Max(duration, 0f);
-    public void SetScriptedDirection(Vector2 direction) => moveDirection = direction.normalized;
+    public void StopScriptedMovement()
+    {
+        moveDirection= Vector2.zero;
+        scriptedMovement = false;
+    }
 
-    public void StopScriptedMovement() => scriptedMovement = false;
     #endregion
 
     #region Helpers
@@ -84,9 +85,14 @@ public class PlayerMovementController : MonoBehaviour
     public void EnableMovement(bool isON = false) => isMovementEnabled = isON;
     
     #region [COROUTINES]
-    private IEnumerator MoveForSecondsRoutine(Action onFinished = null)
+    private IEnumerator MoveToTargetRoutine(Action onFinished = null)
     {
-        yield return new WaitForSeconds(scriptedDuration);
+        while (Vector2.Distance(transform.position, target.position) >= 0.01f)
+        {
+            moveDirection = ((Vector2)target.position - (Vector2)transform.position).normalized;
+            yield return null;
+        } 
+
         StopScriptedMovement();
         onFinished?.Invoke();
     }

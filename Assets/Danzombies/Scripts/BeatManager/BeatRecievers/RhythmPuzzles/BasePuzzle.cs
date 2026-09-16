@@ -25,8 +25,9 @@ public class BasePuzzle : RhythmPuzzle
         {
             innerCounter++;
             eventManager.InvokeRealease(beat, type, currentStep);
+            if(currentDanceSequence.CheckEndOfSequence(innerCounter)) OnPuzzleCompleted();
         }
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 4) availableToDance = true; 
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 4) availableToDance = true;
     }
 
     public override void PreparePuzzle()

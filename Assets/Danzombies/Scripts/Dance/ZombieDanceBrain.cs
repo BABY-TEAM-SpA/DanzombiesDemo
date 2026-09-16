@@ -6,7 +6,7 @@ public class ZombieDanceBrain : DanceBrain
     #region [METHODS]
     
 
-    public void Move(Vector2 direction, float time, Action onFinished = null) => movCtrl.BeginScriptedMovememnt(time, direction, onFinished);
+    public void Move(Vector2 direction, Action onFinished = null) => movCtrl.BeginScriptedMovememnt( direction, onFinished);
     private void MoveToPoint(Vector3 point, float time)
     {
         Vector2 dif = new Vector2(
@@ -14,7 +14,7 @@ public class ZombieDanceBrain : DanceBrain
             point.y - transform.localPosition.y
         );
         dif = dif.normalized;
-        movCtrl.BeginScriptedMovememnt(time, dif);
+        movCtrl.BeginScriptedMovememnt(dif);
     }    
     #endregion
 
