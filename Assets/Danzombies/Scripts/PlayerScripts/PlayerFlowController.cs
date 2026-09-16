@@ -83,7 +83,7 @@ public class PlayerFlowController : MonoBehaviour
             {
                 DanceZone target = null;
                 if (!PlayerManager.Player.TryGetTargetPuzzle(out target)) return;
-                switch (target.damageMode)
+                switch (target.GetDamageMode())
                 {
                     case DamageMode.None:
                         break;
@@ -93,7 +93,6 @@ public class PlayerFlowController : MonoBehaviour
                         OnFlowEmptied?.Invoke();
                         break;
                 }
-                return;
             }
             if (Flow == MaxFlow) OnFlowFilled?.Invoke();
         }

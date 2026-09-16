@@ -17,7 +17,7 @@ public class FlowFeedbackController : MonoBehaviour
     public static FlowFeedbackController FlowFeedback {  get; private set; }
     #endregion
 
-    #region [GODOT]
+    #region [UNITY]
     private void Awake()
     {
         if (FlowFeedback == null)
@@ -32,5 +32,7 @@ public class FlowFeedbackController : MonoBehaviour
         FlowFeedbackState feedbackState = states.FirstOrDefault(s => s.state == state);
         feedbackState?.OnEntered?.Invoke();
     }
+
+    public void Hide() => Show(FlowState.Normal);
     #endregion
 }
