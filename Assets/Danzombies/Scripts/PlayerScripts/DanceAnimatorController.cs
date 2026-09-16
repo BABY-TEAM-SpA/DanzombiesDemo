@@ -54,9 +54,11 @@ public class DanceAnimatorController : MonoBehaviour
         _danceBrain?.EnableMovement(false);
         animator.Play(step.ToString(), 0,0f);
     }
+
     public void OnStandAction()
     {
-        _danceBrain.EnableMovement(true);
+        //_danceBrain.EnableMovement(true); <- [Frco] MovementController tiene métodos públicos para habilitar el movimiento,
+        //                                            tenerlo acá está trayendo más problemas que solucionándolos.
     }
 
     public void SetExpression(AnimatorOverrideController alpha, AnimatorOverrideController beta)

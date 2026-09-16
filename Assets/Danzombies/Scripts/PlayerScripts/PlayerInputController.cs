@@ -23,7 +23,9 @@ public class PlayerInputController : MonoBehaviour
     #region Input Events
     public void OnMoveAction(InputAction.CallbackContext context)
     {
-        if (!allowMoveInput) return;
+        if (!allowMoveInput)
+            return;
+
         if (context.performed) inputMovementDirection = context.ReadValue<Vector2>();
         if (context.canceled) inputMovementDirection = Vector2.zero;
         _playerManager.Move(inputMovementDirection);
@@ -31,9 +33,11 @@ public class PlayerInputController : MonoBehaviour
 
     public void OnSprintAction(InputAction.CallbackContext context)
     {
-        if (!allowMoveInput) return;
+        if (!allowMoveInput)
+            return;
+
         if (context.performed) _playerManager.InputSprint(true);
-        //else if (context.canceled) SetSpeed(walkingSpeed);
+        else if (context.canceled) _playerManager.InputSprint(false);
     }
     #endregion
     #endregion
@@ -52,7 +56,9 @@ public class PlayerInputController : MonoBehaviour
     #region Input Events
     public void OnDirectionButtonAction(InputAction.CallbackContext context)
     {
-        if (!allowDanceInput) return;
+        if (!allowDanceInput)
+            return;
+
         if (context.performed)
         {
             Vector2 value = context.ReadValue<Vector2>();
@@ -70,7 +76,9 @@ public class PlayerInputController : MonoBehaviour
 
     public void OnLeanButtonAction(InputAction.CallbackContext context)
     {
-        if (!allowDanceInput) return;
+        if (!allowDanceInput)
+            return;
+
         if (context.started)
         {
             float valor = context.ReadValue<float>();

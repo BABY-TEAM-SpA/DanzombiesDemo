@@ -11,9 +11,10 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private DanceBrain danceBrain;
 
     [Header("Movement")]
-    private float currentSpeed;
+    [SerializeField] private bool isMovementEnabled = true;
     [SerializeField] private Vector2 moveDirection;
     [SerializeField] private float walkingSpeed = 10f;
+
     [Tooltip("Multiplicador de velocidad al sprintear")]
     [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
     public float MaxSpeed => walkingSpeed * sprintFactor;
@@ -21,9 +22,9 @@ public class PlayerMovementController : MonoBehaviour
     
     [Header("Scripted Movement")]
     [SerializeField][Min(0f)] private float scriptedDuration;
-    private bool isMovementEnabled = true;
+
+    private float currentSpeed;
     private Transform target; 
-    
     #endregion
 
     #region [UNITY]

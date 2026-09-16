@@ -47,7 +47,8 @@ public abstract class DanceBrain : Dancer
     public virtual void ActivateEntity(bool  activate)
     {
         
-        if (activate) movCtrl?.StopScriptedMovement();
+        //if (activate) movCtrl?.StopScriptedMovement(); <- [Frco] MovementController tiene métodos públicos para detener el movimiento,
+        //                                                         tenerlo acá está trayendo más problemas que solucionándolos.
         beatReciever?.SetActive(activate);
     }
 
