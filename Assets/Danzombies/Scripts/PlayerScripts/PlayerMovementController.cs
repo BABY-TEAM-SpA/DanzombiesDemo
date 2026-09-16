@@ -21,25 +21,26 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Scripted Movement")]
     [SerializeField][Min(0f)] private float scriptedDuration;
     private bool scriptedMovement;
+    private bool isMovementEnabled =true;
     
     #endregion
 
     #region [UNITY]
     private void Start() => SetSpeed(walkingSpeed);
 
-    private void Update() => HandleMovement();
+    private void Update()
+    {
+        if(isMovementEnabled) HandleMovement();
+    }
     #endregion
 
     #region [METHODS]
     private void HandleMovement()
     {
-        
         Vector2 velocity = (Velocity.magnitude > 0.05f)? Velocity: Vector2.zero;
         transform.localPosition += (Vector3)(velocity * Time.deltaTime);
         danceBrain.OnMoving(Velocity / walkingSpeed);
-
-        if (Mathf.Abs(Velocity.x) > 0.01f)
-            danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
+        if (Mathf.Abs(Velocity.x) > 0.01f) danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
     }
 
     #region Scripted Movement
@@ -80,6 +81,8 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
     #endregion
 
+    public void EnableMovement(bool isON = false) => isMovementEnabled = isON;
+    
     #region [COROUTINES]
     private IEnumerator MoveForSecondsRoutine(Action onFinished = null)
     {

@@ -24,7 +24,6 @@ public abstract class DanceBrain : Dancer
     [SerializeField] protected DanceAnimatorController danceAnimCtrl;
     [SerializeField] protected BeatReciever beatReciever;
     public bool isLeftLooking;
-    private bool enableMovement=true;
     
     [SerializeField] List<DancerExpression> dancerExpressions = new List<DancerExpression>();
     public event Action<bool> OnDirectionChanged;
@@ -34,7 +33,7 @@ public abstract class DanceBrain : Dancer
     #region [METHODS]
     public void EnableMovement(bool isON = false)
     {
-        enableMovement = isON;
+        movCtrl?.EnableMovement(isON);
     }
     public void ResetScriptedMovement() => movCtrl?.StopScriptedMovement();
     
@@ -54,7 +53,6 @@ public abstract class DanceBrain : Dancer
 
     public void Move(Vector2 inputMovementDirection)
     {
-        if (!enableMovement) inputMovementDirection = Vector2.zero;
         movCtrl?.SetDirection(inputMovementDirection);
     }
     public void OnMoving(Vector3 direction)

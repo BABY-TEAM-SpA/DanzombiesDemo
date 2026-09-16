@@ -7,7 +7,13 @@ public class PlayerInputController : MonoBehaviour
     
     public bool allowMoveInput;
     public void EnableMoveInput() => allowMoveInput = true;
-    public void DisableMoveInput() => allowMoveInput = false;
+    public void DisableMoveInput()
+    {
+        allowMoveInput = false;
+        inputMovementDirection = Vector2.zero;
+        _playerManager.Move(inputMovementDirection);
+    }
+
     public bool allowDanceInput;
     public void EnableDanceInput() => allowDanceInput = true;
     public void DisableDanceInput() => allowDanceInput = false;
