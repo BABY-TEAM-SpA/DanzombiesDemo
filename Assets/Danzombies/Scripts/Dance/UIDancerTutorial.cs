@@ -34,14 +34,26 @@ public class UIDancerTutorial : Dancer
 
     #region [METHODS]
     #region Dancer - Activation
-    public override void OnEnablePuzzle(RhythmPuzzle puzzl)
+    public override void OnEnablePuzzle(RhythmPuzzle puzzle)
     {
+        currentDanceStep = DanceStep.None;
+        futureDanceStep = DanceStep.None;
         SetActiveCanvas(true);
     }
 
-    public override void OnDisablePuzzle(RhythmPuzzle puzzl)
+    public override void OnDisablePuzzle(RhythmPuzzle puzzle)
     {
+        currentDanceStep = DanceStep.None;
+        futureDanceStep = DanceStep.None;
         SetActiveCanvas(false);
+    }
+
+    public override void OnReseatPuzzle(RhythmPuzzle puzzle)
+    {
+        currentDanceStep = DanceStep.None;
+        futureDanceStep = DanceStep.None;
+        if (danceCanvas.isActiveAndEnabled)
+            RefreshIcons(false, false, false);
     }
     #endregion
 
