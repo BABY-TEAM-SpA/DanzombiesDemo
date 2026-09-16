@@ -4938,6 +4938,7 @@ Transform:
   - {fileID: 6464419158723846762}
   - {fileID: 6708268179555401624}
   - {fileID: 8193604699390339688}
+  - {fileID: 3793628205601520390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1450538241836724591
@@ -5068,6 +5069,7 @@ MonoBehaviour:
         m_Calls: []
   flowController: {fileID: 5825363922643408486}
   comboController: {fileID: 9216565697310443677}
+  interactionController: {fileID: 7325312964091968609}
   isTutorial: 0
   LifeDamagedEvent:
     m_PersistentCalls:
@@ -5306,11 +5308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 290e4da60c46fa04397c13564b2ae72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
+  _playerManager: {fileID: 6530795612346585224}
   allowMoveInput: 1
   allowDanceInput: 1
+  margin: 0.5
   allowInteractInput: 1
-  margen: 0.5
-  _playerManager: {fileID: 6530795612346585224}
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10822,6 +10824,38 @@ Transform:
   - {fileID: 3865539375107256469}
   - {fileID: 4939165409592647603}
   - {fileID: 6601486195845940297}
+  m_Father: {fileID: 8897676056707518989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3362564199606480662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3793628205601520390}
+  m_Layer: 0
+  m_Name: SFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3793628205601520390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3362564199606480662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1920525698211690986}
   m_Father: {fileID: 8897676056707518989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3489390123248364533
@@ -35895,6 +35929,62 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!1 &8895687567841216903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1920525698211690986}
+  - component: {fileID: 9027300983553735812}
+  m_Layer: 0
+  m_Name: SFXEmitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1920525698211690986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895687567841216903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3793628205601520390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9027300983553735812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895687567841216903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
 --- !u!1 &9055037549122763869
 GameObject:
   m_ObjectHideFlags: 0

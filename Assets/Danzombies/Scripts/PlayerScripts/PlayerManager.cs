@@ -9,6 +9,7 @@ public class PlayerManager : DanceBrain
     [Header("PlayerManager")]
     [SerializeField] private PlayerFlowController flowController;
     [SerializeField] private PlayerComboController comboController;
+    [SerializeField] private PlayerInteractionController interactionController;
     [SerializeField] private bool isTutorial;
 
     #region Instance
@@ -163,4 +164,6 @@ public class PlayerManager : DanceBrain
     {
         movCtrl.SetRun(isSprinting);
     }
+
+    public void InputInteract() => interactionController.Interact();
 }
