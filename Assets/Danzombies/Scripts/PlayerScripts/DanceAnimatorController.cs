@@ -51,6 +51,7 @@ public class DanceAnimatorController : MonoBehaviour
     
     public void OnDanceBegin(DanceStep step)
     {
+        if (step == DanceStep.None) return; 
         _danceBrain?.EnableMovement(false);
         animator.Play(step.ToString(), 0,0f);
     }

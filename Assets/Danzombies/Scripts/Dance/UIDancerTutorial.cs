@@ -82,7 +82,10 @@ public class UIDancerTutorial : Dancer
 
         if (currentDanceStep == DanceStep.None) return;
         danceIcon.animator.PlaySequence("Pulse");
-        if (GetLean(currentDanceStep) == "R") rightDirIcon.animator.PlaySequence("Pulse");
+        if (GetLean(currentDanceStep) == "R")
+        {
+            rightDirIcon.animator.PlaySequence("Pulse");
+        }
         else leftDirIcon.animator.PlaySequence("Pulse");
     }
 
@@ -121,10 +124,11 @@ public class UIDancerTutorial : Dancer
     {
         bool currentDanceMatches = currentDanceStep != DanceStep.None;
         bool futureDanceMatches = futureDanceStep != DanceStep.None;
+        danceIcon.iconFXRenderer.transform.localScale = Vector3.zero;
+        rightDirIcon.iconFXRenderer.transform.localScale = Vector3.zero;
+        leftDirIcon.iconFXRenderer.transform.localScale = Vector3.zero;
 
-        DanceStep previewStep = currentDanceMatches
-            ? currentDanceStep : futureDanceMatches
-                ? futureDanceStep : DanceStep.None;
+        DanceStep previewStep = currentDanceMatches ? currentDanceStep : futureDanceMatches ? futureDanceStep : DanceStep.None;
 
         danceIcon.iconRenderer.color = ResolveAlpha(currentDanceMatches, futureDanceMatches);
         danceIcon.iconRenderer.sprite = ResolveSprite(currentDanceScheme, GetOrientation(previewStep), danceIconPressed && currentDanceMatches);

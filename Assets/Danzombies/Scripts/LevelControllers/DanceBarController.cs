@@ -58,8 +58,7 @@ public class DanceBarController : MonoBehaviour
 
         UpdateFlowBars(PlayerManager.Player.FlowValue);
         uiAnimator?.PlaySequence(activation ? "Open" : "Close");
-        if (!activation)
-            FlowFeedbackController.FlowFeedback.Hide(); // [Frco] Me molesta tener que hacerlo así, pero es más rápido supongo...
+        if (!activation) FlowFeedbackController.FlowFeedback?.Hide(); // [Frco] Me molesta tener que hacerlo así, pero es más rápido supongo...
     }
 
     #region Updates

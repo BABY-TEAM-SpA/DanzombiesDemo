@@ -13,6 +13,7 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private bool isMovementEnabled = true;
     [SerializeField] private Vector2 moveDirection;
+    public void SetDirection(Vector2 direction) => moveDirection = direction;
     [SerializeField] private float walkingSpeed = 10f;
 
     [Tooltip("Multiplicador de velocidad al sprintear")]
@@ -21,10 +22,9 @@ public class PlayerMovementController : MonoBehaviour
     public Vector2 Velocity => currentSpeed * moveDirection;
     
     [Header("Scripted Movement")]
-    [SerializeField][Min(0f)] private float scriptedDuration;
-
+    private Coroutine scriptedMovement;
     private float currentSpeed;
-    private Transform target; 
+    private Vector3 targetPos; 
     #endregion
 
     #region [UNITY]
@@ -50,24 +50,40 @@ public class PlayerMovementController : MonoBehaviour
     public void MoveToPoint(Transform point)
     {
         //Debug.Log("MoveToPoint");
-        target = point;
+        targetPos = point.position;
         Vector2 direction = (point.position - transform.position);
+        BeginScriptedMovememnt(direction);
+    }
+    public void MoveInX(float directionX)
+    {
+        //Debug.Log("MoveToPoint");
+        Vector2 direction = new Vector2(directionX,0);
+        targetPos = (transform.position+(Vector3)direction);
+        direction.Normalize();
+        BeginScriptedMovememnt(direction);
+    }
+    public void MoveInY(float directionY)
+    {
+        //Debug.Log("MoveToPoint");
+        Vector2 direction = new Vector2(0,directionY);
+        targetPos = transform.position+(Vector3)direction;  
         BeginScriptedMovememnt(direction);
     }
 
     public void BeginScriptedMovememnt(Vector2 direction = default, Action onFinished = null)
     {
-        SetDirection(direction);
-        StartCoroutine(MoveToTargetRoutine(onFinished));
+        moveDirection = direction.normalized;
+        if(scriptedMovement!=null) StopCoroutine(scriptedMovement);
+        scriptedMovement = StartCoroutine(MoveToTargetRoutine(onFinished));
     }
-    public void BeginScriptedMovememnt() => StartCoroutine(MoveToTargetRoutine());
-    public void StopScriptedMovement() => SetDirection(Vector2.zero);
+    public void BeginScriptedMovememnt() => BeginScriptedMovememnt(Vector2.zero);
+    public void StopScriptedMovement() => moveDirection = (Vector3.zero);
 
     #endregion
 
     #region Helpers
     public void SetSpeed(float newSpeed) => currentSpeed = newSpeed;
-    public void SetDirection(Vector2 direction) => moveDirection = direction.normalized;
+    
     public void SetRun(bool run) => currentSpeed = walkingSpeed * ((run) ? sprintFactor : 1f);
     #endregion
     #endregion
@@ -77,13 +93,13 @@ public class PlayerMovementController : MonoBehaviour
     #region [COROUTINES]
     private IEnumerator MoveToTargetRoutine(Action onFinished = null)
     {
-        while (Vector2.Distance(transform.position, target.position) >= 0.01f)
+        while (Vector2.Distance(transform.position, targetPos) >= 0.1f)
         {
-            Vector2 direction = target.position - transform.position;
-            SetDirection(direction);
+            moveDirection = (targetPos - transform.position).normalized;
             yield return null;
         }
 
+        moveDirection = Vector2.zero;
         StopScriptedMovement();
         onFinished?.Invoke();
     }
