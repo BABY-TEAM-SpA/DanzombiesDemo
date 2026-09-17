@@ -230,6 +230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
   onDance:
     m_PersistentCalls:
       m_Calls:
@@ -245,6 +248,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onPostDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
   onReaction:
     m_PersistentCalls:
       m_Calls: []
@@ -274,12 +283,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceBrain: {fileID: 2536597401598945149}
-  walkingSpeed: 10
-  acceleration: 0
+  isMovementEnabled: 1
+  moveDirection: {x: 0, y: 0}
+  walkingSpeed: 4
   sprintFactor: 1.5
-  scriptedDuration: 0
-  scriptedDirection: {x: 0, y: 0}
-  allowInput: 0
 --- !u!114 &3651001649101913600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,11 +560,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _danceBrain: {fileID: 2536597401598945149}
-  allowInput: 0
   animator: {fileID: 8332991270205824799}
   playerFeedbackEvents: []
-  margen: 0.5
-  isTutorial: 0
   renderer: {fileID: 1578431844101746786}
   outlineRenderer: {fileID: 0}
 --- !u!114 &4026297106445111100

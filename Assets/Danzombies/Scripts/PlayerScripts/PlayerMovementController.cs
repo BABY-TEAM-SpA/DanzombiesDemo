@@ -93,12 +93,14 @@ public class PlayerMovementController : MonoBehaviour
     #region [COROUTINES]
     private IEnumerator MoveToTargetRoutine(Action onFinished = null)
     {
-        while (Vector2.Distance(transform.position, targetPos) >= 0.1f)
+        
+        while (Vector2.Distance(transform.position, targetPos) > 0.1f)
         {
+            float distance = Vector2.Distance(transform.position, targetPos);
+            SetRun(distance >= 10f);
             moveDirection = (targetPos - transform.position).normalized;
             yield return null;
         }
-
         moveDirection = Vector2.zero;
         StopScriptedMovement();
         onFinished?.Invoke();
