@@ -6,6 +6,20 @@ public class PlayerInputController : MonoBehaviour
 {
     [SerializeField] PlayerManager _playerManager;
 
+    /// <summary>
+    /// Para simular que el jugador soltó todos los inputs, para poder dejar a Greg en un estado de Idle.
+    /// </summary>
+    public void ReleaseInputs()
+    {
+        inputMovementDirection = Vector2.zero;
+        _playerManager.Move(inputMovementDirection);
+        _playerManager.InputSprint(false);
+
+        inputDanceLean = DanceLean.None;
+        inputDanceDirection = DanceDirection.None;
+        _playerManager.InputDance(inputDanceLean, inputDanceDirection);
+    }
+
     #region [MOVEMENT]
     public bool allowMoveInput;
     private Vector2 inputMovementDirection;

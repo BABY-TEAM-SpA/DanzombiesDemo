@@ -13,17 +13,16 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private bool isMovementEnabled = true;
     [SerializeField] private Vector2 moveDirection;
-    public void SetDirection(Vector2 direction) => moveDirection = direction;
     [SerializeField] private float walkingSpeed = 10f;
 
     [Tooltip("Multiplicador de velocidad al sprintear")]
     [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
     public float MaxSpeed => walkingSpeed * sprintFactor;
-    public Vector2 Velocity => currentSpeed * moveDirection;
+    public Vector2 Velocity => baseSpeed * moveDirection;
     
     [Header("Scripted Movement")]
     private Coroutine scriptedMovement;
-    private float currentSpeed;
+    [SerializeField] private float baseSpeed;
     private Vector3 targetPos; 
     #endregion
 
@@ -76,19 +75,26 @@ public class PlayerMovementController : MonoBehaviour
         if(scriptedMovement!=null) StopCoroutine(scriptedMovement);
         scriptedMovement = StartCoroutine(MoveToTargetRoutine(onFinished));
     }
-    public void BeginScriptedMovememnt() => BeginScriptedMovememnt(Vector2.zero);
-    public void StopScriptedMovement() => moveDirection = (Vector3.zero);
-
+    public void BeginScriptedMovememnt() => BeginScriptedMovememnt(Vector2.zero); // [Frco] ?
+    public void StopScriptedMovement()
+    {
+        SetDirection(Vector2.zero);
+        HandleMovement();
+    }
     #endregion
 
     #region Helpers
-    public void SetSpeed(float newSpeed) => currentSpeed = newSpeed;
-    
-    public void SetRun(bool run) => currentSpeed = walkingSpeed * ((run) ? sprintFactor : 1f);
+    public void SetSpeed(float newSpeed) => baseSpeed = newSpeed;
+    public void SetDirection(Vector2 direction) => moveDirection = direction;
+    public void SetRun(bool run) => baseSpeed = walkingSpeed * ((run) ? sprintFactor : 1f);
     #endregion
     #endregion
 
-    public void EnableMovement(bool isON = false) => isMovementEnabled = isON;
+    public void EnableMovement(bool isON = false)
+    {
+        isMovementEnabled = isON;
+        Debug.Log("ADIVINA.");
+    }
     
     #region [COROUTINES]
     private IEnumerator MoveToTargetRoutine(Action onFinished = null)
@@ -106,7 +112,4 @@ public class PlayerMovementController : MonoBehaviour
         onFinished?.Invoke();
     }
     #endregion
-
-    
-    
 }
