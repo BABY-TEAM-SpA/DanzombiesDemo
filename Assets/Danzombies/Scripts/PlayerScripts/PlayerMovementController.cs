@@ -21,9 +21,10 @@ public class PlayerMovementController : MonoBehaviour
     public Vector2 Velocity => baseSpeed * moveDirection;
     
     [Header("Scripted Movement")]
+    [SerializeField][Min(0f)] private float scriptedDuration;
     private Coroutine scriptedMovement;
     [SerializeField] private float baseSpeed;
-    private Vector3 targetPos; 
+    private Vector3 targetPos;
     #endregion
 
     #region [UNITY]
@@ -50,9 +51,10 @@ public class PlayerMovementController : MonoBehaviour
     {
         //Debug.Log("MoveToPoint");
         targetPos = point.position;
-        Vector2 direction = (point.position - transform.position);
+        Vector2 direction = point.position - transform.position;
         BeginScriptedMovememnt(direction);
     }
+
     public void MoveInX(float directionX)
     {
         //Debug.Log("MoveToPoint");
@@ -99,15 +101,20 @@ public class PlayerMovementController : MonoBehaviour
     #region [COROUTINES]
     private IEnumerator MoveToTargetRoutine(Action onFinished = null)
     {
-        
+        float elapsed = 0f;
+
         while (Vector2.Distance(transform.position, targetPos) > 0.1f)
         {
+            if (scriptedDuration > 0f && elapsed > scriptedDuration)
+                break;
+
             float distance = Vector2.Distance(transform.position, targetPos);
             SetRun(distance >= 10f);
             moveDirection = (targetPos - transform.position).normalized;
+            elapsed += Time.deltaTime;
             yield return null;
         }
-        moveDirection = Vector2.zero;
+
         StopScriptedMovement();
         onFinished?.Invoke();
     }
