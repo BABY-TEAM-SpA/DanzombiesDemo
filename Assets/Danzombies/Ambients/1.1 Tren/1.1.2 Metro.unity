@@ -768,6 +768,10 @@ PrefabInstance:
       propertyPath: 'spriteRenderers.Array.data[1]'
       value: 
       objectReference: {fileID: 90186650}
+    - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7757211502185799696, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: interactions.Array.size
       value: 0
@@ -816,10 +820,37 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 541
       objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Path
+      value: event:/Metro/PersonsInWagon/Metro_PIW_ViejasPeleando
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: activeParam.Name
+      value: Reaccion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data1
+      value: 1707064750
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data2
+      value: 1106536268
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data3
+      value: 305674636
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data4
+      value: -376880340
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2881008638102707473, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1784120956}
   m_SourcePrefab: {fileID: 100100000, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
 --- !u!4 &90186649 stripped
 Transform:
@@ -1603,7 +1634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -21.48
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.y
@@ -3382,7 +3413,7 @@ PrefabInstance:
       objectReference: {fileID: 347619730}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -8.8
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.y
@@ -3459,6 +3490,34 @@ PrefabInstance:
     - target: {fileID: 8239654500472364193, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_SortingOrder
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Path
+      value: event:/Metro/PersonsInWagon/Metro_PIW_Abuela
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: activeParam.Name
+      value: Reaccion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: activeParam.Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data1
+      value: -1278528755
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data2
+      value: 1155997051
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data3
+      value: 12565694
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data4
+      value: -750317760
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3797,7 +3856,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 629253198721850313, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
   m_PrefabInstance: {fileID: 90186648}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1784120953}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d644e095024e73459938a627d97bcff, type: 3}
@@ -4940,7 +4999,7 @@ Transform:
   m_GameObject: {fileID: 548076264}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.330002, y: -0.21999979, z: 0}
+  m_LocalPosition: {x: -9, y: -0.21999979, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9193,7 +9252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -14
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 7757211502185799696, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: interactions.Array.size
@@ -9266,6 +9325,34 @@ PrefabInstance:
     - target: {fileID: 8239654500472364193, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_SortingOrder
       value: 294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Path
+      value: event:/Metro/PersonsInWagon/Metro_PIW_Javier
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: activeParam.Name
+      value: Reaccion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: activeParam.Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data1
+      value: -359089625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data2
+      value: 1257197425
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data3
+      value: -903596661
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: eventRef.Guid.Data4
+      value: 755912572
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9509,7 +9596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -9.04
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.y
@@ -11685,7 +11772,7 @@ Transform:
   m_GameObject: {fileID: 1479548894}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6699982, y: -0.21999979, z: 0}
+  m_LocalPosition: {x: 4.5, y: -0.21999979, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11853,7 +11940,7 @@ PrefabInstance:
       objectReference: {fileID: 862862246}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7784280337927574965, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12958,6 +13045,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95138ec9328597468b5d9a00c0cffec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Position3D
+--- !u!114 &1658200889 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8946989864861922934, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+  m_PrefabInstance: {fileID: 90186648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmiter
+--- !u!212 &1658200891 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4605493262668714572, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+  m_PrefabInstance: {fileID: 90186648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1660514884
 GameObject:
   m_ObjectHideFlags: 0
@@ -13935,6 +14038,42 @@ PrefabInstance:
       addedObject: {fileID: 1478918020}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4d2181b4620a664c831ae68f9feeaf5, type: 3}
+--- !u!1 &1784120953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2881008638102707473, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+  m_PrefabInstance: {fileID: 90186648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1784120956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784120953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22873e1b428f21d458ea0bef8961a679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnCameraDetector
+  spriteRenderer: {fileID: 1658200891}
+  OnVisible:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1658200889}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnInvisible:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1789737256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14001,7 +14140,7 @@ PrefabInstance:
       objectReference: {fileID: 1484387470}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -4
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 7784280337927574965, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14181,6 +14320,10 @@ PrefabInstance:
       propertyPath: 'spriteRenderers.Array.data[1]'
       value: 
       objectReference: {fileID: 871384900}
+    - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
+      propertyPath: m_Offset.x
+      value: -9
+      objectReference: {fileID: 0}
     - target: {fileID: 7757211502185799696, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: interactions.Array.size
       value: 1
@@ -15542,7 +15685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.x
-      value: -9.58
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 6213329709845684170, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
       propertyPath: m_Offset.y
