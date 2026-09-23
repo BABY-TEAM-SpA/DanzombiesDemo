@@ -62,7 +62,7 @@ public class SFXEmitter : MonoBehaviour
     private void Update()
     {
         if (target && limiter)
-            transform.position = BoundsContainer.ClampPosition(transform.position, limiter);
+            transform.position = BoundsContainer.ClampPosition(target.position, limiter);
     }
 
     private void OnDestroy()
