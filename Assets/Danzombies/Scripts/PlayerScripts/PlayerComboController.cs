@@ -58,7 +58,7 @@ public class PlayerComboController : MonoBehaviour
 
         // <- Aquí iría el llamado a un ComboUIController o similar, mismo patrón que con PlayerFlowController
         //    y DanceBarController, dejo el Debug.Log por mientras
-        Debug.Log($"[PlayerComboController] Combo = {State} ({Count})");
+        //Debug.Log($"[PlayerComboController] Combo = {State} ({Count})");
     }
 
     public void Reset() => Increase(-count);

@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 public class PlayerMovementController : MonoBehaviour
 {
     #region [VARIABLES]
+    public bool debug;
+
     [Header("References")]
     [SerializeField] private DanceBrain danceBrain;
 
@@ -19,8 +21,9 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
     public float MaxSpeed => walkingSpeed * sprintFactor;
     public Vector2 Velocity => baseSpeed * moveDirection;
-    
+
     [Header("Scripted Movement")]
+    [SerializeField] private bool useScriptedDuration;
     [SerializeField][Min(0f)] private float scriptedDuration;
     private Coroutine scriptedMovement;
     [SerializeField] private float baseSpeed;
@@ -49,6 +52,8 @@ public class PlayerMovementController : MonoBehaviour
     #region Scripted Movement
     public void MoveToPoint(Transform point)
     {
+        if (debug)
+            Debug.Log($"MoveToPoint({point})");
         //Debug.Log("MoveToPoint");
         targetPos = point.position;
         Vector2 direction = point.position - transform.position;
@@ -57,6 +62,8 @@ public class PlayerMovementController : MonoBehaviour
 
     public void MoveInX(float directionX)
     {
+        if (debug)
+            Debug.Log($"MoveInX()");
         //Debug.Log("MoveToPoint");
         Vector2 direction = new Vector2(directionX,0);
         targetPos = (transform.position+(Vector3)direction);
@@ -73,6 +80,8 @@ public class PlayerMovementController : MonoBehaviour
 
     public void BeginScriptedMovememnt(Vector2 direction = default, Action onFinished = null)
     {
+        if (debug)
+            Debug.Log($"BeginScriptedMovememnt({direction})");
         moveDirection = direction.normalized;
         if(scriptedMovement!=null) StopCoroutine(scriptedMovement);
         scriptedMovement = StartCoroutine(MoveToTargetRoutine(onFinished));
@@ -80,9 +89,13 @@ public class PlayerMovementController : MonoBehaviour
     public void BeginScriptedMovememnt() => BeginScriptedMovememnt(Vector2.zero); // [Frco] ?
     public void StopScriptedMovement()
     {
+        if (debug)
+            Debug.Log($"StopScriptedMovement()");
         SetDirection(Vector2.zero);
         HandleMovement();
     }
+
+    public void UseScriptedDuration(bool use) => useScriptedDuration = use;
     #endregion
 
     #region Helpers
@@ -94,18 +107,21 @@ public class PlayerMovementController : MonoBehaviour
 
     public void EnableMovement(bool isON = false)
     {
+        if (debug)
+            Debug.Log($"EnableMovemement({isON})");
         isMovementEnabled = isON;
-        Debug.Log("ADIVINA.");
     }
     
     #region [COROUTINES]
     private IEnumerator MoveToTargetRoutine(Action onFinished = null)
     {
+        if (debug)
+            Debug.Log($"MoveToTargetRoutine()");
         float elapsed = 0f;
 
         while (Vector2.Distance(transform.position, targetPos) > 0.1f)
         {
-            if (scriptedDuration > 0f && elapsed > scriptedDuration)
+            if (useScriptedDuration && elapsed > scriptedDuration)
                 break;
 
             float distance = Vector2.Distance(transform.position, targetPos);
