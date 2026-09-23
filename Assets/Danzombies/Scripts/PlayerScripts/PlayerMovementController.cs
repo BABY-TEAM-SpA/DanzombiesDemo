@@ -24,6 +24,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("Scripted Movement")]
     [SerializeField] private bool useScriptedDuration;
+    public bool scriptLookingEnding;
     [SerializeField][Min(0f)] private float scriptedDuration;
     private Coroutine scriptedMovement;
     [SerializeField] private float baseSpeed;
@@ -45,8 +46,7 @@ public class PlayerMovementController : MonoBehaviour
         Vector2 velocity = (Velocity.magnitude > 0.05f) ? Velocity : Vector2.zero;
         transform.localPosition += (Vector3)(velocity * Time.deltaTime);
         danceBrain.OnMoving(Velocity / walkingSpeed);
-        if (Mathf.Abs(Velocity.x) > 0.01f)
-            danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
+        if (Mathf.Abs(Velocity.x) > 0.01f) danceBrain.SetBodyDirection(Mathf.Sign(Velocity.x));
     }
 
     #region Scripted Movement
@@ -70,6 +70,11 @@ public class PlayerMovementController : MonoBehaviour
         direction.Normalize();
         BeginScriptedMovememnt(direction);
     }
+
+    public void SetEndingLookingDirection(bool lookingRight)
+    {
+        scriptLookingEnding = !lookingRight;
+    }
     public void MoveInY(float directionY)
     {
         //Debug.Log("MoveToPoint");
@@ -92,7 +97,9 @@ public class PlayerMovementController : MonoBehaviour
         if (debug)
             Debug.Log($"StopScriptedMovement()");
         SetDirection(Vector2.zero);
-        HandleMovement();
+        //HandleMovement();
+        danceBrain.SetBodyDirection(scriptLookingEnding ? -1f: 1f);
+
     }
 
     public void UseScriptedDuration(bool use) => useScriptedDuration = use;
