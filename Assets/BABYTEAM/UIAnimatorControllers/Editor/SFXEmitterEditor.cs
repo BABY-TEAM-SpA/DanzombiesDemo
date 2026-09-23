@@ -27,48 +27,61 @@ public class SFXEmitterEditor : Editor
             return;
         }
 
+        DrawSpatializer(editorEventRef);
+        DrawParameters(editorEventRef);
+    }
+
+    private void DrawParameters(EditorEventRef editorEventRef)
+    {
         showParams = EditorGUILayout.BeginFoldoutHeaderGroup(showParams, "Parameters");
-        if (!showParams)
-            return;
-
-        EditorGUI.indentLevel++;
-
-        if (editorEventRef.Parameters == null || editorEventRef.Parameters.Count == 0)
-            EditorGUILayout.HelpBox($"El evento '{editorEventRef.Path}' no tiene parámetros locales configurados en FMOD Studio.", MessageType.Info);
-        else
+        if (showParams)
         {
-            foreach (EditorParamRef param in editorEventRef.Parameters)
+            EditorGUI.indentLevel++;
+
+            if (editorEventRef.Parameters == null || editorEventRef.Parameters.Count == 0)
+                EditorGUILayout.HelpBox($"El evento '{editorEventRef.Path}' no tiene parámetros locales configurados en FMOD Studio.", MessageType.Info);
+            else
             {
-                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(param.Name, EditorStyles.boldLabel);
-
-                EditorGUILayout.BeginHorizontal();
-
-                if (param.Type == ParameterType.Labeled)
+                foreach (EditorParamRef param in editorEventRef.Parameters)
                 {
-                    string defaultLabel = (param.Labels != null && (int)param.Default >= 0 && (int)param.Default < param.Labels.Length)
-                        ? param.Labels[(int)param.Default]
-                        : param.Default.ToString();
+                    EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-                    string labelsList = param.Labels != null
-                        ? string.Join(", ", param.Labels.Select((label, index) => $"{index}: {label}"))
-                        : "";
+                    EditorGUILayout.LabelField(param.Name, EditorStyles.boldLabel);
 
-                    EditorGUILayout.LabelField($"{labelsList}   |   Default={param.Default}");
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (param.Type == ParameterType.Labeled)
+                    {
+                        string defaultLabel = (param.Labels != null && (int)param.Default >= 0 && (int)param.Default < param.Labels.Length)
+                            ? param.Labels[(int)param.Default]
+                            : param.Default.ToString();
+
+                        string labelsList = param.Labels != null
+                            ? string.Join(", ", param.Labels.Select((label, index) => $"{index}: {label}"))
+                            : "";
+
+                        EditorGUILayout.LabelField($"{labelsList}   |   Default={param.Default}");
+                    }
+                    else EditorGUILayout.LabelField($"{param.Min}-{param.Max}   |   Default={param.Default}");
+
+                    if (GUILayout.Button("Use", EditorStyles.miniButton))
+                        SetParameter(param);
+
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.EndVertical();
                 }
-                else EditorGUILayout.LabelField($"{param.Min}-{param.Max}   |   Default={param.Default}");
-
-                if (GUILayout.Button("Use", EditorStyles.miniButton))
-                    SetParameter(param);
-
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.EndVertical();
             }
-        }
 
+            EditorGUI.indentLevel--;
+        }
         EditorGUILayout.EndFoldoutHeaderGroup();
+    }
+
+    private void DrawSpatializer(EditorEventRef editorEventRef)
+    {
+        if (!editorEventRef.Is3D)
+            EditorGUILayout.HelpBox($"El evento '{editorEventRef.Path}' no es 3D, no tiene Spatializer configurado en FMOD Studio.", MessageType.Info);
     }
 
     private void SetParameter(EditorParamRef param)

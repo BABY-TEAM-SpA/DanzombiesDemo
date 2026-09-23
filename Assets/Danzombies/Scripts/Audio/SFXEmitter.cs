@@ -1,7 +1,8 @@
-using System.Runtime.CompilerServices;
 using FMOD;
 using FMOD.Studio;
 using FMODUnity;
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
@@ -29,8 +30,15 @@ public class SFXEmitter : MonoBehaviour
     public EventReference eventRef;
     public ParamRef activeParam; // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
                                  //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
+    [Header("")]
     [SerializeField] private bool playOnStart;
     [SerializeField][Range(MIN_VOLUME, MAX_VOLUME)] private float volume = 1f;
+
+    [Header("Spatializer")]
+    [SerializeField] private bool overrideDistance;
+    [Tooltip("Desde qué distancia se escucha con volumen máximo.")]
+    [SerializeField][Range(0, 999)] private int minDistance = 0;
+    [SerializeField][Range(1, 1000)] private int maxDistance = 1000;
 
     private EventInstance sfxInstance;
     #endregion
@@ -42,10 +50,13 @@ public class SFXEmitter : MonoBehaviour
             return;
 
         sfxInstance = RuntimeManager.CreateInstance(eventRef);
+        RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
 
         ResolveParameterID();
         UpdateParameterValue(activeParam.Value);
         SetVolume(volume);
+        if (overrideDistance)
+            SetDistance(minDistance, maxDistance);
 
         if (playOnStart)
             Play();
@@ -62,19 +73,14 @@ public class SFXEmitter : MonoBehaviour
     #region API - Studio
     public void Play()
     {
-        if (!sfxInstance.isValid())
-            return;
-
-        sfxInstance.start();
-        RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
+        if (sfxInstance.isValid())
+            sfxInstance.start();
     }
 
     public void Stop(bool fadeOut)
     {
-        if (!sfxInstance.isValid())
-            return;
-
-        sfxInstance.stop(fadeOut ? STOP_MODE.ALLOWFADEOUT : STOP_MODE.IMMEDIATE);
+        if (sfxInstance.isValid())
+            sfxInstance.stop(fadeOut ? STOP_MODE.ALLOWFADEOUT : STOP_MODE.IMMEDIATE);
     }
     #endregion
 
@@ -109,11 +115,8 @@ public class SFXEmitter : MonoBehaviour
     /// </summary>
     public void UpdateParameterValue(float value)
     {
-        if (activeParam == null)
-        {
-            Debug.LogWarning($"[SFXEmitter] El parámetro activo es null, cancelando operación.", this);
+        if (activeParam.Name == string.Empty)
             return;
-        }
 
         RESULT result = sfxInstance.setParameterByID(activeParam.ID, value);
         if (result != RESULT.OK)
@@ -134,6 +137,23 @@ public class SFXEmitter : MonoBehaviour
         if (sfxInstance.isValid())
             sfxInstance.setVolume(volume);
     }
+    #endregion
+
+    #region API - Distance
+    public void SetDistance(float min, float max)
+    {
+        if (!sfxInstance.isValid())
+            return;
+
+        RESULT resultMin = sfxInstance.setProperty(EVENT_PROPERTY.MINIMUM_DISTANCE, Mathf.Max(0f, min));
+        RESULT resultMax = sfxInstance.setProperty(EVENT_PROPERTY.MAXIMUM_DISTANCE, Mathf.Max(minDistance, max));
+
+        if (resultMin != RESULT.OK || resultMax != RESULT.OK)
+            Debug.LogWarning($"[SFXEmitter] No se pudo aplicar min/max distance. Min: {resultMin}, Max: {resultMax}.", this);
+    }
+
+    public void SetMinDistance(int min) => SetDistance(min, maxDistance);
+    public void SetMaxDistance(int max) => SetDistance(minDistance, max);
     #endregion
 
     #region Helpers
