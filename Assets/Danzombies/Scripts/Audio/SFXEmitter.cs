@@ -2,10 +2,7 @@ using FMOD;
 using FMOD.Studio;
 using FMODUnity;
 using System;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 using Debug = UnityEngine.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
