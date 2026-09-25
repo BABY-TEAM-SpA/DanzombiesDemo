@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class DevMode : MonoBehaviour
+public class DevMode : Service<DevMode>
 {
     #region [VARIABLES]
     [SerializeField] private CheckpointsCatalog catalog;
@@ -14,30 +14,13 @@ public class DevMode : MonoBehaviour
 
     private Transform root;
     private bool isShowing;
-
-    public static DevMode Instance { get; private set; } // <- Singleton
     #endregion
 
     #region [UNITY]
-    private void Awake()
+    private void Start()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         root = transform.GetChild(0);
         HideCanvas();
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this)
-            Instance = null;
     }
 
     private void LateUpdate()
