@@ -45,7 +45,7 @@ public class DanceBarController : MonoBehaviour
         beatBarMaterial = newMat;
         foreach (Image bar in beatBars)
             bar.material = newMat;
-        
+
         //PlayerManager.Player.danceBar = this; // [Frco] Lo cambié para que sea el propio PlayerManager quien busca y asigna la DanceBar
         //UpdateFlowBars(PlayerManager.Player.FlowValue);
     }

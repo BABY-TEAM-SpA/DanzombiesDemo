@@ -40,7 +40,7 @@ public class PlayerInputController : MonoBehaviour
         if (!allowMoveInput)
             return;
 
-        if (context.performed) inputMovementDirection = context.ReadValue<Vector2>();
+        if (context.performed) inputMovementDirection = context.ReadValue<Vector2>().normalized;
         if (context.canceled) inputMovementDirection = Vector2.zero;
         _playerManager.Move(inputMovementDirection);
     }

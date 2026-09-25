@@ -67,7 +67,8 @@ public class SceneChangeController : Service<SceneChangeController>
         switch (scenesPack.chargeMode)
         {
             case ChargeSceneMode.Sync:
-                ForceLoadScene(scenesPack.scenes[0]);
+                //ForceLoadScene(scenesPack.scenes[0]); <- [Frco] La transición de escenas queda más smooth si ocupamos la corrutina async
+                LoadAsync();
                 break;
 
             case ChargeSceneMode.Async:
@@ -86,7 +87,6 @@ public class SceneChangeController : Service<SceneChangeController>
 
     private void ForceLoadScene(string sceneName)
     {
-        AudioManager.Instance.StopSong();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         OnLoadCompleted?.Invoke();
     }
