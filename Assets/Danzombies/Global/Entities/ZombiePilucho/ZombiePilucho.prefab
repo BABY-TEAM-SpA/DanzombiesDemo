@@ -146,7 +146,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceAnimatorController
   _danceBrain: {fileID: 7056290208718765735}
-  allowInput: 0
   animator: {fileID: 1741135023226665144}
   playerFeedbackEvents: []
 --- !u!60 &5896840713004236461
@@ -213,6 +212,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBeatReciever
   animator: {fileID: 1741135023226665144}
+--- !u!1 &1264957708571732599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6773568272493097307}
+  - component: {fileID: 4955258270798411502}
+  m_Layer: 0
+  m_Name: SFXEMITTER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6773568272493097307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264957708571732599}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5669607409053360810}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4955258270798411502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264957708571732599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 408154344
+      Data2: 1241392747
+      Data3: 617305248
+      Data4: -1058689315
+    Path: event:/SFX/Dance_System/Zombies/ZombiesGroupVoices
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
+  followPlayer: 0
+  limiter: {fileID: 0}
 --- !u!1 &4427987756750461755
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +361,75 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &6860282358865559845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5669607409053360810}
+  - component: {fileID: 4002957037544005641}
+  m_Layer: 0
+  m_Name: SFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5669607409053360810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860282358865559845}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 952.2, y: 542.69995, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6773568272493097307}
+  m_Father: {fileID: 7910420591908278673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4002957037544005641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860282358865559845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63e4aa1af44cc946bcb2fc4145e1776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DanceEventEmiter
+  onNorth:
+    m_PersistentCalls:
+      m_Calls: []
+  onSouth:
+    m_PersistentCalls:
+      m_Calls: []
+  onWest:
+    m_PersistentCalls:
+      m_Calls: []
+  onEast:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4955258270798411502}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8640736686685673340
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +466,7 @@ Transform:
   m_Children:
   - {fileID: 7889763320899328269}
   - {fileID: 1076999075075102195}
+  - {fileID: 5669607409053360810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &302155366758957264
@@ -418,14 +545,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
   onDance:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4002957037544005641}
+        m_TargetAssemblyTypeName: DanceEventEmiter, Assembly-CSharp
+        m_MethodName: OnDanceBuffer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPostDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivated:
     m_PersistentCalls:
       m_Calls: []
   onReaction:
     m_PersistentCalls:
       m_Calls: []
   debug: 0
-  ActivateOnStart: 0
+  ActivateOnStart: 1
   movCtrl: {fileID: 9083009641924841184}
   danceAnimCtrl: {fileID: 7724229193317757106}
   beatReciever: {fileID: 5584149735106694538}
@@ -449,12 +597,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   danceBrain: {fileID: 7056290208718765735}
+  isMovementEnabled: 1
+  moveDirection: {x: 0, y: 0}
   walkingSpeed: 10
-  acceleration: 0
   sprintFactor: 1.5
+  useScriptedDuration: 0
+  scriptLookingEnding: 0
   scriptedDuration: 0
-  scriptedDirection: {x: 0, y: 0}
+  baseSpeed: 0
 --- !u!114 &1519313315476876159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,3 +631,5 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  followPlayer: 0
+  limiter: {fileID: 0}

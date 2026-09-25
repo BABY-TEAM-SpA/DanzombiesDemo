@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class DanceEventEmiter : MonoBehaviour
 {
-    public UnityEvent<string> onNorth;
-    public UnityEvent<string> onSouth;
-    public UnityEvent<string> onWest;
-    public UnityEvent<string> onEast;
+    public UnityEvent<float> onNorth;
+    public UnityEvent<float> onSouth;
+    public UnityEvent<float> onWest;
+    public UnityEvent<float> onEast;
     
     public void OnDanceBuffer(DanceStep danceStep)
     {
@@ -14,28 +14,28 @@ public class DanceEventEmiter : MonoBehaviour
         switch (danceStep)
         {
             case DanceStep.L_North :
-                onNorth?.Invoke("L");
+                onNorth?.Invoke(0f);
                 break;
             case DanceStep.R_North:
-                onNorth?.Invoke("R");
+                onNorth?.Invoke(1f);
                 break;
             case DanceStep.L_South:
-                onSouth?.Invoke("L");
+                onSouth?.Invoke(0f);
                 break;
             case DanceStep.R_South:
-                onSouth?.Invoke("R");
+                onSouth?.Invoke(1f);
                 break;
             case DanceStep.R_West:
-                onWest?.Invoke("L");
+                onWest?.Invoke(0f);
                 break;
             case DanceStep.L_West:
-                onWest?.Invoke("R");
+                onWest?.Invoke(1f);
                 break;
             case DanceStep.L_East:
-                onEast?.Invoke("L");
+                onEast?.Invoke(0f);
                 break;
             case DanceStep.R_East:
-                onEast?.Invoke("R");
+                onEast?.Invoke(1f);
                 break;
         }
     }

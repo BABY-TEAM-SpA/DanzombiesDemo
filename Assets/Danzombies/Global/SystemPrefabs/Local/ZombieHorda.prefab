@@ -56,6 +56,8 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  followPlayer: 1
+  limiter: {fileID: 6065324922489293100}
 --- !u!1 &2234490020221828320
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +114,8 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  followPlayer: 1
+  limiter: {fileID: 6065324922489293100}
 --- !u!1 &3204123911003178100
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +172,8 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  followPlayer: 1
+  limiter: {fileID: 6065324922489293100}
 --- !u!1 &5562071717745049549
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +230,8 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  followPlayer: 1
+  limiter: {fileID: 6065324922489293100}
 --- !u!1 &5582055949647408294
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,12 +305,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceSequence
   sequenceStopMode: 3
+  correctSteps:
+    amount: 1
+    feedbacks: 
   coreography:
     StepInBar:
     - StepPerBeat: 00000000
     - StepPerBeat: 00000000
     - StepPerBeat: 00000000
     - StepPerBeat: 00000000
+  OnDanceSequenceStarted:
+    m_PersistentCalls:
+      m_Calls: []
   OnDanceSequenceFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -427,6 +441,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a31e72b14b00e4a80cbdec6c4d3000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
   onDance:
     m_PersistentCalls:
       m_Calls:
@@ -442,13 +459,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onPostDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
   onReaction:
-    m_PersistentCalls:
-      m_Calls: []
-  OnActivated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeactivated:
     m_PersistentCalls:
       m_Calls: []
   isActive: 0

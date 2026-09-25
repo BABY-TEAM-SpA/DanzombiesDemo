@@ -34,7 +34,8 @@ public class SFXEmitter : MonoBehaviour
 
     [Header("Dynamic")]
     [Tooltip("Si se le asigna el PlayerManager, el SFXEmitter seguirá a Greg mientras esté dentro de su limiter.")]
-    public Transform target;
+    public bool followPlayer;
+    private Transform target;
     public Collider2D limiter;
 
     private EventInstance sfxInstance;
@@ -43,23 +44,18 @@ public class SFXEmitter : MonoBehaviour
     #region [UNITY]
     private void Start()
     {
-        if (eventRef.IsNull)
-            return;
-
+        if (eventRef.IsNull) return;
         sfxInstance = RuntimeManager.CreateInstance(eventRef);
-
         ResolveParameterID();
         UpdateParameterValue(activeParam.Value);
         SetVolume(volume);
-
-        if (playOnStart)
-            Play();
+        if (followPlayer) target = PlayerManager.Player.transform;
+        if (playOnStart) Play();
     }
 
     private void Update()
     {
-        if (target && limiter)
-            transform.position = BoundsContainer.ClampPosition(target.position, limiter);
+        if (target && limiter)transform.position = BoundsContainer.ClampPosition(target.position, limiter);
     }
 
     private void OnDestroy()
