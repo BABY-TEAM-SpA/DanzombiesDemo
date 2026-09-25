@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7104464789819278032}
   - component: {fileID: 3328392452177608953}
-  - component: {fileID: 1739416909373635647}
   m_Layer: 5
   m_Name: FlowFeedback
   m_TagString: Untagged
@@ -30,8 +29,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1779497360594837831}
-  - {fileID: 1773752945685620894}
+  - {fileID: 1435221169113866524}
+  - {fileID: 8342420538654262371}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -56,19 +55,7 @@ MonoBehaviour:
     OnEntered:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8263790156093621616}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 8064390633880692537}
+        - m_Target: {fileID: 1386471738113348372}
           m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
           m_MethodName: PlaySequence
           m_Mode: 5
@@ -78,77 +65,41 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7893188649637407265}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
   - state: 1
     OnEntered:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8263790156093621616}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 1386471738113348372}
+          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+          m_MethodName: PlaySequence
+          m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: FadeOut
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7893188649637407265}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 8766563753040985453}
+          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+          m_MethodName: PlaySequence
+          m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: FadeOut
             m_BoolArgument: 0
           m_CallState: 2
   - state: 2
     OnEntered:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8263790156093621616}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7893188649637407265}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 1908051273562158159}
+        - m_Target: {fileID: 8766563753040985453}
           m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
           m_MethodName: PlaySequence
           m_Mode: 5
@@ -160,25 +111,231 @@ MonoBehaviour:
             m_StringArgument: FadeIn
             m_BoolArgument: 0
           m_CallState: 2
---- !u!225 &1739416909373635647
+--- !u!1 &6760155831375524762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8342420538654262371}
+  - component: {fileID: 5829180016595859708}
+  - component: {fileID: 8766563753040985453}
+  m_Layer: 5
+  m_Name: InDangerCanvasGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8342420538654262371
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760155831375524762}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1773752945685620894}
+  m_Father: {fileID: 7104464789819278032}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &5829180016595859708
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632338392775211630}
+  m_GameObject: {fileID: 6760155831375524762}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &8766563753040985453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760155831375524762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: FadeIn
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 8342420538654262371}
+      timeMode: 0
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: FadeOut
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 8342420538654262371}
+      timeMode: 0
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!1 &8796223930084051988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435221169113866524}
+  - component: {fileID: 79624946125214559}
+  - component: {fileID: 1386471738113348372}
+  m_Layer: 5
+  m_Name: InFlowCanvasGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1435221169113866524
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796223930084051988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1779497360594837831}
+  m_Father: {fileID: 7104464789819278032}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &79624946125214559
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796223930084051988}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &1386471738113348372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796223930084051988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: FadeIn
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 1435221169113866524}
+      timeMode: 0
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: FadeOut
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 1435221169113866524}
+      timeMode: 0
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &2077410594473319012
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7104464789819278032}
+    m_TransformParent: {fileID: 8342420538654262371}
     m_Modifications:
     - target: {fileID: 309010071618319098, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
       propertyPath: m_Pivot.x
@@ -230,15 +387,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 309010071618319098, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 309010071618319098, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 309010071618319098, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 309010071618319098, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -264,10 +421,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InDangerFeedback
       objectReference: {fileID: 0}
-    - target: {fileID: 8169051076234801221, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -278,29 +431,13 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 309010071618319098, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
   m_PrefabInstance: {fileID: 2077410594473319012}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1908051273562158159 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 481519486576389675, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
-  m_PrefabInstance: {fileID: 2077410594473319012}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7893188649637407265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
---- !u!1 &7893188649637407265 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8169051076234801221, guid: 089279a5a4447b84ea7d0891ef0f3209, type: 3}
-  m_PrefabInstance: {fileID: 2077410594473319012}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4229120518205293124
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7104464789819278032}
+    m_TransformParent: {fileID: 1435221169113866524}
     m_Modifications:
     - target: {fileID: 1475084230421649220, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_SizeDelta.x
@@ -376,15 +513,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2450751905349067523, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2450751905349067523, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2450751905349067523, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2450751905349067523, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -450,34 +587,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_Target
-      value: 
-      objectReference: {fileID: 7994506702250058539}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_TargetAssemblyTypeName
-      value: SFXEmitter, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      propertyPath: sequences.Array.data[0].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[10].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 7271809236675250850, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -494,84 +603,13 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 125167789666777204, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5196656893147596596, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7994506702250058539}
-    - targetCorrespondingSourceObject: {fileID: 5196656893147596596, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3239200210608785801}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
 --- !u!224 &1779497360594837831 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2450751905349067523, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
   m_PrefabInstance: {fileID: 4229120518205293124}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8064390633880692537 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6150406609534412157, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-  m_PrefabInstance: {fileID: 4229120518205293124}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8263790156093621616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
---- !u!1 &8263790156093621616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5196656893147596596, guid: e4cd5c6209a40454282858eddcb72a56, type: 3}
-  m_PrefabInstance: {fileID: 4229120518205293124}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7994506702250058539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8263790156093621616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
-  eventRef:
-    Guid:
-      Data1: -45405139
-      Data2: 1289429912
-      Data3: 516053146
-      Data4: 1957313155
-    Path: event:/SFX/Dance_System/Dance_Hits/Global/StreakStart
-  activeParam:
-    Name: 
-    Value: 0
-  playOnStart: 0
-  volume: 1
---- !u!114 &3239200210608785801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8263790156093621616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
-  eventRef:
-    Guid:
-      Data1: 1390580609
-      Data2: 1153590237
-      Data3: -760304512
-      Data4: -509080875
-    Path: event:/SFX/Dance_System/Dance_Hits/Global/StreakEnd
-  activeParam:
-    Name: 
-    Value: 0
-  playOnStart: 0
-  volume: 1

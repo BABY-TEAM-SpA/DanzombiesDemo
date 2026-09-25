@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7354744909755823254}
   - component: {fileID: 6537990066707893500}
   - component: {fileID: 6150406609534412157}
-  - component: {fileID: 125167789666777204}
+  - component: {fileID: 6071674498215141743}
+  - component: {fileID: 1604171906981055437}
   m_Layer: 5
   m_Name: InFlowFeedback
   m_TagString: Untagged
@@ -70,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1137255, g: 0.03529412, b: 0.19607845, a: 0.7490196}
+  m_Color: {r: 0.1137255, g: 0.03529412, b: 0.19607845, a: 0.6117647}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -101,303 +102,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
   playOnStart: 0
   animName: 
-  sequences:
-  - sequenceName: FadeIn
-    loop: 0
-    loopCount: 0
-    OnSequenceStart:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2833193826623215077}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7864200977049080177}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 715105958718043263}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 976332876838753320}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 79349372052266134}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6324087924393117699}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6539462451739176124}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6355559534426576699}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3239709572551728585}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7225519087359547513}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeIn
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnSequenceComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    animationChannels:
-    - revertOnComplete: 0
-      objectToAnimate: {fileID: 2450751905349067523}
-      timeMode: 0
-      animationSteps:
-      - stepType: 5
-        duration: 0.2
-        easing: 0
-        position: {x: 0, y: 0}
-        scale: {x: 0, y: 0, z: 0}
-        rotation: {x: 0, y: 0, z: 0}
-        alpha: 0.75
-        color: {r: 0, g: 0, b: 0, a: 0}
-  - sequenceName: FadeOut
-    loop: 0
-    loopCount: 0
-    OnSequenceStart:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2833193826623215077}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7864200977049080177}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 715105958718043263}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 976332876838753320}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 79349372052266134}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6324087924393117699}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6539462451739176124}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6355559534426576699}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3239709572551728585}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7225519087359547513}
-          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-          m_MethodName: PlaySequence
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: FadeOut
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnSequenceComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    animationChannels:
-    - revertOnComplete: 0
-      objectToAnimate: {fileID: 2450751905349067523}
-      timeMode: 0
-      animationSteps:
-      - stepType: 5
-        duration: 0.2
-        easing: 0
-        position: {x: 0, y: 0}
-        scale: {x: 0, y: 0, z: 0}
-        rotation: {x: 0, y: 0, z: 0}
-        alpha: 0
-        color: {r: 0, g: 0, b: 0, a: 0}
---- !u!225 &125167789666777204
-CanvasGroup:
+  sequences: []
+--- !u!114 &6071674498215141743
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5196656893147596596}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: -45405139
+      Data2: 1289429912
+      Data3: 516053146
+      Data4: 1957313155
+    Path: event:/SFX/Dance_System/Dance_Hits/Global/StreakStart
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
+--- !u!114 &1604171906981055437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5196656893147596596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 1390580609
+      Data2: 1153590237
+      Data3: -760304512
+      Data4: -509080875
+    Path: event:/SFX/Dance_System/Dance_Hits/Global/StreakEnd
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
 --- !u!1001 &243448534193784232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -728,17 +485,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b541ee1711898984eb867c2b86722798, type: 3}
---- !u!114 &715105958718043263 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-  m_PrefabInstance: {fileID: 504640268059862527}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!224 &5356943982724999992 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5573036923190873799, guid: b541ee1711898984eb867c2b86722798, type: 3}
@@ -881,17 +627,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b541ee1711898984eb867c2b86722798, type: 3}
---- !u!114 &79349372052266134 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-  m_PrefabInstance: {fileID: 1150002746123144470}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!224 &4801618863127610321 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5573036923190873799, guid: b541ee1711898984eb867c2b86722798, type: 3}
@@ -1098,30 +833,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2450751905349067523}
     m_Modifications:
-    - target: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].animationSteps.Array.data[0].scale.x
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].animationSteps.Array.data[0].scale.y
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].animationSteps.Array.data[0].scale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].animationSteps.Array.data[1].scale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].animationSteps.Array.data[1].scale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].animationSteps.Array.data[1].scale.z
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1113297847076775959, guid: b541ee1711898984eb867c2b86722798, type: 3}
       propertyPath: OnBeat.m_PersistentCalls.m_Calls.Array.size
       value: 0
@@ -1425,17 +1136,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5573036923190873799, guid: b541ee1711898984eb867c2b86722798, type: 3}
   m_PrefabInstance: {fileID: 6065381956812324156}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6539462451739176124 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-  m_PrefabInstance: {fileID: 6065381956812324156}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!1001 &6259789128370505403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1578,17 +1278,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5573036923190873799, guid: b541ee1711898984eb867c2b86722798, type: 3}
   m_PrefabInstance: {fileID: 6259789128370505403}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6355559534426576699 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-  m_PrefabInstance: {fileID: 6259789128370505403}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!1001 &6426613334757185923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1924,17 +1613,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5573036923190873799, guid: b541ee1711898984eb867c2b86722798, type: 3}
   m_PrefabInstance: {fileID: 7191975571767542001}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7864200977049080177 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-  m_PrefabInstance: {fileID: 7191975571767542001}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!1001 &7686085323774315001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2077,14 +1755,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5573036923190873799, guid: b541ee1711898984eb867c2b86722798, type: 3}
   m_PrefabInstance: {fileID: 7686085323774315001}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7225519087359547513 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1075312144762245504, guid: b541ee1711898984eb867c2b86722798, type: 3}
-  m_PrefabInstance: {fileID: 7686085323774315001}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator

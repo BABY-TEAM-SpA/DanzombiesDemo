@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -154,50 +154,6 @@ MonoBehaviour:
         easing: 0
         position: {x: 0, y: 0}
         scale: {x: 1, y: 1, z: 1}
-        rotation: {x: 0, y: 0, z: 0}
-        alpha: 0
-        color: {r: 0, g: 0, b: 0, a: 0}
-  - sequenceName: FadeIn
-    loop: 0
-    loopCount: 0
-    OnSequenceStart:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSequenceComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    animationChannels:
-    - revertOnComplete: 0
-      objectToAnimate: {fileID: 5573036923190873799}
-      timeMode: 0
-      animationSteps:
-      - stepType: 5
-        duration: 0.2
-        easing: 0
-        position: {x: 0, y: 0}
-        scale: {x: 0.8, y: 1.2, z: 1}
-        rotation: {x: 0, y: 0, z: 0}
-        alpha: 1
-        color: {r: 0, g: 0, b: 0, a: 0}
-  - sequenceName: FadeOut
-    loop: 0
-    loopCount: 0
-    OnSequenceStart:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSequenceComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    animationChannels:
-    - revertOnComplete: 0
-      objectToAnimate: {fileID: 5573036923190873799}
-      timeMode: 0
-      animationSteps:
-      - stepType: 5
-        duration: 0.2
-        easing: 0
-        position: {x: 0, y: 0}
-        scale: {x: 0.8, y: 1.2, z: 1}
         rotation: {x: 0, y: 0, z: 0}
         alpha: 0
         color: {r: 0, g: 0, b: 0, a: 0}
