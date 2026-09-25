@@ -82,8 +82,8 @@ public class PlayerManager : DanceBrain
 
     public void ActivateDanceHUD(bool activate)
     {
-        DanceBarController.DanceBar?.UpdateFlowBars(FlowValue);
-        DanceBarController.DanceBar?.Activate(activate);
+        DanceBarController.Instance?.UpdateFlowBars(FlowValue);
+        DanceBarController.Instance?.Activate(activate);
     }
 
     public void RemoveTargetPuzzle(DanceZone target)

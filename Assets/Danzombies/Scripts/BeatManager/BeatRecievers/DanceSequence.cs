@@ -85,7 +85,7 @@ public class DanceSequence : MonoBehaviour
                 return isSameCombo;
 
             case SeqStopMode.StopOnFullFlow:
-                bool isBarFilled = DanceBarController.DanceBar.isBarFilled;
+                bool isBarFilled = DanceBarController.Instance.isBarFilled;
                 if (isBarFilled)
                     OnDanceSequenceFinished?.Invoke();
                 return isBarFilled;

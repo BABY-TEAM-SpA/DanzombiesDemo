@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class DanceBarController : MonoBehaviour
+public class DanceBarController : Service<DanceBarController>
 {
     #region [VARIABLES]
     public bool isActive;
@@ -27,18 +27,9 @@ public class DanceBarController : MonoBehaviour
     [SerializeField] private List<Image> beatBars = new List<Image>();
     [SerializeField] private Material beatBarMaterial;
     [SerializeField] private UiAnimator uiAnimator;
-
-    public static DanceBarController DanceBar;
     #endregion
 
     #region [UNITY]
-    private void Awake()
-    {
-        if (DanceBar == null)
-            DanceBar = this;
-        else Destroy(gameObject);
-    }
-
     public void Start()
     {
         Material newMat = new Material(beatBarMaterial);
@@ -46,8 +37,8 @@ public class DanceBarController : MonoBehaviour
         foreach (Image bar in beatBars)
             bar.material = newMat;
 
-        //PlayerManager.Player.danceBar = this; // [Frco] Lo cambié para que sea el propio PlayerManager quien busca y asigna la DanceBar
-        //UpdateFlowBars(PlayerManager.Player.FlowValue);
+        if (PlayerManager.Player != null)
+            UpdateFlowBars(PlayerManager.Player.FlowValue);
     }
     #endregion
 
@@ -55,10 +46,9 @@ public class DanceBarController : MonoBehaviour
     public void Activate(bool activation)
     {
         isActive = activation;
-
         UpdateFlowBars(PlayerManager.Player.FlowValue);
         uiAnimator?.PlaySequence(activation ? "Open" : "Close");
-        if (!activation) FlowFeedbackController.FlowFeedback?.Hide(); // [Frco] Me molesta tener que hacerlo así, pero es más rápido supongo...
+        if (!activation) FlowFeedbackController.Instance?.Hide(); // [Frco] Me molesta tener que hacerlo así, pero es más rápido supongo...
     }
 
     #region Updates

@@ -58,7 +58,7 @@ public class PlayerFlowController : MonoBehaviour
         GetFlowState(State)?.OnStateEntered?.Invoke();
     }
 
-    private void Start() => FlowFeedbackController.FlowFeedback?.Show(State);
+    private void Start() => FlowFeedbackController.Instance?.Show(State);
     #endregion
 
     #region [METHODS]
@@ -74,7 +74,7 @@ public class PlayerFlowController : MonoBehaviour
         {
             GetFlowState(prevState)?.OnStateExited?.Invoke();
             GetFlowState(State)?.OnStateEntered?.Invoke();
-            FlowFeedbackController.FlowFeedback?.Show(State);
+            FlowFeedbackController.Instance?.Show(State);
         }
 
         if (prevFlow != Flow)
@@ -97,7 +97,7 @@ public class PlayerFlowController : MonoBehaviour
             if (Flow == MaxFlow) OnFlowFilled?.Invoke();
         }
 
-        DanceBarController.DanceBar?.UpdateFlowBars(Flow);
+        DanceBarController.Instance?.UpdateFlowBars(Flow);
     }
 
     public void Increase(int value)

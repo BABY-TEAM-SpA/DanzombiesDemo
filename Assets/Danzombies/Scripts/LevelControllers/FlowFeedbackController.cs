@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FlowFeedbackController : MonoBehaviour
+public class FlowFeedbackController : Service<FlowFeedbackController>
 {
     #region [VARIABLES]
     [SerializeField] private FlowFeedbackState[] states;
@@ -12,17 +12,6 @@ public class FlowFeedbackController : MonoBehaviour
     {
         public FlowState state;
         public UnityEvent OnEntered;
-    }
-
-    public static FlowFeedbackController FlowFeedback {  get; private set; }
-    #endregion
-
-    #region [UNITY]
-    private void Awake()
-    {
-        if (FlowFeedback == null)
-            FlowFeedback = this;
-        else Destroy(gameObject);
     }
     #endregion
 
