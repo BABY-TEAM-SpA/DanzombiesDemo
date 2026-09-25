@@ -4914,7 +4914,6 @@ GameObject:
   - component: {fileID: 5825363922643408486}
   - component: {fileID: 9216565697310443677}
   - component: {fileID: 7818074730624892040}
-  - component: {fileID: 3076609317365224843}
   m_Layer: 0
   m_Name: DevPlayable
   m_TagString: Player
@@ -5044,7 +5043,19 @@ MonoBehaviour:
       m_Calls: []
   onDance:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPostDance:
     m_PersistentCalls:
       m_Calls: []
@@ -5089,6 +5100,18 @@ MonoBehaviour:
       - m_Target: {fileID: 6413670990328517254}
         m_TargetAssemblyTypeName: PlayerCanvas, Assembly-CSharp
         m_MethodName: UpdateHP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9027300983553735812}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5325,12 +5348,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   danceBrain: {fileID: 6530795612346585224}
   isMovementEnabled: 1
   moveDirection: {x: 0, y: 0}
   walkingSpeed: 5
   sprintFactor: 1.6
+  useScriptedDuration: 0
+  scriptLookingEnding: 0
   scriptedDuration: 0
+  baseSpeed: 0
 --- !u!114 &3465130852895728156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5501,25 +5528,61 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  EarlyLateDanceEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3076609317365224843}
-        m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: UpdateParameterValue
+        m_Mode: 4
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 130a177e727814a2ea78a886ab72213d, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  EarlyLateDanceEvent:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 921757024314620813}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Emit
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: UpdateParameterValue
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5543,13 +5606,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3076609317365224843}
-        m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: UpdateParameterValue
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5558,18 +5633,6 @@ MonoBehaviour:
   PerfectDanceEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3076609317365224843}
-        m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 5f001211314019b4ab55b524be87c2d6, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3540543881455846685}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Emit
@@ -5594,10 +5657,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MaterialSwapper, Assembly-CSharp
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: UpdateParameterValue
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 3
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7249430405717837643}
+        m_TargetAssemblyTypeName: SFXEmitter, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5606,30 +5681,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
---- !u!114 &3076609317365224843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542709926716473569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SFXEmiter
-  eventRef:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  activeParam:
-    Name: 
-    Value: 0
-  playOnStart: 0
-  volume: 1
 --- !u!1 &913939590769128044
 GameObject:
   m_ObjectHideFlags: 0
@@ -10856,6 +10907,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 9079702141019764614}
   - {fileID: 1920525698211690986}
   m_Father: {fileID: 8897676056707518989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15918,7 +15970,7 @@ MonoBehaviour:
     feedbackEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3076609317365224843}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
           m_MethodName: PlaySFX
           m_Mode: 2
@@ -15930,7 +15982,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 3076609317365224843}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
           m_MethodName: PlaySFX
           m_Mode: 2
@@ -15946,7 +15998,7 @@ MonoBehaviour:
     feedbackEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3076609317365224843}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: SFXEmiter, Assembly-CSharp
           m_MethodName: PlaySFX
           m_Mode: 2
@@ -16130,7 +16182,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 16
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
@@ -16142,6 +16194,64 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &3958071440742152225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9079702141019764614}
+  - component: {fileID: 7249430405717837643}
+  m_Layer: 0
+  m_Name: Damage_SFXEmitter_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9079702141019764614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958071440742152225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3793628205601520390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7249430405717837643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958071440742152225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0034dc1cdf8394ea04d972e3a5d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
+  eventRef:
+    Guid:
+      Data1: 1373406862
+      Data2: 1165891293
+      Data3: -32919660
+      Data4: 1632035451
+    Path: event:/Metro/GregDamage
+  activeParam:
+    Name: 
+    Value: 0
+  playOnStart: 0
+  volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
 --- !u!1 &4269707511934747889
 GameObject:
   m_ObjectHideFlags: 0
@@ -35941,7 +36051,7 @@ GameObject:
   - component: {fileID: 1920525698211690986}
   - component: {fileID: 9027300983553735812}
   m_Layer: 0
-  m_Name: SFXEmitter
+  m_Name: Damage_SFXEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35976,16 +36086,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SFXEmitter
   eventRef:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1373406862
+      Data2: 1165891293
+      Data3: -32919660
+      Data4: 1632035451
+    Path: event:/Metro/GregDamage
   activeParam:
     Name: 
     Value: 0
   playOnStart: 0
   volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
 --- !u!1 &9055037549122763869
 GameObject:
   m_ObjectHideFlags: 0

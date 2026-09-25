@@ -50,12 +50,14 @@ MonoBehaviour:
       Data2: 1265254416
       Data3: 817359276
       Data4: 674214952
-    Path: event:/SFX/Dance_System/Dance_Patterns/Steph/StephEast 2
+    Path: event:/SFX/Dance_System/Dance_Hits/Actors/Steph/StephEast 2
   activeParam:
     Name: 
     Value: 0
   playOnStart: 0
   volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
 --- !u!1 &6748019445471104016
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +114,8 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
 --- !u!1 &7472942076168638150
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,11 +286,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   danceBrain: {fileID: 2536597401598945149}
   isMovementEnabled: 1
   moveDirection: {x: 0, y: 0}
   walkingSpeed: 4
   sprintFactor: 1.5
+  useScriptedDuration: 0
+  scriptLookingEnding: 0
+  scriptedDuration: 0
+  baseSpeed: 0
 --- !u!114 &3651001649101913600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +424,8 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
 --- !u!1 &8426862267633352703
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,3 +735,5 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
+  target: {fileID: 0}
+  limiter: {fileID: 0}
