@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -16,8 +15,9 @@ public class DialogSequence
     public UnityEvent OnDialogEndEvent;
 }
 
-public class DialogController : MonoBehaviour, ISubmitHandler, IPointerClickHandler
+public class DialogController : UIUserEvent
 {
+    private bool isWriting = false;
     public bool animateWriting = false;
     [SerializeField] private float timePerLetter = 0.03f;
 
@@ -32,10 +32,7 @@ public class DialogController : MonoBehaviour, ISubmitHandler, IPointerClickHand
     private string fullTextTarget = "";
     private int currentCharacterCount = 0;
     private float letterTimer = 0f;
-    private bool isWriting = false;
-
-    private bool pendingFocus = false;
-
+    
     public static DialogController Instance { get; private set; }
 
     void Awake()
@@ -46,12 +43,7 @@ public class DialogController : MonoBehaviour, ISubmitHandler, IPointerClickHand
 
     private void Update()
     {
-        if (pendingFocus)
-        {
-            if (EventSystem.current != null && dialogRender != null) EventSystem.current.SetSelectedGameObject(dialogRender.gameObject);
-            pendingFocus = false;
-        }
-
+        if(!isActive) return;
         if (isWriting)
         {
             letterTimer += Time.deltaTime;
@@ -65,53 +57,42 @@ public class DialogController : MonoBehaviour, ISubmitHandler, IPointerClickHand
                 if (currentCharacterCount >= fullTextTarget.Length) OnWrittingComplete();
             }
         }
-
-        if (!isWriting && currentTimer > 0 && currentDialogSequence.timeToAutoContinue > 0)
+        else
         {
-            currentTimer -= Time.deltaTime;
-            if (currentTimer <= 0) ContinueWritting();
+            if (currentTimer > 0 && currentDialogSequence.timeToAutoContinue > 0)
+            {
+                currentTimer -= Time.deltaTime;
+                if (currentTimer <= 0) ContinueWritting();
+            }
         }
     }
     
-    public void OnSubmit(BaseEventData eventData)
-    {
-        HandleInputTrigger();
-    }
-    
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        HandleInputTrigger();
-    }
-
-    private void HandleInputTrigger()
+    protected override void HandleInputTrigger()
     {
         if (isWriting) OnWrittingComplete();
-        else 
-        {
-            if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
-            ContinueWritting();
-        }
+        else ContinueWritting();
     }
 
     public void PlayDialog(DialogSequence dialog)
     {
         currentDialogSequence = dialog;
         currentDialogSequence.currentDialogText = 0;
-        ActivateDialogScript();
+        ActivateEvent();
     }
 
-    public void ActivateDialogScript()
+    public override void ActivateEvent()
     {
+        base.ActivateEvent();
+        dialogRender.gameObject.SetActive(true);
         pin.gameObject.SetActive(false);
         currentTimer = 0f; 
-
         int currentDialog = currentDialogSequence.currentDialogText;
         profileImage.sprite = currentDialogSequence.dialogData.dialogs[currentDialog].profile;
-        dialogRender.gameObject.SetActive(true);
-        pendingFocus = true;
+        
 
         DialogText dialogText = currentDialogSequence.dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
         fullTextTarget = (dialogText != null) ? dialogText.text : "";
+        
 
         if (animateWriting && !string.IsNullOrEmpty(fullTextTarget))
         {
@@ -138,15 +119,18 @@ public class DialogController : MonoBehaviour, ISubmitHandler, IPointerClickHand
     public void ContinueWritting()
     {
         int value = currentDialogSequence.currentDialogText + 1;
-        if (value >= currentDialogSequence.dialogData.dialogs.Count)
-        {
-            dialogRender.gameObject.SetActive(false);
-            currentDialogSequence.OnDialogEndEvent?.Invoke();
-        }
-        else
+        if (value < currentDialogSequence.dialogData.dialogs.Count)
         {
             currentDialogSequence.currentDialogText = value;
-            ActivateDialogScript();
+            ActivateEvent();
         }
+        else EndEvent();
+    }
+
+    protected override void EndEvent()
+    {
+        dialogRender.gameObject.SetActive(false);
+        currentDialogSequence.OnDialogEndEvent?.Invoke();
+        base.EndEvent();
     }
 }
