@@ -105,7 +105,7 @@ public class PlayerFlowController : MonoBehaviour
         if (PlayerManager.Player.IsSafe && value < 0)
             value = 0;
 
-        int result = Flow + (GameManager.Alza * value);
+        int result = Flow + (GameManager.Instance.Alza * value);
         SetFlow(result);
     }
     #endregion

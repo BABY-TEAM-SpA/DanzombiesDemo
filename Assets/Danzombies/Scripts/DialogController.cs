@@ -90,7 +90,7 @@ public class DialogController : UIUserEvent
         profileImage.sprite = currentDialogSequence.dialogData.dialogs[currentDialog].profile;
         
 
-        DialogText dialogText = currentDialogSequence.dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.language);
+        DialogText dialogText = currentDialogSequence.dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.Instance.Language);
         fullTextTarget = (dialogText != null) ? dialogText.text : "";
         
 

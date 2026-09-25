@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 2155781761257636466}
   - component: {fileID: 7857111049130670862}
   - component: {fileID: 2169138281126287077}
+  - component: {fileID: 5392351151660906113}
   m_Layer: 5
   m_Name: TransitionFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2155781761257636466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -75,6 +76,65 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5392351151660906113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666031086463983390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: FadeIn
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 2155781761257636466}
+      timeMode: 1
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: FadeOut
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 2155781761257636466}
+      timeMode: 1
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &6243091949480155212
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7572293404553721574
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101,7 +161,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6243091949480155212}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -111,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 142.04094, y: 5.03116}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &1785479679609186531
@@ -132,6 +192,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

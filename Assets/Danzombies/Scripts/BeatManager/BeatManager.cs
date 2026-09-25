@@ -4,7 +4,7 @@ using FMOD.Studio;
 using UnityEngine;
 
 
-public class BeatManager : MonoBehaviour
+public class BeatManager : Service<BeatManager>
 {
     public bool useDebug = false;
 
@@ -66,17 +66,8 @@ public class BeatManager : MonoBehaviour
     public static event OnBeatEvent OnSecondThirdBeat;
     public static event OnBeatEvent OnSecondThirdPostBeat;
 
-    public static BeatManager Instance { get; private set; }
-
     EventInstance trackedMusic;
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-            return;
-        Instance = this;
-    }
-    
     void OnPlayEvent(float tempo)
     {
         BeatTimeSec = 60d / tempo;

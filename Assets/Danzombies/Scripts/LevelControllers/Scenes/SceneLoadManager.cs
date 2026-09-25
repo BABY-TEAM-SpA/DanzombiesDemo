@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChangeController : MonoBehaviour
+public class SceneChangeController : Service<SceneChangeController>
 {
     #region [VARIABLES]
     [SerializeField] Canvas loadingCanvas;
-
-    public static SceneChangeController Instance { get; private set; }
 
     private LoadScenePack scenesPack;
     private Coroutine loadingCoroutine;
@@ -37,16 +35,6 @@ public class SceneChangeController : MonoBehaviour
         public List<string> scenes = new List<string>();
     }
     #endregion
-    #endregion
-
-    #region [UNITY]
-    private void Awake() 
-    { 
-        if (Instance != null && Instance != this) 
-            Destroy(gameObject);
-        else Instance = this;
-        //DontDestroyOnLoad(this.gameObject);
-    }
     #endregion
 
     #region [METHODS]

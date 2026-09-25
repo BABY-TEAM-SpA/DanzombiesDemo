@@ -1,15 +1,13 @@
 using System;
 using System.Runtime.InteropServices;
-using FMOD;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Service<AudioManager>
 {
-    public static AudioManager Instance { get; private set; }
-
+    #region [VARIABLES]
     private EventInstance currentRhythmTrack;
 
     public delegate void OnMusicEvent(bool reset);
@@ -18,18 +16,23 @@ public class AudioManager : MonoBehaviour
     public static event OnMusicEvent OnStop;
 
     bool isPaused;
+    #endregion
 
-    void Awake()
+    #region [UNITY]
+    protected override void OnDestroy()
     {
-        if (Instance != null && Instance != this)
+        if (currentRhythmTrack.isValid())
         {
-            Destroy(gameObject);
-            return;
+            currentRhythmTrack.stop(STOP_MODE.IMMEDIATE);
+            currentRhythmTrack.release();
         }
 
-        Instance = this;
+        base.OnDestroy();
     }
+    #endregion
 
+    #region [METHODS]
+    #region API - Music Player Handling
     public void PlayRhythmSong(EventReference eventRef, bool interrupt = true)
     {
         if (interrupt)
@@ -42,11 +45,6 @@ public class AudioManager : MonoBehaviour
         );
 
         currentRhythmTrack.start();
-    }
-
-    public void PlaySfx(EventReference eventRef)
-    {
-        RuntimeManager.PlayOneShot(eventRef);
     }
 
     public void PauseSong()
@@ -76,11 +74,28 @@ public class AudioManager : MonoBehaviour
         currentRhythmTrack.release();
         OnStop?.Invoke(true);
     }
+    #endregion
 
+    #region API - Music Player Info
     public bool TryGetCurrentRhythmTrack(out EventInstance track)
     {
         track = currentRhythmTrack;
         return currentRhythmTrack.isValid();
+    }
+
+    public bool IsPlaying()
+    {
+        if (!currentRhythmTrack.isValid())
+            return false;
+
+        currentRhythmTrack.getPlaybackState(out PLAYBACK_STATE state);
+
+        return state == PLAYBACK_STATE.PLAYING;
+    }
+
+    public bool IsPaused()
+    {
+        return isPaused;
     }
 
     public float SongPositionSeconds()
@@ -100,6 +115,9 @@ public class AudioManager : MonoBehaviour
         currentRhythmTrack.getTimelinePosition(out int ms);
         return Mathf.RoundToInt(ms / 1000f);
     }
+    #endregion
+
+    #region Helpers
     [AOT.MonoPInvokeCallback(typeof(EVENT_CALLBACK))]
     private static FMOD.RESULT TimelineCallback(EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)
     {
@@ -109,28 +127,6 @@ public class AudioManager : MonoBehaviour
         BeatManager.Instance?.HandleBeat(beat.bar, beat.beat, beat.tempo, beat.timesignatureupper, beat.timesignaturelower, beat.position);
         return FMOD.RESULT.OK;
     }
-
-    public bool IsPlaying()
-    {
-        if (!currentRhythmTrack.isValid())
-            return false;
-
-        currentRhythmTrack.getPlaybackState(out PLAYBACK_STATE state);
-
-        return state == PLAYBACK_STATE.PLAYING;
-    }
-
-    public bool IsPaused()
-    {
-        return isPaused;
-    }
-
-    void OnDestroy()
-    {
-        if (currentRhythmTrack.isValid())
-        {
-            currentRhythmTrack.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            currentRhythmTrack.release();
-        }
-    }
+    #endregion
+    #endregion
 }
