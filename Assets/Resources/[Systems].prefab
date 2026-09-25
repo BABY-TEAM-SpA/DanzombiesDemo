@@ -326,7 +326,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26a73959ab0f9348bdc8fb8ae04dcc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneChangeController
-  loadingCanvas: {fileID: 693379382296731177}
+  OnLoadStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6597023989187625035}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: FadeIn
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLoadCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6597023989187625035}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: FadeOut
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5262211101412595873
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +432,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1479894885527079101}
     m_Modifications:
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].animationChannels.Array.data[0].timeMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[1].animationChannels.Array.data[0].timeMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[1].OnSequenceStart.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[1].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[1].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 452263092237724116}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3902250549313534426}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[1].OnSequenceStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadInterScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneChangeController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+      propertyPath: sequences.Array.data[0].OnSequenceComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6243091949480155212, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
       propertyPath: m_Name
       value: TransitionsCanvas
@@ -492,11 +573,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
---- !u!223 &693379382296731177 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 1785479679609186531, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+--- !u!1 &452263092237724116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1666031086463983390, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
   m_PrefabInstance: {fileID: 1249797897485612746}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6597023989187625035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5392351151660906113, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
+  m_PrefabInstance: {fileID: 1249797897485612746}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452263092237724116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
 --- !u!224 &8668897306862272556 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7572293404553721574, guid: f00d7cc37c3a0c94baf56a5953534a19, type: 3}
@@ -512,15 +604,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.870003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.750005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1726411477635419054, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -568,7 +660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8491078318934677944, guid: d16851ae3ac872d4cbb92b4862dd56b8, type: 3}
       propertyPath: orthographic size
-      value: 8
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

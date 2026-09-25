@@ -2,16 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SceneChangeController : Service<SceneChangeController>
 {
     #region [VARIABLES]
-    [SerializeField] Canvas loadingCanvas;
-
     private LoadScenePack scenesPack;
     private Coroutine loadingCoroutine;
     private Coroutine unloadingCoroutine;
+
+    public UnityEvent OnLoadStarted;
+    public UnityEvent OnLoadCompleted;
 
     #region Structures
     public enum ChargeSceneMode
@@ -41,10 +43,11 @@ public class SceneChangeController : Service<SceneChangeController>
     #region API
     public void LoadScenes(LoadScenePack scenesPack)
     {
+        OnLoadStarted?.Invoke();
+
         this.scenesPack = scenesPack;
         if (scenesPack.shouldStopMusic)
-            AudioManager.Instance.StopSong(); // <- [Frco] FMOD Update
-        LoadInterScene();
+            AudioManager.Instance.StopSong();
     }
 
     public void UnloadScenes(UnloadScenePack scenesPack)
@@ -59,7 +62,7 @@ public class SceneChangeController : Service<SceneChangeController>
     #endregion
 
     #region Helpers
-    private void LoadInterScene()
+    public void LoadInterScene()
     {
         switch (scenesPack.chargeMode)
         {
@@ -83,8 +86,9 @@ public class SceneChangeController : Service<SceneChangeController>
 
     private void ForceLoadScene(string sceneName)
     {
-        AudioManager.Instance.StopSong(); // <- [Frco] FMOD Update
+        AudioManager.Instance.StopSong();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        OnLoadCompleted?.Invoke();
     }
     #endregion
     #endregion
@@ -93,14 +97,12 @@ public class SceneChangeController : Service<SceneChangeController>
     #region Load
     private IEnumerator LoadAsyncRoutine(LoadScenePack scenesPack)
     {
-        loadingCanvas.gameObject.SetActive(scenesPack.loadMode != LoadSceneMode.Additive);
-
         foreach (string sceneName in scenesPack.scenes)
             yield return LoadAsyncRoutine(sceneName, scenesPack.loadMode);
 
         this.scenesPack = null;
         loadingCoroutine = null;
-        loadingCanvas.gameObject.SetActive(false);
+        OnLoadCompleted?.Invoke();
     }
 
     private IEnumerator LoadAsyncRoutine(string sceneName, LoadSceneMode mode)
