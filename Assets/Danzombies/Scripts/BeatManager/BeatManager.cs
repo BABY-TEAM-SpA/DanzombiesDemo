@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class BeatManager : Service<BeatManager>
 {
+    #region [VARIABLES]
     public bool useDebug = false;
 
     public enum BeatType
@@ -67,6 +68,22 @@ public class BeatManager : Service<BeatManager>
     public static event OnBeatEvent OnSecondThirdPostBeat;
 
     EventInstance trackedMusic;
+    #endregion
+
+    #region [UNITY]
+    private void OnEnable() => AudioManager.OnStop += HandleSongStopped;
+    private void OnDisable() => AudioManager.OnStop -= HandleSongStopped;
+
+    void Update()
+    {
+        if (!AudioManager.Instance.IsPlaying()) return;
+        songTime = AudioManager.Instance.SongPositionSeconds();
+        HandlePrePostBeat();
+    }
+    #endregion
+
+    #region [METHODS]
+    private void HandleSongStopped(bool reset) => isBeating = false;
 
     void OnPlayEvent(float tempo)
     {
@@ -93,12 +110,6 @@ public class BeatManager : Service<BeatManager>
         lastBeatTime = AudioManager.Instance.SongPositionSeconds();
         nextBeatTime = lastBeatTime+BeatTimeSec;
         OnBeat?.Invoke(globalBeatCount, BeatType.FullBeat); ///1, 2 ,3, 4, 1, 2, 3, 4 (segun el Upper)
-    }
-    void Update()
-    {
-        if (!AudioManager.Instance.IsPlaying()) return;
-        songTime = AudioManager.Instance.SongPositionSeconds();
-        HandlePrePostBeat();
     }
 
     void HandlePrePostBeat()
@@ -127,7 +138,6 @@ public class BeatManager : Service<BeatManager>
         }
     }
     
-
     public BeatReciever.BeatFeedback EvaluateInput(int inputBeat, BeatType inputBeatType)
     {
         //Debug.Log(inputBeat);
@@ -147,4 +157,5 @@ public class BeatManager : Service<BeatManager>
         if (absDelta <= maxWindow) return delta < 0? BeatReciever.BeatFeedback.Early : BeatReciever.BeatFeedback.Late;
         return BeatReciever.BeatFeedback.Bad;
     }
+    #endregion
 }
