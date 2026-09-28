@@ -35,14 +35,13 @@ public class Position3D : MonoBehaviour
     #region [METHODS]
     public void RefreshRenderers()
     {
+        SpriteRenderer self = GetComponent<SpriteRenderer>();
+
         SpriteRenderer[] current = GetComponentsInChildren<SpriteRenderer>(true);
-        List<SpriteRenderer> list = spriteRenderers
-            .Where(r => r != null && current.Contains(r)).Distinct().ToList();
-
-        foreach (SpriteRenderer renderer in current)
-            if (!list.Contains(renderer))
-                list.Add(renderer);
-
+        List<SpriteRenderer> list = new List<SpriteRenderer>();
+        list= spriteRenderers.Where(r => r != null && current.Contains(r)).Distinct().ToList();
+        if(self) if(!list.Contains(self)) list.Add(self);
+        foreach (SpriteRenderer renderer in current) if (!list.Contains(renderer)) list.Add(renderer);
         spriteRenderers = list.ToArray();
     }
 

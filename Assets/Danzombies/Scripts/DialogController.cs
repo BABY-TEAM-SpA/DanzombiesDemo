@@ -129,8 +129,10 @@ public class DialogController : UIUserEvent
 
     protected override void EndEvent()
     {
+        
         dialogRender.gameObject.SetActive(false);
-        currentDialogSequence.OnDialogEndEvent?.Invoke();
         base.EndEvent();
+        currentDialogSequence.OnDialogEndEvent?.Invoke();
+        
     }
 }
