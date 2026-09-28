@@ -69,8 +69,7 @@ public class DanceSequence : MonoBehaviour
         switch (sequenceStopMode)
         {
             case SeqStopMode.OneShot:
-                if (beat != coreography.StepInBar.Count)
-                    return false;
+                if (beat != coreography.StepInBar.Count) return false;
                 OnDanceSequenceFinished?.Invoke();
                 return true;
 
@@ -78,14 +77,14 @@ public class DanceSequence : MonoBehaviour
             case SeqStopMode.StopOnComboB:
             case SeqStopMode.StopOnComboA:
             case SeqStopMode.StopOnComboS:
-                bool isSameCombo = PlayerManager.Player.ComboState.ToString() == sequenceStopMode
-                    .ToString().Substring(sequenceStopMode.ToString().Length - 1);
-                if (isSameCombo)
-                    OnDanceSequenceFinished?.Invoke();
+                bool isSameCombo = false;
+                if(PlayerManager.Player) isSameCombo = PlayerManager.Player.ComboState.ToString() == sequenceStopMode.ToString().Substring(sequenceStopMode.ToString().Length - 1);
+                if (isSameCombo) OnDanceSequenceFinished?.Invoke();
                 return isSameCombo;
 
             case SeqStopMode.StopOnFullFlow:
-                bool isBarFilled = DanceBarController.Instance.isBarFilled;
+                bool isBarFilled = false;
+                if(DanceBarController.Instance) isBarFilled= DanceBarController.Instance.isBarFilled;
                 if (isBarFilled)
                     OnDanceSequenceFinished?.Invoke();
                 return isBarFilled;
