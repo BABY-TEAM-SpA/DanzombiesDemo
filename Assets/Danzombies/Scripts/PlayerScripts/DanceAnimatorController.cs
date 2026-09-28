@@ -10,6 +10,7 @@ public enum DanceLean
     R,
 }
 
+[Serializable]
 public enum DanceDirection{
     None,
     North,
@@ -35,6 +36,7 @@ public class DanceAnimatorController : MonoBehaviour
     private DanceDirection isDancePulsed;
 
     public List<AnimationFeedback> playerFeedbackEvents = new List<AnimationFeedback>();
+    private bool isWalking;
     
     private void Start()
     {
@@ -43,9 +45,9 @@ public class DanceAnimatorController : MonoBehaviour
     
     public void AnimateOnMoving(Vector3 velocity)
     {
-        bool moving = velocity != Vector3.zero;
+        isWalking = velocity != Vector3.zero;
         animator?.SetBool("LeftLooking", _danceBrain.isLeftLooking);
-        animator?.SetBool("Walking", moving);
+        animator?.SetBool("Walking", isWalking);
         animator?.SetFloat("WalkingSpeed", velocity.magnitude);
     }
     
@@ -54,6 +56,12 @@ public class DanceAnimatorController : MonoBehaviour
         if (step == DanceStep.None) return; 
         _danceBrain?.EnableMovement(false);
         animator.Play(step.ToString(), 0,0f);
+    }
+
+    public void OnDanceBegin(DanceStep step, BeatManager.BeatType beatType)
+    {
+        if (step == DanceStep.None && beatType == BeatManager.BeatType.FullBeat && !isWalking) animator.Play("None" );
+        else OnDanceBegin(step);
     }
 
     public void OnStandAction()

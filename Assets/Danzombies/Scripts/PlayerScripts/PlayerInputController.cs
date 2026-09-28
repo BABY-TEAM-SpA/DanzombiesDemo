@@ -58,13 +58,24 @@ public class PlayerInputController : MonoBehaviour
 
     #region [DANCE]
     public bool allowDanceInput;
+    public bool northDanceInput;
+    public bool southDanceInput;
+    public bool eastDanceInput;
+    public bool westDanceInput;
     [SerializeField, Range(0.5f, 1f)] private float margin = 0.5f;
     private DanceLean inputDanceLean;
     private DanceDirection inputDanceDirection;
 
     #region API
+
     public void EnableDanceInput() => allowDanceInput = true;
     public void DisableDanceInput() => allowDanceInput = false;
+    
+    public void EnableDisableDanceNorth() => northDanceInput = !northDanceInput;
+    public void EnableDisableDanceSouth() => southDanceInput = !southDanceInput;
+    public void EnableDisableDanceEast() => eastDanceInput = !eastDanceInput;
+    public void EnableDisableDanceWest() => westDanceInput = !westDanceInput;
+    
     #endregion
 
     #region Input Events
@@ -76,11 +87,16 @@ public class PlayerInputController : MonoBehaviour
         if (context.performed)
         {
             Vector2 value = context.ReadValue<Vector2>();
-            if (value.x > margin) inputDanceDirection = DanceDirection.East;
-            else if (value.x < -margin) inputDanceDirection = DanceDirection.West;
-            else if (value.y > margin) inputDanceDirection = DanceDirection.North;
-            else if (value.y < -margin) inputDanceDirection = DanceDirection.South;
-            _playerManager.InputDance(inputDanceLean, inputDanceDirection);
+            DanceDirection input = DanceDirection.None;
+            if (value.x > margin && eastDanceInput) input = DanceDirection.East;
+            else if (value.x < -margin && westDanceInput) input = DanceDirection.West;
+            else if (value.y > margin && northDanceInput) input = DanceDirection.North;
+            else if (value.y < -margin && southDanceInput) input = DanceDirection.South;
+            if(input != DanceDirection.None && inputDanceDirection != input)
+            {
+                inputDanceDirection = input;
+                _playerManager.InputDance(inputDanceLean, inputDanceDirection);
+            }
         }
         if (context.canceled)
         {

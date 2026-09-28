@@ -115,8 +115,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  onDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onPostDance:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  onReaction:
+    m_PersistentCalls:
+      m_Calls: []
   debug: 0
-  ActivateOnStart: 0
+  ActivateOnStart: 1
   movCtrl: {fileID: 3630670231084340477}
   danceAnimCtrl: {fileID: 2836731157353523887}
   beatReciever: {fileID: 4146240392959961186}
@@ -125,6 +140,9 @@ MonoBehaviour:
   - expressionType: 0
     alpha: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
     beta: {fileID: 22100000, guid: e60eb955908d48b478e01eae09283aa1, type: 2}
+    OnReaction:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,10 +155,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   danceBrain: {fileID: 3279488030120961210}
+  isMovementEnabled: 1
+  moveDirection: {x: 0, y: 0}
   walkingSpeed: 10
-  acceleration: 0
   sprintFactor: 1.5
+  useScriptedDuration: 0
+  scriptLookingEnding: 0
+  scriptedDuration: 0
+  baseSpeed: 0
 --- !u!114 &4146240392959961186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +200,10 @@ MonoBehaviour:
   activeParam:
     Name: 
     Value: 0
+  playOnStart: 0
+  volume: 1
+  followPlayer: 0
+  limiter: {fileID: 0}
 --- !u!1 &4969418884321069956
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceAnimatorController
   _danceBrain: {fileID: 3279488030120961210}
-  allowInput: 0
   animator: {fileID: 6072593270596461221}
   playerFeedbackEvents: []
 --- !u!60 &2142067527970415792

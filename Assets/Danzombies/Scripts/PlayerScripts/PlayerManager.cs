@@ -72,7 +72,7 @@ public class PlayerManager : DanceBrain
 
         danceTarget = target;
         hasTargetZone = true;
-        ActivateDanceHUD(true);
+        UpdateDanceHUD();
     }
     public bool TryGetTargetPuzzle(out DanceZone target)
     {
@@ -80,20 +80,19 @@ public class PlayerManager : DanceBrain
         return hasTargetZone;
     }
 
-    public void ActivateDanceHUD(bool activate)
+    public void UpdateDanceHUD()
     {
         DanceBarController.Instance?.UpdateFlowBars(FlowValue);
-        DanceBarController.Instance?.Activate(activate);
+        DanceBarController.Instance?.Activate(danceTarget != null);
     }
 
     public void RemoveTargetPuzzle(DanceZone target)
     {
-        if (target == danceTarget)
-        {
-            danceTarget = null;
-            hasTargetZone = false;
-            ActivateDanceHUD(false);
-        }
+        if (target != danceTarget) return;
+        danceTarget = null;
+        hasTargetZone = false;
+        UpdateDanceHUD();
+        
     }
     #endregion
 

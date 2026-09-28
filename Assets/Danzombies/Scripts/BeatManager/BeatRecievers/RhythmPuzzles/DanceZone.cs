@@ -172,5 +172,8 @@ public class DanceZone : Dancer
         foreach (Transform child in transform)
             if (child.TryGetComponent<ZombieDanceBrain>(out ZombieDanceBrain zombie))
                 dancers.Add(zombie);
+        foreach (Dancer dancer in dancers) 
+            if(TryGetComponent<Position3D>(out Position3D pos)) 
+                pos.SetLayerOnSprites();;
     }
 }

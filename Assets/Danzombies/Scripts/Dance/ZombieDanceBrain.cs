@@ -23,7 +23,7 @@ public class ZombieDanceBrain : DanceBrain
     public override void OnDanceStepAction(int beat,BeatManager.BeatType beatType, DanceStep step)
     {
         onDance?.Invoke(step);
-        danceAnimCtrl?.OnDanceBegin(step);
+        danceAnimCtrl?.OnDanceBegin(step,beatType);
     }
     #endregion
 }

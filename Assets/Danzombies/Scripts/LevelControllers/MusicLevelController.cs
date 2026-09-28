@@ -5,8 +5,8 @@ using UnityEngine;
 
 public enum ActionToPlaySong
 {
-    Enqueue,
-    Interrupt
+    Interrupt,
+    Additive
 }
 
 [Serializable]
@@ -16,7 +16,7 @@ public class MusicToQueue
     public EventReference  eventPath;
 
     public ActionToPlaySong actionToPlay =
-        ActionToPlaySong.Enqueue;
+        ActionToPlaySong.Additive;
 }
 
 public class MusicLevelController : MonoBehaviour
