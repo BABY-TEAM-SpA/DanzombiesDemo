@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static SceneChangeController;
 
 public class SceneChangeController : Service<SceneChangeController>
 {
@@ -14,29 +15,6 @@ public class SceneChangeController : Service<SceneChangeController>
 
     public UnityEvent OnLoadStarted;
     public UnityEvent OnLoadCompleted;
-
-    #region Structures
-    public enum ChargeSceneMode
-    {
-        Sync,
-        Async
-    }
-
-    [Serializable]
-    public class LoadScenePack
-    {
-        public ChargeSceneMode chargeMode = ChargeSceneMode.Sync;
-        public LoadSceneMode loadMode;
-        public List<string> scenes = new List<string>();
-        public bool shouldStopMusic;
-    }
-
-    [Serializable]
-    public class UnloadScenePack
-    {
-        public List<string> scenes = new List<string>();
-    }
-    #endregion
     #endregion
 
     #region [METHODS]
@@ -66,12 +44,12 @@ public class SceneChangeController : Service<SceneChangeController>
     {
         switch (scenesPack.chargeMode)
         {
-            case ChargeSceneMode.Sync:
+            case LoadScenePack.ChargeSceneMode.Sync:
                 //ForceLoadScene(scenesPack.scenes[0]); <- [Frco] La transición de escenas queda más smooth si ocupamos la corrutina async
                 LoadAsync();
                 break;
 
-            case ChargeSceneMode.Async:
+            case LoadScenePack.ChargeSceneMode.Async:
                 LoadAsync();
                 break;
         } 
@@ -142,3 +120,45 @@ public class SceneChangeController : Service<SceneChangeController>
     #endregion
     #endregion
 }
+
+#region Scene Packs
+[Serializable]
+public class LoadScenePack
+{
+    #region [VARIABLES]
+    public ChargeSceneMode chargeMode = ChargeSceneMode.Sync;
+    public enum ChargeSceneMode
+    {
+        Sync,
+        Async
+    }
+    public LoadSceneMode loadMode;
+    public List<string> scenes = new List<string>();
+    public bool shouldStopMusic;
+    #endregion
+
+    #region [METHODS]
+    public LoadScenePack(string scene, bool shouldStopMusic, ChargeSceneMode chargeMode = ChargeSceneMode.Sync, LoadSceneMode loadMode = LoadSceneMode.Single)
+    {
+        this.chargeMode = chargeMode;
+        this.loadMode = loadMode;
+        this.scenes = new List<string> { scene };
+        this.shouldStopMusic = shouldStopMusic;
+    }
+
+    public LoadScenePack(List<string> scenes, bool shouldStopMusic, ChargeSceneMode chargeMode = ChargeSceneMode.Sync, LoadSceneMode loadMode = LoadSceneMode.Single)
+    {
+        this.chargeMode = chargeMode;
+        this.loadMode = loadMode;
+        this.scenes = scenes;
+        this.shouldStopMusic = shouldStopMusic;
+    }
+    #endregion
+}
+
+[Serializable]
+public class UnloadScenePack
+{
+    public List<string> scenes = new List<string>();
+}
+#endregion

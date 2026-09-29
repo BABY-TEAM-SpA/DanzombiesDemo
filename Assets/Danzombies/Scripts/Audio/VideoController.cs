@@ -4,7 +4,7 @@ using UnityEngine.Video;
 
 public class VideoController : MonoBehaviour
 {
-    [SerializeField] private SceneChangeController.LoadScenePack levelToLoad;
+    [SerializeField] private LoadScenePack levelToLoad;
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private VideoClip videoClip;
     [SerializeField] private bool hasAudio;

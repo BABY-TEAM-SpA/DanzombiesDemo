@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     #region [VARIABLES]
-    [SerializeField] protected SceneChangeController.LoadScenePack levelsToLoad;
-    [SerializeField] protected SceneChangeController.UnloadScenePack levelsToUnload;
+    [SerializeField] protected LoadScenePack levelsToLoad;
+    [SerializeField] protected UnloadScenePack levelsToUnload;
     #endregion
 
     #region [UNITY]

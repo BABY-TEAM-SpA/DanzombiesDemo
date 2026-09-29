@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DevMode : Service<DevMode>
 {
@@ -10,10 +12,12 @@ public class DevMode : Service<DevMode>
     [SerializeField] private InputActionReference devModeRef;
 
     [Header("Components")]
+    [SerializeField] private GraphicRaycaster raycaster;
     [SerializeField] private Transform content;
 
     private Transform root;
     private bool isShowing;
+    private Dictionary<string, LoadScenePack> scenePacks = new(); // [SceneName] -> LoadScenePack
     #endregion
 
     #region [UNITY]
@@ -41,6 +45,7 @@ public class DevMode : Service<DevMode>
         ClearCanvas();
         FillCanvas();
         root.gameObject.SetActive(true);
+        raycaster.enabled = true;
         isShowing = true;
     }
 
@@ -48,6 +53,7 @@ public class DevMode : Service<DevMode>
     {
         root.gameObject.SetActive(false);
         ClearCanvas();
+        raycaster.enabled = false;
         isShowing = false;
     }
 
@@ -58,6 +64,8 @@ public class DevMode : Service<DevMode>
             {
                 DevRespawn devRespawn = Instantiate(devRespawnPrefab, content, false);
                 devRespawn.Setup(respawns.sceneName, respawn, PlayFrom);
+
+                LoadScenePack scenePack = new LoadScenePack(respawns.sceneName, true);
             }
     }
 
@@ -86,6 +94,7 @@ public class DevMode : Service<DevMode>
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneChangeController.Instance.LoadScenes();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
