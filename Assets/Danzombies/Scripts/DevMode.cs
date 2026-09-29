@@ -25,6 +25,9 @@ public class DevMode : Service<DevMode>
     {
         root = transform.GetChild(0);
         HideCanvas();
+
+        ClearCanvas();
+        FillCanvas();
     }
 
     private void LateUpdate()
@@ -42,8 +45,6 @@ public class DevMode : Service<DevMode>
     #region Canvas
     private void ShowCanvas()
     {
-        ClearCanvas();
-        FillCanvas();
         root.gameObject.SetActive(true);
         raycaster.enabled = true;
         isShowing = true;
@@ -52,7 +53,6 @@ public class DevMode : Service<DevMode>
     private void HideCanvas()
     {
         root.gameObject.SetActive(false);
-        ClearCanvas();
         raycaster.enabled = false;
         isShowing = false;
     }
@@ -62,10 +62,13 @@ public class DevMode : Service<DevMode>
         foreach (CheckpointsCatalog.SceneRespawns respawns in catalog.Respawns)
             foreach (string respawn in respawns.respawns)
             {
-                DevRespawn devRespawn = Instantiate(devRespawnPrefab, content, false);
-                devRespawn.Setup(respawns.sceneName, respawn, PlayFrom);
+                string sceneName = respawns.sceneName;
 
-                LoadScenePack scenePack = new LoadScenePack(respawns.sceneName, true);
+                DevRespawn devRespawn = Instantiate(devRespawnPrefab, content, false);
+                devRespawn.Setup(sceneName, respawn, PlayFrom);
+
+                LoadScenePack scenePack = new LoadScenePack(sceneName, true);
+                scenePacks[sceneName] = scenePack;
             }
     }
 
@@ -94,8 +97,7 @@ public class DevMode : Service<DevMode>
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-        //SceneChangeController.Instance.LoadScenes();
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        SceneChangeController.Instance.LoadScenes(scenePacks[sceneName]);
     }
 
     private void RespawnInScene(Scene scene, string respawn)
