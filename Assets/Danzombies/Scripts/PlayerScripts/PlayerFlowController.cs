@@ -62,7 +62,21 @@ public class PlayerFlowController : MonoBehaviour
     #endregion
 
     #region [METHODS]
+
+    public void Activate()
+    {
+        FlowFeedbackController.Instance?.Show(State);
+        DanceBarController.Instance.Activate(true);
+    }
+
+    public void Deactivate()
+    {
+        FlowFeedbackController.Instance?.Hide();
+        DanceBarController.Instance.Activate(false);
+    }
+    
     #region API - Flow
+    
     public void SetFlow(int value)
     {
         FlowState prevState = State;
@@ -98,6 +112,11 @@ public class PlayerFlowController : MonoBehaviour
         }
 
         DanceBarController.Instance?.UpdateFlowBars(Flow);
+    }
+
+    public void SetDefaultFlow()
+    {
+        SetFlow(maxFlow/2);
     }
 
     public void Increase(int value)

@@ -49,7 +49,6 @@ public class PlayerManager : DanceBrain
 
     [Header("Puzzle")]
     public DanceZone danceTarget;
-    private bool hasTargetZone = false;
     #endregion
 
     #region [UNITY]
@@ -67,32 +66,35 @@ public class PlayerManager : DanceBrain
     #region RhythmPuzzle - Puzzle
     public void AddTargetPuzzle(DanceZone target)
     {
-        if (target != danceTarget)
-            danceTarget?.PlayerLeave(this);
-
+        Debug.Log("Adding target puzzle");
+        if (danceTarget != null)
+        {
+            Debug.Log("has target puzzle");
+            DanceZone oldTarget = danceTarget;
+            danceTarget = target;
+            if (target != danceTarget) oldTarget?.PlayerLeave(this);
+        }
+        else
+        {
+            Debug.Log("hasnt target puzzle");
+            danceTarget = target;
+            flowController.Activate();
+        }
         danceTarget = target;
-        hasTargetZone = true;
-        UpdateDanceHUD();
     }
+    
     public bool TryGetTargetPuzzle(out DanceZone target)
     {
-        target= (hasTargetZone)?danceTarget:null ;
+        bool hasTargetZone = danceTarget != null;
+        target= hasTargetZone?danceTarget:null ;
         return hasTargetZone;
     }
-
-    public void UpdateDanceHUD()
-    {
-        DanceBarController.Instance?.UpdateFlowBars(FlowValue);
-        DanceBarController.Instance?.Activate(danceTarget != null);
-    }
-
+    
     public void RemoveTargetPuzzle(DanceZone target)
     {
         if (target != danceTarget) return;
         danceTarget = null;
-        hasTargetZone = false;
-        UpdateDanceHUD();
-        
+        flowController.Deactivate();
     }
     #endregion
 
@@ -109,6 +111,7 @@ public class PlayerManager : DanceBrain
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
+        bool hasTargetZone = danceTarget != null;
         DamageMode dmgMode = hasTargetZone
             ? danceTarget.GetDamageMode()
             : DamageMode.None;
@@ -137,7 +140,7 @@ public class PlayerManager : DanceBrain
     public void GameOver()
     {
         hp = MAX_HP;
-        flowController?.SetFlow(MaxFlow / 2);
+        flowController?.SetDefaultFlow();
         comboController?.Reset();
 
         OnPlayerDeath?.Invoke();
