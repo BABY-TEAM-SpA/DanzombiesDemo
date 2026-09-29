@@ -78,13 +78,16 @@ public class DanceSequence : MonoBehaviour
             case SeqStopMode.StopOnComboA:
             case SeqStopMode.StopOnComboS:
                 bool isSameCombo = false;
-                if(PlayerManager.Player) isSameCombo = PlayerManager.Player.ComboState.ToString() == sequenceStopMode.ToString().Substring(sequenceStopMode.ToString().Length - 1);
+                if (PlayerManager.Player)
+                    isSameCombo = PlayerManager.Player.ComboCtrl.State.ToString()
+                        == sequenceStopMode.ToString().Substring(sequenceStopMode.ToString().Length - 1);
                 if (isSameCombo) OnDanceSequenceFinished?.Invoke();
                 return isSameCombo;
 
             case SeqStopMode.StopOnFullFlow:
                 bool isBarFilled = false;
-                if(DanceBarController.Instance) isBarFilled= DanceBarController.Instance.isBarFilled;
+                if (PlayerManager.Player)
+                    isBarFilled = PlayerManager.Player.FlowCtrl.IsFilled;
                 if (isBarFilled)
                     OnDanceSequenceFinished?.Invoke();
                 return isBarFilled;

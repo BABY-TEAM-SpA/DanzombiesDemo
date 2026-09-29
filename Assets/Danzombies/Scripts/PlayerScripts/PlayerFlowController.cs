@@ -23,6 +23,14 @@ public class PlayerFlowController : MonoBehaviour
     public int MaxFlow => maxFlow;
     [SerializeField][Min(0)] private int maxFlow;
 
+    public bool IsFilled => maxFlow > 0 && flow == maxFlow;
+    public bool IsActive => zone != null;
+    public bool IsSafe => isSafe;
+
+    private DanceZone zone;
+    private bool isSafe;
+    private FlowState? lastShownState;
+
     [SerializeField] private PlayerFlowState[] states;
     [Serializable]
     private class PlayerFlowState
@@ -58,25 +66,45 @@ public class PlayerFlowController : MonoBehaviour
         GetFlowState(State)?.OnStateEntered?.Invoke();
     }
 
-    private void Start() => FlowFeedbackController.Instance?.Show(State);
+    private void Start() => RefreshUI();
     #endregion
 
     #region [METHODS]
-
-    public void Activate()
+    #region API
+    public void BindZone(DanceZone newZone)
     {
-        FlowFeedbackController.Instance?.Show(State);
-        DanceBarController.Instance.Activate(true);
+        bool wasActive = IsActive;
+        zone = newZone;
+        if (!wasActive)
+            Activate();
     }
 
-    public void Deactivate()
+    public void UnbindZone(DanceZone oldZone)
     {
-        FlowFeedbackController.Instance?.Hide();
-        DanceBarController.Instance.Activate(false);
+        if (zone != oldZone)
+            return;
+        zone = null;
+        Deactivate();
     }
-    
+
+    public void SetSafe(bool value) => isSafe = value;
+    #endregion
+
+    #region Activation
+    private void Activate()
+    {
+        DanceBarController.Instance?.Activate(true);
+        RefreshUI();
+    }
+
+    private void Deactivate()
+    {
+        DanceBarController.Instance?.Activate(false);
+        RefreshUI();
+    }
+    #endregion
+
     #region API - Flow
-    
     public void SetFlow(int value)
     {
         FlowState prevState = State;
@@ -88,40 +116,26 @@ public class PlayerFlowController : MonoBehaviour
         {
             GetFlowState(prevState)?.OnStateExited?.Invoke();
             GetFlowState(State)?.OnStateEntered?.Invoke();
-            FlowFeedbackController.Instance?.Show(State);
+            OnStateChanged?.Invoke(State);
         }
 
-        if (prevFlow != Flow)
+        if (prevFlow != flow)
         {
-            if (Flow == 0)
-            {
-                DanceZone target = null;
-                if (!PlayerManager.Player.TryGetTargetPuzzle(out target)) return;
-                switch (target.GetDamageMode())
-                {
-                    case DamageMode.None:
-                        break;
-                    case DamageMode.ModificaFlow:
-                        break;
-                    case DamageMode.ModificaFlowYDaña:
-                        OnFlowEmptied?.Invoke();
-                        break;
-                }
-            }
-            if (Flow == MaxFlow) OnFlowFilled?.Invoke();
+            if (flow == 0 && zone != null && zone.GetDamageMode() == DamageMode.ModificaFlowYDaña)
+                OnFlowEmptied?.Invoke();
+
+            if (flow == MaxFlow)
+                OnFlowFilled?.Invoke();
         }
 
-        DanceBarController.Instance?.UpdateFlowBars(Flow);
+        RefreshUI();
     }
 
-    public void SetDefaultFlow()
-    {
-        SetFlow(maxFlow/2);
-    }
+    public void ResetFlow() => SetFlow(maxFlow / 2);
 
     public void Increase(int value)
     {
-        if (PlayerManager.Player.IsSafe && value < 0)
+        if (isSafe && value < 0)
             value = 0;
 
         int result = Flow + (GameManager.Instance.Alza * value);
@@ -130,8 +144,31 @@ public class PlayerFlowController : MonoBehaviour
     #endregion
 
     #region API - Beat Feedback
-    public void ApplyFeedback(BeatReciever.BeatFeedback feedback, bool ignore)
-        => Increase(ignore ? 0 : GetModifier(feedback));
+    public void ApplyFeedback(BeatReciever.BeatFeedback feedback)
+    {
+        bool affectsFlow = zone != null && zone.GetDamageMode() != DamageMode.None;
+        Increase(affectsFlow ? GetModifier(feedback) : 0);
+    }
+    #endregion
+
+    #region Refresh
+    private void RefreshUI()
+    {
+        DanceBarController.Instance?.UpdateFlowBars(Flow, MaxFlow, State);
+        RefreshFeedback();
+    }
+
+    private void RefreshFeedback()
+    {
+        FlowFeedbackController feedback = FlowFeedbackController.Instance;
+        if (feedback == null) return;
+        
+        FlowState shown = IsActive ? State : FlowState.Normal;
+        if (lastShownState == shown) return;
+        
+        lastShownState = shown;
+        feedback.Show(shown);
+    }
     #endregion
 
     #region Helpers

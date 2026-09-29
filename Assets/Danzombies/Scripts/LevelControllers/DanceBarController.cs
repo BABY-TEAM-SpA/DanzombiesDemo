@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DanceBarController : Service<DanceBarController>
 {
     #region [VARIABLES]
-    public bool isActive;
-    public bool isBarFilled { private set; get; } = false;
+    public bool isActive { private set; get; }
 
     [SerializeField] private Sprite iconDefaultState;
     [SerializeField] private DanceBarState[] states;
@@ -27,65 +25,69 @@ public class DanceBarController : Service<DanceBarController>
     [SerializeField] private List<Image> beatBars = new List<Image>();
     [SerializeField] private Material beatBarMaterial;
     [SerializeField] private UiAnimator uiAnimator;
+
+    private FlowState currentState = FlowState.Normal;
+    private bool isFilled;
+    private bool materialReady;
     #endregion
 
     #region [UNITY]
-    public void Start()
-    {
-        Material newMat = new Material(beatBarMaterial);
-        beatBarMaterial = newMat;
-        foreach (Image bar in beatBars)
-            bar.material = newMat;
-
-        if (PlayerManager.Player != null)
-            UpdateFlowBars(PlayerManager.Player.FlowValue);
-    }
+    private void Start() => EnsureMaterial();
     #endregion
 
     #region [METHODS]
     public void Activate(bool activation)
     {
         isActive = activation;
-        UpdateFlowBars(PlayerManager.Player.FlowValue);
         uiAnimator?.PlaySequence(activation ? "Open" : "Close");
-        if (!activation) FlowFeedbackController.Instance?.Hide(); // [Frco] Me molesta tener que hacerlo así, pero es más rápido supongo...
+        RefreshIcon();
+        RefreshRainbow();
     }
 
     #region Updates
-    public void UpdateFlowBars(int value)
+    public void UpdateFlowBars(int value, int maxFlow, FlowState state)
     {
-        FlowState state = PlayerManager.Player.FlowState;
-        int maxFlow = PlayerManager.Player.MaxFlow;
-        isBarFilled = value == maxFlow;
+        currentState = state;
+        isFilled = maxFlow > 0 && value == maxFlow;
+        float fill = maxFlow > 0 ? value / (float)maxFlow : 0f;
+        Color color = StateColor(state);
 
         foreach (Image bar in flowBars)
         {
-            bar.fillAmount = value / (float)maxFlow;
-            
-            bar.color = StateColor(state);
-            beatBarMaterial.SetFloat("_RainbowEnabled", value == maxFlow ? 1f : 0f);
+            bar.fillAmount = fill;
+            bar.color = color;
         }
 
-        UpdateIconFeedback();
-    }
-
-    private void UpdateIconFeedback()
-    {
-        if (iconImage != null)
-            iconImage.sprite = isActive
-                ? StateIcon(PlayerManager.Player.FlowState)
-                : iconDefaultState;
-
-        if (!isActive)
-            beatBarMaterial.SetFloat("_RainbowEnabled", 0f);
+        RefreshIcon();
+        RefreshRainbow();
     }
     #endregion
 
     #region Helpers
-    private DanceBarState GetState(FlowState state) => states.FirstOrDefault(s => s.state == state);
+    private void RefreshIcon()
+    {
+        if (iconImage != null)
+            iconImage.sprite = isActive ? StateIcon(currentState) : iconDefaultState;
+    }
 
+    private void RefreshRainbow()
+    {
+        EnsureMaterial();
+        beatBarMaterial.SetFloat("_RainbowEnabled", isActive && isFilled ? 1f : 0f);
+    }
+
+    private DanceBarState GetState(FlowState state) => states.FirstOrDefault(s => s.state == state);
     private Sprite StateIcon(FlowState state) => GetState(state)?.icon ?? iconImage?.sprite ?? default;
     private Color StateColor(FlowState state) => GetState(state)?.color ?? default;
+
+    private void EnsureMaterial()
+    {
+        if (materialReady) return;
+        beatBarMaterial = new Material(beatBarMaterial);
+        foreach (Image bar in beatBars)
+            bar.material = beatBarMaterial;
+        materialReady = true;
+    }
     #endregion
     #endregion
 }
