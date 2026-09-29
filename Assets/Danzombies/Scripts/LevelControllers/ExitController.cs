@@ -3,9 +3,9 @@ using UnityEngine;
 public class ExitController : MonoBehaviour
 {
     #region [VARIABLES]
-    [SerializeField] private SceneChangeController.LoadScenePack levelToLoad;
+    [SerializeField] private LoadScenePack levelToLoad;
 
-    private SceneChangeController.LoadScenePack levelToUnLoad;
+    private LoadScenePack levelToUnLoad;
     #endregion
 
     #region [UNITY]

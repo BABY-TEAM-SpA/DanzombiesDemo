@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DevMode : Service<DevMode>
 {
@@ -10,10 +12,12 @@ public class DevMode : Service<DevMode>
     [SerializeField] private InputActionReference devModeRef;
 
     [Header("Components")]
+    [SerializeField] private GraphicRaycaster raycaster;
     [SerializeField] private Transform content;
 
     private Transform root;
     private bool isShowing;
+    private Dictionary<string, LoadScenePack> scenePacks = new(); // [SceneName] -> LoadScenePack
     #endregion
 
     #region [UNITY]
@@ -21,6 +25,9 @@ public class DevMode : Service<DevMode>
     {
         root = transform.GetChild(0);
         HideCanvas();
+
+        ClearCanvas();
+        FillCanvas();
     }
 
     private void LateUpdate()
@@ -38,16 +45,15 @@ public class DevMode : Service<DevMode>
     #region Canvas
     private void ShowCanvas()
     {
-        ClearCanvas();
-        FillCanvas();
         root.gameObject.SetActive(true);
+        raycaster.enabled = true;
         isShowing = true;
     }
 
     private void HideCanvas()
     {
         root.gameObject.SetActive(false);
-        ClearCanvas();
+        raycaster.enabled = false;
         isShowing = false;
     }
 
@@ -56,8 +62,13 @@ public class DevMode : Service<DevMode>
         foreach (CheckpointsCatalog.SceneRespawns respawns in catalog.Respawns)
             foreach (string respawn in respawns.respawns)
             {
+                string sceneName = respawns.sceneName;
+
                 DevRespawn devRespawn = Instantiate(devRespawnPrefab, content, false);
-                devRespawn.Setup(respawns.sceneName, respawn, PlayFrom);
+                devRespawn.Setup(sceneName, respawn, PlayFrom);
+
+                LoadScenePack scenePack = new LoadScenePack(sceneName, true);
+                scenePacks[sceneName] = scenePack;
             }
     }
 
@@ -86,7 +97,7 @@ public class DevMode : Service<DevMode>
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        SceneChangeController.Instance.LoadScenes(scenePacks[sceneName]);
     }
 
     private void RespawnInScene(Scene scene, string respawn)
