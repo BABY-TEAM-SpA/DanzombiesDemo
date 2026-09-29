@@ -81,6 +81,10 @@
 		<property name="length">
 			<value>2</value>
 		</property>
+		<property name="name" />
+		<property name="volume">
+			<value>-5</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{0ed2ade7-e62e-4626-9204-24d615ce9c82}</destination>
 			<destination>{45920367-9e20-4b92-9a8f-e73a6ab57fc0}</destination>
@@ -98,6 +102,7 @@
 	<object class="MixerBusEffectChain" id="{946b244d-2815-4652-8360-93f3debb0fa1}">
 		<relationship name="effects">
 			<destination>{5fa7db3d-6e63-40bf-ab82-5871edc0e1b8}</destination>
+			<destination>{80f2f38c-65ab-4999-8a27-c135c085bed8}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{933655f6-92e4-4b9a-9c27-44466d2ec3b6}" />
@@ -128,4 +133,12 @@
 	</object>
 	<object class="MixerBusFader" id="{1a4590de-9c2c-4459-a299-377e4702600c}" />
 	<object class="MixerBusFader" id="{5fa7db3d-6e63-40bf-ab82-5871edc0e1b8}" />
+	<object class="LimiterEffect" id="{80f2f38c-65ab-4999-8a27-c135c085bed8}">
+		<property name="ceiling">
+			<value>-6.4000001</value>
+		</property>
+		<property name="release">
+			<value>42</value>
+		</property>
+	</object>
 </objects>
