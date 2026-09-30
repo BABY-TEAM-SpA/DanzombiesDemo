@@ -10,7 +10,8 @@ public class Checkpoint : MonoBehaviour
 
     public Vector3 Spawn => playerSpawn.position;
     private Transform playerSpawn;
-    
+
+    public bool oneShot = true;
     private bool triggered;
 
     public UnityEvent OnCheckpoint;
@@ -31,11 +32,11 @@ public class Checkpoint : MonoBehaviour
             if (isRespawn)
                 OnPlayerEntered?.Invoke(this, player);
 
-            if (!triggered)
-            {
-                triggered = true;
-                Run();
-            }
+            if (oneShot && triggered)
+                return;
+
+            triggered = true;
+            Run();
         }
     }
     #endregion
