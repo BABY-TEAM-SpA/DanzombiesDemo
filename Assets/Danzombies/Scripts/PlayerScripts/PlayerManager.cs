@@ -116,10 +116,7 @@ public class PlayerManager : DanceBrain
 
     public void GameOver()
     {
-        hp = MAX_HP;
-        flowController?.ResetFlow();
-        comboController?.Reset();
-
+        Reset();
         OnPlayerDeath?.Invoke();
     }
     #endregion
@@ -141,6 +138,13 @@ public class PlayerManager : DanceBrain
 
     public void InputInteract() => interactionController.Interact();
     #endregion
+
+    public void Reset()
+    {
+        hp = MAX_HP;
+        flowController?.ResetFlow();
+        comboController?.Reset();
+    }
 
     public Animator ConfinePlayerCamera() => danceAnimCtrl.animator;
     #endregion

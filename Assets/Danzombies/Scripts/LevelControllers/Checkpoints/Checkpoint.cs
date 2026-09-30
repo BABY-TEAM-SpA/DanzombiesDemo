@@ -42,11 +42,13 @@ public class Checkpoint : MonoBehaviour
     #endregion
 
     #region [METHODS]
-    public void Respawn(PlayerManager player) => player.transform.position = playerSpawn.position;
+    public void Respawn(PlayerManager player)
+    {
+        player.Reset();
+        player.transform.position = playerSpawn.position;
+    }
 
-    #region Helpers
     public void Run() => OnCheckpoint?.Invoke();
     public void Reset() => triggered = false;
-    #endregion
     #endregion
 }
