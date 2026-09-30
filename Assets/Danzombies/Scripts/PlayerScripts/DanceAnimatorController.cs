@@ -18,7 +18,15 @@ public enum DanceDirection{
     West,
     East
 }
-
+[Serializable]
+public class TalkingExpressionData
+{
+    public DialogExpression expression;
+    public AnimationClip alphaIntro;
+    public AnimationClip betaIntro;
+    public AnimationClip alphaLoop;
+    public AnimationClip betaLoop;
+}
 [Serializable]
 public class AnimationFeedback
 {
@@ -37,6 +45,9 @@ public class DanceAnimatorController : MonoBehaviour
 
     public List<AnimationFeedback> playerFeedbackEvents = new List<AnimationFeedback>();
     private bool isWalking;
+    
+    public List<TalkingExpressionData> talkingExpressions = new List<TalkingExpressionData>();
+    
     
     private void Start()
     {
@@ -88,4 +99,24 @@ public class DanceAnimatorController : MonoBehaviour
     {
         playerFeedbackEvents.FirstOrDefault(x=> x.name==eventName)?.feedbackEvent?.Invoke();
     }
+
+
+    public void PlayTalkingAnimation(DialogExpression expression)
+    {
+        TalkingExpressionData expressionData = talkingExpressions.FirstOrDefault(x => x.expression == expression);
+        if(expressionData == null) return;
+        alphaOverrider["BaseTalkingIntro"] = expressionData.alphaIntro;
+        betaOverrider["BaseTalkingIntro"] = expressionData.betaIntro;
+        animator.Play("Talking");
+        alphaOverrider["BaseTalkingLoop"] = expressionData.alphaLoop;
+        betaOverrider["BaseTalkingLoop"] = expressionData.betaLoop;
+    }
+
+    public void PlayStand()
+    {
+        animator.Play("Stand");
+    }
+    
+    
+    
 }
