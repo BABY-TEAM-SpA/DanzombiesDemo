@@ -10,6 +10,8 @@ public class Checkpoint : MonoBehaviour
 
     public Vector3 Spawn => playerSpawn.position;
     private Transform playerSpawn;
+    
+    private bool triggered;
 
     public UnityEvent OnCheckpoint;
 
@@ -29,7 +31,11 @@ public class Checkpoint : MonoBehaviour
             if (isRespawn)
                 OnPlayerEntered?.Invoke(this, player);
 
-            Run();
+            if (!triggered)
+            {
+                triggered = true;
+                Run();
+            }
         }
     }
     #endregion
@@ -39,6 +45,7 @@ public class Checkpoint : MonoBehaviour
 
     #region Helpers
     public void Run() => OnCheckpoint?.Invoke();
+    public void Reset() => triggered = false;
     #endregion
     #endregion
 }
