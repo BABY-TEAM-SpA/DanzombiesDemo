@@ -6,6 +6,7 @@ public class PlayerInputController : MonoBehaviour
 {
     [SerializeField] PlayerManager _playerManager;
 
+    #region API
     /// <summary>
     /// Para simular que el jugador soltó todos los inputs, para poder dejar a Greg en un estado de Idle.
     /// </summary>
@@ -19,6 +20,20 @@ public class PlayerInputController : MonoBehaviour
         inputDanceDirection = DanceDirection.None;
         _playerManager.InputDance(inputDanceLean, inputDanceDirection);
     }
+
+    public void EnableAllInputs()
+    {
+        EnableMoveInput();
+        EnableDanceInput();
+        EnableInteractInput();
+    }
+    public void DisableAllInputs()
+    {
+        DisableMoveInput();
+        DisableDanceInput();
+        DisableInteractInput();
+    }
+    #endregion
 
     #region [MOVEMENT]
     public bool allowMoveInput;
