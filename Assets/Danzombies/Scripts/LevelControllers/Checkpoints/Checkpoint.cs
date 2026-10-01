@@ -11,6 +11,9 @@ public class Checkpoint : MonoBehaviour
     public Vector3 Spawn => playerSpawn.position;
     private Transform playerSpawn;
 
+    public bool oneShot = true;
+    private bool triggered;
+
     public UnityEvent OnCheckpoint;
 
     public Action<Checkpoint, PlayerManager> OnPlayerEntered;
@@ -29,16 +32,23 @@ public class Checkpoint : MonoBehaviour
             if (isRespawn)
                 OnPlayerEntered?.Invoke(this, player);
 
+            if (oneShot && triggered)
+                return;
+
+            triggered = true;
             Run();
         }
     }
     #endregion
 
     #region [METHODS]
-    public void Respawn(PlayerManager player) => player.transform.position = playerSpawn.position;
+    public void Respawn(PlayerManager player)
+    {
+        player.Reset();
+        player.transform.position = playerSpawn.position;
+    }
 
-    #region Helpers
     public void Run() => OnCheckpoint?.Invoke();
-    #endregion
+    public void Reset() => triggered = false;
     #endregion
 }

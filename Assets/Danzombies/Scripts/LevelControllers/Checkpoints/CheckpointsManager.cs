@@ -10,15 +10,17 @@ public class CheckpointsManager : MonoBehaviour
 
     private PlayerManager player;
     private Checkpoint lastCheckpoint;
+    private Checkpoint[] checkpoints;
+
     [SerializeField] private Resettable[] resettableObjects;
     #endregion
 
     #region [UNITY]
     private void OnEnable()
     {
-        foreach (Transform child in transform)
-            if (child.TryGetComponent<Checkpoint>(out Checkpoint checkpoint))
-                checkpoint.OnPlayerEntered += EnableCheckpoint;
+        checkpoints = GetComponentsInChildren<Checkpoint>();
+        foreach (Checkpoint checkpoint in checkpoints)
+            checkpoint.OnPlayerEntered += EnableCheckpoint;
     }
 
     private void OnDisable()
@@ -52,6 +54,8 @@ public class CheckpointsManager : MonoBehaviour
             resettable.ResetState(checkpoint);
         Debug.Log($"[CheckpointsManager] Respawneando en {checkpoint.name}, {resettableObjects.Length} objetos restaurados.");
 
+        foreach (Checkpoint checkpointToReset in checkpoints)
+            checkpointToReset.Reset();
         checkpoint.Respawn(playerManager);
     }
 
@@ -106,12 +110,12 @@ public class CheckpointsManager : MonoBehaviour
 
         string[] respawns = dict.Values.ToArray();
         string sceneName = gameObject.scene.name;
+
 #if UNITY_EDITOR
         catalog.SetRespawns(sceneName, respawns);
         Debug.Log($"[CheckpointsManager] El catálogo fue actualizado con {respawns.Length} puntos de respawn encontrados en la escena.");
         //UnityEditor.EditorUtility.SetDirty(catalog);
 #endif
-        
     }
     #endregion
     #endregion

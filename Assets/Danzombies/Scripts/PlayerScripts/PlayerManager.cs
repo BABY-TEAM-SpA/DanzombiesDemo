@@ -23,20 +23,9 @@ public class PlayerManager : DanceBrain
     private int hp = MAX_HP;
     #endregion
 
-    #region Flow
-    public FlowState FlowState => flowController.State;
-    public int FlowValue => flowController.Flow;
-    public int MaxFlow => flowController.MaxFlow;
-    #endregion
-
-    #region Combo
-    public ComboState ComboState => comboController.State;
-    public int ComboCount => comboController.Count;
-    #endregion
-
-    #region SafeZone
-    public bool IsSafe => isInSafeZone;
-    private bool isInSafeZone;
+    #region Combo & Flow
+    public PlayerFlowController FlowCtrl => flowController;
+    public PlayerComboController ComboCtrl => comboController;
     #endregion
 
     #region Events
@@ -49,6 +38,7 @@ public class PlayerManager : DanceBrain
 
     [Header("Puzzle")]
     public DanceZone danceTarget;
+    public bool HasTarget => danceTarget != null;
     #endregion
 
     #region [UNITY]
@@ -61,40 +51,31 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region [METHODS]
-
-
     #region RhythmPuzzle - Puzzle
     public void AddTargetPuzzle(DanceZone target)
     {
-        Debug.Log("Adding target puzzle");
-        if (danceTarget != null)
-        {
-            Debug.Log("has target puzzle");
-            DanceZone oldTarget = danceTarget;
-            danceTarget = target;
-            if (target != danceTarget) oldTarget?.PlayerLeave(this);
-        }
-        else
-        {
-            Debug.Log("hasnt target puzzle");
-            danceTarget = target;
-            flowController.Activate();
-        }
+        if (target == null) return;
+        
+        DanceZone oldTarget = danceTarget;
+        if (oldTarget == target) return;
+        
         danceTarget = target;
+        oldTarget?.PlayerLeave(this);
+        flowController?.BindZone(target);
     }
-    
+
     public bool TryGetTargetPuzzle(out DanceZone target)
     {
-        bool hasTargetZone = danceTarget != null;
-        target= hasTargetZone?danceTarget:null ;
-        return hasTargetZone;
+        target = danceTarget;
+        return HasTarget;
     }
     
     public void RemoveTargetPuzzle(DanceZone target)
     {
         if (target != danceTarget) return;
+
         danceTarget = null;
-        flowController.Deactivate();
+        flowController?.UnbindZone(target);
     }
     #endregion
 
@@ -111,11 +92,7 @@ public class PlayerManager : DanceBrain
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
-        bool hasTargetZone = danceTarget != null;
-        DamageMode dmgMode = hasTargetZone
-            ? danceTarget.GetDamageMode()
-            : DamageMode.None;
-        flowController.ApplyFeedback(bf, dmgMode == DamageMode.None);
+        flowController?.ApplyFeedback(bf);
         DanceFeedbackEvent?.Invoke(bf);
     }
     #endregion
@@ -135,24 +112,16 @@ public class PlayerManager : DanceBrain
             GameOver();
     }
 
-    public void SetInSafeZone(bool value) => isInSafeZone = value;
+    public void SetInSafeZone(bool value) => flowController?.SetSafe(value);
 
     public void GameOver()
     {
-        hp = MAX_HP;
-        flowController?.SetDefaultFlow();
-        comboController?.Reset();
-
+        Reset();
         OnPlayerDeath?.Invoke();
     }
     #endregion
 
-    public Animator ConfinePlayerCamera()
-    {
-        return danceAnimCtrl.animator;
-    }
-    #endregion
-    
+    #region Input
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
         if(isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance",false);
@@ -168,4 +137,15 @@ public class PlayerManager : DanceBrain
     }
 
     public void InputInteract() => interactionController.Interact();
+    #endregion
+
+    public void Reset()
+    {
+        hp = MAX_HP;
+        flowController?.ResetFlow();
+        comboController?.Reset();
+    }
+
+    public Animator ConfinePlayerCamera() => danceAnimCtrl.animator;
+    #endregion
 }

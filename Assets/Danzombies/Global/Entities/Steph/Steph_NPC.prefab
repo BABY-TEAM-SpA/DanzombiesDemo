@@ -56,7 +56,7 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}
 --- !u!1 &6748019445471104016
 GameObject:
@@ -114,7 +114,7 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}
 --- !u!1 &7472942076168638150
 GameObject:
@@ -424,7 +424,7 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}
 --- !u!1 &8426862267633352703
 GameObject:
@@ -573,6 +573,12 @@ MonoBehaviour:
   _danceBrain: {fileID: 2536597401598945149}
   animator: {fileID: 8332991270205824799}
   playerFeedbackEvents: []
+  talkingExpressions:
+  - expression: 1
+    alphaIntro: {fileID: 7400000, guid: 60b0ace529f9c6d4093c1894a8765967, type: 2}
+    betaIntro: {fileID: 7400000, guid: 60b0ace529f9c6d4093c1894a8765967, type: 2}
+    alphaLoop: {fileID: 7400000, guid: 434ae2ef1bf20ff4a98481f936acfd4d, type: 2}
+    betaLoop: {fileID: 7400000, guid: 434ae2ef1bf20ff4a98481f936acfd4d, type: 2}
   renderer: {fileID: 1578431844101746786}
   outlineRenderer: {fileID: 0}
 --- !u!114 &4026297106445111100
@@ -735,5 +741,5 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}

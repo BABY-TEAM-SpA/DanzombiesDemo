@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private bool isMovementEnabled = true;
     [SerializeField] private Vector2 moveDirection;
     [SerializeField] private float walkingSpeed = 10f;
+    [SerializeField] private float baseSpeed;
 
     [Tooltip("Multiplicador de velocidad al sprintear")]
     [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
@@ -24,11 +24,13 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("Scripted Movement")]
     [SerializeField] private bool useScriptedDuration;
-    public bool scriptLookingEnding;
     [SerializeField][Min(0f)] private float scriptedDuration;
+    [SerializeField] private ScriptedMovementEndingDirection scriptLookingEnding;
+    public enum ScriptedMovementEndingDirection { Left, Right }
     private Coroutine scriptedMovement;
-    [SerializeField] private float baseSpeed;
     private Vector3 targetPos;
+
+    public UnityEvent OnScriptedMovementArrived;
     #endregion
 
     #region [UNITY]
@@ -71,10 +73,6 @@ public class PlayerMovementController : MonoBehaviour
         BeginScriptedMovememnt(direction);
     }
 
-    public void SetEndingLookingDirection(bool lookingRight)
-    {
-        scriptLookingEnding = !lookingRight;
-    }
     public void MoveInY(float directionY)
     {
         //Debug.Log("MoveToPoint");
@@ -92,14 +90,15 @@ public class PlayerMovementController : MonoBehaviour
         scriptedMovement = StartCoroutine(MoveToTargetRoutine(onFinished));
     }
     public void BeginScriptedMovememnt() => BeginScriptedMovememnt(Vector2.zero); // [Frco] ?
+
     public void StopScriptedMovement()
     {
         if (debug)
             Debug.Log($"StopScriptedMovement()");
         SetDirection(Vector2.zero);
-        //HandleMovement();
-        danceBrain.SetBodyDirection(scriptLookingEnding ? -1f: 1f);
-
+        danceBrain.SetBodyDirection(scriptLookingEnding == ScriptedMovementEndingDirection.Left ? -1f : 1f);
+        if (scriptedMovement != null)
+            StopCoroutine(scriptedMovement);
     }
 
     public void UseScriptedDuration(bool use) => useScriptedDuration = use;
@@ -115,7 +114,7 @@ public class PlayerMovementController : MonoBehaviour
     public void EnableMovement(bool isON = false)
     {
         if (debug)
-            Debug.Log($"EnableMovemement({isON})");
+            Debug.Log($"[PlayerMovementController] EnableMovemement({isON})");
         isMovementEnabled = isON;
     }
     
@@ -123,13 +122,17 @@ public class PlayerMovementController : MonoBehaviour
     private IEnumerator MoveToTargetRoutine(Action onFinished = null)
     {
         if (debug)
-            Debug.Log($"MoveToTargetRoutine()");
+            Debug.Log($"[PlayerMovementController] MoveToTargetRoutine()");
         float elapsed = 0f;
+        bool arrived = true;
 
         while (Vector2.Distance(transform.position, targetPos) > 0.1f)
         {
             if (useScriptedDuration && elapsed > scriptedDuration)
+            {
+                arrived = false;
                 break;
+            }
 
             float distance = Vector2.Distance(transform.position, targetPos);
             SetRun(distance >= 10f);
@@ -140,6 +143,13 @@ public class PlayerMovementController : MonoBehaviour
 
         StopScriptedMovement();
         onFinished?.Invoke();
+
+        if (arrived)
+        {
+            if (debug)
+                Debug.Log("[PlayerMovementController] MoveToTargetRoutine() -ARRIVED-");
+            OnScriptedMovementArrived?.Invoke();
+        }
     }
     #endregion
 }

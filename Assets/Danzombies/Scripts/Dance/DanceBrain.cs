@@ -61,6 +61,16 @@ public abstract class DanceBrain : Dancer
         danceAnimCtrl?.AnimateOnMoving(direction);
     }
 
+    public void OnTalkingStart(DialogExpression expression)
+    {
+        danceAnimCtrl?.PlayTalkingAnimation(expression);
+    }
+    
+    public void OnTalkingEnd()
+    {
+        danceAnimCtrl?.PlayStand();
+    }
+
     public void SetBodyDirection(float value)
     {
         if (Math.Abs(value) > 0.5)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,9 @@ public class DialogController : UIUserEvent
     [SerializeField] private Image profileImage;
     [SerializeField] private TMP_Text textContainer;
     [SerializeField] private GameObject pin;
+    
+    private List<TalkingPerson> talkingPersons = new List<TalkingPerson>();
+    DanceBrain talkingBrain;
     
     private DialogSequence currentDialogSequence;
     private float currentTimer;
@@ -73,6 +77,11 @@ public class DialogController : UIUserEvent
         else ContinueWritting();
     }
 
+    public void SetTalkingPersons(List<TalkingPerson> persons)
+    {
+        talkingPersons = persons;
+    }
+
     public void PlayDialog(DialogSequence dialog)
     {
         currentDialogSequence = dialog;
@@ -86,20 +95,28 @@ public class DialogController : UIUserEvent
         dialogRender.gameObject.SetActive(true);
         pin.gameObject.SetActive(false);
         currentTimer = 0f; 
-        int currentDialog = currentDialogSequence.currentDialogText;
-        profileImage.sprite = currentDialogSequence.dialogData.dialogs[currentDialog].profile;
+        Dialog dialog = currentDialogSequence.dialogData.dialogs[currentDialogSequence.currentDialogText];
+        profileImage.sprite = dialog.profile;
+        string characterName = dialog.Character;
+        DialogExpression expression = dialog.expression;
         
-
-        DialogText dialogText = currentDialogSequence.dialogData.dialogs[currentDialog].texts.FirstOrDefault(x => x.language == GameManager.Instance.Language);
+        
+        
+        DialogText dialogText = dialog.texts.FirstOrDefault(x => x.language == GameManager.Instance.Language);
         fullTextTarget = (dialogText != null) ? dialogText.text : "";
         
-
         if (animateWriting && !string.IsNullOrEmpty(fullTextTarget))
         {
             isWriting = true;
             currentCharacterCount = 0;
             letterTimer = 0f;
             textContainer.text = "";
+            TalkingPerson person = talkingPersons.FirstOrDefault(x=> x.name == characterName);
+            if(person != null)
+            {
+                talkingBrain = person.brain;
+                talkingBrain.OnTalkingStart(expression);
+            }
         }
         else
         {
@@ -111,6 +128,8 @@ public class DialogController : UIUserEvent
     private void OnWrittingComplete()
     {
         isWriting = false;
+        talkingBrain?.OnTalkingEnd();
+        talkingBrain = null;
         textContainer.text = fullTextTarget;
         currentTimer = currentDialogSequence.timeToAutoContinue;
         pin.gameObject.SetActive(true);
