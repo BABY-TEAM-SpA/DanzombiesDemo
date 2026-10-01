@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 548811813407721316}
   - component: {fileID: 2536597401598945149}
   - component: {fileID: 1707382129364674341}
+  - component: {fileID: 5104333320804861674}
   - component: {fileID: 3651001649101913600}
   m_Layer: 0
   m_Name: Steph_NPC
@@ -286,16 +287,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
   danceBrain: {fileID: 2536597401598945149}
-  isMovementEnabled: 1
-  moveDirection: {x: 0, y: 0}
   walkingSpeed: 4
   sprintFactor: 1.5
-  useScriptedDuration: 0
-  scriptLookingEnding: 0
-  scriptedDuration: 0
-  baseSpeed: 0
+--- !u!114 &5104333320804861674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7472942076168638150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d727313892c3e244a9c7996edbaaffc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptedMovementController
+  movementController: {fileID: 1707382129364674341}
+  inputController: {fileID: 0}
 --- !u!114 &3651001649101913600
 MonoBehaviour:
   m_ObjectHideFlags: 0

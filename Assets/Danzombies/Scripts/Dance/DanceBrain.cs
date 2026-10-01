@@ -35,8 +35,10 @@ public abstract class DanceBrain : Dancer
     {
         movCtrl?.EnableMovement(isON);
     }
-    public void ResetScriptedMovement() => movCtrl?.StopScriptedMovement();
-    
+
+    // [Frco] <¬ Ahora existe ScriptedMovementController.StopScriptedMovement() público
+    //public void ResetScriptedMovement() => movCtrl?.StopScriptedMovement();
+
     public void Start()
     {
         DancerExpression expression = dancerExpressions.First();

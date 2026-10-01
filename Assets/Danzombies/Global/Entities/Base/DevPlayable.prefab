@@ -4910,6 +4910,7 @@ GameObject:
   - component: {fileID: 3308144933667447571}
   - component: {fileID: 511795604147366574}
   - component: {fileID: 3968905282911785478}
+  - component: {fileID: 8330526141443195807}
   - component: {fileID: 3465130852895728156}
   - component: {fileID: 5825363922643408486}
   - component: {fileID: 9216565697310443677}
@@ -5334,6 +5335,10 @@ MonoBehaviour:
   _playerManager: {fileID: 6530795612346585224}
   allowMoveInput: 1
   allowDanceInput: 1
+  northDanceInput: 0
+  southDanceInput: 0
+  eastDanceInput: 0
+  westDanceInput: 0
   margin: 0.5
   allowInteractInput: 1
 --- !u!114 &3968905282911785478
@@ -5348,16 +5353,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
   danceBrain: {fileID: 6530795612346585224}
-  isMovementEnabled: 1
-  moveDirection: {x: 0, y: 0}
   walkingSpeed: 5
   sprintFactor: 1.6
-  useScriptedDuration: 0
-  scriptLookingEnding: 0
-  scriptedDuration: 0
-  baseSpeed: 0
+--- !u!114 &8330526141443195807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542709926716473569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d727313892c3e244a9c7996edbaaffc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptedMovementController
+  movementController: {fileID: 3968905282911785478}
+  inputController: {fileID: 511795604147366574}
 --- !u!114 &3465130852895728156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16011,6 +16023,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  talkingExpressions: []
   renderer: {fileID: 922934949481849677}
   outlineRenderer: {fileID: 9126638411386914531}
 --- !u!95 &6969242347076242797
@@ -16251,7 +16264,7 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}
 --- !u!1 &4269707511934747889
 GameObject:
@@ -26097,7 +26110,7 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}
 --- !u!1 &5738309094529095927
 GameObject:
@@ -36155,7 +36168,7 @@ MonoBehaviour:
     Value: 0
   playOnStart: 0
   volume: 1
-  target: {fileID: 0}
+  followPlayer: 0
   limiter: {fileID: 0}
 --- !u!1 &9055037549122763869
 GameObject:
