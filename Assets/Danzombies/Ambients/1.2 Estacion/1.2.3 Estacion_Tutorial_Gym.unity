@@ -2037,7 +2037,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1402370953}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -21663,6 +21663,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1283701447}
     m_Modifications:
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: isRespawn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2030484290255281048, guid: 28e588003ef031344a7264b59fd04215, type: 3}
       propertyPath: levelSongs.Array.size
       value: 1
@@ -21735,6 +21739,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4736803431234250072, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: resettableObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736803431234250072, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: 'resettableObjects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1402370954}
     - target: {fileID: 6732433601785801903, guid: 28e588003ef031344a7264b59fd04215, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -21755,9 +21767,17 @@ PrefabInstance:
       propertyPath: Lens.OrthographicSize
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7301853148192048404, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: m_Name
+      value: Start
+      objectReference: {fileID: 0}
     - target: {fileID: 7359454062099051680, guid: 28e588003ef031344a7264b59fd04215, type: 3}
       propertyPath: 'levelsToLoad.scenes.Array.data[0]'
       value: 1.2.4 Estacion_Tiendas_Horde
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890448027425075415, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8008015106656686203, guid: 28e588003ef031344a7264b59fd04215, type: 3}
       propertyPath: m_Name
@@ -21805,6 +21825,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4205346567432822406, guid: 28e588003ef031344a7264b59fd04215, type: 3}
   m_PrefabInstance: {fileID: 1402370951}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1402370953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7890448027425075415, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+  m_PrefabInstance: {fileID: 1402370951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1402370954 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2671193517521005480, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+  m_PrefabInstance: {fileID: 1402370951}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d644e095024e73459938a627d97bcff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Resettable
 --- !u!1 &1408665114
 GameObject:
   m_ObjectHideFlags: 0
