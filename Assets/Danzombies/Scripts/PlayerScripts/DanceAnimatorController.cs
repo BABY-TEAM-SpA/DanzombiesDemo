@@ -26,6 +26,8 @@ public class TalkingExpressionData
     public AnimationClip betaIntro;
     public AnimationClip alphaLoop;
     public AnimationClip betaLoop;
+    public AnimationClip alphaEnd;
+    public AnimationClip betaEnd;
 }
 [Serializable]
 public class AnimationFeedback
@@ -47,6 +49,7 @@ public class DanceAnimatorController : MonoBehaviour
     private bool isWalking;
     
     public List<TalkingExpressionData> talkingExpressions = new List<TalkingExpressionData>();
+    private Action onTalkingEnd;
     
     
     private void Start()
@@ -101,20 +104,25 @@ public class DanceAnimatorController : MonoBehaviour
     }
 
 
-    public void PlayTalkingAnimation(DialogExpression expression)
+    public void Talking(DialogExpression expression)
     {
         TalkingExpressionData expressionData = talkingExpressions.FirstOrDefault(x => x.expression == expression);
         if(expressionData == null) return;
-        alphaOverrider["BaseTalkingIntro"] = expressionData.alphaIntro;
-        betaOverrider["BaseTalkingIntro"] = expressionData.betaIntro;
-        animator.Play("Talking");
+        alphaOverrider["BaseTalkingEnter"] = expressionData.alphaIntro;
+        betaOverrider["BaseTalkingEnter"] = expressionData.betaIntro;
+        animator.Play("TalkingEnter");
         alphaOverrider["BaseTalkingLoop"] = expressionData.alphaLoop;
         betaOverrider["BaseTalkingLoop"] = expressionData.betaLoop;
+        alphaOverrider["BaseTalkingExit"] = expressionData.alphaEnd;
+        betaOverrider["BaseTalkingExit"] = expressionData.betaEnd;
+        onTalkingEnd = ()=>animator.Play("TalkingExit");
     }
 
-    public void PlayStand()
+    public void TalkingEnd()
     {
-        animator.Play("Stand");
+        onTalkingEnd?.Invoke();
+        onTalkingEnd = null;
+        
     }
     
     
