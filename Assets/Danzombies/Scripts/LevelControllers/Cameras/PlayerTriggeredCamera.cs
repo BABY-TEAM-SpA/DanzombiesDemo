@@ -52,10 +52,11 @@ public class PlayerTriggeredCamera : MonoBehaviour
 
     public void UnfollowPlayer()
     {
+        /*
         stateDrivenCamera.AnimatedTarget = null;
-
         foreach (CinemachineCamera camera in cameras)
             camera.Follow = null;
+        */
         stateDrivenCamera.Priority = IDLE_PRIORITY;
 
         OnPlayerUnfollowed?.Invoke(this);
