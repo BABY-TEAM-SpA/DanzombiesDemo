@@ -10,7 +10,11 @@ public class ScriptedMovementData : MonoBehaviour
     public float duration;
     public ScriptedMovementFaceOnArrive faceOnArrive;
     [Tooltip("Por defecto el ScriptedMovement ejecuta DisableAllInputs, mantener true para ejecutar EnableAllInputs al detenerse.")]
-    public bool enableInputsOnStop = true;
+
+    [Header("Inputs")]
+    public bool enableMoveInputOnStop = true;
+    public bool enableDanceInputOnStop = true;
+    public bool enableInteractInputOnStop = true;
 
     public Vector3 Destination => destination.position;
     public float FaceSign => faceOnArrive == ScriptedMovementFaceOnArrive.Left ? -1f : 1f;

@@ -71,7 +71,11 @@ public class ScriptedMovementController : MonoBehaviour
 
         movementController.SetDirection(Vector2.zero);
         movementController.SetRun(false);
-        if (finished.enableInputsOnStop) inputController?.EnableAllInputs();
+
+        // Inputs
+        if (finished.enableMoveInputOnStop) inputController?.EnableMoveInput();
+        if (finished.enableDanceInputOnStop) inputController?.EnableDanceInput();
+        if (finished.enableInteractInputOnStop) inputController?.EnableInteractInput();
 
         if (result != ScriptedMovementResult.Interrupted)
             movementController.Face(finished.FaceSign);
