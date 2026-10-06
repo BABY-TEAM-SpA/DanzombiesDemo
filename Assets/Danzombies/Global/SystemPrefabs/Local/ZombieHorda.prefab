@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 3098186843193420797}
   - component: {fileID: 6065324922489293100}
   - component: {fileID: 6031555963687200971}
+  - component: {fileID: 8673488118355739958}
   m_Layer: 0
   m_Name: ZombieHorda
   m_TagString: Untagged
@@ -471,6 +472,102 @@ MonoBehaviour:
   isActive: 0
   damageMode: 1
   dancers: []
+  OnPlayerEntered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8673488118355739958}
+        m_TargetAssemblyTypeName: FlowComponent, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerExited:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8673488118355739958}
+        m_TargetAssemblyTypeName: FlowComponent, Assembly-CSharp
+        m_MethodName: Deactivate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8673488118355739958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582055949647408294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7bf0b902eb4ab42ab9b2e293da3a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlowController
+  puzzle: {fileID: 1699586347332263442}
+  zone: {fileID: 6031555963687200971}
+  flow: 5
+  maxFlow: 10
+  states:
+  - state: 0
+    percentage: 100
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 1
+    percentage: 25
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 2
+    percentage: 0
+    OnStateEntered:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStateExited:
+      m_PersistentCalls:
+        m_Calls: []
+  modifiers:
+  - feedback: 0
+    modifier: -1
+    isPercentage: 0
+  - feedback: 1
+    modifier: 0
+    isPercentage: 0
+  - feedback: 2
+    modifier: 1
+    isPercentage: 0
+  - feedback: 3
+    modifier: 2
+    isPercentage: 0
+  - feedback: 4
+    modifier: 0
+    isPercentage: 0
+  - feedback: 5
+    modifier: -2
+    isPercentage: 0
+  OnFlowFilled:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFlowEmptied:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &20434162094458597
 PrefabInstance:
   m_ObjectHideFlags: 0

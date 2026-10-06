@@ -58,7 +58,7 @@ public class PlayerManager : DanceBrain
         
         DanceZone oldTarget = danceTarget;
         if (oldTarget == target) return;
-        
+
         danceTarget = target;
         oldTarget?.PlayerLeave(this);
         flowController?.BindZone(target);
@@ -87,14 +87,10 @@ public class PlayerManager : DanceBrain
         if (danceTarget == null) return;
         danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
         comboController.Increase(bf, 1);
-        ApplyDanceFeedback(bf);
     }
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
-    {
-        flowController?.ApplyFeedback(bf);
-        DanceFeedbackEvent?.Invoke(bf);
-    }
+        => DanceFeedbackEvent?.Invoke(bf);
     #endregion
 
     #region HP & SafeZone
@@ -124,10 +120,10 @@ public class PlayerManager : DanceBrain
     #region Input
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
-        if(isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance",false);
+        if(isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance", false);
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {
-            DanceStep step = Enum.Parse<DanceStep>( lean + "_" + direction );
+            DanceStep step = Enum.Parse<DanceStep>(lean + "_" + direction);
             OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat, step);
         }
     }

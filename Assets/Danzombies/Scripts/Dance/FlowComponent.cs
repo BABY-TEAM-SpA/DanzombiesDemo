@@ -3,11 +3,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-//public enum FlowState { InFlow, Normal, InDanger };
+public enum FlowState { InFlow, Normal, InDanger };
 
-public class PlayerFlowController : MonoBehaviour
+public class FlowComponent : MonoBehaviour
 {
     #region [VARIABLES]
+    [SerializeField] private DanceZone zone;
+
     public FlowState State
     {
         get
@@ -18,22 +20,20 @@ public class PlayerFlowController : MonoBehaviour
     }
 
     public int Flow => flow;
+    [Header("Settings")]
     [SerializeField] private int flow;
 
     public int MaxFlow => maxFlow;
     [SerializeField][Min(0)] private int maxFlow;
 
-    public bool IsFilled => maxFlow > 0 && flow == maxFlow;
-    public bool IsActive => zone != null;
-    public bool IsSafe => isSafe;
+    public bool IsFilled => flow == maxFlow;
 
-    private DanceZone zone;
     private bool isSafe;
     private FlowState? lastShownState;
 
-    [SerializeField] private PlayerFlowState[] states;
+    [SerializeField] private FlowComponentState[] states;
     [Serializable]
-    private class PlayerFlowState
+    private class FlowComponentState
     {
         public FlowState state;
         [Tooltip("A partir de este porcentaje, el Flow entra a este estado.")]
@@ -53,6 +53,7 @@ public class PlayerFlowController : MonoBehaviour
         public bool isPercentage;
     }
 
+    [Header("Events")]
     public UnityEvent OnFlowFilled;
     public UnityEvent OnFlowEmptied;
 
@@ -66,41 +67,43 @@ public class PlayerFlowController : MonoBehaviour
         GetFlowState(State)?.OnStateEntered?.Invoke();
     }
 
-    private void Start() => RefreshUI();
+    #region Enable/Disable
+    private void OnEnable()
+    {
+        if (zone != null)
+            zone.OnPlayerFeedback += ApplyFeedback;
+    }
+
+    private void OnDisable()
+    {
+        if (zone != null)
+            zone.OnPlayerFeedback -= ApplyFeedback;
+    }
+    #endregion
     #endregion
 
     #region [METHODS]
-    #region API
-    public void BindZone(DanceZone newZone)
+    #region API - Activation
+    // [Frco] <¬ DanceZone (des)activa el FlowComponent mediante los UnityEvents OnPlayerEntered/Exited
+    public void Activate()
     {
-        bool wasActive = IsActive;
-        zone = newZone;
-        if (!wasActive)
-            Activate();
-    }
-
-    public void UnbindZone(DanceZone oldZone)
-    {
-        if (zone != oldZone)
-            return;
-        zone = null;
-        Deactivate();
-    }
-
-    public void SetSafe(bool value) => isSafe = value;
-    #endregion
-
-    #region Activation
-    private void Activate()
-    {
+        Reset();
         DanceBarController.Instance?.Activate(true);
         RefreshUI();
     }
 
-    private void Deactivate()
+    public void Deactivate()
     {
         DanceBarController.Instance?.Activate(false);
-        RefreshUI();
+        RefreshUI(true);
+    }
+    #endregion
+
+    #region API - Beat Feedback
+    public void ApplyFeedback(BeatReciever.BeatFeedback bf)
+    {
+        bool affectsFlow = zone.DamageMode != DamageMode.None;
+        Increase(affectsFlow ? GetModifier(bf) : 0);
     }
     #endregion
 
@@ -111,7 +114,7 @@ public class PlayerFlowController : MonoBehaviour
         int prevFlow = flow;
 
         flow = Mathf.Clamp(value, 0, MaxFlow);
-        
+
         if (prevState != State) // <- Se compara con el getter del State, por eso prevState puede diferir de State
         {
             GetFlowState(prevState)?.OnStateExited?.Invoke();
@@ -121,7 +124,7 @@ public class PlayerFlowController : MonoBehaviour
 
         if (prevFlow != flow)
         {
-            if (flow == 0 && zone != null && zone.DamageMode == DamageMode.ModificaFlowYDaña)
+            if (flow == 0 && zone?.DamageMode == DamageMode.ModificaFlowYDaña)
                 OnFlowEmptied?.Invoke();
 
             if (flow == MaxFlow)
@@ -131,7 +134,7 @@ public class PlayerFlowController : MonoBehaviour
         RefreshUI();
     }
 
-    public void ResetFlow() => SetFlow(maxFlow / 2);
+    public void Reset() => SetFlow(maxFlow / 2);
 
     public void Increase(int value)
     {
@@ -143,36 +146,30 @@ public class PlayerFlowController : MonoBehaviour
     }
     #endregion
 
-    #region API - Beat Feedback
-    public void ApplyFeedback(BeatReciever.BeatFeedback feedback)
-    {
-        bool affectsFlow = zone != null && zone.DamageMode != DamageMode.None;
-        Increase(affectsFlow ? GetModifier(feedback) : 0);
-    }
-    #endregion
-
     #region Refresh
-    private void RefreshUI()
+    private void RefreshUI(bool hide = false)
     {
         DanceBarController.Instance?.UpdateFlowBars(Flow, MaxFlow, State);
-        RefreshFeedback();
+        RefreshFeedback(hide);
     }
 
-    private void RefreshFeedback()
+    private void RefreshFeedback(bool hide = false)
     {
         FlowFeedbackController feedback = FlowFeedbackController.Instance;
         if (feedback == null) return;
-        
-        FlowState shown = IsActive ? State : FlowState.Normal;
+
+        FlowState shown = hide ? FlowState.Normal : State;
         if (lastShownState == shown) return;
-        
+
         lastShownState = shown;
         feedback.Show(shown);
     }
     #endregion
 
     #region Helpers
-    private PlayerFlowState GetFlowState(FlowState state)
+    public void SetSafe(bool value) => isSafe = value;
+
+    private FlowComponentState GetFlowState(FlowState state)
         => states.FirstOrDefault(s => state == s.state);
 
     private int GetModifier(BeatReciever.BeatFeedback feedback)
