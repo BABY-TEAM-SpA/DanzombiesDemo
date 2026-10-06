@@ -134,9 +134,22 @@ public class DanceSequence : MonoBehaviour
         if (coreography.StepInBar.Count > 0 && beat >= 0)
         {
             DanceStepPerBeat beatDances = coreography.StepInBar[beat % coreography.StepInBar.Count];
-            if (beatPart == BeatManager.BeatType.FullBeat)
-                step = beatDances.StepPerBeat.Count != 0 ? beatDances.StepPerBeat[0] : DanceStep.None;
-            else step = (beatDances.StepPerBeat.Count == 2) ? beatDances.StepPerBeat[1] : DanceStep.None;
+
+            switch (beatPart)
+            {
+                case BeatManager.BeatType.FullBeat:
+                    step = (beatDances.StepPerBeat.Count > 0)?beatDances.StepPerBeat[0]: DanceStep.None;
+                    break;
+                case BeatManager.BeatType.FirstThird:
+                    step = (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
+                    break;
+                case BeatManager.BeatType.HalfBeat:
+                    step = (beatDances.StepPerBeat.Count == 2) ? beatDances.StepPerBeat[1] : DanceStep.None;
+                    break;
+                case BeatManager.BeatType.SecondThird:
+                    step = (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
+                    break;
+            }
         }
         return step;
     }

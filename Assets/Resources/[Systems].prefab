@@ -583,9 +583,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatManager
   useDebug: 0
-  margenPercentOnBeat: 0.30000001192092896
-  greatPercentOnMargin: 0.699999988079071
-  perfectPercentOnMargin: 0.15000000596046448
+  margenPercentOnBeat: 0.11999999731779099
+  greatPercentOnMargin: 0.75
+  perfectPercentOnMargin: 0.5
+  beatChannels:
+  - channelState: 0
+    channelBeatType: 4
+  - channelState: 0
+    channelBeatType: 6
+  - channelState: 0
+    channelBeatType: 8
 --- !u!1 &4278266224309382269
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348865290203182728, guid: 16a6aaa4b584a564ab31d5ffc9866c36, type: 3}
       propertyPath: m_Size
-      value: 0.49999994
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6348865290203182728, guid: 16a6aaa4b584a564ab31d5ffc9866c36, type: 3}
       propertyPath: m_Value

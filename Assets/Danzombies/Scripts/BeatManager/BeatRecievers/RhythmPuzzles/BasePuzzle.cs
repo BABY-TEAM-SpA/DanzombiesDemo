@@ -8,14 +8,21 @@ public class BasePuzzle : RhythmPuzzle
     
     public override void PreBeatAction(int beat, BeatManager.BeatType type)
     {
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount==1)
+        {
+            innerCounter = 0;
+            availableToDance = true;
+        }
         if (!availableToDance) return;
         currentStep = currentDanceSequence.GetDanceStep(innerCounter,type);
+        if(debug) Debug.Log($"PreBeat {beat}:{type}.... dance:{currentStep}");
         eventManager.InvokePrepare(beat,type,currentStep);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type)
     {
         if (!availableToDance) return;
+        if(debug) Debug.Log($"Beat {beat}:{type}.... dance:{currentStep}");
         eventManager.InvokeDance(beat,type,currentStep);
     }
 
@@ -23,11 +30,11 @@ public class BasePuzzle : RhythmPuzzle
     {
         if (availableToDance)
         {
-            innerCounter++;
-            eventManager.InvokeRealease(beat, type, currentStep);
+            if(type== BeatManager.BeatType.FullBeat) innerCounter++;
+            eventManager.InvokeRealease(beat, type, DanceStep.None);
+            if(debug) Debug.Log($"PostBeat {beat}:{type}.... dance:{currentStep}");
             if(currentDanceSequence.CheckEndOfSequence(innerCounter)) OnPuzzleCompleted();
         }
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == 4) availableToDance = true;
     }
 
     public override void PreparePuzzle()

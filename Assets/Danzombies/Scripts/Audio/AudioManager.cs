@@ -10,7 +10,8 @@ public class AudioManager : Service<AudioManager>
     #region [VARIABLES]
     private EventInstance currentRhythmTrack;
 
-    public delegate void OnMusicEvent(bool reset);
+    public delegate void OnMusicEvent();
+    public static event OnMusicEvent OnPlay;
     public static event OnMusicEvent OnResume;
     public static event OnMusicEvent OnPause;
     public static event OnMusicEvent OnStop;
@@ -35,15 +36,10 @@ public class AudioManager : Service<AudioManager>
     #region API - Music Player Handling
     public void PlayRhythmSong(EventReference eventRef, bool interrupt = true)
     {
-        if (interrupt)
-            StopSong();
+        if (interrupt) StopSong();
         currentRhythmTrack = RuntimeManager.CreateInstance(eventRef);
         isPaused = false;
-        currentRhythmTrack.setCallback(
-            TimelineCallback,
-            EVENT_CALLBACK_TYPE.TIMELINE_BEAT
-        );
-
+        currentRhythmTrack.setCallback(TimelineCallback, EVENT_CALLBACK_TYPE.TIMELINE_BEAT);
         currentRhythmTrack.start();
     }
 
@@ -53,7 +49,7 @@ public class AudioManager : Service<AudioManager>
             return;
         isPaused = true;
         currentRhythmTrack.setPaused(isPaused);
-        OnPause?.Invoke(false);
+        OnPause?.Invoke();
     }
 
     public void ResumeSong()
@@ -62,7 +58,7 @@ public class AudioManager : Service<AudioManager>
             return;
         isPaused = false;
         currentRhythmTrack.setPaused(isPaused);
-        OnResume?.Invoke(false);
+        OnResume?.Invoke();
     }
 
     public void StopSong()
@@ -72,7 +68,7 @@ public class AudioManager : Service<AudioManager>
         
         currentRhythmTrack.stop(STOP_MODE.IMMEDIATE);
         currentRhythmTrack.release();
-        OnStop?.Invoke(true);
+        OnStop?.Invoke();
     }
     #endregion
 

@@ -1,6 +1,5 @@
 using System;
-using System.Runtime.InteropServices;
-using FMOD.Studio;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -8,137 +7,193 @@ public class BeatManager : Service<BeatManager>
 {
     #region [VARIABLES]
     public bool useDebug = false;
+    private bool isBeating;
 
-    public enum BeatType
-    {
-        FullBeat=0,
-        FirstThird=(1/3),
-        HalfBeat=(1/2),
-        SecondThird=(2/3)
-    }
-
-    [Header("Sync")] [Range(0f, 0.4f)] public double margenPercentOnBeat = 0.2d;
+    public enum BeatType { FullBeat=0, FirstThird=4, SecondThird=8,HalfBeat=6 }
+    
+    [Header("Sync")] 
+    [Range(0f, 0.4f)] public double margenPercentOnBeat = 0.08d;
 
     [Range(0f, 1f)] public double greatPercentOnMargin = 0.5d;
 
     [Range(0f, 0.5f)] public double perfectPercentOnMargin = 0.1d;
 
-    public double BeatTimeSec { get; private set; } = 1f;
-    public double HalfBeatTimeSec { get; private set; } = 1f;
-    public double ThirdBeatTimeSec { get; private set; } = 1f;
-
+    public double BeatTimeSec { get; private set; } = 1d;
+    
+    // Bar duration
+    public double lastBeatTime { get; private set; } = 0d;
+    public double nextBeatTime => lastBeatTime + BeatTimeSec;
+    public double margin => BeatTimeSec * margenPercentOnBeat;
+    
     public int localBeatCount { get; private set; } = 1; 
     public int globalBeatCount { get; private set; } = 1;
     public int globalBarCount { get; private set; } = 1;
     public int globalUpperBar { get; private set; } = 1;
     public int globalLowerBar { get; private set; } = 1;
+    
 
     public delegate void OnUpdate(double beatDuration);
 
     public static event OnUpdate OnUpdateEvent;
-    private bool isBeating;
-    double songTime;
-
-    double lastBeatTime;
-    double nextBeatTime;
-
-    double nextHalfBeatTime;
-
-    private bool preTrigger;
-    private bool beatTrigger;
-    private bool postTrigger;
     
-
+    double songTime;
+    private BeatChannel.BeatChannelState mainBeatState = BeatChannel.BeatChannelState.Waiting;
+    
     public delegate void OnBeatEvent(int counter, BeatType beatType);
 
     public static event OnBeatEvent OnPreBeat;
     public static event OnBeatEvent OnBeat;
     public static event OnBeatEvent OnPostBeat;
     
-    public static event OnBeatEvent OnFirsThirdPreBeat;
-    public static event OnBeatEvent OnFirsThirdBeat;
-    public static event OnBeatEvent OnFirsThirdPostBeat;
-    
-    public static event OnBeatEvent OnHalfPreBeat;
-    public static event OnBeatEvent OnHalfBeat;
-    public static event OnBeatEvent OnHalfPostBeat;
-    
-    public static event OnBeatEvent OnSecondThirdPreBeat;
-    public static event OnBeatEvent OnSecondThirdBeat;
-    public static event OnBeatEvent OnSecondThirdPostBeat;
-
-    EventInstance trackedMusic;
+    //EventInstance trackedMusic;
     #endregion
+    
+    
+    #region BeatBuffer
+    
+    [SerializeField] List<BeatChannel> beatChannels = new List<BeatChannel>();
+    
+    [Serializable]
+public class BeatChannel 
+{
+    private double channelLastBeatTime;
+    private double channelNextBeatTime;
+    private bool alreadyBeated;
 
-    #region [UNITY]
-    private void OnEnable() => AudioManager.OnStop += HandleSongStopped;
-    private void OnDisable() => AudioManager.OnStop -= HandleSongStopped;
+    public enum BeatChannelState { Waiting, Pre, Post }
+    public BeatChannelState channelState;
+    public BeatManager.BeatType channelBeatType;
 
-    void Update()
+    public void SetNewTime() 
     {
-        if (!AudioManager.Instance.IsPlaying()) return;
-        songTime = AudioManager.Instance.SongPositionSeconds();
-        HandlePrePostBeat();
+        channelNextBeatTime = Instance.lastBeatTime + (Instance.BeatTimeSec * (double)channelBeatType / 12d);
+        channelState = BeatChannelState.Waiting;
+        alreadyBeated = false; 
     }
-    #endregion
 
+    public void Update(double songTime) 
+    {
+        if (alreadyBeated) return; 
+        switch (channelState) 
+        {
+            case BeatChannelState.Waiting:
+                if (songTime >= channelNextBeatTime - Instance.margin) 
+                {
+                    OnPreBeat?.Invoke(Instance.globalBeatCount, channelBeatType);
+                    if(Instance.useDebug) Debug.Log($"--{channelBeatType}--PreBeat: {Instance.globalBeatCount}");
+                    channelState = BeatChannelState.Pre;
+                }
+                break;
+
+            case BeatChannelState.Pre:
+                if (songTime >= channelNextBeatTime) 
+                {
+                    channelLastBeatTime = channelNextBeatTime;
+                    OnBeat?.Invoke(Instance.globalBeatCount, channelBeatType);
+                    if(Instance.useDebug) Debug.Log($"--{channelBeatType}-*-Beat: {Instance.globalBeatCount}");
+                    channelState = BeatChannelState.Post;
+                }
+                break;
+
+            case BeatChannelState.Post:
+                if (songTime >= channelLastBeatTime + Instance.margin) 
+                {
+                    OnPostBeat?.Invoke(Instance.globalBeatCount, channelBeatType);
+                    if(Instance.useDebug) Debug.Log($"--{channelBeatType}--Postbeat: {Instance.globalBeatCount}");
+                    alreadyBeated = true; 
+                }
+                break;
+        }
+    }
+}
+
+    #endregion
+    
+    
     #region [METHODS]
-    private void HandleSongStopped(bool reset) => isBeating = false;
-
-    void OnPlayEvent(float tempo)
+    private void OnEnable()
     {
-        BeatTimeSec = 60d / tempo;
-        HalfBeatTimeSec = BeatTimeSec / 2d;
-        ThirdBeatTimeSec = BeatTimeSec / 3d;
-        isBeating=true;
-        OnUpdateEvent?.Invoke(BeatTimeSec);
+        AudioManager.OnPlay += OnSongPlay;
+        AudioManager.OnPause += OnSongPaused;
+        AudioManager.OnStop += OnSongStopped;
     }
+
+    private void OnDisable()
+    {
+        AudioManager.OnPlay -= OnSongPlay;
+        AudioManager.OnPause -= OnSongPaused;
+        AudioManager.OnStop -= OnSongStopped;
+    }
+
+    void OnSongPlay()
+    {
+        isBeating=true;
+    }
+    public void OnSongPaused()=> isBeating=false;
+    private void OnSongStopped() => isBeating = false;
+    
     public void HandleBeat(int bar, int beat, float tempo, int upper, int lower, int pos)
     {
-        if (beat==1 && bar==1 && !isBeating) OnPlayEvent(tempo);
-        preTrigger = true;
-        beatTrigger = true;
-        postTrigger = false;
-        
+        lastBeatTime = AudioManager.Instance.SongPositionSeconds();
+        BeatTimeSec = 60d / tempo;
+        OnUpdateEvent?.Invoke(BeatTimeSec);
         localBeatCount = beat;
         globalBeatCount = (beat) + ((bar - 1) * upper);
         globalBarCount = bar;
         globalUpperBar = upper;
         globalLowerBar = lower;
-        
-        if (useDebug) Debug.Log("beat:" + localBeatCount);
-        lastBeatTime = AudioManager.Instance.SongPositionSeconds();
-        nextBeatTime = lastBeatTime+BeatTimeSec;
-        OnBeat?.Invoke(globalBeatCount, BeatType.FullBeat); ///1, 2 ,3, 4, 1, 2, 3, 4 (segun el Upper)
-    }
-
-    void HandlePrePostBeat()
-    {
-        double margin = BeatTimeSec * margenPercentOnBeat;
-
-        //preBeat
-        if (!preTrigger && songTime >= nextBeatTime - margin)
-        {
-            preTrigger = true;
-            beatTrigger = false;
-            postTrigger = true;
-            localBeatCount = (localBeatCount+1<=globalUpperBar)?localBeatCount+1:1;
-            if (useDebug) Debug.Log("Prebeat:" + localBeatCount);
-            OnPreBeat?.Invoke(localBeatCount, BeatType.FullBeat);
-        }
-
-        //postBeat
-        if (!postTrigger && beatTrigger && songTime >= lastBeatTime + margin)
-        {
-            preTrigger = false;
-            beatTrigger = true;
-            postTrigger = true;
-            if (useDebug) Debug.Log("Postbeat:" + localBeatCount);
-            OnPostBeat?.Invoke(localBeatCount, BeatType.FullBeat);
-        }
+        if(useDebug) Debug.Log($"-*-{BeatType.FullBeat}:Beat: {localBeatCount}");
+        OnBeat?.Invoke(globalBeatCount, BeatType.FullBeat); //1, 2 ,3, 4, 1, 2, 3, 4 (segun el Upper)
+        mainBeatState = BeatChannel.BeatChannelState.Post;
+        beatChannels[0]?.SetNewTime();
+        beatChannels[1]?.SetNewTime();
+        beatChannels[2]?.SetNewTime();
+ 
     }
     
-    public BeatReciever.BeatFeedback EvaluateInput(int inputBeat, BeatType inputBeatType)
+    void Update()
+    {
+        if (!AudioManager.Instance.IsPlaying()) return;
+        songTime = AudioManager.Instance.SongPositionSeconds();
+        UpdateMainBeat();
+        //UpdateBuffers();
+    }
+
+    private void UpdateMainBeat()
+    {
+        switch (mainBeatState)
+        {
+            case BeatChannel.BeatChannelState.Waiting:
+                if (songTime >= nextBeatTime - margin)
+                {
+                    localBeatCount = (localBeatCount+1<=globalUpperBar)?localBeatCount+1:1;
+                    OnPreBeat?.Invoke(localBeatCount,BeatType.FullBeat);
+                    //OnPreBeat?.Invoke(globalBeatCount,BeatType.FullBeat);
+                    if(useDebug) Debug.Log($"-{BeatType.FullBeat}:PreBeat: {localBeatCount}");
+                    mainBeatState = BeatChannel.BeatChannelState.Pre;
+                }
+                break;
+            case BeatChannel.BeatChannelState.Post:
+                if(songTime>= lastBeatTime + margin)
+                {
+                    OnPostBeat?.Invoke(localBeatCount, BeatType.FullBeat);
+                    //OnPostBeat?.Invoke(globalBeatCount, BeatType.FullBeat);
+                    if(useDebug) Debug.Log($"-{BeatType.FullBeat}:PostBeat: {localBeatCount}");
+                    mainBeatState = BeatChannel.BeatChannelState.Waiting;
+                }
+                break;
+        }
+    }
+
+    private void UpdateBuffers()
+    {
+        //beatChannels[0]?.Update(songTime);
+        beatChannels[1]?.Update(songTime);
+        //beatChannels[2]?.Update(songTime);
+    }
+    
+    
+    public BeatReciever.BeatFeedback EvaluateInput(int inputBeat, BeatType inputBeatType, int StepParts=1)
     {
         //Debug.Log(inputBeat);
         double inputTime = AudioManager.Instance.SongPositionSeconds();;
@@ -148,7 +203,7 @@ public class BeatManager : Service<BeatManager>
         double delta = BeatTime - inputTime;
         //Debug.Log(delta);
         double absDelta = Math.Abs(delta);
-        double maxWindow = BeatTimeSec*margenPercentOnBeat;
+        double maxWindow = BeatTimeSec*margenPercentOnBeat*3/StepParts;
         //Debug.Log(maxWindow);
         double greatWindow =maxWindow * greatPercentOnMargin;
         double perfectWindow = greatWindow * perfectPercentOnMargin;
