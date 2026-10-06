@@ -16,7 +16,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField, Min(1f)] private float walkingSpeed = 10f;
-    [SerializeField, Range(0f,1f)] private float VerticalMultiplier = 0.5f;
+    [SerializeField, Range(0f,1f)] private float verticalMultiplier = 0.5f;
     [Tooltip("Multiplicador de velocidad al correr.")]
     [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
 
@@ -24,8 +24,9 @@ public class PlayerMovementController : MonoBehaviour
     private Vector2 moveDirection;
     private bool isSprinting;
 
+    public bool IsRunning => isSprinting;
     public float MaxSpeed => walkingSpeed * sprintFactor;
-    public Vector2 Velocity => moveDirection * (isSprinting ? MaxSpeed : walkingSpeed) * new Vector2(1,VerticalMultiplier);
+    public Vector2 Velocity => moveDirection * (isSprinting ? MaxSpeed : walkingSpeed) * new Vector2(1f, verticalMultiplier);
     #endregion
 
     #region [UNITY]
@@ -50,7 +51,7 @@ public class PlayerMovementController : MonoBehaviour
         Vector2 velocity = (Velocity.sqrMagnitude > DEAD_ZONE * DEAD_ZONE) ? Velocity : Vector2.zero;
         transform.localPosition += (Vector3)(velocity * Time.deltaTime);
 
-        danceBrain.OnMoving(Velocity* new Vector2(1,1/VerticalMultiplier) / walkingSpeed);
+        danceBrain.OnMoving(Velocity* new Vector2(1f, 1 / verticalMultiplier) / walkingSpeed);
         if (Mathf.Abs(Velocity.x) > THRESHOLD) Face(Mathf.Sign(Velocity.x));
     }
     #endregion

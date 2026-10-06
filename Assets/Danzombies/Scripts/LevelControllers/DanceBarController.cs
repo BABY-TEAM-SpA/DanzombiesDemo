@@ -8,6 +8,7 @@ public class DanceBarController : Service<DanceBarController>
 {
     #region [VARIABLES]
     public bool isActive { private set; get; }
+    public bool IsFilled => isFilled;
 
     [SerializeField] private Sprite iconDefaultState;
     [SerializeField] private DanceBarState[] states;

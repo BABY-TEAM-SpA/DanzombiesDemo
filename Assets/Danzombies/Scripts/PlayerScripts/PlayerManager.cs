@@ -7,7 +7,8 @@ public class PlayerManager : DanceBrain
 {
     #region [VARIABLES]
     [Header("PlayerManager")]
-    [SerializeField] private PlayerFlowController flowController;
+    [SerializeField] private PlayerInputController inputController;
+    [SerializeField] private PlayerMovementController movementController;
     [SerializeField] private PlayerComboController comboController;
     [SerializeField] private PlayerInteractionController interactionController;
     [SerializeField] private bool isTutorial;
@@ -17,14 +18,14 @@ public class PlayerManager : DanceBrain
     public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
     #endregion
 
-    #region HP
+    #region HP, Safe Zone & Combo
     private const int MAX_HP = 3;
     public int HP => hp;
     private int hp = MAX_HP;
-    #endregion
 
-    #region Combo & Flow
-    public PlayerFlowController FlowCtrl => flowController;
+    public bool IsSafe => isInSafeZone;
+    private bool isInSafeZone;
+
     public PlayerComboController ComboCtrl => comboController;
     #endregion
 
@@ -61,7 +62,6 @@ public class PlayerManager : DanceBrain
 
         danceTarget = target;
         oldTarget?.PlayerLeave(this);
-        flowController?.BindZone(target);
     }
 
     public bool TryGetTargetPuzzle(out DanceZone target)
@@ -73,9 +73,7 @@ public class PlayerManager : DanceBrain
     public void RemoveTargetPuzzle(DanceZone target)
     {
         if (target != danceTarget) return;
-
         danceTarget = null;
-        flowController?.UnbindZone(target);
     }
     #endregion
 
@@ -90,7 +88,11 @@ public class PlayerManager : DanceBrain
     }
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
-        => DanceFeedbackEvent?.Invoke(bf);
+    {
+        if (bf == BeatReciever.BeatFeedback.Bad && movementController.IsRunning)
+            inputController.DisableMoveForSeconds(0.5f); // <- [Frco] Hardcodeado D: y parcheado :D
+        DanceFeedbackEvent?.Invoke(bf);
+    }
     #endregion
 
     #region HP & SafeZone
@@ -108,7 +110,7 @@ public class PlayerManager : DanceBrain
             GameOver();
     }
 
-    public void SetInSafeZone(bool value) => flowController?.SetSafe(value);
+    public void SetInSafeZone(bool value) => isInSafeZone = value;
 
     public void GameOver()
     {
@@ -118,6 +120,11 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region Input
+    public void InputSprint(bool isSprinting)
+    {
+        movCtrl.SetRun(isSprinting);
+    }
+
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
         if(isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance", false);
@@ -127,10 +134,6 @@ public class PlayerManager : DanceBrain
             OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat, step);
         }
     }
-    public void InputSprint(bool isSprinting)
-    {
-        movCtrl.SetRun(isSprinting);
-    }
 
     public void InputInteract() => interactionController.Interact();
     #endregion
@@ -138,7 +141,6 @@ public class PlayerManager : DanceBrain
     public void Reset()
     {
         hp = MAX_HP;
-        flowController?.ResetFlow();
         comboController?.Reset();
     }
 

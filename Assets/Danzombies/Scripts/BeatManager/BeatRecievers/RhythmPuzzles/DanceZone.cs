@@ -11,7 +11,7 @@ public class DanceZone : Dancer
     [SerializeField] private bool isActive;
 
     [Header("Dance Zone - Settings")]
-    [SerializeField] public DamageMode damageMode;
+    [SerializeField] private DamageMode damageMode;
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
 
     public DanceEventManager listeners = new DanceEventManager();
@@ -30,7 +30,7 @@ public class DanceZone : Dancer
     public UnityEvent OnPlayerExited;
 
     public Action<BeatReciever.BeatFeedback> OnPlayerFeedback; // <- [Frco] Único evaluador de la entrada del jugador.
-    // El FlowComponent y PlayerManager escuchan este evento para reaccionar a la entrada del jugador.
+                                                               // El FlowComponent escucha este evento para reaccionar a la entrada del jugador.
     #endregion
 
     #region [UNITY]
@@ -160,9 +160,9 @@ public class DanceZone : Dancer
     public override void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
         if (!isActive) return;
+        Debug.Log("test");
         if (playersInside != null && !PlayerHasDanced && danceStep != DanceStep.None)
-            ReactToFeedback(BeatReciever.BeatFeedback.Bad); // <- [Frco] ¿No debería ser Ignored?
-            //playersInside?.ApplyDanceFeedback(BeatReciever.BeatFeedback.Bad);
+            ReactToFeedback(BeatReciever.BeatFeedback.Bad);
         base.OnReleaseStepAction(beat, beatType, danceStep);
         listeners.InvokeRealease(beat, beatType, danceStep);
     }
@@ -176,6 +176,7 @@ public class DanceZone : Dancer
     #region Helpers
     private void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
+        Debug.Log(bf);
         puzzle?.ResolvePlayerInput(bf);
         playersInside?.ApplyDanceFeedback(bf);
         OnPlayerFeedback?.Invoke(bf);

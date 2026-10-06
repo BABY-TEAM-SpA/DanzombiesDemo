@@ -31,7 +31,7 @@ public class BasePuzzle : RhythmPuzzle
         if (availableToDance)
         {
             if(type== BeatManager.BeatType.FullBeat) innerCounter++;
-            eventManager.InvokeRealease(beat, type, DanceStep.None);
+            eventManager.InvokeRealease(beat, type, currentStep);
             if(debug) Debug.Log($"PostBeat {beat}:{type}.... dance:{currentStep}");
             if(currentDanceSequence.CheckEndOfSequence(innerCounter)) OnPuzzleCompleted();
         }

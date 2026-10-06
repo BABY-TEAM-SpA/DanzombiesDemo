@@ -6,6 +6,25 @@ public class PlayerInputController : MonoBehaviour
 {
     [SerializeField] PlayerManager _playerManager;
 
+    private float elapsed;
+    private float recoveryTime;
+
+    #region [UNITY]
+    private void Update()
+    {
+        if (recoveryTime > 0f)
+        {
+            elapsed += Time.deltaTime;
+            if (elapsed >= recoveryTime)
+            {
+                elapsed = 0f;
+                recoveryTime = 0f;
+                EnableMoveInput();
+            }
+        }
+    }
+    #endregion
+
     #region [GLOBAL]
     /// <summary>
     /// Para simular que el jugador soltó todos los inputs, para poder dejar a Greg en un estado de Idle.
@@ -36,17 +55,34 @@ public class PlayerInputController : MonoBehaviour
     #endregion
 
     #region [MOVEMENT]
+    [Header("Movement")]
     public bool allowMoveInput;
+    [SerializeField] InputActionReference moveAction;
+    [SerializeField] InputActionReference sprintAction;
     private Vector2 inputMovementDirection;
 
     #region API
-    public void EnableMoveInput() => allowMoveInput = true;
+    public void EnableMoveInput()
+    {
+        allowMoveInput = true;
+
+        inputMovementDirection = moveAction.action.ReadValue<Vector2>().normalized;
+        _playerManager.Move(inputMovementDirection);
+        _playerManager.InputSprint(sprintAction.action.IsPressed());
+    }
+
     public void DisableMoveInput()
     {
         allowMoveInput = false;
         inputMovementDirection = Vector2.zero;
         _playerManager.Move(inputMovementDirection);
         _playerManager.InputSprint(false);
+    }
+
+    public void DisableMoveForSeconds(float seconds)
+    {
+        recoveryTime = seconds;
+        DisableMoveInput();
     }
     #endregion
 
@@ -73,6 +109,7 @@ public class PlayerInputController : MonoBehaviour
     #endregion
 
     #region [DANCE]
+    [Header("Dance")]
     public bool allowDanceInput;
     public bool northDanceInput;
     public bool southDanceInput;
@@ -83,7 +120,6 @@ public class PlayerInputController : MonoBehaviour
     private DanceDirection inputDanceDirection;
 
     #region API
-
     public void EnableDanceInput() => allowDanceInput = true;
     public void DisableDanceInput() => allowDanceInput = false;
     
@@ -91,7 +127,6 @@ public class PlayerInputController : MonoBehaviour
     public void EnableDisableDanceSouth() => southDanceInput = !southDanceInput;
     public void EnableDisableDanceEast() => eastDanceInput = !eastDanceInput;
     public void EnableDisableDanceWest() => westDanceInput = !westDanceInput;
-    
     #endregion
 
     #region Input Events
@@ -140,6 +175,7 @@ public class PlayerInputController : MonoBehaviour
     #endregion
 
     #region [INTERACTION]
+    [Header("Interaction")]
     public bool allowInteractInput;
 
     #region API

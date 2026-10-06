@@ -5078,7 +5078,8 @@ MonoBehaviour:
     OnReaction:
       m_PersistentCalls:
         m_Calls: []
-  flowController: {fileID: 0}
+  inputController: {fileID: 511795604147366574}
+  movementController: {fileID: 3968905282911785478}
   comboController: {fileID: 9216565697310443677}
   interactionController: {fileID: 7325312964091968609}
   isTutorial: 0
@@ -5333,6 +5334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
   _playerManager: {fileID: 6530795612346585224}
   allowMoveInput: 1
+  moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  sprintAction: {fileID: -7471211009204490832, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   allowDanceInput: 1
   northDanceInput: 0
   southDanceInput: 0
@@ -5354,7 +5357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   danceBrain: {fileID: 6530795612346585224}
   walkingSpeed: 5
-  VerticalMultiplier: 0.5
+  verticalMultiplier: 0.5
   sprintFactor: 1.6
 --- !u!114 &8330526141443195807
 MonoBehaviour:

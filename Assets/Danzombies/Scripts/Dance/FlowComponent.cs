@@ -28,7 +28,7 @@ public class FlowComponent : MonoBehaviour
 
     public bool IsFilled => flow == maxFlow;
 
-    private bool isSafe;
+    private bool ignore;
     private FlowState? lastShownState;
 
     [SerializeField] private FlowComponentState[] states;
@@ -138,7 +138,7 @@ public class FlowComponent : MonoBehaviour
 
     public void Increase(int value)
     {
-        if (isSafe && value < 0)
+        if (PlayerManager.Player && PlayerManager.Player.IsSafe)
             value = 0;
 
         int result = Flow + (GameManager.Instance.Alza * value);
@@ -167,8 +167,6 @@ public class FlowComponent : MonoBehaviour
     #endregion
 
     #region Helpers
-    public void SetSafe(bool value) => isSafe = value;
-
     private FlowComponentState GetFlowState(FlowState state)
         => states.FirstOrDefault(s => state == s.state);
 

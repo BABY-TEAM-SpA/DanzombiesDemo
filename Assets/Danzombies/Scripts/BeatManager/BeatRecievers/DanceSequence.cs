@@ -86,8 +86,8 @@ public class DanceSequence : MonoBehaviour
 
             case SeqStopMode.StopOnFullFlow:
                 bool isBarFilled = false;
-                if (PlayerManager.Player)
-                    isBarFilled = PlayerManager.Player.FlowCtrl.IsFilled;
+                if (DanceBarController.Instance)
+                    isBarFilled = DanceBarController.Instance.IsFilled;
                 if (isBarFilled)
                     OnDanceSequenceFinished?.Invoke();
                 return isBarFilled;
