@@ -1,5 +1,119 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3066596660180004192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2807157470261791393}
+  - component: {fileID: 642981396120243976}
+  m_Layer: 0
+  m_Name: ExclamationRig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2807157470261791393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3066596660180004192}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 13, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 2943832998438784630}
+  m_Father: {fileID: 2425359846088772492}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &642981396120243976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3066596660180004192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
+  playOnStart: 0
+  animName: 
+  sequences:
+  - sequenceName: Center
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 2807157470261791393}
+      timeMode: 0
+      animationSteps:
+      - stepType: 2
+        duration: 0.06
+        easing: 0
+        position: {x: 0.5, y: 13}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: LeanLeft
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 2807157470261791393}
+      timeMode: 0
+      animationSteps:
+      - stepType: 2
+        duration: 0.06
+        easing: 0
+        position: {x: -0.5, y: 12.5}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: LeanRight
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 2807157470261791393}
+      timeMode: 0
+      animationSteps:
+      - stepType: 2
+        duration: 0.06
+        easing: 0
+        position: {x: 1.5, y: 12.5}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4289113837907152225
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +151,7 @@ Transform:
   m_Children:
   - {fileID: 2382966619084325648}
   - {fileID: 4800180245375766510}
+  - {fileID: 2807157470261791393}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &5214771201940626125
@@ -143,6 +258,69 @@ MonoBehaviour:
     OnReaction:
       m_PersistentCalls:
         m_Calls: []
+  - expressionType: 1
+    alpha: {fileID: 22100000, guid: 33b0340952ee3b346a244db55238a26c, type: 2}
+    beta: {fileID: 22100000, guid: 33b0340952ee3b346a244db55238a26c, type: 2}
+    OnReaction:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3952486397621228636}
+          m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+          m_MethodName: PlaySequence
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Pam
+            m_BoolArgument: 0
+          m_CallState: 2
+  OnLeaningLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 642981396120243976}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeanLeft
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLeaningRight:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 642981396120243976}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeanRight
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLeaningNone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 642981396120243976}
+        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Center
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,16 +333,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a75cbbec93e2e94fb54c9de1d5a4c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
   danceBrain: {fileID: 3279488030120961210}
-  isMovementEnabled: 1
-  moveDirection: {x: 0, y: 0}
   walkingSpeed: 10
+  verticalMultiplier: 0.5
   sprintFactor: 1.5
-  useScriptedDuration: 0
-  scriptLookingEnding: 0
-  scriptedDuration: 0
-  baseSpeed: 0
 --- !u!114 &4146240392959961186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +524,7 @@ MonoBehaviour:
   _danceBrain: {fileID: 3279488030120961210}
   animator: {fileID: 6072593270596461221}
   playerFeedbackEvents: []
+  talkingExpressions: []
 --- !u!60 &2142067527970415792
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -494,3 +667,76 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1001 &797376315053740547
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2807157470261791393}
+    m_Modifications:
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7819575366847526756, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+      propertyPath: m_Name
+      value: ExclamationIcon_UIAnimator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+--- !u!4 &2943832998438784630 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2578945254221864053, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+  m_PrefabInstance: {fileID: 797376315053740547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3952486397621228636 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4452605271668180575, guid: c4da7d6ee1a98c74c90fd9a5bb84e3b3, type: 3}
+  m_PrefabInstance: {fileID: 797376315053740547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiAnimator

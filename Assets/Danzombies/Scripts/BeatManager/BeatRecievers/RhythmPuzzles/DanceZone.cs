@@ -160,7 +160,6 @@ public class DanceZone : Dancer
     public override void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
         if (!isActive) return;
-        Debug.Log("test");
         if (playersInside != null && !PlayerHasDanced && danceStep != DanceStep.None)
             ReactToFeedback(BeatReciever.BeatFeedback.Bad);
         base.OnReleaseStepAction(beat, beatType, danceStep);
@@ -176,7 +175,6 @@ public class DanceZone : Dancer
     #region Helpers
     private void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
-        Debug.Log(bf);
         puzzle?.ResolvePlayerInput(bf);
         playersInside?.ApplyDanceFeedback(bf);
         OnPlayerFeedback?.Invoke(bf);
