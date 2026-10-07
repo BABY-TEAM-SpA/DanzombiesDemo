@@ -60,6 +60,30 @@ public class LevelProgressTracker : Service<LevelProgressTracker>
     }
     #endregion
 
+    #region API
+    public void RegisterStep(BeatReciever.BeatFeedback feedback)
+    {
+        switch (feedback)
+        {
+            case BeatReciever.BeatFeedback.Perfect:
+                PerfectSteps++;
+                break;
+            case BeatReciever.BeatFeedback.Good:
+                GoodSteps++;
+                break;
+            case BeatReciever.BeatFeedback.Late:
+            case BeatReciever.BeatFeedback.Early:
+                OkSteps++;
+                break;
+            case BeatReciever.BeatFeedback.Bad:
+                BadSteps++;
+                break;
+        }
+
+        Debug.Log($"Perfect: {PerfectSteps} | Good: {GoodSteps} | Ok: {OkSteps} | Bad: {BadSteps}");
+    }
+    #endregion
+
     #region Helpers
     private void Reset()
     {

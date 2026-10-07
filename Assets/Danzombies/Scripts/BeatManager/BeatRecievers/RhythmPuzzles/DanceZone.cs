@@ -103,8 +103,6 @@ public class DanceZone : Dancer
     {
         Debug.Log($"[DanceZone] {name} completed.");
         OnCompleted?.Invoke();
-
-        Debug.Log(LevelProgressTracker.Instance.HordesCleared);
     }
     #endregion
 
