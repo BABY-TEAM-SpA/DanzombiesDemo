@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -84,6 +85,7 @@ public class Dancer: MonoBehaviour
     public UnityEvent<DanceStep> onPostDance;
     public UnityEvent onDeactivated;
     public UnityEvent<ExpressionType> onReaction;
+    public Action OnCompleted;
 
     public virtual void OnEnablePuzzle(RhythmPuzzle puzzl)
     {

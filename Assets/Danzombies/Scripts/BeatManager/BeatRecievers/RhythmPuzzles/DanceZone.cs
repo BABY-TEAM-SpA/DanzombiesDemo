@@ -98,6 +98,14 @@ public class DanceZone : Dancer
             ReactToFeedback(bf);
         }
     }
+
+    public void CompleteZone()
+    {
+        Debug.Log($"[DanceZone] {name} completed.");
+        OnCompleted?.Invoke();
+
+        Debug.Log(LevelProgressTracker.Instance.HordesCleared);
+    }
     #endregion
 
     #region Enter/Exit

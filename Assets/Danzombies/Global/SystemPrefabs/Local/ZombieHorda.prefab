@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 6065324922489293100}
   - component: {fileID: 6031555963687200971}
   - component: {fileID: 8673488118355739958}
+  - component: {fileID: 8804393219255525147}
   m_Layer: 0
   m_Name: ZombieHorda
   m_TagString: Untagged
@@ -514,7 +515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7bf0b902eb4ab42ab9b2e293da3a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlowController
-  puzzle: {fileID: 1699586347332263442}
   zone: {fileID: 6031555963687200971}
   flow: 5
   maxFlow: 10
@@ -564,10 +564,46 @@ MonoBehaviour:
     isPercentage: 0
   OnFlowFilled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6031555963687200971}
+        m_TargetAssemblyTypeName: DanceZone, Assembly-CSharp
+        m_MethodName: CompleteZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8804393219255525147}
+        m_TargetAssemblyTypeName: TrackerComponent, Assembly-CSharp
+        m_MethodName: Track
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnFlowEmptied:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8804393219255525147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582055949647408294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6037a21825dd41e43b6db892050205ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrackerComponent
 --- !u!1001 &20434162094458597
 PrefabInstance:
   m_ObjectHideFlags: 0
