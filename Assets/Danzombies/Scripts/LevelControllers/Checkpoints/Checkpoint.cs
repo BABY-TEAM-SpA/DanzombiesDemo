@@ -12,9 +12,14 @@ public class Checkpoint : MonoBehaviour
     private Transform playerSpawn;
 
     public bool oneShot = true;
-    private bool triggered;
+
+    public bool Triggered => entered && exited;
+    private bool entered;
+    private bool exited;
 
     public UnityEvent OnCheckpoint;
+    public UnityEvent OnEnterCheckpoint;
+    public UnityEvent OnLeaveCheckpoint;
 
     public Action<Checkpoint, PlayerManager> OnPlayerEntered;
     #endregion
@@ -31,13 +36,22 @@ public class Checkpoint : MonoBehaviour
         {
             if (isRespawn)
                 OnPlayerEntered?.Invoke(this, player);
-
-            if (oneShot && triggered)
+            if (oneShot && entered)
                 return;
-
-            triggered = true;
-            Run();
+            entered = true;
+            OnEnterCheckpoint?.Invoke();
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player"))
+            return;
+
+        if (oneShot && exited)
+            return;
+        exited = true;
+        OnLeaveCheckpoint?.Invoke();
     }
     #endregion
 
@@ -48,7 +62,16 @@ public class Checkpoint : MonoBehaviour
         player.transform.position = playerSpawn.position;
     }
 
-    public void Run() => OnCheckpoint?.Invoke();
-    public void Reset() => triggered = false;
+    public void Run()
+    {
+        OnEnterCheckpoint?.Invoke();
+        OnLeaveCheckpoint?.Invoke();
+    }
+
+    public void Reset()
+    {
+        entered = false;
+        exited = false;
+    }
     #endregion
 }

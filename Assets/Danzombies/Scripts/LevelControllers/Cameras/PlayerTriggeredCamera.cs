@@ -1,53 +1,39 @@
-using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerTriggeredCamera : MonoBehaviour
 {
     #region [VARIABLES]
-    private const int FOLLOW_PRIORITY = 1;
-    private const int IDLE_PRIORITY = 0;
-    private Animator targetAnimator;
-
-    [SerializeField] private CinemachineStateDrivenCamera stateDrivenCamera;
+    [SerializeField] private CinemachineStateDrivenCamera sdCamera;
     [SerializeField] private CinemachineCamera[] cameras;
 
-    public CinemachineCamera ActiveCamera => stateDrivenCamera?.LiveChild as CinemachineCamera;
-
-    public Action<PlayerTriggeredCamera> OnPlayerFollowed;
-    public Action<PlayerTriggeredCamera> OnPlayerUnfollowed;
-    #endregion
-
-    #region [UNITY]
-    private void Start() => stateDrivenCamera.Priority = IDLE_PRIORITY;
-
-    #region Trigger
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && other.TryGetComponent(out targetAnimator))
-            FollowPlayer(targetAnimator);
-    }
-
-    //private void OnTriggerExit2D(Collider2D other)
-    //{
-    //    if (other.CompareTag("Player") && other.TryGetComponent(out targetAnimator))
-    //        UnfollowPlayer();
-    //}
-    #endregion
+    public CinemachineCamera ActiveCamera => sdCamera?.LiveChild as CinemachineCamera;
     #endregion
 
     #region [METHODS]
-    #region API
-    public void FollowPlayer(Animator playerAnimator)
+    #region Setup
+    public void Prepare(Animator playerAnimator)
     {
-        stateDrivenCamera.AnimatedTarget = playerAnimator;
-        SetInstructions();
-
+        sdCamera.AnimatedTarget = playerAnimator;
         foreach (CinemachineCamera camera in cameras)
             camera.Follow = playerAnimator.transform;
-        stateDrivenCamera.Priority = FOLLOW_PRIORITY;
+        SetInstructions();
+    }
+    #endregion
 
-        OnPlayerFollowed?.Invoke(this);
+    #region API
+    public void Activate(bool value) => sdCamera.gameObject.SetActive(value);
+
+    public void FollowPlayer(Animator playerAnimator)
+    {
+        //sdCamera.AnimatedTarget = playerAnimator;
+        //SetInstructions();
+
+        //foreach (CinemachineCamera camera in cameras)
+        //    camera.Follow = playerAnimator.transform;
+        //sdCamera.Priority = FOLLOW_PRIORITY;
+
+        //OnPlayerFollowed?.Invoke(this);
     }
 
     public void UnfollowPlayer()
@@ -57,11 +43,13 @@ public class PlayerTriggeredCamera : MonoBehaviour
         foreach (CinemachineCamera camera in cameras)
             camera.Follow = null;
         */
-        stateDrivenCamera.Priority = IDLE_PRIORITY;
+        //sdCamera.Priority = IDLE_PRIORITY;
 
-        OnPlayerUnfollowed?.Invoke(this);
+        //OnPlayerUnfollowed?.Invoke(this);
     }
+    #endregion
 
+    #region Helpers
     public Vector2 GetAverageCameras()
     {
         Vector2 center = Vector2.zero;
@@ -70,11 +58,10 @@ public class PlayerTriggeredCamera : MonoBehaviour
 
         return center / cameras.Length;
     }
-    #endregion
 
     private void SetInstructions()
     {
-        CinemachineStateDrivenCamera.Instruction[] instructions = stateDrivenCamera.Instructions;
+        CinemachineStateDrivenCamera.Instruction[] instructions = sdCamera.Instructions;
         if (instructions.Length < 2)
             return;
 
@@ -94,7 +81,8 @@ public class PlayerTriggeredCamera : MonoBehaviour
             MinDuration = instructions[1].MinDuration
         };
 
-        stateDrivenCamera.Instructions = instructions;
+        sdCamera.Instructions = instructions;
     }
+    #endregion
     #endregion
 }

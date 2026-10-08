@@ -1,3 +1,4 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -5,31 +6,38 @@ public class CamerasController : MonoBehaviour
 {
     #region [VARIABLES]
     private PlayerTriggeredCamera[] cameras;
-    private PlayerTriggeredCamera playerTriggeredCamera;
+    private PlayerTriggeredCamera currentCam;
 
-    public CinemachineCamera CurrentCamera => playerTriggeredCamera?.ActiveCamera;
-    public Vector2 CenterOfCamera => playerTriggeredCamera?.GetAverageCameras() ?? Vector2.zero;
+    public CinemachineCamera CurrentCamera => currentCam?.ActiveCamera;
+    public Vector2 CenterOfCamera => currentCam?.GetAverageCameras() ?? Vector2.zero;
+
+    public Action<PlayerTriggeredCamera> OnCameraActivated;
     #endregion
 
     #region [UNITY]
     private void Awake()
-    {
-        cameras = GetComponentsInChildren<PlayerTriggeredCamera>();
+        => cameras = GetComponentsInChildren<PlayerTriggeredCamera>();
 
+    private void Start()
+    {
         foreach (PlayerTriggeredCamera cam in cameras)
-            cam.OnPlayerFollowed += OnCameraFollowed;
+            cam.Prepare(PlayerManager.Player.ConfinePlayerCamera());
     }
 
     private void LateUpdate() => CameraFrustum.Update();
     #endregion
 
-    #region [EVENTS]
-    private void OnCameraFollowed(PlayerTriggeredCamera cam)
+    #region [METHODS]
+    public void ActivateCamera(PlayerTriggeredCamera cam)
     {
-        if (playerTriggeredCamera != null && playerTriggeredCamera != cam)
-            playerTriggeredCamera.UnfollowPlayer();
+        if (cam == null || currentCam == cam)
+            return;
 
-        playerTriggeredCamera = cam;
+        currentCam?.Activate(false);
+        cam.Activate(true);
+        currentCam = cam;
+
+        OnCameraActivated?.Invoke(cam);
     }
     #endregion
 }
