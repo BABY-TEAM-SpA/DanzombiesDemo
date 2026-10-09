@@ -20,7 +20,7 @@ public class CamerasController : MonoBehaviour
     {
         foreach (PlayerTriggeredCamera cam in cameras)
         {
-            cam.Prepare(PlayerManager.Player.ConfinePlayerCamera());
+            //cam.Prepare(PlayerManager.Player.ConfinePlayerCamera());
             cam.OnCameraActivated += () => currentCam = cam;
         }
     }

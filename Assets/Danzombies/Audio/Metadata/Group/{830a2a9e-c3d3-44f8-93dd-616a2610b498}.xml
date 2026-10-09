@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{830a2a9e-c3d3-44f8-93dd-616a2610b498}">
+		<property name="name">
+			<value>Greg</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{dc6b4f01-004d-4779-ba11-539f6ea3dc22}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{b07caed4-c03f-43cf-a2dd-53e1b581b008}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{87ee7aeb-3c9f-4cd8-8beb-9066862fafa8}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{dc6b4f01-004d-4779-ba11-539f6ea3dc22}">
+		<relationship name="effects">
+			<destination>{14ca6c2a-0450-4508-bdef-68dd614c671a}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{b07caed4-c03f-43cf-a2dd-53e1b581b008}" />
+	<object class="MixerBusFader" id="{14ca6c2a-0450-4508-bdef-68dd614c671a}" />
+</objects>

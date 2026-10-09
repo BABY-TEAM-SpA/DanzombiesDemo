@@ -33,6 +33,8 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #region API
     public void FollowPlayer(Animator playerAnimator)
     {
+        Debug.LogError("[PlayerTriggeredCamera] FollowPlayer() deprecated.");
+
         //sdCamera.AnimatedTarget = playerAnimator;
         //SetInstructions();
 
@@ -45,6 +47,8 @@ public class PlayerTriggeredCamera : MonoBehaviour
 
     public void UnfollowPlayer()
     {
+        Debug.LogError("[PlayerTriggeredCamera] UnfollowPlayer() deprecated.");
+
         /*
         stateDrivenCamera.AnimatedTarget = null;
         foreach (CinemachineCamera camera in cameras)

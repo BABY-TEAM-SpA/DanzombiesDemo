@@ -16,6 +16,7 @@ public class DevMode : Service<DevMode>
     [SerializeField] private Transform content;
 
     private Transform root;
+    private Transform aux; // <- [Frco] Temporal, hasta que el menú de pausa exista y tenga las opciones de sonido
     private bool isShowing;
     private Dictionary<string, LoadScenePack> scenePacks = new(); // [SceneName] -> LoadScenePack
     #endregion
@@ -24,6 +25,7 @@ public class DevMode : Service<DevMode>
     private void Start()
     {
         root = transform.GetChild(0);
+        aux = transform.GetChild(1);
         HideCanvas();
 
         ClearCanvas();
@@ -46,6 +48,7 @@ public class DevMode : Service<DevMode>
     private void ShowCanvas()
     {
         root.gameObject.SetActive(true);
+        aux.gameObject.SetActive(true);
         raycaster.enabled = true;
         isShowing = true;
     }
@@ -53,6 +56,7 @@ public class DevMode : Service<DevMode>
     private void HideCanvas()
     {
         root.gameObject.SetActive(false);
+        aux.gameObject.SetActive(false);
         raycaster.enabled = false;
         isShowing = false;
     }

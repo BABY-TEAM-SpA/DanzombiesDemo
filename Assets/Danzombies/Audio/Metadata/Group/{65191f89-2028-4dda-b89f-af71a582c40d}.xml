@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{65191f89-2028-4dda-b89f-af71a582c40d}">
+		<property name="name">
+			<value>Zombies</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{01d26185-5177-4560-8fe5-b08e7019d1d0}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{565f576c-4b97-4d5f-87d6-328fdcbac621}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{87ee7aeb-3c9f-4cd8-8beb-9066862fafa8}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{01d26185-5177-4560-8fe5-b08e7019d1d0}">
+		<relationship name="effects">
+			<destination>{51db7717-6052-4a61-8eff-6b781d3660f9}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{565f576c-4b97-4d5f-87d6-328fdcbac621}" />
+	<object class="MixerBusFader" id="{51db7717-6052-4a61-8eff-6b781d3660f9}" />
+</objects>

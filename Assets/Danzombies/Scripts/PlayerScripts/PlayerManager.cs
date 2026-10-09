@@ -149,6 +149,6 @@ public class PlayerManager : DanceBrain
         comboController?.Reset();
     }
 
-    public Animator ConfinePlayerCamera() => danceAnimCtrl.animator;
+    public Animator ConfinePlayerCamera() => GetComponent<Animator>();
     #endregion
 }
