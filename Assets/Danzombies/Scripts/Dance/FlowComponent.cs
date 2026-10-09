@@ -139,7 +139,7 @@ public class FlowComponent : MonoBehaviour
     public void Increase(int value)
     {
         if (PlayerManager.Player && PlayerManager.Player.IsSafe)
-            value = 0;
+            value = Mathf.Max(value, 0);
 
         int result = Flow + (GameManager.Instance.Alza * value);
         SetFlow(result);
