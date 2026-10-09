@@ -15,12 +15,12 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private DanceBrain danceBrain;
 
     [Header("Movement")]
+    [SerializeField] private bool isMovementEnabled = true;
     [SerializeField, Min(1f)] private float walkingSpeed = 10f;
     [SerializeField, Range(0f,1f)] private float verticalMultiplier = 0.5f;
     [Tooltip("Multiplicador de velocidad al correr.")]
     [SerializeField, Range(1f, 2f)] private float sprintFactor = 1.5f;
 
-    private bool isMovementEnabled = true;
     private Vector2 moveDirection;
     private bool isSprinting;
 

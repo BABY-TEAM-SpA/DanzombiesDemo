@@ -1,3 +1,4 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,6 +9,14 @@ public class PlayerTriggeredCamera : MonoBehaviour
     [SerializeField] private CinemachineCamera[] cameras;
 
     public CinemachineCamera ActiveCamera => sdCamera?.LiveChild as CinemachineCamera;
+
+    public Action OnCameraActivated;
+    public Action OnCameraDeactivated;
+    #endregion
+
+    #region [UNITY]
+    private void OnEnable() => OnCameraActivated?.Invoke();
+    private void OnDisable() => OnCameraDeactivated?.Invoke();
     #endregion
 
     #region [METHODS]
@@ -22,8 +31,6 @@ public class PlayerTriggeredCamera : MonoBehaviour
     #endregion
 
     #region API
-    public void Activate(bool value) => sdCamera.gameObject.SetActive(value);
-
     public void FollowPlayer(Animator playerAnimator)
     {
         //sdCamera.AnimatedTarget = playerAnimator;

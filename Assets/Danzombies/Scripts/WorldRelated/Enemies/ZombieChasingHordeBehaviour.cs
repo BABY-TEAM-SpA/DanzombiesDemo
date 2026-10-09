@@ -11,7 +11,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     [SerializeField] Animator animator;
 
     [Header("Settings")]
-    [SerializeField] bool chaseOnStart;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
 
@@ -34,12 +33,6 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
     #endregion
 
     #region [UNITY]
-    private void Start()
-    {
-        if (chaseOnStart)
-            SetChase(true);
-    }
-
     private void Update()
     {
         if (isChasing)

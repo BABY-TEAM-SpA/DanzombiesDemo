@@ -10,8 +10,6 @@ public class CamerasController : MonoBehaviour
 
     public CinemachineCamera CurrentCamera => currentCam?.ActiveCamera;
     public Vector2 CenterOfCamera => currentCam?.GetAverageCameras() ?? Vector2.zero;
-
-    public Action<PlayerTriggeredCamera> OnCameraActivated;
     #endregion
 
     #region [UNITY]
@@ -21,23 +19,12 @@ public class CamerasController : MonoBehaviour
     private void Start()
     {
         foreach (PlayerTriggeredCamera cam in cameras)
+        {
             cam.Prepare(PlayerManager.Player.ConfinePlayerCamera());
+            cam.OnCameraActivated += () => currentCam = cam;
+        }
     }
 
     private void LateUpdate() => CameraFrustum.Update();
-    #endregion
-
-    #region [METHODS]
-    public void ActivateCamera(PlayerTriggeredCamera cam)
-    {
-        if (cam == null || currentCam == cam)
-            return;
-
-        currentCam?.Activate(false);
-        cam.Activate(true);
-        currentCam = cam;
-
-        OnCameraActivated?.Invoke(cam);
-    }
     #endregion
 }
