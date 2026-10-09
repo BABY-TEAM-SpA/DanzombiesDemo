@@ -89,8 +89,11 @@ public class PlayerManager : DanceBrain
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
-        if (bf == BeatReciever.BeatFeedback.Bad && movementController.IsRunning)
-            inputController.DisableMoveForSeconds(0.5f); // <- [Frco] Hardcodeado D: y parcheado :D
+        if (bf == BeatReciever.BeatFeedback.Bad)
+        {
+            if (movementController.IsRunning && !IsSafe)
+                inputController.DisableMoveForSeconds(0.5f); // <- [Frco] Hardcodeado D: y parcheado :D
+        }
 
         LevelProgressTracker.Instance?.RegisterStep(bf);
         DanceFeedbackEvent?.Invoke(bf);
