@@ -55,7 +55,7 @@ public class SFXEmitter : MonoBehaviour
 
     private void Update()
     {
-        if (target && limiter)transform.position = BoundsContainer.ClampPosition(target.position, limiter);
+        if (target && limiter) transform.position = BoundsContainer.ClampPosition(target.position, limiter);
     }
 
     private void OnDestroy()
@@ -63,6 +63,20 @@ public class SFXEmitter : MonoBehaviour
         if (sfxInstance.isValid())
             sfxInstance.release();
     }
+
+    #region Enabled
+    private void OnEnable()
+    {
+        Pauser.Instance.OnPause.AddListener(Pause);
+        Pauser.Instance.OnResume.AddListener(Resume);
+    }
+
+    private void OnDisable()
+    {
+        Pauser.Instance.OnPause.RemoveListener(Pause);
+        Pauser.Instance.OnResume.RemoveListener(Resume);
+    }
+    #endregion
     #endregion
 
     #region [METHODS]
@@ -74,6 +88,18 @@ public class SFXEmitter : MonoBehaviour
             sfxInstance.start();
             RuntimeManager.AttachInstanceToGameObject(sfxInstance, gameObject, GetComponent<Rigidbody2D>());
         }
+    }
+
+    public void Pause()
+    {
+        if (sfxInstance.isValid())
+            sfxInstance.setPaused(true);
+    }
+
+    public void Resume()
+    {
+        if (sfxInstance.isValid())
+            sfxInstance.setPaused(false);
     }
 
     public void Stop(bool fadeOut)

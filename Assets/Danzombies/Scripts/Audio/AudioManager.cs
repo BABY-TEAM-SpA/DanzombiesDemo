@@ -30,6 +30,20 @@ public class AudioManager : Service<AudioManager>
 
         base.OnDestroy();
     }
+
+    #region Enabled
+    private void OnEnable()
+    {
+        Pauser.Instance.OnPause.AddListener(PauseSong);
+        Pauser.Instance.OnResume.AddListener(ResumeSong);
+    }
+
+    private void OnDisable()
+    {
+        Pauser.Instance.OnPause.RemoveListener(PauseSong);
+        Pauser.Instance.OnResume.RemoveListener(ResumeSong);
+    }
+    #endregion
     #endregion
 
     #region [METHODS]

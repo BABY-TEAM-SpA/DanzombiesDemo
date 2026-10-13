@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -19,10 +20,11 @@ public class Pauser : Service<Pauser>
     protected override void Awake()
     {
         base.Awake();
-
-        pauseAction.action.started += PauseInput;
         Resume();
     }
+
+    private void OnEnable() => pauseAction.action.started += PauseInput;
+    private void OnDisable() => pauseAction.action.started -= PauseInput;
     #endregion
 
     #region [METHODS]
