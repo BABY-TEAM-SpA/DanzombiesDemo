@@ -30,6 +30,7 @@ public class SFXEmitter : MonoBehaviour
     public ParamRef activeParam; // <- Abstracción del parámetro del evento, NO es una referencia directa, ni siquiera una copia,
                                  //    porque no se clona a partir del evento; hay que verlo como un struct que ocupar en el evento real
     public bool playOnStart;
+    public bool listenPause = true;
     [Range(MIN_VOLUME, MAX_VOLUME)] public float volume = 1f;
 
     [Header("Dynamic")]
@@ -67,14 +68,20 @@ public class SFXEmitter : MonoBehaviour
     #region Enabled
     private void OnEnable()
     {
-        Pauser.Instance.OnPause.AddListener(Pause);
-        Pauser.Instance.OnResume.AddListener(Resume);
+        if (listenPause)
+        {
+            Pauser.Instance.OnPause.AddListener(Pause);
+            Pauser.Instance.OnResume.AddListener(Resume);
+        }
     }
 
     private void OnDisable()
     {
-        Pauser.Instance.OnPause.RemoveListener(Pause);
-        Pauser.Instance.OnResume.RemoveListener(Resume);
+        if (Pauser.Instance && listenPause)
+        {
+            Pauser.Instance.OnPause.RemoveListener(Pause);
+            Pauser.Instance.OnResume.RemoveListener(Resume);
+        }
     }
     #endregion
     #endregion

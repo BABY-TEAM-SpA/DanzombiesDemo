@@ -40,8 +40,11 @@ public class AudioManager : Service<AudioManager>
 
     private void OnDisable()
     {
-        Pauser.Instance.OnPause.RemoveListener(PauseSong);
-        Pauser.Instance.OnResume.RemoveListener(ResumeSong);
+        if (Pauser.Instance)
+        {
+            Pauser.Instance.OnPause.RemoveListener(PauseSong);
+            Pauser.Instance.OnResume.RemoveListener(ResumeSong);
+        }
     }
     #endregion
     #endregion
