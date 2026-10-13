@@ -20,35 +20,35 @@ public class TutorialPuzzle : RhythmPuzzle
         if (currentSequenceIndex < TutorialSequences.Count) SetSequence(TutorialSequences[currentSequenceIndex]);
     }
     
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    public  void PreBeatAction(int beat, BeatManager.BeatType type)
     {
         if (!availableToDance) return;
         //g.Log(BeatManager.Instance.localBeatCount);
         //Debug.Log(beat);
         currentStep = currentDanceSequence.GetDanceStep(beat-1,type);
         GetNextStep(beat,type);
-        eventManager.InvokePrepare(beat,type,currentStep);
+        //eventManager.InvokePrepare(beat,type,currentStep);
         
     }
 
-    public override void BeatAction(int beat, BeatManager.BeatType type)
+    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
     {
         if (!availableToDance)
         {
             //Debug.Log(BeatManager.Instance.localBeatCount);
-            eventManager.InvokePreDance(beat, type);
+            //eventManager.InvokePreDance(beatCounter, beatType);
             return;
         }
         //Debug.Log(BeatManager.Instance.localBeatCount);
-        eventManager.InvokeDance(beat,type,currentStep);
+        danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
     }
 
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    public  void PostBeatAction(int beat, BeatManager.BeatType type)
     {
         if (availableToDance)
         {
             //Debug.Log(BeatManager.Instance.localBeatCount);
-            eventManager.InvokeRealease(beat, type, currentStep);
+            //eventManager.InvokeRealease(beat, type, currentStep);
             CheckEnd(beat);
         }
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar) availableToDance = true; 
@@ -57,12 +57,12 @@ public class TutorialPuzzle : RhythmPuzzle
     public void GetNextStep(int beat, BeatManager.BeatType type)
     {
         DanceStep nextStep = currentDanceSequence.GetFutureStep(beat-1,type);
-        eventManager.InvokeNextStep(beat,type,nextStep);
+        danceEventBuffer.InvokeNextStep(beat,type,nextStep);
     }
     
     public override void PreparePuzzle()
     {
-        eventManager.AddListener(zone);
+        danceEventBuffer.AddListener(zone);
         //eventManager.AddListener(HUD);
     }
     

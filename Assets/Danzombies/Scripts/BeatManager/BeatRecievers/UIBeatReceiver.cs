@@ -18,17 +18,17 @@ public class UIBeatReceiver : BeatReciever
 
     #region [GODOT]
     #region Beat Receiver
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    public void PreBeatAction(int beat, BeatManager.BeatType type)
     {
         OnPreBeat?.Invoke();
     }
 
-    public override void BeatAction(int beat, BeatManager.BeatType type)
+    public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
         OnBeat?.Invoke();
     }
 
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    public void PostBeatAction(int beat, BeatManager.BeatType type)
     {
         OnPostBeat?.Invoke();
     }

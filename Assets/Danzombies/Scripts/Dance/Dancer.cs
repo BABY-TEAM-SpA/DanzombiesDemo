@@ -4,28 +4,28 @@ using UnityEngine.Events;
 
 
 
-public class DanceEventManager
+public class DanceEventBuffer
 {
     private delegate void OnPuzzle(RhythmPuzzle puzzle);
     private event OnPuzzle OnEnable;
     private event OnPuzzle OnReseat;
     private event OnPuzzle OnDisable;
-    private delegate void OnDanceSetEvent(int beat, BeatManager.BeatType beatType,DanceStep danceStep);
-    private event OnDanceSetEvent OnPrepareStep;
-    private event OnDanceSetEvent OnPreDanceStep;
+    private delegate void OnDanceSetEvent(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep);
+    //private event OnDanceSetEvent OnPrepareStep;
     private event OnDanceSetEvent OnDanceStep;
-    private event OnDanceSetEvent OnReleaseStep;
-    private event OnDanceSetEvent OnNextStep;
+    //private event OnDanceSetEvent OnReleaseStep;
+    private delegate void OnPreDanceSetEvent(int beatCounter, BeatManager.BeatType beatType, DanceStep danceStep);
+    private event OnPreDanceSetEvent OnNextStep;
     
     public void AddListener(Dancer dancer)
     {
         OnEnable  += dancer.OnEnablePuzzle;
         OnReseat  += dancer.OnReseatPuzzle;
         OnDisable  += dancer.OnDisablePuzzle;
-        OnPrepareStep += dancer.OnPrepareStepAction;
-        OnPreDanceStep += dancer.OnPreDanceStepAction;
+        //OnPrepareStep += dancer.OnPrepareStepAction;
+        //OnPreDanceStep += dancer.OnPreDanceStepAction;
         OnDanceStep += dancer.OnDanceStepAction;
-        OnReleaseStep += dancer.OnReleaseStepAction;
+        //OnReleaseStep += dancer.OnReleaseStepAction;
         OnNextStep += dancer.OnSetNextSetAction;
     }
     public void RemoveListener(Dancer dancer)
@@ -33,18 +33,18 @@ public class DanceEventManager
         OnEnable  -= dancer.OnEnablePuzzle;
         OnReseat  -= dancer.OnReseatPuzzle;
         OnDisable  -= dancer.OnDisablePuzzle;
-        OnPrepareStep -= dancer.OnPrepareStepAction;
-        OnPreDanceStep -= dancer.OnPreDanceStepAction;
+        //OnPrepareStep -= dancer.OnPrepareStepAction;
+        //OnPreDanceStep -= dancer.OnPreDanceStepAction;
         OnDanceStep -= dancer.OnDanceStepAction;
-        OnReleaseStep -= dancer.OnReleaseStepAction;
+        //OnReleaseStep -= dancer.OnReleaseStepAction;
         OnNextStep -= dancer.OnSetNextSetAction;
     }
     public void RemoveAllListeners()
     {
-        OnPrepareStep = null;
-        OnPreDanceStep = null;
+        //OnPrepareStep = null;
+        //OnPreDanceStep = null;
         OnDanceStep = null;
-        OnReleaseStep = null;
+        //OnReleaseStep = null;
         OnNextStep = null;
     }
     
@@ -56,21 +56,21 @@ public class DanceEventManager
     {
         //Debug.Log("Invoke PreDanceStepAction EVENT MANAGER");
         //Debug.Log(OnPreDanceStep.GetInvocationList()[0].ToString());
-        OnPreDanceStep?.Invoke(beat, beatType, DanceStep.None);
+        //OnPreDanceStep?.Invoke(beat, beatType, DanceStep.None);
     }
 
-    public void InvokePrepare(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    /*public void InvokePrepare(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
     {
-        OnPrepareStep?.Invoke(beat, beatType, danceStep);
-    }
-    public void InvokeDance(int beat, BeatManager.BeatType beatType,DanceStep danceStep) 
+        //OnPrepareStep?.Invoke(beat, beatType, danceStep);
+    }*/
+    public void InvokeDance(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
-        OnDanceStep?.Invoke(beat, beatType, danceStep);
+        OnDanceStep?.Invoke(beatCounter, beatType, beatTimeMs ,danceStep);
     }
-    public void InvokeRealease(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
+    /*public void InvokeRealease(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
     {
-        OnReleaseStep?.Invoke(beat, beatType, danceStep);
-    }
+        //nReleaseStep?.Invoke(beat, beatType, danceStep);
+    }*/
     public void InvokeNextStep(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep) =>OnNextStep?.Invoke(nextBeat, beatType, nextDanceStep); 
 }
 
@@ -78,8 +78,6 @@ public class DanceEventManager
 public class Dancer: MonoBehaviour
 {
     protected DanceStep currentDanceStep;
-    protected int currentBeat;
-    protected BeatManager.BeatType currentBeatType;
     public UnityEvent onActivated;
     public UnityEvent<DanceStep> onDance;
     public UnityEvent<DanceStep> onPostDance;
@@ -94,7 +92,6 @@ public class Dancer: MonoBehaviour
     public virtual void OnReseatPuzzle(RhythmPuzzle puzzl)
     {
         currentDanceStep = DanceStep.None;
-        currentBeat = 0;
     }
 
     public virtual void OnPreDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
@@ -102,22 +99,12 @@ public class Dancer: MonoBehaviour
         //Debug.Log("OnPreDanceStepAction Dancer:"+this.transform.name);
     }
     
-    public virtual void OnPrepareStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
-    {
-        currentDanceStep = danceStep;
-    }
-
-    public virtual void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    public virtual void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
         currentDanceStep = danceStep;
         onDance?.Invoke(danceStep);
     }
-
-    public virtual void OnReleaseStepAction(int beat, BeatManager.BeatType beatType,DanceStep danceStep)
-    {
-        onPostDance?.Invoke(danceStep);
-        currentDanceStep = DanceStep.None;
-    }
+    
     public virtual void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType,DanceStep nextDanceStep) { }
 
     public virtual void OnDisablePuzzle(RhythmPuzzle puzzl)

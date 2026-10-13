@@ -26,10 +26,7 @@ public class DanceFeedbackReciever : MonoBehaviour
     {
         switch (feedback)
         {
-            case BeatReciever.BeatFeedback.Early:
-                EventSender(EarlyLateEvent, EarlyLateDanceEvent);
-                break;
-            case BeatReciever.BeatFeedback.Late:
+            case BeatReciever.BeatFeedback.Ok:
                 EventSender(EarlyLateEvent, EarlyLateDanceEvent);
                 break;
             case BeatReciever.BeatFeedback.Perfect:

@@ -14,26 +14,13 @@ public abstract class RhythmPuzzle : BeatReciever
     [Header("Rhythm Puzzle Settings")]
     [SerializeField] protected bool debug;
     [SerializeField] bool activateOnStart;
-    protected DanceEventManager eventManager = new DanceEventManager();
+    protected DanceEventBuffer danceEventBuffer = new DanceEventBuffer();
     protected DanceSequence currentDanceSequence;
     protected int currentSequenceIndex;
     protected DanceStep currentStep;
     protected bool availableToDance = false;
-
-    [SerializeField] protected PlayerInputEvent[] playerInputs;
-    [Serializable]
-    public class PlayerInputEvent
-    {
-        public BeatReciever.BeatFeedback feedback;
-        public UnityEvent OnPlayerSuccess;
-    }
-
-    public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
-    {
-        currentDanceSequence?.RegisterStepFeedback(fb);
-        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
-        e?.OnPlayerSuccess?.Invoke();
-    }
+    protected int innerBeatCounter = 0;
+    
     
     protected void Start()
     {
@@ -42,7 +29,7 @@ public abstract class RhythmPuzzle : BeatReciever
     }
     private void OnDisable()
     {
-        eventManager.RemoveAllListeners();
+        danceEventBuffer.RemoveAllListeners();
     }
     
     public abstract void PreparePuzzle();
@@ -54,11 +41,11 @@ public abstract class RhythmPuzzle : BeatReciever
         if(isActive)
         {
             if(debug)Debug.Log($"Starting PUZZLE ({name})");
-            eventManager.InvokeEnablePuzzle(this);
+            danceEventBuffer.InvokeEnablePuzzle(this);
         } else
         {
             if(debug)Debug.Log($"Stopping PUZZLE ({name})");
-            eventManager.InvokeDisablePuzzle(this);
+            danceEventBuffer.InvokeDisablePuzzle(this);
         }
         if (!activate) return;
         

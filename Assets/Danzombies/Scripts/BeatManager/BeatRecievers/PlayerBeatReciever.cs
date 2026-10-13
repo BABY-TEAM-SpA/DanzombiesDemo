@@ -12,22 +12,11 @@ public class PlayerBeatReciever : BeatReciever
         float value = (float)(1f / duration);
         animator.SetFloat("Beat",value);
     }
-
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void BeatAction(int beat, BeatManager.BeatType type)
+    
+    public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
         if(type == BeatManager.BeatType.FullBeat) animator.SetTrigger("Pulse");
     }
-
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
-    {
-        //throw new NotImplementedException();
-    }
-    
 
     public void ResetIdle()
     {

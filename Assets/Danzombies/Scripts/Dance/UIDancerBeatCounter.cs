@@ -22,7 +22,7 @@ public class UIDancerBeatCounter : Dancer
     }
 
 
-    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep danceStep)
+    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType,int beatTimeMs, DanceStep danceStep)
     {
         feedbackText.transform.localScale = Vector3.zero;
         if (!UseOnDance) return;

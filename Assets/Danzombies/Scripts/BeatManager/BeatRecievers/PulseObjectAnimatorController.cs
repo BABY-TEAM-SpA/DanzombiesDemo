@@ -20,18 +20,18 @@ public class PulseObjectAnimatorController : BeatReciever
         }
     }
 
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+    public  void PreBeatAction(int beat, BeatManager.BeatType type)
     {
         //throw new System.NotImplementedException();
     }
 
-    public override void BeatAction(int beat, BeatManager.BeatType type)
+    public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
         if(type == BeatManager.BeatType.FullBeat) animator.SetTrigger("Pulse");
         //Debug.Log(counter);
     }
 
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
+    public  void PostBeatAction(int beat, BeatManager.BeatType type)
     {
         animator.ResetTrigger("Pulse");
     }

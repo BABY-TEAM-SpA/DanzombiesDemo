@@ -78,12 +78,12 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region RhythmPuzzle - Dance
-    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
+    public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
-        onDance?.Invoke(step);
-        danceAnimCtrl?.OnDanceBegin(step);
+        onDance?.Invoke(danceStep);
+        danceAnimCtrl?.OnDanceBegin(danceStep);
         if (danceTarget == null) return;
-        danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
+        danceTarget.SetPlayerInput(beatTimeMs,danceStep, out BeatReciever.BeatFeedback bf);
         comboController.Increase(bf, 1);
     }
 
@@ -92,9 +92,8 @@ public class PlayerManager : DanceBrain
         if (bf == BeatReciever.BeatFeedback.Bad)
         {
             if (movementController.IsRunning && !IsSafe)
-                inputController.DisableMoveForSeconds(0.5f); // <- [Frco] Hardcodeado D: y parcheado :D
+                inputController.DisableMoveForSeconds(BeatManager.Instance.BeatDurationMs/1000f); // <- [Frco] Hardcodeado D: y parcheado :D
         }
-
         LevelProgressTracker.Instance?.RegisterStep(bf);
         DanceFeedbackEvent?.Invoke(bf);
     }
@@ -136,7 +135,7 @@ public class PlayerManager : DanceBrain
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {
             DanceStep step = Enum.Parse<DanceStep>(lean + "_" + direction);
-            OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat, step);
+            OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat,AudioManager.Instance.SongPositionMs() ,step);
         }
     }
 

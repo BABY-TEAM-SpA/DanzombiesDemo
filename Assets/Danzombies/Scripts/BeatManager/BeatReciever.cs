@@ -9,27 +9,22 @@ public abstract class BeatReciever : MonoBehaviour
     public enum BeatFeedback
     {
         Bad,
-        Early,  // 'Ok'
-        Good,   // Antiguamente 'Great'
+        Ok,  
+        Good,   
         Perfect,
-        Late,   // 'Ok'
         Ignored
     }
 
     private void OnEnable()
     {
         BeatManager.OnUpdateEvent += OnUpdateSongEvent;
-        BeatManager.OnPreBeat += OnPreBeatEvent;
         BeatManager.OnBeat += OnBeatEvent;
-        BeatManager.OnPostBeat += OnPostBeatEvent;
     }
 
     private void OnDisable()
     {
         BeatManager.OnUpdateEvent -= OnUpdateSongEvent;
-        BeatManager.OnPreBeat -= OnPreBeatEvent;
         BeatManager.OnBeat -= OnBeatEvent;
-        BeatManager.OnPostBeat -= OnPostBeatEvent;
     }
     public void SetActive(bool active)
     {
@@ -44,27 +39,27 @@ public abstract class BeatReciever : MonoBehaviour
     private void OnPreBeatEvent(int beat, BeatManager.BeatType type)
     {
         if (!isActive) return;
-        PreBeatAction(beat, type);
+        //PreBeatAction(beat, type);
         isOnBeat = true;
     }
 
-    private void OnBeatEvent(int beat, BeatManager.BeatType type)
+    private void OnBeatEvent(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
     {
         if (!isActive) return;
-        BeatAction(beat, type);
+        BeatAction(beatCounter, beatType, beatTimeMs);
     }
 
     private void OnPostBeatEvent(int beat, BeatManager.BeatType type)
     {
         if (!isActive) return;
-        PostBeatAction(beat, type);
+        //PostBeatAction(beat, type);
         isOnBeat = false;
     }
 
     public virtual void OnUpdateSongAction(double barDuration){}
-    public abstract void PreBeatAction(int beat, BeatManager.BeatType type);
-    public abstract void BeatAction(int beat, BeatManager.BeatType type);
-    public abstract void PostBeatAction(int beat, BeatManager.BeatType type);
+    //public abstract void PreBeatAction(int beat, BeatManager.BeatType type);
+    public abstract void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs);
+    //public abstract void PostBeatAction(int beat, BeatManager.BeatType type);
     
 
 }

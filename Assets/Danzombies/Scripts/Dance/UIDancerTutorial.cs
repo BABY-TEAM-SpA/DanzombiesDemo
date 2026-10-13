@@ -58,7 +58,7 @@ public class UIDancerTutorial : Dancer
     #endregion
 
     #region Dancer - Steps
-    public override void OnPrepareStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
+    public  void OnPrepareStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
         currentDanceStep = step;
         if (!danceCanvas.isActiveAndEnabled) return;
@@ -72,9 +72,9 @@ public class UIDancerTutorial : Dancer
         RefreshIcons(false, false, false);
     }
 
-    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
+    public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
-        currentDanceStep = step;
+        currentDanceStep = danceStep;
         Debug.Log($"CurrentDanceStep: {currentDanceStep} | FutureDanceStep: {futureDanceStep}");
 
         if (!danceCanvas.isActiveAndEnabled) return;
@@ -89,7 +89,7 @@ public class UIDancerTutorial : Dancer
         else leftDirIcon.animator.PlaySequence("Pulse");
     }
 
-    public override void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
+    public  void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
         //currentDanceStep = DanceStep.None;
         if (!danceCanvas.isActiveAndEnabled) return;

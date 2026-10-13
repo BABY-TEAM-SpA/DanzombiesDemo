@@ -39,18 +39,10 @@ public class FlickerLight : BeatReciever
         lightToFlicker.intensity = Random.Range(minIntensity, maxIntensity);
     }
 
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    public override void BeatAction(int beat, BeatManager.BeatType type)
+    
+    public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
         if(useBeatTime && type == BeatManager.BeatType.FullBeat) Flick();
     }
-
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
-    {
-        //throw new System.NotImplementedException();
-    }
+    
 }
