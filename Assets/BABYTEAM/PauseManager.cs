@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class Pauser : Service<Pauser>
+public class PauseManager : Service<PauseManager>
 {
     #region [VARIABLES]
     [SerializeField] private bool canPause = true;

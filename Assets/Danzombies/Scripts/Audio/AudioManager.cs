@@ -34,16 +34,16 @@ public class AudioManager : Service<AudioManager>
     #region Enabled
     private void OnEnable()
     {
-        Pauser.Instance.OnPause.AddListener(PauseSong);
-        Pauser.Instance.OnResume.AddListener(ResumeSong);
+        PauseManager.Instance.OnPause.AddListener(PauseSong);
+        PauseManager.Instance.OnResume.AddListener(ResumeSong);
     }
 
     private void OnDisable()
     {
-        if (Pauser.Instance)
+        if (PauseManager.Instance)
         {
-            Pauser.Instance.OnPause.RemoveListener(PauseSong);
-            Pauser.Instance.OnResume.RemoveListener(ResumeSong);
+            PauseManager.Instance.OnPause.RemoveListener(PauseSong);
+            PauseManager.Instance.OnResume.RemoveListener(ResumeSong);
         }
     }
     #endregion

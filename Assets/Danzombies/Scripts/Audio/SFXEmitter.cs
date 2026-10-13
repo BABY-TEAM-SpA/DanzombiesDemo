@@ -70,17 +70,17 @@ public class SFXEmitter : MonoBehaviour
     {
         if (listenPause)
         {
-            Pauser.Instance.OnPause.AddListener(Pause);
-            Pauser.Instance.OnResume.AddListener(Resume);
+            PauseManager.Instance.OnPause.AddListener(Pause);
+            PauseManager.Instance.OnResume.AddListener(Resume);
         }
     }
 
     private void OnDisable()
     {
-        if (Pauser.Instance && listenPause)
+        if (PauseManager.Instance && listenPause)
         {
-            Pauser.Instance.OnPause.RemoveListener(Pause);
-            Pauser.Instance.OnResume.RemoveListener(Resume);
+            PauseManager.Instance.OnPause.RemoveListener(Pause);
+            PauseManager.Instance.OnResume.RemoveListener(Resume);
         }
     }
     #endregion
