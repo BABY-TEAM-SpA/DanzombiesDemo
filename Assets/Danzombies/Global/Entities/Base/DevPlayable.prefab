@@ -5333,16 +5333,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
   _playerManager: {fileID: 6530795612346585224}
-  allowMoveInput: 1
+  allowedInputs:
+    movement: 1
+    dance: 1
+    danceInputs:
+      northDance: 0
+      southDance: 0
+      eastDance: 0
+      westDance: 0
+    interaction: 1
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   sprintAction: {fileID: -7471211009204490832, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  allowDanceInput: 1
-  northDanceInput: 0
-  southDanceInput: 0
-  eastDanceInput: 0
-  westDanceInput: 0
   margin: 0.5
-  allowInteractInput: 1
 --- !u!114 &3968905282911785478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5356,6 +5358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceBrain: {fileID: 6530795612346585224}
+  isMovementEnabled: 1
   walkingSpeed: 5
   verticalMultiplier: 0.5
   sprintFactor: 1.6

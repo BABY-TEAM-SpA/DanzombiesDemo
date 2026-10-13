@@ -18,15 +18,20 @@ public class PlayerManager : DanceBrain
     public static event Action<BeatReciever.BeatFeedback> DanceFeedbackEvent;
     #endregion
 
-    #region HP, Safe Zone & Combo
+    #region Expositions
+    public PlayerInputController InputCtrl => inputController;
+    public PlayerMovementController MovementCtrl => movementController;
+    public PlayerComboController ComboCtrl => comboController;
+    public PlayerInteractionController InteractionCtrl => interactionController;
+    #endregion
+
+    #region HP & Safe Zone
     private const int MAX_HP = 3;
     public int HP => hp;
     private int hp = MAX_HP;
 
     public bool IsSafe => isInSafeZone;
     private bool isInSafeZone;
-
-    public PlayerComboController ComboCtrl => comboController;
     #endregion
 
     #region Events
