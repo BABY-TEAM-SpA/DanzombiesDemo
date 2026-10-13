@@ -17,7 +17,6 @@ public class Checkpoint : MonoBehaviour
     private bool entered;
     private bool exited;
 
-    public UnityEvent OnCheckpoint;
     public UnityEvent OnEnterCheckpoint;
     public UnityEvent OnLeaveCheckpoint;
 
