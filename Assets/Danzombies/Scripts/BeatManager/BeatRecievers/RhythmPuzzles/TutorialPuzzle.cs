@@ -25,8 +25,7 @@ public class TutorialPuzzle : RhythmPuzzle
         if (!availableToDance) return;
         //g.Log(BeatManager.Instance.localBeatCount);
         //Debug.Log(beat);
-        currentStep = currentDanceSequence.GetDanceStep(beat-1,type);
-        GetNextStep(beat,type);
+        
         //eventManager.InvokePrepare(beat,type,currentStep);
         
     }
@@ -34,11 +33,9 @@ public class TutorialPuzzle : RhythmPuzzle
     public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
     {
         if (!availableToDance)
-        {
-            //Debug.Log(BeatManager.Instance.localBeatCount);
-            //eventManager.InvokePreDance(beatCounter, beatType);
             return;
-        }
+        currentStep = currentDanceSequence.GetDanceStep(beatCounter-1,beatType);
+        GetNextStep(beatCounter,beatType);
         //Debug.Log(BeatManager.Instance.localBeatCount);
         danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
     }

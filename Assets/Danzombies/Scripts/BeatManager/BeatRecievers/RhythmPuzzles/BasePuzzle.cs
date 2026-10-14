@@ -4,21 +4,20 @@ public class BasePuzzle : RhythmPuzzle
 {
     public Dancer dancer;
     public DanceSequence danceSequence;
-    public int innerCounter=0;
     
    
     public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
     {
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount==1)
         {
-            innerCounter = 0;
+            innerBeatCounter = 0;
             availableToDance = true;
         }
         if (!availableToDance) return;
-        currentStep = currentDanceSequence.GetDanceStep(innerCounter,beatType);
+        currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,beatType);
         if(debug) Debug.Log($"Beat {beatCounter}:{beatType}.... dance:{currentStep}");
         danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
-        if(beatType== BeatManager.BeatType.FullBeat) innerCounter++;
+        if(beatType== BeatManager.BeatType.FullBeat) innerBeatCounter++;
         //if(currentDanceSequence.CheckEndOfSequence(innerCounter)) OnPuzzleCompleted();
     }
 

@@ -130,28 +130,27 @@ public class DanceSequence : MonoBehaviour
     #region Get Steps
     public DanceStep GetDanceStep(int beat, BeatManager.BeatType beatPart)
     {
-        DanceStep step = DanceStep.None;
         if (coreography.StepInBar.Count > 0 && beat >= 0)
         {
             DanceStepPerBeat beatDances = coreography.StepInBar[beat % coreography.StepInBar.Count];
-
+            if(beatDances.StepPerBeat.Count<=0) return DanceStep.None;
             switch (beatPart)
             {
                 case BeatManager.BeatType.FullBeat:
-                    step = (beatDances.StepPerBeat.Count > 0)?beatDances.StepPerBeat[0]: DanceStep.None;
-                    break;
+                    return(beatDances.StepPerBeat.Count > 0)?beatDances.StepPerBeat[0]: DanceStep.None;
                 case BeatManager.BeatType.FirstThird:
-                    step = (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
-                    break;
+                    return (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
+                    
                 case BeatManager.BeatType.HalfBeat:
-                    step = (beatDances.StepPerBeat.Count == 2) ? beatDances.StepPerBeat[1] : DanceStep.None;
-                    break;
+                    return (beatDances.StepPerBeat.Count == 2) ? beatDances.StepPerBeat[1] : DanceStep.None;
+                    
                 case BeatManager.BeatType.SecondThird:
-                    step = (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
-                    break;
+                    return (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[2] : DanceStep.None;
+                default:
+                    return DanceStep.None;
             }
         }
-        return step;
+        return DanceStep.None;
     }
 
     //Aqui esta el problema del looping

@@ -135,7 +135,7 @@ public class PlayerManager : DanceBrain
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {
             DanceStep step = Enum.Parse<DanceStep>(lean + "_" + direction);
-            OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat,AudioManager.Instance.SongPositionMs() ,step);
+            OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.localBeatCount:1,BeatManager.Instance.mainBeatState,AudioManager.Instance.SongPositionMs() ,step);
         }
     }
 
