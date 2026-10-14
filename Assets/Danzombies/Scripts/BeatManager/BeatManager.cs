@@ -24,6 +24,7 @@ public class BeatManager : Service<BeatManager>
     public float nextBeatTime;
     public BeatType nextBeatType;
     public float margin => BeatDurationMs * margenPercentOnBeat;
+    private bool shouldBeatPart;
     
     public int localBeatCount { get; private set; } = 1; 
     public int globalBeatCount { get; private set; } = 1;
@@ -79,58 +80,37 @@ public class BeatManager : Service<BeatManager>
         globalUpperBar = upper;
         globalLowerBar = lower;
         
+        nextBeatType = BeatType.FullBeat;
         mainBeatState = BeatType.FullBeat;
-        if(useDebug) Debug.Log($"-*-{mainBeatState}:Beat: {localBeatCount}");
+        if(useDebug) Debug.Log($"Beat: {localBeatCount}-*-{mainBeatState}");
         OnBeat?.Invoke(globalBeatCount, BeatType.FullBeat, posMs); //1, 2 ,3, 4, 1, 2, 3, 4 (segun el Upper) NUNCA MANDAR EL LOCAL
-        
-        //Calcular el nextBeatTime
-        nextBeatTime = lastBeatTime + beatPartTimeMs;
-        
-        //if(useDebug) Debug.Log($"-{nextBeatState}:--PreBeat: {localBeatCount}");
-        //OnPreBeat?.Invoke(localBeatCount, nextBeatState);
+        SetNextBeatPartTime();
     }
     
     void Update()
     {
         if (!AudioManager.Instance.IsPlaying()) return;
         songTime = AudioManager.Instance.SongPositionMs();
-        if (songTime >= nextBeatTime) UpdateMainBeat();
+        if (songTime >= nextBeatTime && shouldBeatPart) UpdatePartBeat();
     }
 
-    private void UpdateMainBeat()
+    private void SetNextBeatPartTime()
     {
-        mainBeatState = nextBeatType;
-        /*
-        if(useDebug) Debug.Log($"-{mainBeatState}:Beat: {localBeatCount}");
-        OnBeat?.Invoke(localBeatCount, nextBeatType);
-        switch (mainBeatState)
-        {
-            case BeatType.FullBeat:
-                nextBeatType = BeatType.FirstEmpty;
-                break;
-            case BeatType.FirstEmpty:
-                nextBeatType = BeatType.FirstEmpty;
-                break;
-            case BeatType.FirstThird:
-                nextBeatType = BeatType.HalfBeat;
-                nextBeatTime = lastBeatTime+((double)nextBeatState*beatPartTimeSec);
-                break;
-            case BeatType.HalfBeat:
-                nextBeatType = BeatType.SecondThird;
-                nextBeatTime = lastBeatTime+((double)nextBeatState*beatPartTimeSec);
-                break;
-            case BeatType.SecondThird:
-                nextBeatType = BeatType.FullBeat;
-                nextBeatTime = lastBeatTime+(2*BeatTimeSec);
-                //localBeatCount = (localBeatCount+1<=globalUpperBar)?localBeatCount+1:1;
-                
-                break;
-            case BeatType.SecondEmpty:
-                break;
-        }
+        nextBeatTime = lastBeatTime + beatPartTimeMs*((int)nextBeatType+1);
+        nextBeatType = (BeatType)((int)(nextBeatType+1)%Enum.GetNames(typeof(BeatType)).Length);
+        shouldBeatPart=(nextBeatType != BeatType.FullBeat);
+        
+    }
+
+    private void UpdatePartBeat()
+    {
+        
+        if(useDebug) Debug.Log($"Beat: {localBeatCount}-{nextBeatType}");
+        OnBeat?.Invoke(localBeatCount, nextBeatType, Mathf.RoundToInt(beatPartTimeMs));
+        SetNextBeatPartTime();
         //if(useDebug) Debug.Log($"-{nextBeatState}:--PreBeat: {localBeatCount}");
         //OnPreBeat?.Invoke(localBeatCount,nextBeatState);*/
-        
+
     }
     
     #endregion
