@@ -10,7 +10,7 @@ public class StepRegist
 {
     public DanceStep danceStep;
     public int stepTimeMs;
-    public int life;
+    public int life; // BeatType con el que nacio 0,1,2,3-,4_,5,*0,*1,(bad)2,3-,4_,5(bad),0,1,2,3-,4_,5 para que dure solo 2 beatTypes
 
     public StepRegist(DanceStep step, int timeMs)
     {
@@ -34,7 +34,7 @@ public class DanceZone : Dancer
     [Header("Dance Zone - Settings")]
     [SerializeField] private DamageMode damageMode;
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
-    DanceEventBuffer danceEventBuffer = new DanceEventBuffer();
+    DanceEventBuffer danceEventBuffer = new DanceEventBuffer(); // Aqui hay muchos zombies... hay que mandar solo los eventos significativos
     private Queue<StepRegist> danceStepsInputRegists = new Queue<StepRegist>();
     
     [Header("Players")] 
@@ -177,10 +177,13 @@ public class DanceZone : Dancer
         danceEventBuffer.InvokePreDance(beat, beatType);
     }
 
-    
-
     public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
+        /// FLujo...
+        /// hacer mi paso
+        /// Preguntar si me quedaron pasos vivos
+        /// comparar en caso de que hayan registros
+
         if (!isActive) return;
         
         ///PreCheck
@@ -205,7 +208,7 @@ public class DanceZone : Dancer
             }
         }
         currentDanceStep = danceStep;
-        danceEventBuffer.InvokeDance(beatCounter, beatType, beatTimeMs, danceStep);
+        danceEventBuffer.InvokeDance(beatCounter, beatType, beatTimeMs, danceStep); // aqui hay que mandar el paso responzablemente
         onDance?.Invoke(danceStep);
         if (playersInside != null && danceStep != DanceStep.None)
         {
@@ -213,8 +216,6 @@ public class DanceZone : Dancer
             playerInputRegists.Enqueue(zone);
             Debug.Log($"added: {zone}");
         }
-        
-        
     }
 
     public override void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep)
@@ -248,12 +249,12 @@ public class DanceZone : Dancer
                 dancers.Add(zombie);
         foreach (Dancer dancer in dancers)
             if (TryGetComponent<Position3D>(out Position3D pos))
-                pos.SetLayerOnSprites(); ;
+                pos.SetLayerOnSprites();
     }
     #endregion
     #endregion
 
-    public BeatReciever.BeatFeedback EvaluateInput(int beatTime, int inputTime)
+    public BeatReciever.BeatFeedback EvaluateInput(int beatTime, int inputTime) // (3040ms , 3050ms)
     {
         int beatLength = BeatManager.Instance.BeatDurationMs;
         int delta = beatTime - inputTime;

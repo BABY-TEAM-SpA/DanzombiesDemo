@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class BasePuzzle : RhythmPuzzle
 {
-    public Dancer dancer;
+    public Dancer dancer; //zone
     public DanceSequence danceSequence;
     
    
-    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
+    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs) /// { FullBeat=0, FirstEmpty=1, FirstThird=2, HalfBeat=3, SecondThird=4, SecondEmpty=5 }
     {
         if (isActive && !availableToDance && BeatManager.Instance.localBeatCount==1)
         {
