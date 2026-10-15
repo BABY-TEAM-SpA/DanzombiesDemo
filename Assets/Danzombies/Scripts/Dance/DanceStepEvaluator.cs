@@ -10,10 +10,7 @@ public class DanceStepEvaluator
 
     public event Action<BeatReciever.BeatFeedback> OnFeedback;
 
-    private float Window => BeatManager.Instance.BeatDurationMs / 3f;
-    #endregion
-
-    #region [UNITY]
+    private float Window => BeatManager.Instance.BeatDurationMs / 3f; // <- [Frco] Equivalente a 2/6 de un Beat
     #endregion
 
     #region [METHODS]
@@ -88,18 +85,46 @@ public class DanceStepEvaluator
     #region Expire
     private void Expire(int nowMs)
     {
-        RemoveExpired(expected, nowMs);
-        RemoveExpired(player, nowMs);
+        RemoveExpired(expected, player, nowMs);
+        RemoveExpired(player, expected, nowMs);
     }
 
-    private void RemoveExpired(List<StepRegist> list, int nowMs)
+    private void RemoveExpired(List<StepRegist> own, List<StepRegist> other, int nowMs)
     {
-        for (int i = list.Count - 1; i >= 0; i--)
+        for (int i = own.Count - 1; i >= 0; i--)
         {
-            if (nowMs - list[i].stepTimeMs <= Window) continue;
-            list.RemoveAt(i);
-            OnFeedback?.Invoke(BeatReciever.BeatFeedback.Bad); // solo sale el expirado
+            StepRegist reg = own[i];
+            if (nowMs - reg.stepTimeMs <= Window) continue;
+
+            own.RemoveAt(i);
+            if (reg.penalized) continue;
+
+            OnFeedback?.Invoke(BeatReciever.BeatFeedback.Bad);
+            PenalizeNeighbor(reg, other);
         }
+    }
+
+    /// <summary>
+    /// Busca en la otra lista el StepRegist más cercano a expirar dentroo de 'Window', y lo marca como 'penalized'
+    /// para evitar que se considere como Bad al expirar.
+    /// </summary>
+    /// <param name="reg">StepRegist de la otra lista, expirado y que fue considerado como Bad.</param>
+    /// <param name="other">Lista opuesta y en la que se busca en StepRegist más próximo a expirar.</param>
+    private void PenalizeNeighbor(StepRegist reg, List<StepRegist> other)
+    {
+        StepRegist best = null;
+        int bestDelta = int.MaxValue;
+        foreach (StepRegist candidate in other)
+        {
+            if (candidate.penalized) continue;
+            int delta = Math.Abs(candidate.stepTimeMs - reg.stepTimeMs);
+            if (delta <= Window && delta < bestDelta)
+            {
+                best = candidate;
+                bestDelta = delta;
+            }
+        }
+        if (best != null) best.penalized = true;
     }
     #endregion
 
@@ -119,6 +144,7 @@ public class StepRegist
 {
     public DanceStep danceStep;
     public int stepTimeMs;
+    public bool penalized; // <- [Frco] Marcar como verdadero para evitar que la expiración del StepRegist lance un Bad
 
     public StepRegist(DanceStep step, int timeMs)
     {

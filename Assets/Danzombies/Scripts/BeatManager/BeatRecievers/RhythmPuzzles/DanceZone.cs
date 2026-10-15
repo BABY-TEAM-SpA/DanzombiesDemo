@@ -152,7 +152,6 @@ public class DanceZone : Dancer
     {
         if (!isActive) return;
 
-        // 1. Expirar registros viejos y registrar el paso esperado (solo si hay jugador dentro)
         if (playersInside != null)
         {
             evaluator.Tick(beatTimeMs);
@@ -160,7 +159,6 @@ public class DanceZone : Dancer
                 evaluator.AddExpected(danceStep, beatTimeMs);
         }
 
-        // 2. Hacer mi paso y avisar a los bailarines de la zona
         currentDanceStep = danceStep;
         danceEventBuffer.InvokeDance(beatCounter, beatType, beatTimeMs, danceStep);
         onDance?.Invoke(danceStep);
