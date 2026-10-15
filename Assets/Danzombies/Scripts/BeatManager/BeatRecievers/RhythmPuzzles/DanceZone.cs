@@ -5,53 +5,32 @@ using UnityEngine.Events;
 
 public enum DamageMode { None, ModificaFlow, ModificaFlowYDaña }
 
-
-public class StepRegist
-{
-    public DanceStep danceStep;
-    public int stepTimeMs;
-    public int life; // BeatType con el que nacio 0,1,2,3-,4_,5,*0,*1,(bad)2,3-,4_,5(bad),0,1,2,3-,4_,5 para que dure solo 2 beatTypes
-
-    public StepRegist(DanceStep step, int timeMs)
-    {
-        danceStep = step;
-        stepTimeMs = timeMs;
-    }
-}
-
-[Serializable]
-public class PlayerInputEvent
-{
-    public BeatReciever.BeatFeedback feedback;
-    public UnityEvent OnPlayerSuccess;
-}
-
 public class DanceZone : Dancer
 {
     #region [VARIABLES]
+    #region Inspector
     [SerializeField] private bool isActive;
+    [SerializeField] protected PlayerInputEvent[] playerInputs;
 
     [Header("Dance Zone - Settings")]
+    public DamageMode DamageMode => damageMode;
     [SerializeField] private DamageMode damageMode;
     [SerializeField] private List<Dancer> dancers = new List<Dancer>();
-    DanceEventBuffer danceEventBuffer = new DanceEventBuffer(); // Aqui hay muchos zombies... hay que mandar solo los eventos significativos
-    private Queue<StepRegist> danceStepsInputRegists = new Queue<StepRegist>();
-    
-    [Header("Players")] 
-    public PlayerManager playersInside { private set; get; }
-    private Queue<StepRegist> playerInputRegists = new Queue<StepRegist>();
-    
-    [SerializeField] protected PlayerInputEvent[] playerInputs;
-    public DamageMode DamageMode => damageMode;
-
-    private RhythmPuzzle puzzle;
 
     [Header("Dance Zone - Events")]
     public UnityEvent OnPlayerEntered;
     public UnityEvent OnPlayerExited;
+    #endregion
+
+    #region Interns
+    public RhythmPuzzle puzzle { private set; get; }
+    public PlayerManager playersInside { private set; get; }
+    private DanceEventBuffer danceEventBuffer = new DanceEventBuffer(); // <- Dancers dentro de la DanceZone
+    private DanceStepEvaluator evaluator = new DanceStepEvaluator();
 
     public Action<BeatReciever.BeatFeedback> OnPlayerFeedback; // <- [Frco] Único evaluador de la entrada del jugador.
                                                                // El FlowComponent escucha este evento para reaccionar a la entrada del jugador.
+    #endregion
     #endregion
 
     #region [UNITY]
@@ -60,8 +39,8 @@ public class DanceZone : Dancer
         if (dancers.Count > 0)
             SetZone();
     }
-    
-    
+
+    private void OnEnable() => evaluator.OnFeedback += ReactToFeedback;
     private void OnDisable() => danceEventBuffer.RemoveAllListeners();
 
     #region Trigger
@@ -80,19 +59,7 @@ public class DanceZone : Dancer
     #endregion
 
     #region [METHODS]
-    #region API
-    // [Frco] <¬ Para poder añadir/remover un Dancer de una DanceZone desde un UnityEvent
-    public void AddListener(Dancer dancer)
-    {
-        if (dancer != null)
-            danceEventBuffer.AddListener(dancer);
-    }
-    public void RemoveListener(Dancer dancer)
-    {
-        if (dancer != null)
-            danceEventBuffer.RemoveListener(dancer);
-    }
-
+    #region API - Zone
     public void SetZone()
     {
         if (dancers.Count > 0) 
@@ -102,33 +69,8 @@ public class DanceZone : Dancer
 
     public void React(ExpressionType exp)
     {
-        foreach (Dancer dancer in dancers) dancer.React(exp);
-    }
-
-    public void SetPlayerInput(int beatTimeMs ,DanceStep step, out BeatReciever.BeatFeedback bf)
-    {
-        bf = BeatReciever.BeatFeedback.Ignored;
-        if (!isActive) return;
-        else
-        {
-            StepRegist input = new StepRegist(step,beatTimeMs);
-            playerInputRegists.Enqueue(input);
-            bf = TryCheckPlayerZone();
-        }
-    }
-
-    private BeatReciever.BeatFeedback TryCheckPlayerZone()
-    {
-        BeatReciever.BeatFeedback bf = BeatReciever.BeatFeedback.Ignored;
-        if(danceStepsInputRegists.TryPeek(out StepRegist zone) && playerInputRegists.TryPeek(out StepRegist player))
-        {
-            danceStepsInputRegists.Dequeue();
-            playerInputRegists.Dequeue();
-            bf = player.danceStep == zone.danceStep ? EvaluateInput(zone.stepTimeMs,player.stepTimeMs) : BeatReciever.BeatFeedback.Bad;
-            //React(bf == BeatReciever.BeatFeedback.Bad ? ExpressionType.Angry : ExpressionType.Normal);
-            //ReactToFeedback(bf);
-        }
-        return bf;
+        foreach (Dancer dancer in dancers)
+            dancer.React(exp);
     }
 
     public void CompleteZone()
@@ -138,7 +80,16 @@ public class DanceZone : Dancer
     }
     #endregion
 
-    #region Enter/Exit
+    #region API - Player Input
+    public void SetPlayerInput(int beatTimeMs, DanceStep step, out BeatReciever.BeatFeedback bf)
+    {
+        bf = BeatReciever.BeatFeedback.Ignored;
+        if (!isActive) return;
+        evaluator.AddPlayer(step, beatTimeMs);
+    }
+    #endregion
+
+    #region API - Enter/Exit
     public void PlayerEnter(PlayerManager player)
     {
         player.AddTargetPuzzle(this);
@@ -151,6 +102,20 @@ public class DanceZone : Dancer
         playersInside = null;
         player.RemoveTargetPuzzle(this);
         OnPlayerExited?.Invoke();
+    }
+    #endregion
+
+    #region API - Listeners
+    // [Frco] <¬ Para poder añadir/remover un Dancer de una DanceZone desde un UnityEvent
+    public void AddListener(Dancer dancer)
+    {
+        if (dancer != null)
+            danceEventBuffer.AddListener(dancer);
+    }
+    public void RemoveListener(Dancer dancer)
+    {
+        if (dancer != null)
+            danceEventBuffer.RemoveListener(dancer);
     }
     #endregion
 
@@ -169,6 +134,12 @@ public class DanceZone : Dancer
         isActive = false;
         danceEventBuffer.InvokeDisablePuzzle(puz);
     }
+
+    public override void OnReseatPuzzle(RhythmPuzzle puz)
+    {
+        base.OnReseatPuzzle(puz);
+        evaluator.Clear();
+    }
     #endregion
 
     #region Dancer - Step Actions
@@ -179,43 +150,20 @@ public class DanceZone : Dancer
 
     public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
-        /// FLujo...
-        /// hacer mi paso
-        /// Preguntar si me quedaron pasos vivos
-        /// comparar en caso de que hayan registros
-
         if (!isActive) return;
-        
-        ///PreCheck
+
+        // 1. Expirar registros viejos y registrar el paso esperado (solo si hay jugador dentro)
         if (playersInside != null)
         {
-            if (playerInputRegists.TryPeek(out StepRegist playerInput))
-            {
-                if ((playerInput.life - (int)beatType) > 2)
-                {
-                    Debug.Log($"killed in player queue; remains:{playerInputRegists.Count}");
-                    playerInputRegists.Dequeue();
-                }
-            }
-            if(danceStepsInputRegists.TryPeek(out StepRegist zone))
-            {
-                  if((zone.life - (int)beatType) > 2)
-                  {
-                      Debug.Log($"killed in queue; remains:{danceStepsInputRegists.Count}");
-                      danceStepsInputRegists.Dequeue();
-                      ReactToFeedback(BeatReciever.BeatFeedback.Bad);
-                  }
-            }
+            evaluator.Tick(beatTimeMs);
+            if (danceStep != DanceStep.None)
+                evaluator.AddExpected(danceStep, beatTimeMs);
         }
+
+        // 2. Hacer mi paso y avisar a los bailarines de la zona
         currentDanceStep = danceStep;
-        danceEventBuffer.InvokeDance(beatCounter, beatType, beatTimeMs, danceStep); // aqui hay que mandar el paso responzablemente
+        danceEventBuffer.InvokeDance(beatCounter, beatType, beatTimeMs, danceStep);
         onDance?.Invoke(danceStep);
-        if (playersInside != null && danceStep != DanceStep.None)
-        {
-            StepRegist zone =  new StepRegist(danceStep,beatTimeMs);
-            playerInputRegists.Enqueue(zone);
-            Debug.Log($"added: {zone}");
-        }
     }
 
     public override void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep)
@@ -253,21 +201,11 @@ public class DanceZone : Dancer
     }
     #endregion
     #endregion
+}
 
-    public BeatReciever.BeatFeedback EvaluateInput(int beatTime, int inputTime) // (3040ms , 3050ms)
-    {
-        int beatLength = BeatManager.Instance.BeatDurationMs;
-        int delta = beatTime - inputTime;
-        
-        delta = ((delta + beatLength / 2) % beatLength + beatLength) % beatLength - beatLength / 2;
-        
-        int absDelta = Math.Abs(delta);
-        float maxWindow = beatLength * BeatManager.Instance.margenPercentOnBeat;
-        float greatWindow = maxWindow * BeatManager.Instance.greatPercentOnMargin;
-        float perfectWindow = greatWindow * BeatManager.Instance.perfectPercentOnMargin;
-        if (absDelta <= perfectWindow) return BeatReciever.BeatFeedback.Perfect;
-        if (absDelta <= greatWindow) return BeatReciever.BeatFeedback.Good;
-        if (absDelta <= maxWindow) return BeatReciever.BeatFeedback.Ok;
-        return BeatReciever.BeatFeedback.Bad;
-    }
+[Serializable]
+public class PlayerInputEvent
+{
+    public BeatReciever.BeatFeedback feedback;
+    public UnityEvent OnPlayerSuccess;
 }

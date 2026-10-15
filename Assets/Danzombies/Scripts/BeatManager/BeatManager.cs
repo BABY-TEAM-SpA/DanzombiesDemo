@@ -103,9 +103,8 @@ public class BeatManager : Service<BeatManager>
     {
         
         if(useDebug) Debug.Log($"Beat: {localBeatCount}-{mainBeatState}");
-        OnBeat?.Invoke(localBeatCount, mainBeatState, Mathf.RoundToInt(beatPartTimeMs));
+        OnBeat?.Invoke(localBeatCount, mainBeatState, Mathf.RoundToInt(nextBeatTime));
         SetNextBeatPartTime();
     }
-    
     #endregion
 }
