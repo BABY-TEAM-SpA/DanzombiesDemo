@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,9 +7,6 @@ using UnityEngine.UI;
 public class PauseCanvas : MonoBehaviour
 {
     #region [VARIABLES]
-    [Header("Animator")]
-    [SerializeField] private UiAnimator pauseAnimator;
-
     public UnityEvent<bool> PauseEvent;
 
     [Header("Pause Settings")]
@@ -33,13 +29,14 @@ public class PauseCanvas : MonoBehaviour
     private void SetupFullscreen()
     {
         isFullscreen = Screen.fullScreen;
-        fullscreenToggle.isOn = isFullscreen;
+        if (fullscreenToggle)
+            fullscreenToggle.isOn = isFullscreen;
     }
 
     private void SetupResolutions()
     {
-        resolutions.Clear();
-        resolutionsDropdown.ClearOptions();
+        resolutions?.Clear();
+        resolutionsDropdown?.ClearOptions();
 
         var options = new List<string>();
         var unique = new HashSet<string>();
@@ -50,12 +47,12 @@ public class PauseCanvas : MonoBehaviour
 
             if (unique.Add(key))
             {
-                resolutions.Add(res);
+                resolutions?.Add(res);
                 options.Add(key);
             }
         }
 
-        resolutionsDropdown.AddOptions(options);
+        resolutionsDropdown?.AddOptions(options);
     }
 
     public void OnResolutionUpdate()
