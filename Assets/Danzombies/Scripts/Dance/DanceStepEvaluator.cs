@@ -105,7 +105,7 @@ public class DanceStepEvaluator
     }
 
     /// <summary>
-    /// Busca en la otra lista el StepRegist más cercano a expirar dentroo de 'Window', y lo marca como 'penalized'
+    /// Busca en la otra lista el StepRegist más cercano en tiempo al registro que expiró y lo marca como 'penalized'
     /// para evitar que se considere como Bad al expirar.
     /// </summary>
     /// <param name="reg">StepRegist de la otra lista, expirado y que fue considerado como Bad.</param>
