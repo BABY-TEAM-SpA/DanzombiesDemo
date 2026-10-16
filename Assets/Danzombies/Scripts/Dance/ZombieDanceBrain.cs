@@ -20,7 +20,7 @@ public class ZombieDanceBrain : DanceBrain
     #region [EVENTS]
     public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType,int beatTimeMs, DanceStep danceStep)
     {
-        onDance?.Invoke(danceStep);
+        onDance?.Invoke(beatType,danceStep);
         danceAnimCtrl?.OnDanceBegin(danceStep,beatType);
     }
     #endregion

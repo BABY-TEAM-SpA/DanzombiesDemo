@@ -26,40 +26,29 @@ public class CanonPuzzle : RhythmPuzzle
         if(activate) dancers[0].OnEnablePuzzle(this);
     }
     
-    public  void PreBeatAction(int beat, BeatManager.BeatType type)
+    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
     {
         if (!availableToDance) return;
-        Debug.Log(BeatManager.Instance.localBeatCount);
-        currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,type);
-        //dancers[currentDancerIndex].OnPrepareStepAction(innerBeatCounter,type,currentStep);
+        GetDanceStep(beatCounter,beatType);
+        if(debug) Debug.Log($"Beat {beatCounter} (inner:{innerBeatCounter}):{beatType}.... dance:{currentStep}");
+        dancers[currentDancerIndex].OnDanceStepAction(beatCounter,beatType, beatTimeMs,currentStep);
     }
 
-    public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
-    {
-        if (!availableToDance)
-        {
-            //eventManager.InvokePreDance(innerBeatCounter, type);
-            return;
-        }
-        //Debug.Log(innerBeatCounter.ToString() + "Cannon Puzzle");
-        dancers[currentDancerIndex].OnDanceStepAction(innerBeatCounter,type, beatTimeMs,currentStep);
-    }
-
-    public  void PostBeatAction(int beat, BeatManager.BeatType type)
+    public override void PostBarAction(int beatCounter)
     {
         if (availableToDance)
         {
-            //dancers[currentDancerIndex].OnReleaseStepAction(innerBeatCounter, type, currentStep);
             innerBeatCounter++;
-            if (innerBeatCounter >= currentDanceSequence.coreography.StepInBar.Count) SetNextDancer();
+            if (beatCounter >= currentDanceSequence.coreography.StepInBar.Count) SetNextDancer();
         }
-        
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar)
+        if (isActive && !availableToDance && beatCounter == BeatManager.Instance.globalUpperBar)
         {
             availableToDance = true;
+            innerBeatCounter = 0;
             OnAvailable?.Invoke();
             currentDanceSequence.ActivateSequence();
         };
+        
     }
 
     public void SetNextDancer()

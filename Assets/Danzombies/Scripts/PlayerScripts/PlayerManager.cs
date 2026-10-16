@@ -87,7 +87,7 @@ public class PlayerManager : DanceBrain
     /// <param name="danceStep">El paso de baile (e.g. L_West).</param>
     public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
-        onDance?.Invoke(danceStep);
+        onDance?.Invoke(beatType,danceStep);
         danceAnimCtrl?.OnDanceBegin(danceStep);
         if (danceTarget == null) return;
         danceTarget.SetPlayerInput(beatTimeMs,danceStep, out BeatReciever.BeatFeedback bf);

@@ -162,7 +162,7 @@ public class DanceZone : Dancer
 
         currentDanceStep = danceStep;
         danceEventBuffer.InvokeDance(beatCounter, beatType, beatTimeMs, danceStep);
-        onDance?.Invoke(danceStep);
+        onDance?.Invoke(beatType,danceStep);
     }
 
     public override void OnSetNextSetAction(int nextBeat, BeatManager.BeatType beatType, DanceStep nextDanceStep)
