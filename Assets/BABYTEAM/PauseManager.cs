@@ -28,7 +28,7 @@ public class PauseManager : Service<PauseManager>
     #endregion
 
     #region [METHODS]
-    private void Pause()
+    public void Pause()
     {
         Time.timeScale = 0f;
 
@@ -39,7 +39,7 @@ public class PauseManager : Service<PauseManager>
         OnPause?.Invoke();
     }
 
-    private void Resume()
+    public void Resume()
     {
         Time.timeScale = 1f;
 
