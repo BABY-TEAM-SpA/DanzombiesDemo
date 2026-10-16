@@ -131,7 +131,7 @@ public class DanceSequence : MonoBehaviour
     /** beatCount goes from 1 to upper or +inf
      * beatPart goes from 0 to 5
      */
-    public DanceStep GetDanceStep(int beatCount=0, BeatManager.BeatType beatPart=BeatManager.BeatType.FullBeat)
+    public DanceStep GetDanceStep(int beatCount=1, BeatManager.BeatType beatPart=BeatManager.BeatType.FullBeat)
     {
         beatCount -= 1;
         if (coreography.StepInBar.Count == 0) return DanceStep.None; 

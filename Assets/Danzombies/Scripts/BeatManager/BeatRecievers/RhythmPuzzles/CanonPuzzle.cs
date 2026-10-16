@@ -7,7 +7,6 @@ public class CanonPuzzle : RhythmPuzzle
 {
     [SerializeField] private List<Dancer> dancers =new List<Dancer>();
     private int currentDancerIndex = 0;
-    private int innerBeatCounter=0;
     public List<DanceSequence> danceSequences = new List<DanceSequence>();
     public UnityEvent OnAvailable; 
     

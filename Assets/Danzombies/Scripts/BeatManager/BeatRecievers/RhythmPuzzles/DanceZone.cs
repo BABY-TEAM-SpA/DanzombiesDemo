@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -173,17 +174,11 @@ public class DanceZone : Dancer
     #region Helpers
     private void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
-        //ResolvePlayerInput(bf);
         playersInside?.ApplyDanceFeedback(bf);
+        puzzle.ReactToFeedback(bf);
+        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == bf);
+        e?.OnPlayerSuccess?.Invoke();
         OnPlayerFeedback?.Invoke(bf);
-    }
-    public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
-    {
-        Debug.Log("ResolvePlayerInput is broke");
-        /*
-        currentDanceSequence?.RegisterStepFeedback(fb);
-        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
-        e?.OnPlayerSuccess?.Invoke();//*/
     }
 
     public void RefreshZombies()

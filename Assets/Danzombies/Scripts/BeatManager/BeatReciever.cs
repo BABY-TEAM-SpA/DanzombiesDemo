@@ -39,6 +39,8 @@ public abstract class BeatReciever : MonoBehaviour
     {
         if (!isActive) return;
         BeatAction(beatCounter, beatType, beatTimeMs);
+        if(beatType == BeatManager.BeatType.SecondEmpty)PostBarAction(beatCounter);
+        
     }
     
     public virtual void OnUpdateSongAction(double barDuration){}
@@ -47,6 +49,8 @@ public abstract class BeatReciever : MonoBehaviour
      * beatTimeMs(int) is the songTime [Miliseconds: 0000ms] where the beatPart is launched (it loops)*
      */
     public abstract void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs);
-    
+
+    public virtual void PostBarAction(int beatCounter) { }
+
 
 }

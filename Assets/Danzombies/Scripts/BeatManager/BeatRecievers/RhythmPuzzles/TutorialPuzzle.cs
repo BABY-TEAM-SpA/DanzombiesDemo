@@ -12,68 +12,41 @@ public class TutorialPuzzle : RhythmPuzzle
     #endregion
     #region [METHODS]
 
-    
-
-    public override void SetActivePuzzle(bool activate)
-    {
-        base.SetActivePuzzle(activate);
-        if (currentSequenceIndex < TutorialSequences.Count) SetSequence(TutorialSequences[currentSequenceIndex]);
-    }
-    
-    public  void PreBeatAction(int beat, BeatManager.BeatType type)
-    {
-        if (!availableToDance) return;
-        //g.Log(BeatManager.Instance.localBeatCount);
-        //Debug.Log(beat);
-        
-        //eventManager.InvokePrepare(beat,type,currentStep);
-        
-    }
-
-    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
-    {
-        if (!availableToDance)
-            return;
-        currentStep = currentDanceSequence.GetDanceStep(beatCounter-1,beatType);
-        GetNextStep(beatCounter,beatType);
-        //Debug.Log(BeatManager.Instance.localBeatCount);
-        danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
-    }
-
-    public  void PostBeatAction(int beat, BeatManager.BeatType type)
-    {
-        if (availableToDance)
-        {
-            //Debug.Log(BeatManager.Instance.localBeatCount);
-            //eventManager.InvokeRealease(beat, type, currentStep);
-            CheckEnd(beat);
-        }
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount == BeatManager.Instance.globalUpperBar) availableToDance = true; 
-    }
-
-    public void GetNextStep(int beat, BeatManager.BeatType type)
-    {
-        DanceStep nextStep = currentDanceSequence.GetFutureStep(beat-1,type);
-        danceEventBuffer.InvokeNextStep(beat,type,nextStep);
-    }
-    
     public override void PreparePuzzle()
     {
         danceEventBuffer.AddListener(zone);
-        //eventManager.AddListener(HUD);
     }
-    
-    public void CheckEnd(int beat)
-    {
-        if(TutorialSequences[currentSequenceIndex].CheckEndOfSequence(beat))OnPuzzleCompleted();
-    }
-
- 
 
     public void ActivatePuzzleByIndex(int index)
     {
         currentSequenceIndex = index;
         SetActivePuzzle(true);
+    }
+    public override void SetActivePuzzle(bool activate)
+    {
+        base.SetActivePuzzle(activate);
+        if (currentSequenceIndex < TutorialSequences.Count) SetSequence(TutorialSequences[currentSequenceIndex]);
+    }
+
+    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
+    {
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount==1)
+        {
+            innerBeatCounter = 0;
+            availableToDance = true;
+        }
+        if (!availableToDance) return;
+        if(beatType== BeatManager.BeatType.FullBeat) innerBeatCounter++;
+        GetDanceStep(beatCounter,beatType);
+        if(debug) Debug.Log($"Beat {beatCounter} (inner:{innerBeatCounter}):{beatType}.... dance:{currentStep}");
+        danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
+        GetNextDanceStep(beatCounter,beatType);
+        
+    }
+    protected override void CheckEnd(int beat)
+    {
+        //if(TutorialSequences[currentSequenceIndex].CheckEndOfSequence(beat))OnPuzzleCompleted();
+        if(currentDanceSequence.CheckEndOfSequence(beat))OnPuzzleCompleted();
     }
     
     #endregion

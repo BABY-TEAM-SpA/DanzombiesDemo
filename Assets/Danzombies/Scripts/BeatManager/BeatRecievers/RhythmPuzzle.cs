@@ -57,8 +57,33 @@ public abstract class RhythmPuzzle : BeatReciever
         currentDanceSequence?.ResetProgress();
         currentDanceSequence = sequence;
     }
+    public void GetDanceStep(int beat, BeatManager.BeatType beatType)
+    {
+        currentStep = currentDanceSequence.GetDanceStep(beat,beatType);
+    }
+    public void GetNextDanceStep(int beat, BeatManager.BeatType type)
+    {
+        DanceStep nextStep = currentDanceSequence.GetFutureStep(beat-1,type);
+        danceEventBuffer.InvokeNextStep(beat,type,nextStep);
+        if(debug) Debug.Log($"... Nextdance:{nextStep}");
+    }
 
-    public virtual void OnPuzzleCompleted()
+    public void ReactToFeedback(BeatReciever.BeatFeedback bf)
+    {
+        currentDanceSequence.RegisterStepFeedback(bf);
+    }
+
+    public override void PostBarAction(int beatCounter)
+    {
+        CheckEnd(beatCounter);
+    }
+    
+    protected virtual void CheckEnd(int beat)
+    {
+        if(currentDanceSequence.CheckEndOfSequence(beat))OnPuzzleCompleted();
+    }
+
+    public void OnPuzzleCompleted()
     {
         //Debug.Log("Puzzle Is Over");
         SetActivePuzzle(false);

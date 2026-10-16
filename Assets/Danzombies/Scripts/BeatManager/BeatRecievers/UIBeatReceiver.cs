@@ -6,10 +6,10 @@ public class UIBeatReceiver : BeatReciever
 {
     #region [VARIABLES]
     [SerializeField] private bool activateOnStart = true;
-
-    [SerializeField] private UnityEvent OnPreBeat;
+    
     [SerializeField] private UnityEvent OnBeat;
-    [SerializeField] private UnityEvent OnPostBeat;
+    
+    [SerializeField] private Animator animator;
     #endregion
 
     #region [UNITY]
@@ -18,20 +18,22 @@ public class UIBeatReceiver : BeatReciever
 
     #region [GODOT]
     #region Beat Receiver
-    public void PreBeatAction(int beat, BeatManager.BeatType type)
+    
+        
+    public override void OnUpdateSongAction(double barDuration)
     {
-        OnPreBeat?.Invoke();
+        if (animator == null) return;
+        animator.enabled = true;
+        double duration = barDuration;
+        float value = (float)(1f / duration);
+        animator.SetFloat("Beat",value);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
         OnBeat?.Invoke();
     }
-
-    public void PostBeatAction(int beat, BeatManager.BeatType type)
-    {
-        OnPostBeat?.Invoke();
-    }
+    
     #endregion
     #endregion
 }

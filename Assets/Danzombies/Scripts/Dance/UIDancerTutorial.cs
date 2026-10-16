@@ -75,7 +75,7 @@ public class UIDancerTutorial : Dancer
     public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
         currentDanceStep = danceStep;
-        Debug.Log($"CurrentDanceStep: {currentDanceStep} | FutureDanceStep: {futureDanceStep}");
+        //Debug.Log($"CurrentDanceStep: {currentDanceStep} | FutureDanceStep: {futureDanceStep}");
 
         if (!danceCanvas.isActiveAndEnabled) return;
         RefreshIcons(true, true, true);
