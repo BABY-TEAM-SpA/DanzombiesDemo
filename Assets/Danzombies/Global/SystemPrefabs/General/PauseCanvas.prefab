@@ -1699,6 +1699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3473371494076211960}
   - component: {fileID: 8717277086588583899}
+  - component: {fileID: 883616807911331314}
   m_Layer: 5
   m_Name: Options_Buttons
   m_TagString: Untagged
@@ -1755,6 +1756,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &883616807911331314
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2800528251147978030}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2839385675914607518
 GameObject:
   m_ObjectHideFlags: 0
@@ -2594,6 +2607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 311555956997502510}
   - component: {fileID: 3487437660062347718}
+  - component: {fileID: 2834516665692340068}
   m_Layer: 5
   m_Name: Options_Settings
   m_TagString: Untagged
@@ -2648,6 +2662,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &2834516665692340068
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4440068902788822566}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4738997810090923941
 GameObject:
   m_ObjectHideFlags: 0
@@ -3656,8 +3682,8 @@ MonoBehaviour:
   PauseEvent:
     m_PersistentCalls:
       m_Calls: []
-  resolutionsDropdown: {fileID: 0}
-  fullscreenToggle: {fileID: 0}
+  resolutionsDropdown: {fileID: 4860489830017885022}
+  fullscreenToggle: {fileID: 3800215175837120823}
 --- !u!114 &1219399259666493651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3678,10 +3704,34 @@ MonoBehaviour:
     loopCount: 0
     OnSequenceStart:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2800528251147978030}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     OnSequenceComplete:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 4440068902788822566}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     animationChannels:
     - revertOnComplete: 0
       objectToAnimate: {fileID: 2647227628402420477}
@@ -3700,6 +3750,30 @@ MonoBehaviour:
       timeMode: 1
       animationSteps:
       - stepType: 2
+        duration: 0.0001
+        easing: 0
+        position: {x: 38, y: -45}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 3473371494076211960}
+      timeMode: 1
+      animationSteps:
+      - stepType: 5
+        duration: 0.0001
+        easing: 0
+        position: {x: 38, y: -45}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 311555956997502510}
+      timeMode: 1
+      animationSteps:
+      - stepType: 5
         duration: 0.0001
         easing: 0
         position: {x: 38, y: -45}
@@ -3764,6 +3838,138 @@ MonoBehaviour:
       - stepType: 2
         duration: 0.5
         easing: 3
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: Options
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4440068902788822566}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2800528251147978030}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 3473371494076211960}
+      timeMode: 1
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 311555956997502510}
+      timeMode: 1
+      animationSteps:
+      - stepType: 0
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+  - sequenceName: Return to Buttons
+    loop: 0
+    loopCount: 0
+    OnSequenceStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2800528251147978030}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    OnSequenceComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4440068902788822566}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    animationChannels:
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 3473371494076211960}
+      timeMode: 1
+      animationSteps:
+      - stepType: 0
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+      - stepType: 5
+        duration: 0.25
+        easing: 0
+        position: {x: 0, y: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        alpha: 1
+        color: {r: 0, g: 0, b: 0, a: 0}
+    - revertOnComplete: 0
+      objectToAnimate: {fileID: 311555956997502510}
+      timeMode: 1
+      animationSteps:
+      - stepType: 5
+        duration: 0.25
+        easing: 0
         position: {x: 0, y: 0}
         scale: {x: 0, y: 0, z: 0}
         rotation: {x: 0, y: 0, z: 0}
@@ -5808,6 +6014,38 @@ PrefabInstance:
     - target: {fileID: 6500820785740001597, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1219399259666493651}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySequence
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UiAnimator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Options
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629302598125398527, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7634239987249929328, guid: dafaa3de1cf75f94293ec9b54b95e3f7, type: 3}
       propertyPath: m_text
