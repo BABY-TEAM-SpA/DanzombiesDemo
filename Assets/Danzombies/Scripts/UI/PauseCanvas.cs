@@ -26,6 +26,7 @@ public class PauseCanvas : MonoBehaviour
     #endregion
 
     #region [METHODS]
+    #region Options - Fullscreen
     private void SetupFullscreen()
     {
         isFullscreen = Screen.fullScreen;
@@ -33,6 +34,14 @@ public class PauseCanvas : MonoBehaviour
             fullscreenToggle.isOn = isFullscreen;
     }
 
+    public void OnFullScreenUpdate()
+    {
+        isFullscreen = fullscreenToggle.isOn;
+        Screen.fullScreen = isFullscreen;
+    }
+    #endregion
+
+    #region Options - Resolutions
     private void SetupResolutions()
     {
         resolutions?.Clear();
@@ -62,11 +71,6 @@ public class PauseCanvas : MonoBehaviour
 
         Screen.SetResolution(res.width, res.height, isFullscreen);
     }
-
-    public void OnFullScreenUpdate()
-    {
-        isFullscreen = fullscreenToggle.isOn;
-        Screen.fullScreen = isFullscreen;
-    }
+    #endregion
     #endregion
 }
