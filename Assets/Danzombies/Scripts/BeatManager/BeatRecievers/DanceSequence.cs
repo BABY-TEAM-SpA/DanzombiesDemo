@@ -128,29 +128,33 @@ public class DanceSequence : MonoBehaviour
     #endregion
 
     #region Get Steps
-    public DanceStep GetDanceStep(int beat, BeatManager.BeatType beatPart)
+    /** beatCount goes from 1 to upper or +inf
+     * beatPart goes from 0 to 5
+     */
+    public DanceStep GetDanceStep(int beatCount=0, BeatManager.BeatType beatPart=BeatManager.BeatType.FullBeat)
     {
-        if (coreography.StepInBar.Count > 0 && beat >= 0)
+        beatCount -= 1;
+        if (coreography.StepInBar.Count == 0) return DanceStep.None; 
+        if (beatCount < 0) return DanceStep.None;
+        
+        int index = beatCount % coreography.StepInBar.Count;
+        DanceStepPerBeat beatDances = coreography.StepInBar[index];
+        if(beatDances.StepPerBeat.Count==0) return DanceStep.None;
+        
+        switch (beatPart)
         {
-            DanceStepPerBeat beatDances = coreography.StepInBar[beat % coreography.StepInBar.Count];
-            if(beatDances.StepPerBeat.Count<=0) return DanceStep.None;
-            switch (beatPart)
-            {
-                case BeatManager.BeatType.FullBeat:
-                    return(beatDances.StepPerBeat.Count > 0)?beatDances.StepPerBeat[0]: DanceStep.None;
-                case BeatManager.BeatType.FirstThird:
-                    return (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
-                    
-                case BeatManager.BeatType.HalfBeat:
-                    return (beatDances.StepPerBeat.Count == 2) ? beatDances.StepPerBeat[1] : DanceStep.None;
-                    
-                case BeatManager.BeatType.SecondThird:
-                    return (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[2] : DanceStep.None;
-                default:
-                    return DanceStep.None;
-            }
+            case BeatManager.BeatType.FullBeat: //(index,0)
+                return(beatDances.StepPerBeat.Count >= 1)?beatDances.StepPerBeat[0]: DanceStep.None;
+            case BeatManager.BeatType.FirstThird: //(index,2)
+                return (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[1] : DanceStep.None;
+            case BeatManager.BeatType.HalfBeat: //(index,3)
+                return (beatDances.StepPerBeat.Count == 2) ? beatDances.StepPerBeat[1] : DanceStep.None;
+            case BeatManager.BeatType.SecondThird: //(index,4)
+                return (beatDances.StepPerBeat.Count == 3) ? beatDances.StepPerBeat[2] : DanceStep.None;
+            default:
+                return DanceStep.None;
         }
-        return DanceStep.None;
+        
     }
 
     //Aqui esta el problema del looping

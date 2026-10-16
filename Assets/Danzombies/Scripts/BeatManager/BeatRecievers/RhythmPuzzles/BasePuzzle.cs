@@ -14,10 +14,11 @@ public class BasePuzzle : RhythmPuzzle
             availableToDance = true;
         }
         if (!availableToDance) return;
-        currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,beatType);
-        if(debug) Debug.Log($"Beat {beatCounter}:{beatType}.... dance:{currentStep}");
-        danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
         if(beatType== BeatManager.BeatType.FullBeat) innerBeatCounter++;
+        currentStep = currentDanceSequence.GetDanceStep(innerBeatCounter,beatType);
+        if(debug) Debug.Log($"Beat {beatCounter} (inner:{innerBeatCounter}):{beatType}.... dance:{currentStep}");
+        danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
+        
         //if(currentDanceSequence.CheckEndOfSequence(innerCounter)) OnPuzzleCompleted();
     }
 

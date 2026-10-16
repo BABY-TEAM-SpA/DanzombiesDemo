@@ -42,6 +42,10 @@ public abstract class BeatReciever : MonoBehaviour
     }
     
     public virtual void OnUpdateSongAction(double barDuration){}
+    /** beatCounter(int) starts counting the beats 1,2,3,4 to upper (it loops),
+     * beatType(int enum) is the part of the beat [0,1,2,3,4,5],
+     * beatTimeMs(int) is the songTime [Miliseconds: 0000ms] where the beatPart is launched (it loops)*
+     */
     public abstract void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs);
     
 

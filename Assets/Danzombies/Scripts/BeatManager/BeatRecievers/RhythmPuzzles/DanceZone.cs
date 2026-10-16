@@ -173,17 +173,17 @@ public class DanceZone : Dancer
     #region Helpers
     private void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
-        ResolvePlayerInput(bf);
+        //ResolvePlayerInput(bf);
         playersInside?.ApplyDanceFeedback(bf);
         OnPlayerFeedback?.Invoke(bf);
     }
     public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
     {
         Debug.Log("ResolvePlayerInput is broke");
-        /*currentDanceSequence?.RegisterStepFeedback(fb);
+        /*
+        currentDanceSequence?.RegisterStepFeedback(fb);
         PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
-        e?.OnPlayerSuccess?.Invoke();
-        */
+        e?.OnPlayerSuccess?.Invoke();//*/
     }
 
     public void RefreshZombies()
