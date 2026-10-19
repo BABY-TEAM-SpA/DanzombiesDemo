@@ -836,24 +836,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: PlayerFlowController, Assembly-CSharp
-          m_MethodName: SetFlow
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - currentDialogText: 0
     timeToAutoContinue: 0
     dialogData: {fileID: 11400000, guid: a7ccdd05793ffc94eaec9c96bc0f70ac, type: 2}
     OnDialogEndEvent:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 2010002788}
+          m_TargetAssemblyTypeName: FMODUnity.StudioGlobalParameterTrigger, FMODUnity
+          m_MethodName: TriggerParameters
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
         - m_Target: {fileID: 1689679293}
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
@@ -1420,23 +1420,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 60066525}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 60066525}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1460,9 +1445,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &60066525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,6 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 892640271}
@@ -4419,23 +4402,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 264736977}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 264736977}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4459,9 +4427,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &264736977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4474,6 +4439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1962170055}
@@ -5035,6 +5001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 710123885}
@@ -5073,23 +5040,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 291716274}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 291716274}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5113,9 +5065,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &300451258
 GameObject:
   m_ObjectHideFlags: 0
@@ -6341,23 +6290,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 389520676}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 389520676}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6381,9 +6315,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &389520676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6396,6 +6327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1985315586}
@@ -6637,23 +6569,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 415634142}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 415634142}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6677,9 +6594,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &415634142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6692,6 +6606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1341166696}
@@ -7026,9 +6941,6 @@ MonoBehaviour:
   onDance:
     m_PersistentCalls:
       m_Calls: []
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
     m_PersistentCalls:
       m_Calls:
@@ -7044,10 +6956,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
   isActive: 0
+  playerInputs: []
   damageMode: 1
   dancers:
   - {fileID: 869731217}
@@ -7192,7 +7102,8 @@ Transform:
   m_LocalPosition: {x: 2.63, y: -0.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1324212730}
   m_Father: {fileID: 1185187998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466959140
@@ -8490,6 +8401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 0
   objects:
   - {fileID: 869731214}
@@ -9178,9 +9090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d2b658beb07894c9f629165f43cd09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanonPuzzle
-  debug: 0
+  debug: 1
   activateOnStart: 0
-  playerInputs: []
   dancers:
   - {fileID: 1212863503}
   - {fileID: 466104985}
@@ -9635,6 +9546,10 @@ PrefabInstance:
       propertyPath: m_ShadowMesh.m_Mesh
       value: 
       objectReference: {fileID: 1488251047}
+    - target: {fileID: 5396731879489201664, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d1ea03c5dcb17d64592ab7a6c09dc1fa, type: 2}
     - target: {fileID: 5848019546511833440, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.07999992
@@ -9820,6 +9735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 545943750}
@@ -9858,23 +9774,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 618920849}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 618920849}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9898,9 +9799,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &623926489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10807,6 +10705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1412965384}
@@ -10845,23 +10744,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 724824739}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 724824739}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10885,9 +10769,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &740927111
 GameObject:
   m_ObjectHideFlags: 0
@@ -11125,6 +11006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 812993522}
@@ -11163,23 +11045,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 758805798}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 758805798}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11203,9 +11070,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &760714425
 GameObject:
   m_ObjectHideFlags: 0
@@ -12968,6 +12832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1662882018}
@@ -13006,23 +12871,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 869731216}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 869731216}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13046,9 +12896,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &872028919
 GameObject:
   m_ObjectHideFlags: 0
@@ -13602,6 +13449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 0
   objects:
   - {fileID: 415634139}
@@ -13711,6 +13559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1569061048}
@@ -13749,23 +13598,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 915968511}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 915968511}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13789,9 +13623,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &921563203
 GameObject:
   m_ObjectHideFlags: 0
@@ -13917,184 +13748,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!43 &931920361
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!1 &934809204
 GameObject:
   m_ObjectHideFlags: 0
@@ -14585,23 +14238,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 969036426}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 969036426}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14625,9 +14263,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &969036426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14640,6 +14275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1289615605}
@@ -15279,23 +14915,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1021969470}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1021969470}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -15319,9 +14940,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1021969470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15334,6 +14952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1824954466}
@@ -17698,23 +17317,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1170083152}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1170083152}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17738,9 +17342,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1170083152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17753,6 +17354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1383977567}
@@ -17971,6 +17573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1957955144}
@@ -18009,23 +17612,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1191554431}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1191554431}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -18049,9 +17637,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1191679890
 GameObject:
   m_ObjectHideFlags: 0
@@ -18724,28 +18309,11 @@ MonoBehaviour:
   onDance:
     m_PersistentCalls:
       m_Calls: []
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 914382588}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onReaction:
     m_PersistentCalls:
       m_Calls: []
   isActive: 0
+  playerInputs: []
   damageMode: 0
   dancers:
   - {fileID: 1740428034531047183}
@@ -19711,23 +19279,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1296632975}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1296632975}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19751,9 +19304,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1296632975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19766,6 +19316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 914990792}
@@ -19990,6 +19541,90 @@ MonoBehaviour:
   m_PointLightOuterAngle: 29.73
   m_PointLightInnerRadius: 0
   m_PointLightOuterRadius: 18.411776
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &1324212729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1324212730}
+  - component: {fileID: 1324212731}
+  m_Layer: 0
+  m_Name: Global Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1324212730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324212729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 466104988}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1324212731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324212729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
+  m_ComponentVersion: 2
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.2528302, g: 0.2528302, b: 0.2528302, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 00000000e5ffbde801c7ca27c59f54e1bba60a1d73e17645894876518fa59a64
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -20632,23 +20267,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1346919446}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1346919446}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20672,9 +20292,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1346919446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20687,6 +20304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 515459059}
@@ -24768,16 +24386,11 @@ MonoBehaviour:
   onDance:
     m_PersistentCalls:
       m_Calls: []
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
     m_PersistentCalls:
       m_Calls: []
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
   isActive: 1
+  playerInputs: []
   damageMode: 1
   dancers:
   - {fileID: 1740428034531047183}
@@ -25132,23 +24745,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1629868291}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1629868291}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25172,9 +24770,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1629868291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25187,6 +24782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 129972518}
@@ -25784,6 +25380,184 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 202302016822588715, guid: c3aa1bf5ef7c1b74e88df7aa1e81409e, type: 3}
   m_PrefabInstance: {fileID: 1674738593}
   m_PrefabAsset: {fileID: 0}
+--- !u!43 &1676789540
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1 &1677278328
 GameObject:
   m_ObjectHideFlags: 0
@@ -26319,7 +26093,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialPuzzle
   debug: 0
   activateOnStart: 0
-  playerInputs: []
   zone: {fileID: 1607467820}
   TutorialSequences:
   - {fileID: 1516937218}
@@ -28856,7 +28629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1904322314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28875,13 +28648,7 @@ MonoBehaviour:
   onDance:
     m_PersistentCalls:
       m_Calls: []
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  onReaction:
     m_PersistentCalls:
       m_Calls: []
   feedbackText: {fileID: 1622082644}
@@ -30093,6 +29860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 527259360}
@@ -30131,23 +29899,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1975664625}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1975664625}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -30171,9 +29924,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1976141158
 GameObject:
   m_ObjectHideFlags: 0
@@ -30545,6 +30295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 1206756427}
@@ -30583,23 +30334,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2000378374}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2000378374}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -30623,9 +30359,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2005350144
 GameObject:
   m_ObjectHideFlags: 0
@@ -31756,6 +31489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a59eb0ecd87bae45bd21415812c8b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Switcher
+  updateMethod: 0
   activatorBeatBehavior: 1
   objects:
   - {fileID: 2061451901}
@@ -31794,23 +31528,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2090705212}
         m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2090705212}
-        m_TargetAssemblyTypeName: Switcher, Assembly-CSharp
-        m_MethodName: SetNext
-        m_Mode: 1
+        m_MethodName: ActivateByRhythm
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -31834,9 +31553,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2094724175
 GameObject:
   m_ObjectHideFlags: 0

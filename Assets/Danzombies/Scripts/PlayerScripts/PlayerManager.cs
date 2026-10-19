@@ -83,23 +83,29 @@ public class PlayerManager : DanceBrain
     #endregion
 
     #region RhythmPuzzle - Dance
-    public override void OnDanceStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
+    /// <summary>
+    /// Ejecución del paso de baile.
+    /// </summary>
+    /// <param name="beatCounter"></param>
+    /// <param name="beatType">La partición del bit [0, 5]</param>
+    /// <param name="beatTimeMs"></param>
+    /// <param name="danceStep">El paso de baile (e.g. L_West).</param>
+    public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
-        onDance?.Invoke(step);
-        danceAnimCtrl?.OnDanceBegin(step);
+        onDance?.Invoke(beatType,danceStep);
+        danceAnimCtrl?.OnDanceBegin(danceStep);
         if (danceTarget == null) return;
-        danceTarget.SetPlayerInput(step, out BeatReciever.BeatFeedback bf);
-        comboController.Increase(bf, 1);
+        danceTarget.SetPlayerInput(beatTimeMs,danceStep, out BeatReciever.BeatFeedback bf);
     }
 
     public void ApplyDanceFeedback(BeatReciever.BeatFeedback bf)
     {
+        comboController.Increase(bf, 1);
         if (bf == BeatReciever.BeatFeedback.Bad)
         {
             if (movementController.IsRunning && !IsSafe)
-                inputController.DisableMoveForSeconds(0.5f); // <- [Frco] Hardcodeado D: y parcheado :D
+                inputController.DisableMoveForSeconds(BeatManager.Instance.BeatDurationMs/1000f); // <- [Frco] Hardcodeado D: y parcheado :D
         }
-
         LevelProgressTracker.Instance?.RegisterStep(bf);
         DanceFeedbackEvent?.Invoke(bf);
     }
@@ -135,13 +141,21 @@ public class PlayerManager : DanceBrain
         movCtrl.SetRun(isSprinting);
     }
 
+    /// <summary>
+    /// Input de baile (e.g. clic izq. + D = L_East)
+    /// </summary>
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
-        if(isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance", false);
+        if (isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance", false);
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {
             DanceStep step = Enum.Parse<DanceStep>(lean + "_" + direction);
-            OnDanceStepAction(BeatManager.Instance?BeatManager.Instance.globalBeatCount:1,BeatManager.BeatType.FullBeat, step);
+            OnDanceStepAction(
+                BeatManager.Instance ? BeatManager.Instance.localBeatCount : 1,
+                BeatManager.Instance.mainBeatState,
+                AudioManager.Instance.SongPositionMs(),
+                step
+            );
         }
     }
 

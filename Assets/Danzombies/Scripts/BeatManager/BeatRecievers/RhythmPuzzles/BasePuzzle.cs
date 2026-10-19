@@ -2,45 +2,31 @@ using UnityEngine;
 
 public class BasePuzzle : RhythmPuzzle
 {
-    public Dancer dancer;
+    public Dancer dancer; //zone
     public DanceSequence danceSequence;
-    public int innerCounter=0;
     
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
-    {
-        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount==1)
-        {
-            innerCounter = 0;
-            availableToDance = true;
-        }
-        if (!availableToDance) return;
-        currentStep = currentDanceSequence.GetDanceStep(innerCounter,type);
-        if(debug) Debug.Log($"PreBeat {beat}:{type}.... dance:{currentStep}");
-        eventManager.InvokePrepare(beat,type,currentStep);
-    }
-
-    public override void BeatAction(int beat, BeatManager.BeatType type)
-    {
-        if (!availableToDance) return;
-        if(debug) Debug.Log($"Beat {beat}:{type}.... dance:{currentStep}");
-        eventManager.InvokeDance(beat,type,currentStep);
-    }
-
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
-    {
-        if (availableToDance)
-        {
-            if(type== BeatManager.BeatType.FullBeat) innerCounter++;
-            eventManager.InvokeRealease(beat, type, currentStep);
-            if(debug) Debug.Log($"PostBeat {beat}:{type}.... dance:{currentStep}");
-            if(currentDanceSequence.CheckEndOfSequence(innerCounter)) OnPuzzleCompleted();
-        }
-    }
-
     public override void PreparePuzzle()
     {
         currentDanceSequence = danceSequence; 
-        eventManager.AddListener(dancer);
+        danceEventBuffer.AddListener(dancer);
     }
+
+    
+
+    public override void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs) /// { FullBeat=0, FirstEmpty=1, FirstThird=2, HalfBeat=3, SecondThird=4, SecondEmpty=5 }
+    {
+        if (isActive && !availableToDance && BeatManager.Instance.localBeatCount==1)
+        {
+            innerBeatCounter = 0;
+            availableToDance = true;
+        }
+        if (!availableToDance) return;
+        if(beatType== BeatManager.BeatType.FullBeat) innerBeatCounter++;
+        GetDanceStep(innerBeatCounter,beatType);
+        if(debug) Debug.Log($"Beat {beatCounter} (inner:{innerBeatCounter}):{beatType}.... dance:{currentStep}");
+        danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
+        
+    }
+
     
 }

@@ -71,8 +71,7 @@ public class LevelProgressTracker : Service<LevelProgressTracker>
             case BeatReciever.BeatFeedback.Good:
                 GoodSteps++;
                 break;
-            case BeatReciever.BeatFeedback.Late:
-            case BeatReciever.BeatFeedback.Early:
+            case BeatReciever.BeatFeedback.Ok:
                 OkSteps++;
                 break;
             case BeatReciever.BeatFeedback.Bad:

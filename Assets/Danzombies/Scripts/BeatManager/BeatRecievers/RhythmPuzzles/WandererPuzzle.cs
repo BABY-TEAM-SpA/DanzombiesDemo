@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class WandererPuzzle : RhythmPuzzle
 {
-    public override void PreBeatAction(int beat, BeatManager.BeatType type)
+   
+    public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
         throw new NotImplementedException();
     }
-
-    public override void BeatAction(int beat, BeatManager.BeatType type)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void PostBeatAction(int beat, BeatManager.BeatType type)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public override void PreparePuzzle()
     {

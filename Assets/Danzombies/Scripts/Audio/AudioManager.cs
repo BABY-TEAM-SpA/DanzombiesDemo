@@ -111,14 +111,12 @@ public class AudioManager : Service<AudioManager>
         return isPaused;
     }
 
-    public float SongPositionSeconds()
+    public int SongPositionMs()
     {
         if (!currentRhythmTrack.isValid())
-            return 0f;
-
+            return 0;
         currentRhythmTrack.getTimelinePosition(out int ms);
-
-        return ms / 1000f;
+        return ms;
     }
 
     public float SongPositionSecondsRelativeToCurrentRhythm()

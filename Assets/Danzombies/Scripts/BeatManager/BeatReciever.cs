@@ -3,33 +3,27 @@ using UnityEngine;
 public abstract class BeatReciever : MonoBehaviour
 {
     public bool isActive { get; set; } = false;
-    public bool isOnBeat { get; private set; } = false;
     
 
     public enum BeatFeedback
     {
         Bad,
-        Early,  // 'Ok'
-        Good,   // Antiguamente 'Great'
+        Ok,  
+        Good,   
         Perfect,
-        Late,   // 'Ok'
         Ignored
     }
 
     private void OnEnable()
     {
         BeatManager.OnUpdateEvent += OnUpdateSongEvent;
-        BeatManager.OnPreBeat += OnPreBeatEvent;
         BeatManager.OnBeat += OnBeatEvent;
-        BeatManager.OnPostBeat += OnPostBeatEvent;
     }
 
     private void OnDisable()
     {
         BeatManager.OnUpdateEvent -= OnUpdateSongEvent;
-        BeatManager.OnPreBeat -= OnPreBeatEvent;
         BeatManager.OnBeat -= OnBeatEvent;
-        BeatManager.OnPostBeat -= OnPostBeatEvent;
     }
     public void SetActive(bool active)
     {
@@ -40,31 +34,23 @@ public abstract class BeatReciever : MonoBehaviour
     {
         OnUpdateSongAction( barDuration);
     }
-
-    private void OnPreBeatEvent(int beat, BeatManager.BeatType type)
-    {
-        if (!isActive) return;
-        PreBeatAction(beat, type);
-        isOnBeat = true;
-    }
-
-    private void OnBeatEvent(int beat, BeatManager.BeatType type)
-    {
-        if (!isActive) return;
-        BeatAction(beat, type);
-    }
-
-    private void OnPostBeatEvent(int beat, BeatManager.BeatType type)
-    {
-        if (!isActive) return;
-        PostBeatAction(beat, type);
-        isOnBeat = false;
-    }
-
-    public virtual void OnUpdateSongAction(double barDuration){}
-    public abstract void PreBeatAction(int beat, BeatManager.BeatType type);
-    public abstract void BeatAction(int beat, BeatManager.BeatType type);
-    public abstract void PostBeatAction(int beat, BeatManager.BeatType type);
     
+    private void OnBeatEvent(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs)
+    {
+        if (!isActive) return;
+        BeatAction(beatCounter, beatType, beatTimeMs);
+        if(beatType == BeatManager.BeatType.SecondEmpty)PostBarAction(beatCounter);
+        
+    }
+    
+    public virtual void OnUpdateSongAction(double barDuration){}
+    /** beatCounter(int) starts counting the beats 1,2,3,4 to upper (it loops),
+     * beatType(int enum) is the part of the beat [0,1,2,3,4,5],
+     * beatTimeMs(int) is the songTime [Miliseconds: 0000ms] where the beatPart is launched (it loops)*
+     */
+    public abstract void BeatAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs);
+
+    public virtual void PostBarAction(int beatCounter) { }
+
 
 }

@@ -14,26 +14,13 @@ public abstract class RhythmPuzzle : BeatReciever
     [Header("Rhythm Puzzle Settings")]
     [SerializeField] protected bool debug;
     [SerializeField] bool activateOnStart;
-    protected DanceEventManager eventManager = new DanceEventManager();
+    protected DanceEventBuffer danceEventBuffer = new DanceEventBuffer();
     protected DanceSequence currentDanceSequence;
     protected int currentSequenceIndex;
     protected DanceStep currentStep;
     protected bool availableToDance = false;
-
-    [SerializeField] protected PlayerInputEvent[] playerInputs;
-    [Serializable]
-    public class PlayerInputEvent
-    {
-        public BeatReciever.BeatFeedback feedback;
-        public UnityEvent OnPlayerSuccess;
-    }
-
-    public void ResolvePlayerInput(BeatReciever.BeatFeedback fb)
-    {
-        currentDanceSequence?.RegisterStepFeedback(fb);
-        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == fb);
-        e?.OnPlayerSuccess?.Invoke();
-    }
+    protected int innerBeatCounter = 0;
+    
     
     protected void Start()
     {
@@ -42,7 +29,7 @@ public abstract class RhythmPuzzle : BeatReciever
     }
     private void OnDisable()
     {
-        eventManager.RemoveAllListeners();
+        danceEventBuffer.RemoveAllListeners();
     }
     
     public abstract void PreparePuzzle();
@@ -54,11 +41,11 @@ public abstract class RhythmPuzzle : BeatReciever
         if(isActive)
         {
             if(debug)Debug.Log($"Starting PUZZLE ({name})");
-            eventManager.InvokeEnablePuzzle(this);
+            danceEventBuffer.InvokeEnablePuzzle(this);
         } else
         {
             if(debug)Debug.Log($"Stopping PUZZLE ({name})");
-            eventManager.InvokeDisablePuzzle(this);
+            danceEventBuffer.InvokeDisablePuzzle(this);
         }
         if (!activate) return;
         
@@ -70,8 +57,33 @@ public abstract class RhythmPuzzle : BeatReciever
         currentDanceSequence?.ResetProgress();
         currentDanceSequence = sequence;
     }
+    public void GetDanceStep(int beat, BeatManager.BeatType beatType)
+    {
+        currentStep = currentDanceSequence.GetDanceStep(beat,beatType);
+    }
+    public void GetNextDanceStep(int beat, BeatManager.BeatType type)
+    {
+        DanceStep nextStep = currentDanceSequence.GetFutureStep(beat-1,type);
+        danceEventBuffer.InvokeNextStep(beat,type,nextStep);
+        if(debug) Debug.Log($"... Nextdance:{nextStep}");
+    }
 
-    public virtual void OnPuzzleCompleted()
+    public void ReactToFeedback(BeatReciever.BeatFeedback bf)
+    {
+        currentDanceSequence.RegisterStepFeedback(bf);
+    }
+
+    public override void PostBarAction(int beatCounter)
+    {
+        CheckEnd(beatCounter);
+    }
+    
+    protected virtual void CheckEnd(int beat)
+    {
+        if(currentDanceSequence.CheckEndOfSequence(beat))OnPuzzleCompleted();
+    }
+
+    public void OnPuzzleCompleted()
     {
         //Debug.Log("Puzzle Is Over");
         SetActivePuzzle(false);

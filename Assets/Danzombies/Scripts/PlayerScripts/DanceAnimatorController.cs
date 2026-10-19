@@ -104,18 +104,31 @@ public class DanceAnimatorController : MonoBehaviour
     }
 
 
-    public void Talking(DialogExpression expression)
+   public void Talking(DialogExpression expression)
     {
         TalkingExpressionData expressionData = talkingExpressions.FirstOrDefault(x => x.expression == expression);
-        if(expressionData == null) return;
-        alphaOverrider["BaseTalkingEnter"] = expressionData.alphaIntro;
-        betaOverrider["BaseTalkingEnter"] = expressionData.betaIntro;
-        animator.Play("TalkingEnter");
-        alphaOverrider["BaseTalkingLoop"] = expressionData.alphaLoop;
-        betaOverrider["BaseTalkingLoop"] = expressionData.betaLoop;
-        alphaOverrider["BaseTalkingExit"] = expressionData.alphaEnd;
-        betaOverrider["BaseTalkingExit"] = expressionData.betaEnd;
-        onTalkingEnd = ()=>animator.Play("TalkingExit");
+        if (expressionData == null) return;
+        var alphaCambios = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        var betaCambios = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+
+        foreach (var clip in alphaOverrider.animationClips)
+        {
+            if (clip.name == "BaseTalkingEnter") alphaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.alphaIntro));
+            else if (clip.name == "BaseTalkingLoop") alphaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.alphaLoop));
+            else if (clip.name == "BaseTalkingExit") alphaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.alphaEnd));
+        }
+        foreach (var clip in betaOverrider.animationClips)
+        {
+            if (clip.name == "BaseTalkingEnter") betaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.betaIntro));
+            else if (clip.name == "BaseTalkingLoop") betaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.betaLoop));
+            else if (clip.name == "BaseTalkingExit") betaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.betaEnd));
+        }
+        alphaOverrider.ApplyOverrides(alphaCambios);
+        betaOverrider.ApplyOverrides(betaCambios);
+        
+        animator.Update(0f);
+        animator.Play("TalkingEnter", 0, 0f);
+        onTalkingEnd = () => animator.Play("TalkingExit", 0, 0f);
     }
 
     public void TalkingEnd()
