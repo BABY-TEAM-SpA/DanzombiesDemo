@@ -55,6 +55,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 1
   limiter: {fileID: 6065324922489293100}
@@ -113,6 +114,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 1
   limiter: {fileID: 6065324922489293100}
@@ -171,6 +173,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 1
   limiter: {fileID: 6065324922489293100}
@@ -229,6 +232,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 1
   limiter: {fileID: 6065324922489293100}
@@ -289,10 +293,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BasePuzzle
   debug: 0
   activateOnStart: 1
-  playerInputs: []
   dancer: {fileID: 6031555963687200971}
   danceSequence: {fileID: 6771419205934160515}
-  innerCounter: 0
 --- !u!114 &6771419205934160515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,16 +462,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
     m_PersistentCalls:
       m_Calls: []
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
   isActive: 0
+  playerInputs: []
   damageMode: 1
   dancers: []
   OnPlayerEntered:
@@ -527,7 +524,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - state: 1
-    percentage: 25
+    percentage: 45
     OnStateEntered:
       m_PersistentCalls:
         m_Calls: []
@@ -567,18 +564,6 @@ MonoBehaviour:
       - m_Target: {fileID: 6031555963687200971}
         m_TargetAssemblyTypeName: DanceZone, Assembly-CSharp
         m_MethodName: CompleteZone
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TrackerComponent, Assembly-CSharp
-        m_MethodName: Track
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

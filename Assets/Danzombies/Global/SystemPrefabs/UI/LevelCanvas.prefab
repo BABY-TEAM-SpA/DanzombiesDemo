@@ -192,24 +192,110 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.data[1].sequenceName
+      value: FadeOut
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.data[1].animationChannels.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.data[1].animationChannels.Array.data[0].objectToAnimate
+      value: 
+      objectReference: {fileID: 1676280344012491351}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.data[1].animationChannels.Array.data[0].animationSteps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.data[1].animationChannels.Array.data[0].animationSteps.Array.data[0].alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779099260870878398, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: sequences.Array.data[1].animationChannels.Array.data[0].animationSteps.Array.data[0].duration
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5664156205711603811, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
       propertyPath: m_Name
       value: FlowHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711071795925697377, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: states.Array.data[2].zombiesHud
+      value: 
+      objectReference: {fileID: 21300000, guid: 81caa6844072eaf41a1e23ac9e91954f, type: 3}
+    - target: {fileID: 7151541786660128272, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 3471121933362256871}
+    - target: {fileID: 7151541786660128272, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: OnBeat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3471121933362256871}
+    - target: {fileID: 7151541786660128272, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: OnBeat.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151541786660128272, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: OnBeat.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203579985761668378, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9203579985761668378, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9203579985761668378, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1327850647046036804, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3471121933362256871}
   m_SourcePrefab: {fileID: 100100000, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
 --- !u!224 &1676280344012491351 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2892880441801961961, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
   m_PrefabInstance: {fileID: 4568562589202807742}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3245884051309061882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1327850647046036804, guid: feeeebd4f250ef446931c8c9401a4927, type: 3}
+  m_PrefabInstance: {fileID: 4568562589202807742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3471121933362256871
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3245884051309061882}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 178c69511f94faf4592e95bd9f29793b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8091322443042201310
 PrefabInstance:
   m_ObjectHideFlags: 0
