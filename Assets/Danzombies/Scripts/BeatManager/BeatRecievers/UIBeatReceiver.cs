@@ -6,6 +6,7 @@ public class UIBeatReceiver : BeatReciever
 {
     #region [VARIABLES]
     [SerializeField] private bool activateOnStart = true;
+    [SerializeField] private BeatManager.BeatType beatType;
     
     [SerializeField] private UnityEvent OnBeat;
     
@@ -26,12 +27,13 @@ public class UIBeatReceiver : BeatReciever
         animator.enabled = true;
         double duration = barDuration;
         float value = (float)(1f / duration);
-        animator.SetFloat("Beat",value);
+        animator.SetFloat("Beat", value);
     }
 
     public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
-        OnBeat?.Invoke();
+        if (type == beatType)
+            OnBeat?.Invoke();
     }
     
     #endregion

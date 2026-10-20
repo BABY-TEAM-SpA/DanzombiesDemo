@@ -158,11 +158,13 @@ public class FlowComponent : MonoBehaviour
         FlowFeedbackController feedback = FlowFeedbackController.Instance;
         if (feedback == null) return;
 
-        FlowState shown = hide ? FlowState.Normal : State;
-        if (lastShownState == shown) return;
-
-        lastShownState = shown;
-        feedback.Show(shown);
+        if (hide) feedback.Hide();
+        else
+        {
+            if (lastShownState == State) return;
+            lastShownState = State;
+            feedback.Show(State);
+        }
     }
     #endregion
 
