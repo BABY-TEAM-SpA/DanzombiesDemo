@@ -14,15 +14,12 @@ public class CamerasController : MonoBehaviour
 
     #region [UNITY]
     private void Awake()
-        => cameras = GetComponentsInChildren<PlayerTriggeredCamera>();
+        => cameras = GetComponentsInChildren<PlayerTriggeredCamera>(true);
 
-    private void Start()
+    private void OnEnable()
     {
         foreach (PlayerTriggeredCamera cam in cameras)
-        {
-            //cam.Prepare(PlayerManager.Player.ConfinePlayerCamera());
             cam.OnCameraActivated += () => currentCam = cam;
-        }
     }
 
     private void LateUpdate() => CameraFrustum.Update();
