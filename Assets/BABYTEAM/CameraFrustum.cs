@@ -15,7 +15,7 @@ public static class CameraFrustum
     {
         if (Time.frameCount - lastFrameUpdated >= FRAME_RATE)
         {
-            planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+            GeometryUtility.CalculateFrustumPlanes(Camera.main, planes);
             lastFrameUpdated = Time.frameCount;
             OnPlanesUpdated?.Invoke();
         }
