@@ -55,6 +55,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -113,6 +114,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -235,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBussy: 0
   onActivated:
     m_PersistentCalls:
       m_Calls: []
@@ -253,13 +256,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  onReaction:
     m_PersistentCalls:
       m_Calls: []
   debug: 0
@@ -288,7 +285,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceBrain: {fileID: 2536597401598945149}
+  isMovementEnabled: 1
   walkingSpeed: 4
+  verticalMultiplier: 0.5
   sprintFactor: 1.5
 --- !u!114 &5104333320804861674
 MonoBehaviour:
@@ -302,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d727313892c3e244a9c7996edbaaffc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScriptedMovementController
+  RUN_DISTANCE: 10
   movementController: {fileID: 1707382129364674341}
   inputController: {fileID: 0}
 --- !u!114 &3651001649101913600
@@ -431,6 +431,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -581,14 +582,6 @@ MonoBehaviour:
   _danceBrain: {fileID: 2536597401598945149}
   animator: {fileID: 8332991270205824799}
   playerFeedbackEvents: []
-  talkingExpressions:
-  - expression: 1
-    alphaIntro: {fileID: 7400000, guid: 60b0ace529f9c6d4093c1894a8765967, type: 2}
-    betaIntro: {fileID: 7400000, guid: 60b0ace529f9c6d4093c1894a8765967, type: 2}
-    alphaLoop: {fileID: 7400000, guid: 434ae2ef1bf20ff4a98481f936acfd4d, type: 2}
-    betaLoop: {fileID: 7400000, guid: 434ae2ef1bf20ff4a98481f936acfd4d, type: 2}
-    alphaEnd: {fileID: 7400000, guid: f0e6eabc98191bc44854eba23658dcf9, type: 2}
-    betaEnd: {fileID: 7400000, guid: f0e6eabc98191bc44854eba23658dcf9, type: 2}
   renderer: {fileID: 1578431844101746786}
   outlineRenderer: {fileID: 0}
 --- !u!114 &4026297106445111100
@@ -603,7 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBeatReciever
-  animator: {fileID: 8332991270205824799}
+  brain: {fileID: 2536597401598945149}
 --- !u!1 &8435274793667293342
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +743,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}

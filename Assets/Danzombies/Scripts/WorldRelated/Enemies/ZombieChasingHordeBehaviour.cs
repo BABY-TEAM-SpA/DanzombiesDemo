@@ -131,6 +131,7 @@ public class ZombieChasingHordeBehaviour : MonoBehaviour
         float playerDistance = playerMovement.transform.position.x - transform.position.x;
         float error = playerDistance - maxDistance;
         float targetSpeed = playerMovement.MaxSpeed;
+        animator.SetFloat("Speed", 1);
 
         if (Mathf.Abs(error) > DIST_THRESHOLD)
         {

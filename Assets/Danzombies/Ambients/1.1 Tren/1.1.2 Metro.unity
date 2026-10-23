@@ -592,6 +592,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1297188475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &50385248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4270589657975275695, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+  m_PrefabInstance: {fileID: 2017053135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8b143420ca3b243baf5c7016504ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelProgressTracker
 --- !u!1 &56830003
 GameObject:
   m_ObjectHideFlags: 0
@@ -5266,6 +5277,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -8596,6 +8608,10 @@ PrefabInstance:
     - target: {fileID: 8586757226700705617, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
       propertyPath: isMovementEnabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586757226700705617, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
+      propertyPath: verticalMultiplier
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8586757226700705617, guid: 21c4f3f1d89c18a408f83a6e468772da, type: 3}
       propertyPath: m_EditorClassIdentifier
@@ -14242,7 +14258,7 @@ PlayableDirector:
   - key: {fileID: 6710106674071629334, guid: fc3c50038ab3e6d4481aa09ecb35b520, type: 2}
     value: {fileID: 2060887117}
   - key: {fileID: 3883795249232676930, guid: fc3c50038ab3e6d4481aa09ecb35b520, type: 2}
-    value: {fileID: 1138679452078805193}
+    value: {fileID: 0}
   - key: {fileID: -46115488282322643, guid: fc3c50038ab3e6d4481aa09ecb35b520, type: 2}
     value: {fileID: 1674720377}
   - key: {fileID: 9217861305148723955, guid: fc3c50038ab3e6d4481aa09ecb35b520, type: 2}
@@ -16745,6 +16761,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076879074}
     m_Modifications:
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1883500076}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 50385248}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Update
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StartTracking
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: LevelProgressTracker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757667944268354834, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: OnEnterCheckpoint.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2030484290255281048, guid: 28e588003ef031344a7264b59fd04215, type: 3}
       propertyPath: shouldStartPlaying
       value: 1
@@ -16839,6 +16907,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4205346567432822406, guid: 28e588003ef031344a7264b59fd04215, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619305930731198667, guid: 28e588003ef031344a7264b59fd04215, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4736803431234250072, guid: 28e588003ef031344a7264b59fd04215, type: 3}
@@ -18088,10 +18160,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 113557671231220146, guid: 084cbfabc6997334f8ba4f2f8e0bca77, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1138679452078805193}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084cbfabc6997334f8ba4f2f8e0bca77, type: 3}
 --- !u!114 &1138679452078805182 stripped
 MonoBehaviour:
@@ -18120,28 +18189,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5363584533827117334, guid: 084cbfabc6997334f8ba4f2f8e0bca77, type: 3}
   m_PrefabInstance: {fileID: 1138679452078805181}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1138679452078805193
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905891234}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &4651486713725582458
 PrefabInstance:
   m_ObjectHideFlags: 0

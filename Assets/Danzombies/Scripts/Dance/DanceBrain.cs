@@ -20,6 +20,7 @@ public abstract class DanceBrain : Dancer
     [SerializeField] protected bool debug;
     [SerializeField]
     private bool ActivateOnStart =false;
+   
     [SerializeField] protected PlayerMovementController movCtrl;
     [SerializeField] protected DanceAnimatorController danceAnimCtrl;
     [SerializeField] protected BeatReciever beatReciever;
@@ -60,16 +61,21 @@ public abstract class DanceBrain : Dancer
     }
     public void OnMoving(Vector3 direction)
     {
+        base.isBussy = direction.sqrMagnitude > 0;
         danceAnimCtrl?.AnimateOnMoving(direction);
     }
 
     public void OnTalkingStart(DialogExpression expression)
     {
+        if(debug) Debug.Log($"{name} started talking");
+        base.isBussy = true;
         danceAnimCtrl?.Talking(expression);
     }
     
     public void OnTalkingEnd()
     {
+        if(debug) Debug.Log($"{name} ended talking");
+        base.isBussy = false;
         danceAnimCtrl?.TalkingEnd();
     }
 
@@ -86,6 +92,11 @@ public abstract class DanceBrain : Dancer
                 OnDirectionChanged?.Invoke(isLeft);
             }
         }
+    }
+
+    public void UpdateAnimator(double barDuration)
+    {
+        danceAnimCtrl.UpdateAnimator(barDuration);
     }
     
     public override void React(ExpressionType exp)

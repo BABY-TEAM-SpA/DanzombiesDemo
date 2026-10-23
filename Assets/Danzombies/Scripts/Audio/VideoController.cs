@@ -11,52 +11,60 @@ public class VideoController : MonoBehaviour
     [SerializeField] private bool shouldPlayOnStart;
 
     [Header("FMOD Configuration")]
-    [SerializeField] private FMODUnity.EventReference fmodEvent; 
-    [SerializeField] private AudioSource unityAudioSource;
+    [SerializeField] private FMODUnity.EventReference fmodEvent;
 
     private FMOD.Studio.EventInstance videoAudioInstance;
     private FMOD.Studio.Bus masterBus; // Almacena el bus maestro para pausar/silenciar el resto
 
     void Start()
     {
-        // Obtenemos el bus maestro de FMOD para controlar todo el audio previo
+        videoPlayer.clip = videoClip;
         masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
-
-        if (shouldPlayOnStart) PlayVideo();
+        videoPlayer.prepareCompleted += OnPrepareCompleted;
+        videoPlayer.started += OnVideoStarted;
+        videoPlayer.Prepare();
+        
     }
 
     private void OnEnable()
     {
+        videoPlayer.prepareCompleted += OnPrepareCompleted;
+        videoPlayer.started += OnVideoStarted;
         videoPlayer.loopPointReached += OnVideoEnd;
     }
 
     private void OnDisable()
     {
+        videoPlayer.prepareCompleted -= OnPrepareCompleted;
+        videoPlayer.started -= OnVideoStarted;
         videoPlayer.loopPointReached -= OnVideoEnd;
+    }
+    void OnPrepareCompleted(VideoPlayer vp)
+    {
+        Debug.Log("Preparation done.");
+        if (shouldPlayOnStart) PlayVideo();
+    }
+
+    void OnVideoStarted(VideoPlayer vp)
+    {
+        //Debug.Log("Video has started.");
+        if (hasAudio && !fmodEvent.IsNull)
+        {
+            videoAudioInstance.start();
+        }
+        else Debug.Log("OnVideoStarted tried to play an AudioSource that doesn't exist.");
     }
 
     void PlayVideo()
     {
-        videoPlayer.clip = videoClip;
         
-        if (hasAudio && !fmodEvent.IsNull && unityAudioSource != null)
+        if (hasAudio && !fmodEvent.IsNull)
         {
-            // 1. Detener o mutear el audio previo antes de arrancar el nuevo
-            // Opción A: Pausar absolutamente todo el juego (Recomendado para cinemáticas)
             masterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); 
-
-            videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-            videoPlayer.SetTargetAudioSource(0, unityAudioSource);
-            
             videoAudioInstance = FMODUnity.RuntimeManager.CreateInstance(fmodEvent);
             FMODUnity.RuntimeManager.AttachInstanceToGameObject(videoAudioInstance, transform);
-            
-            videoAudioInstance.start();
         }
-        else
-        {
-            videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
-        }
+        //videoPlayer.waitForFirstFrame = true;
         videoPlayer.Play();
     }
 

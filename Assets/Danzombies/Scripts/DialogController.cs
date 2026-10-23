@@ -128,8 +128,6 @@ public class DialogController : UIUserEvent
     private void OnWrittingComplete()
     {
         isWriting = false;
-        talkingBrain?.OnTalkingEnd();
-        talkingBrain = null;
         textContainer.text = fullTextTarget;
         currentTimer = currentDialogSequence.timeToAutoContinue;
         pin.gameObject.SetActive(true);
@@ -137,6 +135,8 @@ public class DialogController : UIUserEvent
 
     public void ContinueWritting()
     {
+        talkingBrain?.OnTalkingEnd();
+        talkingBrain = null;
         int value = currentDialogSequence.currentDialogText + 1;
         if (value < currentDialogSequence.dialogData.dialogs.Count)
         {

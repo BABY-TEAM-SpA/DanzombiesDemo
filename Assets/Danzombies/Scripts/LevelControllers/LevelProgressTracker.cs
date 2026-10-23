@@ -79,7 +79,7 @@ public class LevelProgressTracker : Service<LevelProgressTracker>
                 break;
         }
 
-        Debug.Log($"Perfect: {PerfectSteps} | Good: {GoodSteps} | Ok: {OkSteps} | Bad: {BadSteps}");
+        //Debug.Log($"Perfect: {PerfectSteps} | Good: {GoodSteps} | Ok: {OkSteps} | Bad: {BadSteps}");
     }
     #endregion
 

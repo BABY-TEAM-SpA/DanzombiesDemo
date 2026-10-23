@@ -4,7 +4,7 @@ public class ScriptedMovementController : MonoBehaviour
 {
     #region [VARIABLES]
     private const float STOP_DISTANCE = 0.1f;
-    private const float RUN_DISTANCE = 10f;
+    [SerializeField] float RUN_DISTANCE = 10f;
 
     [Header("References")]
     [SerializeField] private PlayerMovementController movementController;
@@ -14,6 +14,7 @@ public class ScriptedMovementController : MonoBehaviour
     public bool IsPlaying => data != null;
 
     private ScriptedMovementData data;
+    private float timer;
     private float elapsed;
     #endregion
 
@@ -34,14 +35,31 @@ public class ScriptedMovementController : MonoBehaviour
         }
 
         elapsed += Time.deltaTime;
-        if (data.type == ScriptedMovementData.ScriptedMovementType.Temporal && elapsed >= data.duration)
+        if (data.type != ScriptedMovementData.ScriptedInterruptMovementType.None)
         {
-            StopScriptedMovement(ScriptedMovementResult.TimedOut);
-            return;
+            timer = data.interruptTimer*((data.type== ScriptedMovementData.ScriptedInterruptMovementType.TemporalBeat)? BeatManager.Instance.BeatDurationMs/1000f :1f);
+            if(elapsed >= timer)
+            {
+                
+                StopScriptedMovement(ScriptedMovementResult.Interrupted);
+                return;
+            }
         }
-
+        
+        switch (data.movementType)
+        {
+            case ScriptedMovementData.ScriptedMovementType.Walking:
+                movementController.SetRun(false);
+                break;
+            case ScriptedMovementData.ScriptedMovementType.Running:
+                movementController.SetRun(true);
+                break;
+            case ScriptedMovementData.ScriptedMovementType.Auto:
+                movementController.SetRun(distance >= RUN_DISTANCE);
+                break;
+        }
         movementController.SetDirection(delta / distance);
-        movementController.SetRun(distance >= RUN_DISTANCE);
+        
     }
 
     private void OnDisable() => InterruptScriptedMovement();
@@ -77,11 +95,8 @@ public class ScriptedMovementController : MonoBehaviour
         if (finished.enableDanceInputOnStop) inputController?.EnableDanceInput();
         if (finished.enableInteractInputOnStop) inputController?.EnableInteractInput();
 
-        if (result != ScriptedMovementResult.Interrupted)
-            movementController.Face(finished.FaceSign);
-
-        if (result == ScriptedMovementResult.Interrupted)
-            finished.OnInterrupt?.Invoke();
+        if (result != ScriptedMovementResult.Interrupted) movementController.Face(finished.FaceSign);
+        if (result == ScriptedMovementResult.Interrupted) finished.OnInterrupt?.Invoke();
         else finished.OnArrive?.Invoke();
     }
     public void InterruptScriptedMovement() => StopScriptedMovement(ScriptedMovementResult.Interrupted);

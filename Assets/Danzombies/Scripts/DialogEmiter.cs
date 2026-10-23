@@ -25,16 +25,20 @@ public class DialogEmiter : MonoBehaviour
     {
         if (playOnStart)
         {
-            PlayDialogByIndex(0);
+            Invoke("PlayInitialDialog",0.5f);
         }
     }
 
-    public void PlayDialogByIndex(int index)
+    private void PlayInitialDialog()
     {
+        PlayDialogByIndex(0);
+    }
+    public void PlayDialogByIndex(int index=0)
+    {
+        DialogController.Instance.SetTalkingPersons(talkingPersons);
         if (dialogScripts[index] != null)
         {
             currentSequenceIndex = index;
-            DialogController.Instance.SetTalkingPersons(talkingPersons);
             DialogController.Instance.PlayDialog(dialogScripts[index]);
         }
     }

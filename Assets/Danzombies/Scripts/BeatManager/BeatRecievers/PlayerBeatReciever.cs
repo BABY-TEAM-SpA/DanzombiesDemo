@@ -3,23 +3,21 @@ using UnityEngine;
 
 public class PlayerBeatReciever : BeatReciever
 {
-    [SerializeField] Animator animator;
+    [SerializeField] DanceBrain brain;
+
+    public void Start()
+    {
+        if (brain == null) brain = GetComponent<DanceBrain>();
+    }
 
     public override void OnUpdateSongAction(double barDuration)
     {
-        animator.enabled = true;
-        double duration = barDuration;
-        float value = (float)(1f / duration);
-        animator.SetFloat("Beat",value);
+        brain?.UpdateAnimator(barDuration);
     }
     
     public override void BeatAction(int beat, BeatManager.BeatType type, int beatTimeMs)
     {
-        if(type == BeatManager.BeatType.FullBeat) animator.SetTrigger("Pulse");
-    }
-
-    public void ResetIdle()
-    {
-        animator.ResetTrigger("Pulse");
+        if (brain.isBussy) return;
+        //if(type == BeatManager.BeatType.FullBeat) brain.OnDanceStepAction();
     }
 }

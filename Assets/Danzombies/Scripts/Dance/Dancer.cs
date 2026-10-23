@@ -62,6 +62,7 @@ public class DanceEventBuffer
 
 public class Dancer: MonoBehaviour
 {
+    public bool isBussy;
     protected DanceStep currentDanceStep;
     public UnityEvent onActivated;
     public UnityEvent<BeatManager.BeatType,DanceStep> onDance;
@@ -84,6 +85,11 @@ public class Dancer: MonoBehaviour
     
     public virtual void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
+        if (isBussy)
+        {
+            Debug.Log($"{name} was bussy");
+            return;
+        }
         currentDanceStep = danceStep;
         onDance?.Invoke(beatType,danceStep);
     }

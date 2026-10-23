@@ -215,8 +215,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 4.76, y: 3.29}
+  m_Offset: {x: 0, y: 0.45}
+  m_Size: {x: 4.5, y: 1.2}
   m_Direction: 1
 --- !u!114 &3279488030120961210
 MonoBehaviour:
@@ -230,19 +230,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBussy: 0
   onActivated:
     m_PersistentCalls:
       m_Calls: []
   onDance:
     m_PersistentCalls:
       m_Calls: []
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  onReaction:
     m_PersistentCalls:
       m_Calls: []
   debug: 0
@@ -276,51 +271,6 @@ MonoBehaviour:
             m_StringArgument: Pam
             m_BoolArgument: 0
           m_CallState: 2
-  OnLeaningLeft:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 642981396120243976}
-        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-        m_MethodName: PlaySequence
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: LeanLeft
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLeaningRight:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 642981396120243976}
-        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-        m_MethodName: PlaySequence
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: LeanRight
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLeaningNone:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 642981396120243976}
-        m_TargetAssemblyTypeName: UiAnimator, Assembly-CSharp
-        m_MethodName: PlaySequence
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Center
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &3630670231084340477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceBrain: {fileID: 3279488030120961210}
+  isMovementEnabled: 1
   walkingSpeed: 10
   verticalMultiplier: 0.5
   sprintFactor: 1.5
@@ -349,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 6072593270596461221}
+  brain: {fileID: 3279488030120961210}
 --- !u!114 &6447537400045105506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,6 +324,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -389,7 +341,6 @@ GameObject:
   - component: {fileID: 379218205658937483}
   - component: {fileID: 6072593270596461221}
   - component: {fileID: 2836731157353523887}
-  - component: {fileID: 2142067527970415792}
   m_Layer: 0
   m_Name: RenderController
   m_TagString: Untagged
@@ -524,58 +475,6 @@ MonoBehaviour:
   _danceBrain: {fileID: 3279488030120961210}
   animator: {fileID: 6072593270596461221}
   playerFeedbackEvents: []
-  talkingExpressions: []
---- !u!60 &2142067527970415792
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4969418884321069956}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 8, y: 7.4}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.142719, y: 0.1721903}
-      - {x: 1.172191, y: 1.0313077}
-      - {x: -0.95303816, y: 1.078268}
-      - {x: -2.4263203, y: 0.015653461}
-  m_UseDelaunayMesh: 0
 --- !u!1 &8150584127454511398
 GameObject:
   m_ObjectHideFlags: 0

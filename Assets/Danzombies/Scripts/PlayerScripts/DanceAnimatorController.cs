@@ -18,17 +18,7 @@ public enum DanceDirection{
     West,
     East
 }
-[Serializable]
-public class TalkingExpressionData
-{
-    public DialogExpression expression;
-    public AnimationClip alphaIntro;
-    public AnimationClip betaIntro;
-    public AnimationClip alphaLoop;
-    public AnimationClip betaLoop;
-    public AnimationClip alphaEnd;
-    public AnimationClip betaEnd;
-}
+
 [Serializable]
 public class AnimationFeedback
 {
@@ -47,14 +37,21 @@ public class DanceAnimatorController : MonoBehaviour
 
     public List<AnimationFeedback> playerFeedbackEvents = new List<AnimationFeedback>();
     private bool isWalking;
+    private bool isTalking;
     
-    public List<TalkingExpressionData> talkingExpressions = new List<TalkingExpressionData>();
     private Action onTalkingEnd;
     
     
     private void Start()
     {
         SetAnimatorOverrideDirection();
+    }
+
+    public void UpdateAnimator(double barDuration)
+    {
+        double duration = barDuration;
+        float value = (float)(1f / duration);
+        animator.SetFloat("Beat",value);
     }
     
     public void AnimateOnMoving(Vector3 velocity)
@@ -106,27 +103,7 @@ public class DanceAnimatorController : MonoBehaviour
 
    public void Talking(DialogExpression expression)
     {
-        TalkingExpressionData expressionData = talkingExpressions.FirstOrDefault(x => x.expression == expression);
-        if (expressionData == null) return;
-        var alphaCambios = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        var betaCambios = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-
-        foreach (var clip in alphaOverrider.animationClips)
-        {
-            if (clip.name == "BaseTalkingEnter") alphaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.alphaIntro));
-            else if (clip.name == "BaseTalkingLoop") alphaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.alphaLoop));
-            else if (clip.name == "BaseTalkingExit") alphaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.alphaEnd));
-        }
-        foreach (var clip in betaOverrider.animationClips)
-        {
-            if (clip.name == "BaseTalkingEnter") betaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.betaIntro));
-            else if (clip.name == "BaseTalkingLoop") betaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.betaLoop));
-            else if (clip.name == "BaseTalkingExit") betaCambios.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, expressionData.betaEnd));
-        }
-        alphaOverrider.ApplyOverrides(alphaCambios);
-        betaOverrider.ApplyOverrides(betaCambios);
-        
-        animator.Update(0f);
+        isTalking = true;
         animator.Play("TalkingEnter", 0, 0f);
         onTalkingEnd = () => animator.Play("TalkingExit", 0, 0f);
     }
@@ -135,6 +112,7 @@ public class DanceAnimatorController : MonoBehaviour
     {
         onTalkingEnd?.Invoke();
         onTalkingEnd = null;
+        isTalking = false;
         
     }
     
