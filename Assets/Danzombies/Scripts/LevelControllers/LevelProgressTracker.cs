@@ -36,21 +36,23 @@ public class LevelProgressTracker : Service<LevelProgressTracker>
     #region Track
     public void StartTracking()
     {
+        if (isTracking)
+            return;
+
         Reset();
-
         foreach (DanceZone horde in hordes)
-            horde.OnCompleted += () => HordesCleared++;
-
+            horde.OnCompleted += OnHordeCompleted;
         isTracking = true;
     }
 
     public void StopTracking()
     {
+        if (!isTracking)
+            return;
+
         isTracking = false;
-
         foreach (DanceZone horde in hordes)
-            horde.OnCompleted -= () => HordesCleared++;
-
+            horde.OnCompleted -= OnHordeCompleted;
         GameTime = elapsed;
     }
 
@@ -96,5 +98,9 @@ public class LevelProgressTracker : Service<LevelProgressTracker>
         GameTime = 0f;
     }
     #endregion
+    #endregion
+
+    #region [EVENTS]
+    private void OnHordeCompleted() => HordesCleared++;
     #endregion
 }
