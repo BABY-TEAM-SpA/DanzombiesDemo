@@ -96,6 +96,7 @@ public class LevelProgressTracker : Service<LevelProgressTracker>
         BadSteps = 0;
 
         GameTime = 0f;
+        elapsed = 0f;
     }
     #endregion
     #endregion
