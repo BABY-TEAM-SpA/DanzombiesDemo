@@ -36,12 +36,13 @@ public class CanonPuzzle : RhythmPuzzle
 
     public override void PostBarAction(int beatCounter)
     {
+        if(!isActive) return;
         if (availableToDance)
         {
             innerBeatCounter++;
             if (beatCounter >= currentDanceSequence.coreography.StepInBar.Count) SetNextDancer();
         }
-        if (isActive && !availableToDance && beatCounter == BeatManager.Instance.globalUpperBar)
+        if (!availableToDance && beatCounter == BeatManager.Instance.globalUpperBar)
         {
             availableToDance = true;
             innerBeatCounter = 0;

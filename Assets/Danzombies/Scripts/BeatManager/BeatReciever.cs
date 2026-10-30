@@ -39,7 +39,7 @@ public abstract class BeatReciever : MonoBehaviour
     {
         if (!isActive) return;
         BeatAction(beatCounter, beatType, beatTimeMs);
-        if(beatType == BeatManager.BeatType.SecondEmpty)PostBarAction(beatCounter);
+        if(beatType == BeatManager.BeatType.HalfBeat) PostBarAction(beatCounter);
         
     }
     
