@@ -133,10 +133,10 @@ public class PlayerInputController : MonoBehaviour
     public void EnableDanceInput() => allowedInputs.dance = true;
     public void DisableDanceInput() => allowedInputs.dance = false;
     
-    public void EnableDisableDanceNorth() => allowedInputs.danceInputs.northDance = !allowedInputs.danceInputs.northDance;
-    public void EnableDisableDanceSouth() => allowedInputs.danceInputs.southDance = !allowedInputs.danceInputs.southDance;
-    public void EnableDisableDanceEast() => allowedInputs.danceInputs.eastDance = !allowedInputs.danceInputs.eastDance;
-    public void EnableDisableDanceWest() => allowedInputs.danceInputs.westDance = !allowedInputs.danceInputs.westDance;
+    public void EnableDisableDanceNorth(bool isOn) => allowedInputs.danceInputs.northDance = isOn;
+    public void EnableDisableDanceSouth(bool isOn) => allowedInputs.danceInputs.southDance = isOn;
+    public void EnableDisableDanceEast(bool isOn) => allowedInputs.danceInputs.eastDance = isOn;
+    public void EnableDisableDanceWest(bool isOn) => allowedInputs.danceInputs.westDance = isOn;
     #endregion
 
     #region Input Events

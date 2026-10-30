@@ -63,6 +63,12 @@ public class DanceSequence : MonoBehaviour
 
     #region [METHODS]
     public void ActivateSequence() => OnDanceSequenceStarted?.Invoke();
+    
+    public void StopSequence()
+    {
+        correctStepsCount = 0;
+        OnDanceSequenceFinished?.Invoke();
+    }
 
     public bool CheckEndOfSequence(int beat)
     {
@@ -70,7 +76,7 @@ public class DanceSequence : MonoBehaviour
         {
             case SeqStopMode.OneShot:
                 if (beat != coreography.StepInBar.Count) return false;
-                OnDanceSequenceFinished?.Invoke();
+                StopSequence();
                 return true;
 
             case SeqStopMode.StopOnComboC:
@@ -81,7 +87,7 @@ public class DanceSequence : MonoBehaviour
                 if (PlayerManager.Player)
                     isSameCombo = PlayerManager.Player.ComboCtrl.State.ToString()
                         == sequenceStopMode.ToString().Substring(sequenceStopMode.ToString().Length - 1);
-                if (isSameCombo) OnDanceSequenceFinished?.Invoke();
+                if (isSameCombo) StopSequence();
                 return isSameCombo;
 
             case SeqStopMode.StopOnFullFlow:
@@ -89,7 +95,7 @@ public class DanceSequence : MonoBehaviour
                 if (DanceBarController.Instance)
                     isBarFilled = DanceBarController.Instance.IsFilled;
                 if (isBarFilled)
-                    OnDanceSequenceFinished?.Invoke();
+                    StopSequence();
                 return isBarFilled;
 
             case SeqStopMode.Loop:
@@ -106,7 +112,7 @@ public class DanceSequence : MonoBehaviour
                     return false;
                 bool hasReached = correctStepsCount >= correctSteps.amount;
                 if (hasReached)
-                    OnDanceSequenceFinished?.Invoke();
+                    StopSequence();
                 return hasReached;
                 
             default:
@@ -156,8 +162,6 @@ public class DanceSequence : MonoBehaviour
         }
         
     }
-
-    //Aqui esta el problema del looping
     public DanceStep GetFutureStep(int currentBeat, BeatManager.BeatType beatPart)
     {
         int nextStepCounter = (currentBeat + 1) % coreography.StepInBar.Count;

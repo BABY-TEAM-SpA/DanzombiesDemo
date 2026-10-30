@@ -42,7 +42,7 @@ public class DanceZone : Dancer
     }
 
     private void OnEnable() => evaluator.OnFeedback += ReactToFeedback;
-    private void OnDisable() => danceEventBuffer.RemoveAllListeners();
+    private void OnDisable() => Debug.Log("DanZone Cleaned");//danceEventBuffer.RemoveAllListeners();
 
     #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
