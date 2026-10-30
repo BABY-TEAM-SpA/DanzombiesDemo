@@ -3591,6 +3591,30 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 425054330}
+          m_TargetAssemblyTypeName: DestructibleObject, Assembly-CSharp
+          m_MethodName: Destroy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 984232253}
+          m_TargetAssemblyTypeName: DestructibleObject, Assembly-CSharp
+          m_MethodName: Destroy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
         - m_Target: {fileID: 471107363}
           m_TargetAssemblyTypeName: ZombieChasingHordeBehaviour, Assembly-CSharp
           m_MethodName: UpdateEndPoint
@@ -4198,6 +4222,8 @@ GameObject:
   - component: {fileID: 425054329}
   - component: {fileID: 425054328}
   - component: {fileID: 425054327}
+  - component: {fileID: 425054331}
+  - component: {fileID: 425054330}
   m_Layer: 0
   m_Name: Hoyo_Barrera (1)
   m_TagString: Untagged
@@ -4294,6 +4320,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1836404141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &425054330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425054326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2425f5be45a660a4089b84bf32da0d82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleObject
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 425054331}
+--- !u!95 &425054331
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425054326}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 77f0cbd853ee6fa449081f0c6e268441, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &433126199 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 629253198721850313, guid: d6934bc94a9342d4290ae7364dfbb7fd, type: 3}
@@ -9429,6 +9493,8 @@ GameObject:
   - component: {fileID: 984232252}
   - component: {fileID: 984232251}
   - component: {fileID: 984232250}
+  - component: {fileID: 984232254}
+  - component: {fileID: 984232253}
   m_Layer: 0
   m_Name: Hoyo_Barrera (2)
   m_TagString: Untagged
@@ -9525,6 +9591,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1836404141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &984232253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984232249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2425f5be45a660a4089b84bf32da0d82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleObject
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 984232254}
+--- !u!95 &984232254
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984232249}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 77f0cbd853ee6fa449081f0c6e268441, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &986555589
 GameObject:
   m_ObjectHideFlags: 0
@@ -16083,6 +16187,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
+      propertyPath: interactions.Array.data[0].OnComplete.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
       propertyPath: interactions.Array.data[0].OnComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1058767370}
@@ -16112,6 +16220,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
       propertyPath: interactions.Array.data[0].OnComplete.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
+      propertyPath: interactions.Array.data[0].OnComplete.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
@@ -16152,6 +16264,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
       propertyPath: interactions.Array.data[0].OnComplete.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: UnityEngine.Playables.PlayableDirector, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
+      propertyPath: interactions.Array.data[0].OnComplete.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
       value: UnityEngine.Playables.PlayableDirector, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 165070555763991969, guid: b99ede772cfd28148a16a0bb3f5a7d2e, type: 3}
