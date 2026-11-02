@@ -104,8 +104,8 @@ public class DanceAnimatorController : MonoBehaviour
    public void Talking(DialogExpression expression)
     {
         isTalking = true;
-        animator.Play("TalkingEnter", 0, 0f);
-        onTalkingEnd = () => animator.Play("TalkingExit", 0, 0f);
+        animator.Play("TalkingIntro_"+expression.ToString(), 0, 0f);
+        onTalkingEnd = () => animator.Play("TalkingExit_"+expression.ToString(), 0, 0f);
     }
 
     public void TalkingEnd()

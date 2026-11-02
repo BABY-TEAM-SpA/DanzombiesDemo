@@ -11,10 +11,11 @@ public enum Languages
 public enum DialogExpression
 {
     Normal,
-    Happy,
+    Relax,
+    Think,
     Fear,
-    Angry,
-    Sad
+    Excited
+    //Sad,
 }
 
 [Serializable]
