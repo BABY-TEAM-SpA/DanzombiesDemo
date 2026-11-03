@@ -146,9 +146,11 @@ public class PlayerManager : DanceBrain
     /// </summary>
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
-        if (isTutorial) danceAnimCtrl.animator.SetBool("PrepareDance", false);
+        Debug.Log("InputDance");
+        if (isTutorial&& lean != DanceLean.None) danceAnimCtrl.TutorialPrepare(true);
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {
+            if (isTutorial) danceAnimCtrl.TutorialPrepare(false);
             DanceStep step = Enum.Parse<DanceStep>(lean + "_" + direction);
             OnDanceStepAction(
                 BeatManager.Instance ? BeatManager.Instance.localBeatCount : 1,
@@ -157,6 +159,11 @@ public class PlayerManager : DanceBrain
                 step
             );
         }
+    }
+
+    public void ReleaseInput()
+    {
+        if (isTutorial && danceAnimCtrl.animator.GetBool("PrepareDance")) danceAnimCtrl.TutorialPrepare(false);
     }
 
     public void InputInteract() => interactionController.Interact();

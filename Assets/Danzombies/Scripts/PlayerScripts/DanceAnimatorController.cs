@@ -59,6 +59,7 @@ public class DanceAnimatorController : MonoBehaviour
         isWalking = velocity != Vector3.zero;
         animator?.SetBool("LeftLooking", _danceBrain.isLeftLooking);
         animator?.SetBool("Walking", isWalking);
+        if(velocity.magnitude>0)animator?.SetBool("PrepareDance",false);
         animator?.SetFloat("WalkingSpeed", velocity.magnitude);
     }
     
@@ -116,6 +117,10 @@ public class DanceAnimatorController : MonoBehaviour
         
     }
     
+    public void TutorialPrepare(bool isPreparing)
+    {
+        if(!isWalking) animator.SetBool("PrepareDance", isPreparing);
+    }
     
     
 }

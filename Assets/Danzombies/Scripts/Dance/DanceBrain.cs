@@ -79,6 +79,8 @@ public abstract class DanceBrain : Dancer
         danceAnimCtrl?.TalkingEnd();
     }
 
+    
+
     public void SetBodyDirection(float value)
     {
         if (Math.Abs(value) > 0.5)

@@ -444,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a31e72b14b00e4a80cbdec6c4d3000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBussy: 0
   onActivated:
     m_PersistentCalls:
       m_Calls: []
@@ -467,7 +468,7 @@ MonoBehaviour:
       m_Calls: []
   isActive: 0
   playerInputs: []
-  damageMode: 1
+  damageMode: 2
   dancers: []
   OnPlayerEntered:
     m_PersistentCalls:
@@ -484,6 +485,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5976586730880803271}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnPlayerExited:
     m_PersistentCalls:
       m_Calls:
@@ -491,6 +504,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FlowComponent, Assembly-CSharp
         m_MethodName: Deactivate
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5976586730880803271}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -678,6 +703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieArea
       objectReference: {fileID: 0}
+    - target: {fileID: 2838502008387195905, guid: fb4dc46bcfc03ef449b52e198cbc97a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6389598460149910303, guid: fb4dc46bcfc03ef449b52e198cbc97a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -726,5 +755,10 @@ PrefabInstance:
 --- !u!4 &3258656201873702617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6389598460149910303, guid: fb4dc46bcfc03ef449b52e198cbc97a0, type: 3}
+  m_PrefabInstance: {fileID: 8472814058407491014}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5976586730880803271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2838502008387195905, guid: fb4dc46bcfc03ef449b52e198cbc97a0, type: 3}
   m_PrefabInstance: {fileID: 8472814058407491014}
   m_PrefabAsset: {fileID: 0}
