@@ -432,6 +432,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &213723328
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -475,8 +476,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: b6427adf04bab1643a8c1fe3c347530d, type: 3}
   m_Color: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
   m_FlipX: 0
@@ -486,7 +488,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &213932118
 GameObject:
@@ -541,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 213932121}
   animatorOverrideController: {fileID: 22100000, guid: 5ae2b180dc8f11d46b04361b022f5bcf, type: 2}
+  beatMode: 0
 --- !u!95 &213932121
 Animator:
   serializedVersion: 7
@@ -2213,6 +2215,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &329940579
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2256,8 +2259,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1165418867
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: df4dd12e424bbe04a85f0ec77b494506, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2267,7 +2271,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &340891162
 PrefabInstance:
@@ -2342,11 +2345,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a341a1c00c721174fb557c5e22fe3967, type: 3}
---- !u!1 &394344513 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8041701320878578342, guid: 44243319342bad741a31b9115cac23bc, type: 3}
-  m_PrefabInstance: {fileID: 134409180}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &408941189 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 556853962040248446, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
@@ -2694,6 +2692,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &440434981
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2737,8 +2736,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: b6427adf04bab1643a8c1fe3c347530d, type: 3}
   m_Color: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
   m_FlipX: 0
@@ -2748,7 +2748,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &503045348
 PrefabInstance:
@@ -2989,7 +2988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Path
-      value: event:/Demo/OldTutorial
+      value: event:/Ambients/-1 Demo/OldTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data1
@@ -3437,17 +3436,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
---- !u!114 &714125536 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5584085731872573711, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
-  m_PrefabInstance: {fileID: 1759706725}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &714125537 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1707382129364674341, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
@@ -4060,25 +4048,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: a341a1c00c721174fb557c5e22fe3967, type: 3}
   m_PrefabInstance: {fileID: 868548048}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &893039704 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8138215571376651237, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
-  m_PrefabInstance: {fileID: 617003222}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f77188784b2d7a44877cda4460cb466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
 --- !u!4 &893039706 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5848019546511833440, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
-  m_PrefabInstance: {fileID: 617003222}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &893039710 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4257519140846765901, guid: aee9d819b8e7e024fb4f927fc9e2270a, type: 3}
   m_PrefabInstance: {fileID: 617003222}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &909824508
@@ -4115,6 +4087,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &909824510
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4158,8 +4131,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1165418867
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: df4dd12e424bbe04a85f0ec77b494506, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -4169,7 +4143,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &915782318 stripped
 Transform:
@@ -4825,6 +4798,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &1072541362
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4868,8 +4842,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: -2
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: b6427adf04bab1643a8c1fe3c347530d, type: 3}
   m_Color: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
   m_FlipX: 0
@@ -4879,7 +4854,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1093010188
 GameObject:
@@ -5075,6 +5049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
   animator: {fileID: 1192884341}
   animatorOverrideController: {fileID: 22100000, guid: 5ae2b180dc8f11d46b04361b022f5bcf, type: 2}
+  beatMode: 0
 --- !u!95 &1192884341
 Animator:
   serializedVersion: 7
@@ -5097,7 +5072,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!43 &1217314229
+--- !u!4 &1222380364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
+  m_PrefabInstance: {fileID: 536862097}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1254199110 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
+  m_PrefabInstance: {fileID: 684479022}
+  m_PrefabAsset: {fileID: 0}
+--- !u!43 &1267996022
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5275,16 +5260,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!4 &1222380364 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
-  m_PrefabInstance: {fileID: 536862097}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1254199110 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: 69d21af147fa94e4899a0cf9985b78cd, type: 3}
-  m_PrefabInstance: {fileID: 684479022}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1286136897
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,6 +5294,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1286136899
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5362,8 +5338,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1165418867
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: df4dd12e424bbe04a85f0ec77b494506, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5373,7 +5350,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1292384076 stripped
 Transform:
@@ -5582,6 +5558,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1326630305
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5625,8 +5602,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 487237307
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: -2
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: b6427adf04bab1643a8c1fe3c347530d, type: 3}
   m_Color: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
   m_FlipX: 0
@@ -5636,7 +5614,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &1328048184
 PrefabInstance:
@@ -6416,17 +6393,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 977854871585507625, guid: 0b51cefb8235d1b4baf4c15ab171f72b, type: 3}
   m_PrefabInstance: {fileID: 1636123373}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1636123378 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7377540372340290396, guid: 0b51cefb8235d1b4baf4c15ab171f72b, type: 3}
-  m_PrefabInstance: {fileID: 1636123373}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636123374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e2457a104d8e1a4195d65d99252d805, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DanceBarController
 --- !u!114 &1636123379 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8277422874104646979, guid: 0b51cefb8235d1b4baf4c15ab171f72b, type: 3}
@@ -6438,17 +6404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b69b7e98fb9c4e81105cf50f3e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiAnimator
---- !u!114 &1652040216 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 56076002610781623, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
-  m_PrefabInstance: {fileID: 1759706725}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fd2ff6ec9e1bb428b59a4ea6c8e79b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TutorialDanceBrain
 --- !u!1001 &1668535390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6555,39 +6510,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialPuzzle
   debug: 0
   activateOnStart: 0
-  syncMode: 0
-  currentDanceData:
-    Sequence:
-      patternBeatType: 0
-      pattern: 
-      playbackMode: 0
-      sequenceFlowType: 0
-      playerSeqToStop: 1
-      correctDancesToStop: 1
-      OnSequenceCompletedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    DanceStep: 0
-    NextDanceStep: 0
-  onPuzzleGetsActivateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playersInside: {fileID: 893039704}
-  Steph: {fileID: 714125538}
-  HUD: {fileID: 1652040216}
-  playerSucceses: 0
-  puzzleGoal: 0
-  currentTutorialSequence: 0
+  zone: {fileID: 0}
   TutorialSequences:
-  - patternBeatType: 0
-    pattern: 0000000008000000
-    playbackMode: 0
-    sequenceFlowType: 2
-    playerSeqToStop: 0
-    correctDancesToStop: 3
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls: []
+  - {fileID: 0}
 --- !u!4 &1689679295
 Transform:
   m_ObjectHideFlags: 0
@@ -6980,7 +6905,7 @@ PrefabInstance:
     - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: beatReciever
       value: 
-      objectReference: {fileID: 714125536}
+      objectReference: {fileID: 0}
     - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: danceAnimCtrl
       value: 
@@ -7279,6 +7204,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -7318,10 +7244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3061d14bfdb26b34fb59e108174217aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GUIManager
-  PlayerCanvas: {fileID: 394344513}
   PauseCanvas: {fileID: 0}
   TransitionCanvas: {fileID: 0}
-  danceBarController: {fileID: 1636123378}
 --- !u!4 &1831359500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7228787560312083304, guid: bdf8f69c983589c4884cd0ac0fe506b6, type: 3}
@@ -7636,7 +7560,7 @@ PrefabInstance:
     - target: {fileID: 4890470772562407265, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: AnimatedTarget
       value: 
-      objectReference: {fileID: 893039710}
+      objectReference: {fileID: 0}
     - target: {fileID: 4890470772562407265, guid: 09b89eaa404a2f643925f8652e5478dc, type: 3}
       propertyPath: HashOfParent.Array.size
       value: 2

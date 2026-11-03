@@ -196,6 +196,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -905,28 +906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84d471d26ba8ef4392a6e09a9b69982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1342278708 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 56076002610781623, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
-  m_PrefabInstance: {fileID: 4416453963142573652}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fd2ff6ec9e1bb428b59a4ea6c8e79b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TutorialDanceBrain
---- !u!114 &1342278710 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5584085731872573711, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
-  m_PrefabInstance: {fileID: 4416453963142573652}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1342278711 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1707382129364674341, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
@@ -1202,9 +1181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf99b5fa5490249b42ec46c8aaf2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulseObjectAnimatorController
-  beatType: 0
   animator: {fileID: 1771186915}
   animatorOverrideController: {fileID: 22100000, guid: 5ae2b180dc8f11d46b04361b022f5bcf, type: 2}
+  beatMode: 0
 --- !u!95 &1771186915
 Animator:
   serializedVersion: 7
@@ -1257,296 +1236,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f5f6cac489e4843a995b7fcb1155a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatType: 0
   debug: 0
   activateOnStart: 0
-  syncMode: 1
-  currentDanceData:
-    Sequence:
-      patternBeatType: 0
-      pattern: 
-      playbackMode: 0
-      playerSeqToStop: 1
-      correctDancesToStop: 1
-      OnSequenceCompletedEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    DanceStep: 0
-    NextDanceStep: 0
-  onPuzzleGetsActivateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playersInside: {fileID: 0}
-  Steph: {fileID: 1342278704}
-  HUD: {fileID: 1342278708}
-  playerSucceses: 0
-  puzzleGoal: 4
-  currentTutorialSequence: 0
+  zone: {fileID: 0}
   TutorialSequences:
-  - patternBeatType: 0
-    pattern: 
-    playbackMode: 0
-    playerSeqToStop: 1
-    correctDancesToStop: 1
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1808593042}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: PlayerLeave
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: PlayerManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1342278708}
-          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
-          m_MethodName: SetActiveCanvas
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    pattern: 
-    playbackMode: 0
-    playerSeqToStop: 1
-    correctDancesToStop: 1
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1808593042}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: PlayerLeave
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: PlayerManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1342278708}
-          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
-          m_MethodName: SetActiveCanvas
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    pattern: 
-    playbackMode: 0
-    playerSeqToStop: 1
-    correctDancesToStop: 1
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1808593042}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: PlayerLeave
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: PlayerManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1342278708}
-          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
-          m_MethodName: SetActiveCanvas
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    pattern: 
-    playbackMode: 0
-    playerSeqToStop: 1
-    correctDancesToStop: 1
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1808593042}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: PlayerLeave
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: PlayerManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1342278708}
-          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
-          m_MethodName: SetActiveCanvas
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    pattern: 
-    playbackMode: 0
-    playerSeqToStop: 1
-    correctDancesToStop: 1
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1808593042}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: PlayerLeave
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: PlayerManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 6
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1342278708}
-          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
-          m_MethodName: SetActiveCanvas
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternBeatType: 0
-    pattern: 
-    playbackMode: 0
-    playerSeqToStop: 1
-    correctDancesToStop: 1
-    OnSequenceCompletedEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1808593042}
-          m_TargetAssemblyTypeName: TutorialPuzzle, Assembly-CSharp
-          m_MethodName: PlayerLeave
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: PlayerManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1325767226}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ActivateDialogScript
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 7
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1342278708}
-          m_TargetAssemblyTypeName: TutorialDanceBrain, Assembly-CSharp
-          m_MethodName: SetActiveCanvas
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1808593043
 Transform:
   m_ObjectHideFlags: 0
@@ -1748,7 +1447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Path
-      value: event:/Demo/OldTutorial
+      value: event:/Ambients/-1 Demo/OldTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 617333950871692694, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
       propertyPath: levelSongs.Array.data[0].eventPath.Guid.Data1
@@ -1815,6 +1514,184 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3328274d0d121dc409fff6f5791a4724, type: 3}
+--- !u!43 &2112793995
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1001 &4416453963142573652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1882,7 +1759,7 @@ PrefabInstance:
     - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: beatReciever
       value: 
-      objectReference: {fileID: 1342278710}
+      objectReference: {fileID: 0}
     - target: {fileID: 2536597401598945149, guid: afbf9df220e8afb40abb9a90f879eafe, type: 3}
       propertyPath: danceAnimCtrl
       value: 
@@ -2227,7 +2104,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[0].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1342278708}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2247,7 +2124,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[1].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1342278708}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2263,7 +2140,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 1342278708}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[2].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
@@ -2291,7 +2168,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1342278708}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[3].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
@@ -2315,7 +2192,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1342278708}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[4].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
@@ -2339,7 +2216,7 @@ PrefabInstance:
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[5].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1342278708}
+      objectReference: {fileID: 0}
     - target: {fileID: 7251560795481285523, guid: af756cb48fece4c498d8523a07f9d0a3, type: 3}
       propertyPath: dialogScripts.Array.data[6].OnDialogEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

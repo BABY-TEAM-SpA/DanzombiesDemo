@@ -5038,6 +5038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f77188784b2d7a44877cda4460cb466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  isBussy: 0
   onActivated:
     m_PersistentCalls:
       m_Calls: []
@@ -5056,13 +5057,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  onReaction:
     m_PersistentCalls:
       m_Calls: []
   debug: 1
@@ -5374,6 +5369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d727313892c3e244a9c7996edbaaffc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScriptedMovementController
+  RUN_DISTANCE: 10
   movementController: {fileID: 3968905282911785478}
   inputController: {fileID: 511795604147366574}
 --- !u!114 &3465130852895728156
@@ -5388,7 +5384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d70ce1a77c76746928fe074733621c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 6969242347076242797}
+  brain: {fileID: 0}
 --- !u!114 &9216565697310443677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15953,7 +15949,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  talkingExpressions: []
   renderer: {fileID: 922934949481849677}
   outlineRenderer: {fileID: 9126638411386914531}
 --- !u!95 &6969242347076242797
@@ -16193,6 +16188,7 @@ MonoBehaviour:
     Name: Feedback
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -26039,6 +26035,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -36092,11 +36089,12 @@ MonoBehaviour:
       Data2: 1165891293
       Data3: -32919660
       Data4: 1632035451
-    Path: event:/Metro/GregDamage
+    Path: event:/Ambients/1. Metro/GregDamage
   activeParam:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
