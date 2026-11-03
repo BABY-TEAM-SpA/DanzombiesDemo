@@ -6,7 +6,7 @@ public class IntroLogosController : MonoBehaviour
     [SerializeField] string sceneName;
     public void LoadMenu()
     {
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene(sceneName); 
     }
        
 }

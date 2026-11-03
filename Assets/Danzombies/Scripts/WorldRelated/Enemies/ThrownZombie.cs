@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ThrownZombie : MonoBehaviour
 {
     #region [VARIAIBLES]
     [SerializeField] Animator animator;
+    
+    [SerializeField] AnimatorOverrideController[] overriders;
 
     [Header("Settings")]
     [SerializeField] private Transform target;
@@ -22,6 +25,11 @@ public class ThrownZombie : MonoBehaviour
     }
     private ZombieChasingHordeThrower thrower;
     #endregion
+
+    private void OnEnable()
+    {
+        animator.runtimeAnimatorController = overriders[Random.Range(0, overriders.Length)];
+    }
 
     #region [UNITY]
     private void Update()
