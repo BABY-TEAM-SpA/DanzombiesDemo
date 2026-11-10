@@ -146,7 +146,7 @@ public class PlayerManager : DanceBrain
     /// </summary>
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
-        Debug.Log("InputDance");
+        if(debug)Debug.Log("InputDance");
         if (isTutorial&& lean != DanceLean.None) danceAnimCtrl.TutorialPrepare(true);
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {

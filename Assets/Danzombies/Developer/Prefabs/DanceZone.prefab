@@ -55,6 +55,7 @@ MonoBehaviour:
     Name: 
     Value: 0
   playOnStart: 0
+  listenPause: 1
   volume: 1
   followPlayer: 0
   limiter: {fileID: 0}
@@ -70,6 +71,7 @@ GameObject:
   - component: {fileID: 9097498212195600997}
   - component: {fileID: 2931359582042701089}
   - component: {fileID: 1929456782814636952}
+  - component: {fileID: 3455829944355755017}
   m_Layer: 0
   m_Name: DanceZone
   m_TagString: Untagged
@@ -105,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a31e72b14b00e4a80cbdec6c4d3000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceZone
+  isBussy: 0
   onActivated:
     m_PersistentCalls:
       m_Calls: []
@@ -123,18 +126,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onPostDance:
-    m_PersistentCalls:
-      m_Calls: []
   onDeactivated:
     m_PersistentCalls:
       m_Calls: []
-  onReaction:
-    m_PersistentCalls:
-      m_Calls: []
   isActive: 0
+  playerInputs: []
   damageMode: 0
   dancers: []
+  OnPlayerEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerExited:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2931359582042701089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,3 +296,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 4.13, y: 2.88}
   m_Direction: 1
+--- !u!114 &3455829944355755017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553873618878960526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1c58ae5476b704aa8af2c8c906ce06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Position3DGlobal
+  positions3D: []

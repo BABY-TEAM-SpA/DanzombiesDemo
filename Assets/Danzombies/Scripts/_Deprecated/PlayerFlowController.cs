@@ -121,7 +121,7 @@ public class PlayerFlowController : MonoBehaviour
 
         if (prevFlow != flow)
         {
-            if (flow == 0 && zone != null && zone.DamageMode == DamageMode.ModificaFlowYDaña)
+            if (flow == 0)
                 OnFlowEmptied?.Invoke();
 
             if (flow == MaxFlow)

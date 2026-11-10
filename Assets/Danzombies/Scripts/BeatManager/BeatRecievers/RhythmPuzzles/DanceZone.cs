@@ -4,14 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum DamageMode { None, ModificaFlow, ModificaFlowYDaña }
+public enum DamageMode { None, ModificaFlow}
 
 public class DanceZone : Dancer
 {
     #region [VARIABLES]
     #region Inspector
     [SerializeField] private bool isActive;
-    [SerializeField] protected PlayerInputEvent[] playerInputs;
+    //[SerializeField] protected PlayerInputEvent[] playerInputs;
 
     [Header("Dance Zone - Settings")]
     public DamageMode DamageMode => damageMode;
@@ -26,11 +26,10 @@ public class DanceZone : Dancer
     #region Interns
     public RhythmPuzzle puzzle { private set; get; }
     public PlayerManager playersInside { private set; get; }
-    private DanceEventBuffer danceEventBuffer = new DanceEventBuffer(); // <- Dancers dentro de la DanceZone
-    private DanceStepEvaluator evaluator = new DanceStepEvaluator();
+    protected DanceEventBuffer danceEventBuffer = new DanceEventBuffer(); // <- Dancers dentro de la DanceZone
+    protected DanceStepEvaluator evaluator = new DanceStepEvaluator();
 
-    public Action<BeatReciever.BeatFeedback> OnPlayerFeedback; // <- [Frco] Único evaluador de la entrada del jugador.
-                                                               // El FlowComponent escucha este evento para reaccionar a la entrada del jugador.
+    public UnityEvent<BeatReciever.BeatFeedback> OnPlayerFeedback;
     #endregion
     #endregion
 
@@ -42,7 +41,7 @@ public class DanceZone : Dancer
     }
 
     private void OnEnable() => evaluator.OnFeedback += ReactToFeedback;
-    private void OnDisable() => Debug.Log("DanZone Cleaned");//danceEventBuffer.RemoveAllListeners();
+    private void OnDisable() => evaluator.OnFeedback -= ReactToFeedback;//danceEventBuffer.RemoveAllListeners();
 
     #region Trigger
     private void OnTriggerEnter2D(Collider2D other)
@@ -70,8 +69,14 @@ public class DanceZone : Dancer
 
     public void React(ExpressionType exp)
     {
+        Debug.Log($"[DanceZone] {name} reacting {exp}");
         foreach (Dancer dancer in dancers)
             dancer.React(exp);
+    }
+
+    public void React(FlowState flowState)
+    {
+        React((ExpressionType)(int)flowState);
     }
 
     public void CompleteZone()
@@ -172,13 +177,13 @@ public class DanceZone : Dancer
     #endregion
 
     #region Helpers
-    private void ReactToFeedback(BeatReciever.BeatFeedback bf)
+    protected virtual void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
         playersInside?.ApplyDanceFeedback(bf);
         puzzle.ReactToFeedback(bf);
-        PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == bf);
-        e?.OnPlayerSuccess?.Invoke();
-        OnPlayerFeedback?.Invoke(bf);
+        //PlayerInputEvent e = playerInputs.FirstOrDefault(p => p.feedback == bf);
+        //e?.OnPlayerSuccess?.Invoke();
+        if(damageMode!= DamageMode.None) OnPlayerFeedback?.Invoke(bf);
     }
 
     public void RefreshZombies()
@@ -191,6 +196,11 @@ public class DanceZone : Dancer
         foreach (Dancer dancer in dancers)
             if (TryGetComponent<Position3D>(out Position3D pos))
                 pos.SetLayerOnSprites();
+        if (TryGetComponent<Position3DGlobal>(out Position3DGlobal posGlobal))
+        {
+            posGlobal.FindChildrenPosition3D();
+            posGlobal.RefreshRenderers();
+        }
     }
     #endregion
     #endregion

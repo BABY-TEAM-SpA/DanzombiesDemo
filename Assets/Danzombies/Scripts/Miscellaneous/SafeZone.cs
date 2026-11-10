@@ -4,29 +4,23 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider2D))]
 public class SafeZone : DanceZone
 {
-   
-
+    public UnityEvent onPlayerSucces;
     #region [UNITY]
    
-
-    #region Trigger
-    /*private void OnTriggerEnter2D(Collider2D other)
+    private void OnEnable() => evaluator.OnFeedback += ReactToFeedback;
+    private void OnDisable() => evaluator.OnFeedback -= ReactToFeedback;//danceEventBuffer.RemoveAllListeners();
+    
+    protected virtual void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
+        Debug.Log("SafeZone ReactToFeedback");
+        if(bf!=BeatReciever.BeatFeedback.Bad) playersInside?.ApplyDanceFeedback(bf);
+        OnPlayerFeedback?.Invoke(bf);
+        if((int)bf>1)
         {
-            player.SetInSafeZone(true);
-            OnPlayerEnterZone?.Invoke(player);
+            Debug.Log("Player Success");
+            onPlayerSucces?.Invoke();
         }
     }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerManager>(out PlayerManager player))
-        {
-            player.SetInSafeZone(false);
-            OnPlayerExitZone?.Invoke(player);
-        }
-    }*/
-    #endregion
+    
     #endregion
 }

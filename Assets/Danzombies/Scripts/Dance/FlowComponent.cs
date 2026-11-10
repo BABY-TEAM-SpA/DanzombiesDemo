@@ -8,7 +8,6 @@ public enum FlowState { InFlow, Normal, InDanger };
 public class FlowComponent : MonoBehaviour
 {
     #region [VARIABLES]
-    [SerializeField] private DanceZone zone;
 
     public FlowState State
     {
@@ -38,8 +37,6 @@ public class FlowComponent : MonoBehaviour
         public FlowState state;
         [Tooltip("A partir de este porcentaje, el Flow entra a este estado.")]
         [Range(0f, 100f)] public float percentage;
-        public UnityEvent OnStateEntered;
-        public UnityEvent OnStateExited;
     }
 
     [SerializeField] private BeatFeedbackFlowModifier[] modifiers;
@@ -54,32 +51,19 @@ public class FlowComponent : MonoBehaviour
     }
 
     [Header("Events")]
-    public UnityEvent OnFlowFilled;
     public UnityEvent OnFlowEmptied;
+    public UnityEvent<FlowState> OnStateChanged;
+    public UnityEvent OnFlowFilled;
 
-    public Action<FlowState> OnStateChanged;
+    
     #endregion
 
     #region [UNITY]
     private void Awake()
     {
         states = states.OrderByDescending(s => s.percentage).ToArray();
-        GetFlowState(State)?.OnStateEntered?.Invoke();
     }
-
-    #region Enable/Disable
-    private void OnEnable()
-    {
-        if (zone != null)
-            zone.OnPlayerFeedback += ApplyFeedback;
-    }
-
-    private void OnDisable()
-    {
-        if (zone != null)
-            zone.OnPlayerFeedback -= ApplyFeedback;
-    }
-    #endregion
+    
     #endregion
 
     #region [METHODS]
@@ -102,8 +86,7 @@ public class FlowComponent : MonoBehaviour
     #region API - Beat Feedback
     public void ApplyFeedback(BeatReciever.BeatFeedback bf)
     {
-        bool affectsFlow = zone.DamageMode != DamageMode.None;
-        Increase(affectsFlow ? GetModifier(bf) : 0);
+        Increase(GetModifier(bf));
     }
     #endregion
 
@@ -117,14 +100,12 @@ public class FlowComponent : MonoBehaviour
 
         if (prevState != State) // <- Se compara con el getter del State, por eso prevState puede diferir de State
         {
-            GetFlowState(prevState)?.OnStateExited?.Invoke();
-            GetFlowState(State)?.OnStateEntered?.Invoke();
             OnStateChanged?.Invoke(State);
         }
 
         if (prevFlow != flow)
         {
-            if (flow == 0 && zone?.DamageMode == DamageMode.ModificaFlowYDaña)
+            if (flow == 0)
                 OnFlowEmptied?.Invoke();
 
             if (flow == MaxFlow)

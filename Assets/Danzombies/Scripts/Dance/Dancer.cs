@@ -101,4 +101,21 @@ public class Dancer: MonoBehaviour
         onDeactivated?.Invoke();
     }
     public virtual void React(ExpressionType exp) { }
+
+    public void React(string exp)
+    {
+        if (System.Enum.TryParse(exp, out ExpressionType expressionType))
+        {
+            React(expressionType);
+        }
+        else
+        {
+            Debug.LogError($"El texto '{exp}' no coincide con ningún elemento.");
+        }
+    }
+    public void React(int exp)
+    {
+        ExpressionType expressionType = (ExpressionType)exp;
+        React(expressionType);
+    }
 }

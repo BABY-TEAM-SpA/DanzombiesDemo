@@ -155,7 +155,7 @@ public class PlayerInputController : MonoBehaviour
             else if (value.y < -margin && allowedInputs.danceInputs.southDance) input = DanceDirection.South;
             if(input != DanceDirection.None && inputDanceDirection != input)
             {
-                Debug.Log(input);
+                //Debug.Log(input);
                 inputDanceDirection = input;
                 _playerManager.InputDance(inputDanceLean, inputDanceDirection);
             }
@@ -176,7 +176,7 @@ public class PlayerInputController : MonoBehaviour
         {
             float valor = context.ReadValue<float>();
             inputDanceLean = valor > 0 ? DanceLean.R : DanceLean.L;
-            Debug.Log(inputDanceLean);
+            //Debug.Log(inputDanceLean);
             _playerManager.InputDance(inputDanceLean, inputDanceDirection);
         }
         if (context.canceled)

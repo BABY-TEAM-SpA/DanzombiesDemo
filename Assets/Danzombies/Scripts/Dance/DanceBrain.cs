@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-
-public enum ExpressionType {Normal,Angry}
+[Serializable]
+public enum ExpressionType {Happy,Normal,Angry}
 [Serializable]
 public class DancerExpression
 {
@@ -26,6 +26,7 @@ public abstract class DanceBrain : Dancer
     [SerializeField] protected BeatReciever beatReciever;
     public bool isLeftLooking;
     
+    [SerializeField] private ExpressionType currentMood = ExpressionType.Normal;
     [SerializeField] List<DancerExpression> dancerExpressions = new List<DancerExpression>();
     public event Action<bool> OnDirectionChanged;
 
@@ -43,7 +44,8 @@ public abstract class DanceBrain : Dancer
     public void Start()
     {
         DancerExpression expression = dancerExpressions.First();
-        danceAnimCtrl.SetExpression(expression.alpha, expression.beta);
+        currentMood = expression.expressionType;
+        danceAnimCtrl.SetExpression(expression.alpha,expression.beta);
         if(ActivateOnStart)ActivateEntity(ActivateOnStart);
     }
 

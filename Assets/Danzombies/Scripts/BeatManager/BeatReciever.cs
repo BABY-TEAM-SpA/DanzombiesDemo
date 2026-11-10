@@ -7,11 +7,11 @@ public abstract class BeatReciever : MonoBehaviour
 
     public enum BeatFeedback
     {
-        Bad,
-        Ok,  
-        Good,   
-        Perfect,
-        Ignored
+        Bad=0,
+        Ok=1,  
+        Good=2,   
+        Perfect=3,
+        Ignored =-1
     }
 
     private void OnEnable()
