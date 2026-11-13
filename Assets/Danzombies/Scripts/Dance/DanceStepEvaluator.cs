@@ -1,109 +1,78 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class DanceStepEvaluator
 {
     #region [VARIABLES]
-    private readonly List<StepRegist> expected = new();
-    private readonly List<StepRegist> player = new();
+    private readonly Queue<StepRegist> expected = new();
+    private readonly Queue<StepRegist> player = new();
 
     public event Action<BeatReciever.BeatFeedback> OnFeedback;
-
-    private float Window => BeatManager.Instance.BeatDurationMs / 3f; // <- [Frco] Equivalente a 2/6 de un Beat
+    
     #endregion
 
     #region [METHODS]
     #region Add
     public void AddExpected(DanceStep step, int timeMs)
     {
-        Expire(timeMs);
-        Insert(new StepRegist(step, timeMs), expected, player);
+        expected.Enqueue(new StepRegist(step, timeMs));
+        //Debug.Log($"Expected Added...Expected: {expected.Count}, Player: {player.Count}");
     }
 
     public void AddPlayer(DanceStep step, int timeMs)
     {
-        Expire(timeMs);
-        Insert(new StepRegist(step, timeMs), player, expected);
+        
+        player.Enqueue(new StepRegist(step, timeMs));
+        //Debug.Log($"Player Added!!!! ...Expected: {expected.Count}, Player: {player.Count}");
     }
     #endregion
+    
 
-    #region Insert
-    /// <summary>
-    /// Cuando se añade un StepRegist nuevo a una de las listas, puede ocurrir que:
-    /// A. El jugador hace un input precipitado, su lista tiene un StepRegist que todavía no existe en la del puzzle.
-    ///    Resultado: se inserta su StepRegist en 'player' hasta que se consuma o expire.
-    /// B. El jugador hace un input atrasado, la lista del puzzle ya cuenta con un StepRegist con el mismo DanceStep.
-    ///    Resultado: se omite la inserción y directamente se consumen ambos StepRegist.
-    /// 
-    /// Funcionamiento:
-    /// 1. Busca si en el momento de la inserción, existe un StepRegist en 'other' con el mismo DanceStep.
-    /// 2. Mantiene en 'bestDelta' el menor tiempo entre el StepRegist insertado y la coincidencia en 'other'.
-    /// 3. Si hubo coincidencia con 'bestDelta' < 'Window', se "consume" el StepRegist de 'other' y se llama a Grade()
-    ///    para que evalúe el BeatFeedback a retornar.
-    /// 4. Si no ocurrió (3), se inserta en 'own'.
-    /// </summary>
-    /// <param name="reg">StepRegist recién llegado.</param>
-    /// <param name="own">Lista de destino.</param>
-    /// <param name="other">Lista a comparar.</param>
-    private void Insert(StepRegist reg, List<StepRegist> own, List<StepRegist> other)
+    #region Manage
+    private void ManageQueues(int nowMs)
     {
-        int best = -1;
-        int bestDelta = int.MaxValue;
-        for (int i = 0; i < other.Count; i++)
+        if(expected.TryPeek(out StepRegist expectedRegist) && player.TryPeek(out StepRegist playerRegist))
         {
-            if (other[i].danceStep != reg.danceStep) continue;
-            int delta = Math.Abs(other[i].stepTimeMs - reg.stepTimeMs);
-            if (delta <= Window && delta < bestDelta)
+            expectedRegist = expected.Dequeue();
+            playerRegist = player.Dequeue();
+            
+            BeatReciever.BeatFeedback grade = Grade(expectedRegist,playerRegist);
+            //Debug.Log($"Resolved{grade}");
+            OnFeedback?.Invoke(grade);
+        }
+        if(expected.TryPeek(out StepRegist regExp))
+        {
+            if (regExp.IsExpired(nowMs))
             {
-                best = i;
-                bestDelta = delta;
+                expected.Dequeue();
+                OnFeedback?.Invoke(BeatReciever.BeatFeedback.Bad); 
             }
         }
-
-        if (best >= 0)
+        if(player.TryPeek(out StepRegist regPlayer))
         {
-            other.RemoveAt(best);
-            OnFeedback?.Invoke(Grade(bestDelta));
+            if(regPlayer.IsExpired(nowMs))
+            {
+                player.Dequeue();
+                OnFeedback?.Invoke(BeatReciever.BeatFeedback.Bad); 
+            }
         }
-        else own.Add(reg);
     }
-
-    private BeatReciever.BeatFeedback Grade(int absDelta)
+    private BeatReciever.BeatFeedback Grade(StepRegist expectedRegist,StepRegist  playerRegist)
     {
+        if(expectedRegist.danceStep != playerRegist.danceStep) return BeatReciever.BeatFeedback.Bad;
+        int absDelta = Math.Abs(expectedRegist.stepTimeMs - playerRegist.stepTimeMs);
         BeatManager bm = BeatManager.Instance;
-        float max = bm.BeatDurationMs * bm.margenPercentOnBeat;
+        float max = bm.marginMs;
         float great = max * bm.greatPercentOnMargin;
         float perfect = great * bm.perfectPercentOnMargin;
-
         if (absDelta <= perfect) return BeatReciever.BeatFeedback.Perfect;
         if (absDelta <= great) return BeatReciever.BeatFeedback.Good;
         return BeatReciever.BeatFeedback.Ok;
     }
-    #endregion
-
-    #region Expire
-    private void Expire(int nowMs)
-    {
-        RemoveExpired(expected, player, nowMs);
-        RemoveExpired(player, expected, nowMs);
-    }
-
-    private void RemoveExpired(List<StepRegist> own, List<StepRegist> other, int nowMs)
-    {
-        for (int i = own.Count - 1; i >= 0; i--)
-        {
-            StepRegist reg = own[i];
-            if (nowMs - reg.stepTimeMs <= Window) continue;
-
-            own.RemoveAt(i);
-            if (reg.penalized) continue;
-
-            OnFeedback?.Invoke(BeatReciever.BeatFeedback.Bad);
-            PenalizeNeighbor(reg, other);
-        }
-    }
-
+    
+    /*
     /// <summary>
     /// Busca en la otra lista el StepRegist más cercano en tiempo al registro que expiró y lo marca como 'penalized'
     /// para evitar que se considere como Bad al expirar.
@@ -125,11 +94,11 @@ public class DanceStepEvaluator
             }
         }
         if (best != null) best.penalized = true;
-    }
+    }*/
     #endregion
 
     #region Helpers
-    public void Tick(int nowMs) => Expire(nowMs);
+    public void Tick(int nowMs) => ManageQueues(nowMs);
 
     public void Clear()
     {
@@ -145,10 +114,17 @@ public class StepRegist
     public DanceStep danceStep;
     public int stepTimeMs;
     public bool penalized; // <- [Frco] Marcar como verdadero para evitar que la expiración del StepRegist lance un Bad
+    private float life;
 
     public StepRegist(DanceStep step, int timeMs)
     {
         danceStep = step;
         stepTimeMs = timeMs;
+        life=stepTimeMs+BeatManager.Instance.marginMs/2;
+    }
+
+    public bool IsExpired(int nowMs)
+    {
+        return nowMs > life;
     }
 }

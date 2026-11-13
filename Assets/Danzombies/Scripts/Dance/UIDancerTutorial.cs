@@ -3,11 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem.Switch;
 using UnityEngine.UI;
 
 public class UIDancerTutorial : Dancer
 {
     #region [VARIABLES]
+    [Serializable]
+    public class DanceIcon
+    {
+        [Serializable]
+        public class SchemesSpritesControls
+        {
+            
+            [Serializable]
+            public class ControlButtons
+            {
+                public string buttonName;
+                public Sprite active;
+                public Sprite pressed;
+            }
+            public string schemeName;
+            public Sprite spriteFX;
+            public Sprite defaultSprite;
+            public List<ControlButtons> buttons = new List<ControlButtons>();
+        }
+
+        public UiAnimator animator;
+        public Image VfxIconRenderer;
+        public Image futureIconRenderer;
+        public Image currentIconRenderer;
+        
+        public List<SchemesSpritesControls> schemes = new List<SchemesSpritesControls>();
+    }
+    
+    [SerializeField] private bool debug = false;
     [SerializeField] private DanceIcon danceIcon;
     private DanceIcon.SchemesSpritesControls currentDanceScheme = new DanceIcon.SchemesSpritesControls();
     [SerializeField] private DanceIcon leftDirIcon;
@@ -30,6 +62,22 @@ public class UIDancerTutorial : Dancer
     {
         PrepareUI();
     }
+    private void OnEnable()
+    {
+        if (_playerInput != null)
+            _playerInput.onControlsChanged += HandleControlsChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (_playerInput != null)
+            _playerInput.onControlsChanged -= HandleControlsChanged;
+    }
+
+    private void HandleControlsChanged(PlayerInput input)
+    {
+        PrepareUI();
+    }
     #endregion
 
     #region [METHODS]
@@ -38,174 +86,184 @@ public class UIDancerTutorial : Dancer
     {
         currentDanceStep = DanceStep.None;
         futureDanceStep = DanceStep.None;
-        SetActiveCanvas(true);
+        SetFutureDanceStep();
+        SetDanceStep();
+        
     }
 
     public override void OnDisablePuzzle(RhythmPuzzle puzzle)
     {
         currentDanceStep = DanceStep.None;
         futureDanceStep = DanceStep.None;
-        SetActiveCanvas(false);
+        SetFutureDanceStep();
+        SetDanceStep();
+        
     }
 
     public override void OnReseatPuzzle(RhythmPuzzle puzzle)
     {
         currentDanceStep = DanceStep.None;
         futureDanceStep = DanceStep.None;
-        if (danceCanvas.isActiveAndEnabled)
-            RefreshIcons(false, false, false);
+        if (danceCanvas.isActiveAndEnabled) SetDanceStep();
     }
     #endregion
 
     #region Dancer - Steps
-    public  void OnPrepareStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
-    {
-        currentDanceStep = step;
-        if (!danceCanvas.isActiveAndEnabled) return;
-        RefreshIcons(false, false, false);
-    }
 
     public override void OnSetNextSetAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
         futureDanceStep = step;
         if (!danceCanvas.isActiveAndEnabled) return;
-        RefreshIcons(false, false, false);
+        SetFutureDanceStep();
+        
     }
 
     public override void OnDanceStepAction(int beatCounter, BeatManager.BeatType beatType, int beatTimeMs, DanceStep danceStep)
     {
         currentDanceStep = danceStep;
-        //Debug.Log($"CurrentDanceStep: {currentDanceStep} | FutureDanceStep: {futureDanceStep}");
-
         if (!danceCanvas.isActiveAndEnabled) return;
-        RefreshIcons(true, true, true);
-
-        if (currentDanceStep == DanceStep.None) return;
-        danceIcon.animator.PlaySequence("Pulse");
-        if (GetLean(currentDanceStep) == "R")
+        if (beatType == BeatManager.BeatType.SecondEmpty)
         {
-            rightDirIcon.animator.PlaySequence("Pulse");
+            OnReleaseStepAction(beatCounter, beatType, danceStep);
+            return;
         }
-        else leftDirIcon.animator.PlaySequence("Pulse");
+        SetDanceStep();
     }
 
     public  void OnReleaseStepAction(int beat, BeatManager.BeatType beatType, DanceStep step)
     {
         //currentDanceStep = DanceStep.None;
         if (!danceCanvas.isActiveAndEnabled) return;
-        RefreshIcons(false, false, false);
+        //SetDanceStep(futureDanceStep);
     }
     #endregion
 
     #region UI
+    private string GetDetailedSchemeName()
+    {
+        string baseScheme = _playerInput.currentControlScheme;
+        if(debug) Debug.Log($"Debug scheme name: {baseScheme}");
+        if (baseScheme == "Gamepad")
+        {
+            var gamepad = _playerInput.devices.OfType<Gamepad>().FirstOrDefault() ?? Gamepad.current;
+            if(debug) Debug.Log($"Gamepad Setted with: {gamepad} controll");
+            switch (gamepad)
+            {
+                case DualShockGamepad:
+                    return "PlayStation";
+                case XInputController:
+                    return "Xbox";
+                case SwitchProControllerHID:
+                    return "Switch";
+                default:
+                    return "Xbox";
+            }
+        }
+        return baseScheme;
+    }
+    
     public void PrepareUI()
     {
-        currentScheme = _playerInput.currentControlScheme;
+        currentScheme = GetDetailedSchemeName();
 
         currentDanceScheme = danceIcon.schemes.FirstOrDefault(x => x.schemeName == currentScheme);
-        danceIcon.iconFXRenderer.sprite = currentDanceScheme.spriteFX;
-        danceIcon.iconFXRenderer.SetNativeSize();
+        danceIcon.currentIconRenderer.sprite = currentDanceScheme.spriteFX;
+        danceIcon.currentIconRenderer.SetNativeSize();
 
         currentLeftScheme = leftDirIcon.schemes.FirstOrDefault(x => x.schemeName == currentScheme);
-        leftDirIcon.iconFXRenderer.sprite = currentLeftScheme.spriteFX;
-        leftDirIcon.iconFXRenderer.SetNativeSize();
+        leftDirIcon.currentIconRenderer.sprite = currentLeftScheme.spriteFX;
+        leftDirIcon.currentIconRenderer.SetNativeSize();
 
         currentRightScheme = rightDirIcon.schemes.FirstOrDefault(x => x.schemeName == currentScheme);
-        rightDirIcon.iconFXRenderer.sprite = currentRightScheme.spriteFX;
-        rightDirIcon.iconFXRenderer.SetNativeSize();
-
-        RefreshIcons(false, false, false);
-        danceIcon.iconRenderer.SetNativeSize();
-        leftDirIcon.iconRenderer.SetNativeSize();
-        rightDirIcon.iconRenderer.SetNativeSize();
+        rightDirIcon.currentIconRenderer.sprite = currentRightScheme.spriteFX;
+        rightDirIcon.currentIconRenderer.SetNativeSize();
+        
+        danceIcon.currentIconRenderer.SetNativeSize();
+        leftDirIcon.currentIconRenderer.SetNativeSize();
+        rightDirIcon.currentIconRenderer.SetNativeSize();
     }
 
-    private void RefreshIcons(bool danceIconPressed, bool leftPressed, bool rightPressed)
+    public void SetFutureDanceStep()
     {
-        bool currentDanceMatches = currentDanceStep != DanceStep.None;
-        bool futureDanceMatches = futureDanceStep != DanceStep.None;
-        danceIcon.iconFXRenderer.transform.localScale = Vector3.zero;
-        rightDirIcon.iconFXRenderer.transform.localScale = Vector3.zero;
-        leftDirIcon.iconFXRenderer.transform.localScale = Vector3.zero;
-
-        DanceStep previewStep = currentDanceMatches ? currentDanceStep : futureDanceMatches ? futureDanceStep : DanceStep.None;
-
-        danceIcon.iconRenderer.color = ResolveAlpha(currentDanceMatches, futureDanceMatches);
-        danceIcon.iconRenderer.sprite = ResolveSprite(currentDanceScheme, GetOrientation(previewStep), danceIconPressed && currentDanceMatches);
-
-        string currentLean = GetLean(currentDanceStep);
-        string futureLean = GetLean(futureDanceStep);
-
-        bool currentIsRight = currentLean == "R";
-        bool futureIsRight = futureLean == "R";
-        rightDirIcon.iconRenderer.color = ResolveAlpha(currentIsRight, futureIsRight);
-        rightDirIcon.iconRenderer.sprite = ResolveSprite(currentRightScheme, "", rightPressed && currentIsRight);
-
-        bool currentIsLeft = currentLean == "L";
-        bool futureIsLeft = futureLean == "L";
-        leftDirIcon.iconRenderer.color = ResolveAlpha(currentIsLeft, futureIsLeft);
-        leftDirIcon.iconRenderer.sprite = ResolveSprite(currentLeftScheme, "", leftPressed && currentIsLeft);
+        if(debug) Debug.Log($"FutureDance {futureDanceStep} ");
+        if(futureDanceStep == DanceStep.None)
+        {
+            danceIcon.futureIconRenderer.gameObject.SetActive(false);
+            leftDirIcon.futureIconRenderer.gameObject.SetActive(false);
+            rightDirIcon.futureIconRenderer.gameObject.SetActive(false);
+            return;
+        }
+        string orientation = GetOrientation(futureDanceStep);
+        string lean = GetLean(futureDanceStep);
+        
+        danceIcon.futureIconRenderer.sprite = ResolveSprite(currentDanceScheme, orientation,false);
+        danceIcon.futureIconRenderer.SetNativeSize();
+        danceIcon.futureIconRenderer.gameObject.SetActive(true);
+        
+        rightDirIcon.futureIconRenderer.sprite = ResolveSprite(currentRightScheme,"",false);
+        rightDirIcon.futureIconRenderer.SetNativeSize();
+        rightDirIcon.futureIconRenderer.gameObject.SetActive(lean =="R");
+        
+        leftDirIcon.futureIconRenderer.sprite = ResolveSprite(currentLeftScheme,"",false);
+        leftDirIcon.futureIconRenderer.SetNativeSize();
+        leftDirIcon.futureIconRenderer.gameObject.SetActive(lean =="L");
     }
-
-    public void SetActiveCanvas(bool active)
+    public void SetDanceStep()
     {
-        PrepareUI();
-        danceCanvas.gameObject.SetActive(active);
-        danceIcon.iconFXRenderer.gameObject.SetActive(active);
-        danceIcon.iconRenderer.gameObject.SetActive(active);
-        leftDirIcon.iconRenderer.gameObject.SetActive(active);
-        leftDirIcon.iconFXRenderer.gameObject.SetActive(active);
-        rightDirIcon.iconRenderer.gameObject.SetActive(active);
-        rightDirIcon.iconFXRenderer.gameObject.SetActive(active);
+        if(currentDanceStep == DanceStep.None)
+        {
+            danceIcon.currentIconRenderer.gameObject.SetActive(false);
+            leftDirIcon.currentIconRenderer.gameObject.SetActive(false);
+            rightDirIcon.currentIconRenderer.gameObject.SetActive(false);
+            return;
+        }
+
+        if(debug) Debug.Log($"Dance {currentDanceStep}");
+        string orientation = GetOrientation(currentDanceStep);
+        string lean = GetLean(currentDanceStep);
+        
+        danceIcon.currentIconRenderer.sprite = ResolveSprite(currentDanceScheme, orientation,true);
+        danceIcon.currentIconRenderer.SetNativeSize();
+        danceIcon.currentIconRenderer.gameObject.SetActive(true);
+        
+        rightDirIcon.currentIconRenderer.sprite = ResolveSprite(currentRightScheme,"",true);
+        rightDirIcon.currentIconRenderer.SetNativeSize();
+        rightDirIcon.currentIconRenderer.gameObject.SetActive(lean =="R");
+        
+        leftDirIcon.currentIconRenderer.sprite = ResolveSprite(currentLeftScheme,"",true);
+        leftDirIcon.currentIconRenderer.SetNativeSize();
+        leftDirIcon.currentIconRenderer.gameObject.SetActive(lean =="L");
+        AnimateDanceStep(currentDanceStep);
     }
+
+    private void AnimateDanceStep(DanceStep danceStep)
+    {
+        if(debug) Debug.Log($"AnimateDanceStep {danceStep}");
+        danceIcon.VfxIconRenderer.transform.localScale = Vector3.zero;
+        rightDirIcon.VfxIconRenderer.transform.localScale = Vector3.zero;
+        leftDirIcon.VfxIconRenderer.transform.localScale = Vector3.zero;
+        string lean = GetLean(currentDanceStep);
+        if (lean == "R") rightDirIcon.animator.PlaySequence("Pulse");
+        else leftDirIcon.animator.PlaySequence("Pulse");
+        danceIcon.animator.PlaySequence("Pulse");
+    }
+
+    
     #endregion
 
     #region Helpers
     private static string GetLean(DanceStep step) => step == DanceStep.None ? "" : step.ToString().Substring(0, 1);
     private static string GetOrientation(DanceStep step) => step == DanceStep.None ? "" : step.ToString().Substring(2);
-
-    private Color ResolveAlpha(bool currentMatches, bool futureMatches)
-    {
-        if (currentMatches) return Color.white;
-        if (futureMatches) return new Color(1, 1, 1, incomingAlpha);
-        return Color.clear;
-    }
-
+    
     private Sprite ResolveSprite(DanceIcon.SchemesSpritesControls scheme, string orientation, bool pressed)
     {
-        DanceIcon.SchemesSpritesControls.ControlButtons button = string.IsNullOrEmpty(orientation)
-            ? (scheme.buttons.Count > 0 ? scheme.buttons[0] : null)
-            : scheme.buttons.Find(x => x.buttonName == orientation);
+        DanceIcon.SchemesSpritesControls.ControlButtons button = string.IsNullOrEmpty(orientation) ? (scheme.buttons.Count > 0 ? scheme.buttons[0] : null) : scheme.buttons.Find(x => x.buttonName == orientation);
         if (button == null) return scheme.defaultSprite;
         return pressed ? button.pressed : button.active;
     }
     #endregion
     #endregion
 
-    [Serializable]
-    public class DanceIcon
-    {
-        [Serializable]
-        public class SchemesSpritesControls
-        {
-            
-            [Serializable]
-            public class ControlButtons
-            {
-                public string buttonName;
-                public Sprite active;
-                public Sprite pressed;
-            }
-            public string schemeName;
-            public Sprite spriteFX;
-            public Sprite defaultSprite;
-            public List<ControlButtons> buttons = new List<ControlButtons>();
-        }
-
-        public UiAnimator animator;
-        public Image iconRenderer;
-        public Image iconFXRenderer;
-        public List<SchemesSpritesControls> schemes = new List<SchemesSpritesControls>();
-    }
+    
 }
 

@@ -12,12 +12,12 @@ public class SafeZone : DanceZone
     
     protected virtual void ReactToFeedback(BeatReciever.BeatFeedback bf)
     {
-        Debug.Log("SafeZone ReactToFeedback");
+        //Debug.Log("SafeZone ReactToFeedback");
         if(bf!=BeatReciever.BeatFeedback.Bad) playersInside?.ApplyDanceFeedback(bf);
         OnPlayerFeedback?.Invoke(bf);
         if((int)bf>1)
         {
-            Debug.Log("Player Success");
+            //Debug.Log("Player Success");
             onPlayerSucces?.Invoke();
         }
     }

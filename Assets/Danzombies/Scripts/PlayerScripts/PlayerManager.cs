@@ -146,12 +146,13 @@ public class PlayerManager : DanceBrain
     /// </summary>
     public void InputDance(DanceLean lean, DanceDirection direction)
     {
-        if(debug)Debug.Log("InputDance");
+        
         if (isTutorial&& lean != DanceLean.None) danceAnimCtrl.TutorialPrepare(true);
         if (lean != DanceLean.None && direction != DanceDirection.None)
         {
             if (isTutorial) danceAnimCtrl.TutorialPrepare(false);
             DanceStep step = Enum.Parse<DanceStep>(lean + "_" + direction);
+            if(debug)Debug.Log($"InputDance: {step}");
             OnDanceStepAction(
                 BeatManager.Instance ? BeatManager.Instance.localBeatCount : 1,
                 BeatManager.Instance.mainBeatState,

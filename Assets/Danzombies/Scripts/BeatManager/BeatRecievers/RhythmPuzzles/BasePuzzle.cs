@@ -25,6 +25,7 @@ public class BasePuzzle : RhythmPuzzle
         GetDanceStep(innerBeatCounter,beatType);
         if(debug) Debug.Log($"Beat {beatCounter} (inner:{innerBeatCounter}):{beatType}.... dance:{currentStep}");
         danceEventBuffer.InvokeDance(beatCounter,beatType,beatTimeMs,currentStep);
+        GetNextDanceStep(beatCounter,beatType);
         
     }
 

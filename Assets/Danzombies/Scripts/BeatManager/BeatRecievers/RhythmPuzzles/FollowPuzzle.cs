@@ -40,7 +40,7 @@ public class FollowPuzzle : RhythmPuzzle
     [Header("Follow Puzzle Settings")]
     public Dancer leader;
     public bool leaderTurn;
-    private int innerBeatCounter=0;
+    //private int innerBeatCounter=0;
     
     public List<FollowDanceSequence> followDanceSequences = new List<FollowDanceSequence>();
     

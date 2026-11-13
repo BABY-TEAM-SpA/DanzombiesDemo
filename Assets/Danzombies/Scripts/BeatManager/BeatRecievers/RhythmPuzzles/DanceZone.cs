@@ -100,6 +100,7 @@ public class DanceZone : Dancer
     {
         player.AddTargetPuzzle(this);
         playersInside = player;
+        evaluator.Clear();
         OnPlayerEntered?.Invoke();
     }
 
@@ -107,6 +108,7 @@ public class DanceZone : Dancer
     {
         playersInside = null;
         player.RemoveTargetPuzzle(this);
+        evaluator.Clear();
         OnPlayerExited?.Invoke();
     }
     #endregion
@@ -160,9 +162,8 @@ public class DanceZone : Dancer
 
         if (playersInside != null)
         {
+            if (danceStep != DanceStep.None) evaluator.AddExpected(danceStep, beatTimeMs);
             evaluator.Tick(beatTimeMs);
-            if (danceStep != DanceStep.None)
-                evaluator.AddExpected(danceStep, beatTimeMs);
         }
 
         currentDanceStep = danceStep;

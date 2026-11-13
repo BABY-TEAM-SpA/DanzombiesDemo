@@ -17,12 +17,12 @@ public class BeatManager : Service<BeatManager>
     [Range(0f, 0.5f)] public float perfectPercentOnMargin = 0.1f;
 
     public int BeatDurationMs { get; private set; } = 1;
-    private float beatPartTimeMs;
+    public float beatPartTimeMs;
     
     // Bar duration
     public int lastBeatTime { get; private set; } = 0;
     public float nextBeatTime;
-    public float margin => BeatDurationMs * margenPercentOnBeat;
+    public float marginMs => BeatDurationMs * margenPercentOnBeat;
     private bool shouldBeatPart;
     
     public int localBeatCount { get; private set; } = 1; 
