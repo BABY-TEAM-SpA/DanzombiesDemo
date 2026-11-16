@@ -64,14 +64,12 @@ public class UIDancerTutorial : Dancer
     }
     private void OnEnable()
     {
-        if (_playerInput != null)
-            _playerInput.onControlsChanged += HandleControlsChanged;
+        _playerInput.controlsChangedEvent.AddListener(HandleControlsChanged);
     }
 
     private void OnDisable()
     {
-        if (_playerInput != null)
-            _playerInput.onControlsChanged -= HandleControlsChanged;
+        _playerInput.controlsChangedEvent.RemoveListener(HandleControlsChanged);
     }
 
     private void HandleControlsChanged(PlayerInput input)
@@ -164,6 +162,7 @@ public class UIDancerTutorial : Dancer
     
     public void PrepareUI()
     {
+        if(debug) Debug.Log($"PrepareUI {currentDanceStep} ");
         currentScheme = GetDetailedSchemeName();
 
         currentDanceScheme = danceIcon.schemes.FirstOrDefault(x => x.schemeName == currentScheme);
